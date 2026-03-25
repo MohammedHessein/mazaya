@@ -3,9 +3,9 @@ part of 'config_imports.dart';
 final GetIt injector = GetIt.instance;
 
 class ConstantManager {
-  static const String bundleId = 'com.smartVision.cleansolution';
-  static const String appName = 'Flutter_Base';
-  static const String fontFamily = 'Expo';
+  static const String bundleId = 'com.smartVision.mazaya';
+  static const String appName = 'mazaya';
+  static const String fontFamily = 'Madani';
 
   static const int splashTimer = 3000;
   static const String emptyText = '';

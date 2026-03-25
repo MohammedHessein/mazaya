@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.11.0
+  sdk: ^3.9.0
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -111,18 +111,26 @@ flutter:
     - assets/translations/
 
   fonts:
-    - family: Expo
+    - family: Madani
       fonts:
-      - asset: assets/fonts/ExpoArabicBold.ttf
-        weight: 700   
-      - asset: assets/fonts/ExpoArabicSemiBold.ttf
-        weight: 600
-      - asset: assets/fonts/ExpoArabicMedium.ttf
-        weight: 500
-      - asset: assets/fonts/ExpoArabicBook.ttf
-        weight: 400
-      - asset: assets/fonts/ExpoArabicLight.ttf
-        weight: 300
+        - asset: assets/fonts/Madani Arabic Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Madani Arabic Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Madani Arabic Semi Bold.ttf
+          weight: 600
+        - asset: assets/fonts/Madani Arabic Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Madani Arabic Extra Bold.ttf
+          weight: 800
+        - asset: assets/fonts/Madani Arabic Black.ttf
+          weight: 900
+        - asset: assets/fonts/Madani Arabic Light.ttf
+          weight: 300
+        - asset: assets/fonts/Madani Arabic Extra Light.ttf
+          weight: 200
+        - asset: assets/fonts/Madani Arabic Thin.ttf
+          weight: 100
 
 flutter_native_splash:
   color: "#000000"

@@ -120,8 +120,8 @@ class FontSizeManager {
 }
 
 class ScreenSizes {
-  static double width = 360;
-  static double height = 690;
+  static double width = 375;
+  static double height = 812;
 }
 
 class FontWeightManager {
