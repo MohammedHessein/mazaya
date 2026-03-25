@@ -79,6 +79,8 @@ dependencies:
   share_plus: ^11.1.0
   url_launcher: ^6.3.0
   rxdart: ^0.28.0
+  flutter_launcher_icons: ^0.14.4
+  image: ^4.8.0
 
 dev_dependencies:
   flutter_test:
@@ -89,7 +91,6 @@ dev_dependencies:
   flutter_gen_runner: ^5.4.0
   injectable_generator: ^2.6.2
   flutter_native_splash: ^2.4.7
-  flutter_launcher_icons: ^0.14.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -134,9 +135,9 @@ flutter:
 
 flutter_native_splash:
   color: "#000000"
-  image: "assets/svg/app_svg/splash_android_11.png"
+  image: "assets/svg/app_svg/android_12_splash.png"
   android_12:
-    image: "assets/svg/app_svg/splash_android_11.png"
+    image: "assets/svg/app_svg/android_12_splash.png"
     color: "#000000"
   fullscreen: true
 
