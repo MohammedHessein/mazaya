@@ -11,6 +11,6 @@
 class FontFamily {
   FontFamily._();
 
-  /// Font family: Expo
-  static const String expo = 'Expo';
+  /// Font family: Madani
+  static const String madani = 'Madani';
 }

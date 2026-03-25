@@ -18,28 +18,50 @@ import 'package:vector_graphics/vector_graphics.dart' as _vg;
 class $AssetsFontsGen {
   const $AssetsFontsGen();
 
-  /// File path: assets/fonts/ExpoArabicBold.ttf
-  String get expoArabicBold => 'assets/fonts/ExpoArabicBold.ttf';
+  /// File path: assets/fonts/Madani Arabic Black.ttf
+  String get madaniArabicBlack => 'assets/fonts/Madani Arabic Black.ttf';
 
-  /// File path: assets/fonts/ExpoArabicBook.ttf
-  String get expoArabicBook => 'assets/fonts/ExpoArabicBook.ttf';
+  /// File path: assets/fonts/Madani Arabic Bold.ttf
+  String get madaniArabicBold => 'assets/fonts/Madani Arabic Bold.ttf';
 
-  /// File path: assets/fonts/ExpoArabicLight.ttf
-  String get expoArabicLight => 'assets/fonts/ExpoArabicLight.ttf';
+  /// File path: assets/fonts/Madani Arabic Extra Bold.ttf
+  String get madaniArabicExtraBold =>
+      'assets/fonts/Madani Arabic Extra Bold.ttf';
 
-  /// File path: assets/fonts/ExpoArabicMedium.ttf
-  String get expoArabicMedium => 'assets/fonts/ExpoArabicMedium.ttf';
+  /// File path: assets/fonts/Madani Arabic Extra Light.ttf
+  String get madaniArabicExtraLight =>
+      'assets/fonts/Madani Arabic Extra Light.ttf';
 
-  /// File path: assets/fonts/ExpoArabicSemiBold.ttf
-  String get expoArabicSemiBold => 'assets/fonts/ExpoArabicSemiBold.ttf';
+  /// File path: assets/fonts/Madani Arabic Light.ttf
+  String get madaniArabicLight => 'assets/fonts/Madani Arabic Light.ttf';
+
+  /// File path: assets/fonts/Madani Arabic Medium.ttf
+  String get madaniArabicMedium => 'assets/fonts/Madani Arabic Medium.ttf';
+
+  /// File path: assets/fonts/Madani Arabic Regular.ttf
+  String get madaniArabicRegular => 'assets/fonts/Madani Arabic Regular.ttf';
+
+  /// File path: assets/fonts/Madani Arabic Semi Bold.ttf
+  String get madaniArabicSemiBold => 'assets/fonts/Madani Arabic Semi Bold.ttf';
+
+  /// File path: assets/fonts/Madani Arabic Thin.ttf
+  String get madaniArabicThin => 'assets/fonts/Madani Arabic Thin.ttf';
+
+  /// File path: assets/fonts/Madani Arabic Variable.ttf
+  String get madaniArabicVariable => 'assets/fonts/Madani Arabic Variable.ttf';
 
   /// List of all assets
   List<String> get values => [
-    expoArabicBold,
-    expoArabicBook,
-    expoArabicLight,
-    expoArabicMedium,
-    expoArabicSemiBold,
+    madaniArabicBlack,
+    madaniArabicBold,
+    madaniArabicExtraBold,
+    madaniArabicExtraLight,
+    madaniArabicLight,
+    madaniArabicMedium,
+    madaniArabicRegular,
+    madaniArabicSemiBold,
+    madaniArabicThin,
+    madaniArabicVariable,
   ];
 }
 
@@ -113,15 +135,23 @@ class $AssetsTranslationsGen {
 class $AssetsSvgAppSvgGen {
   const $AssetsSvgAppSvgGen();
 
-  /// File path: assets/svg/app_svg/app_logo.png
-  AssetGenImage get appLogo =>
-      const AssetGenImage('assets/svg/app_svg/app_logo.png');
+  /// File path: assets/svg/app_svg/android_12_splash.png
+  AssetGenImage get android12Splash =>
+      const AssetGenImage('assets/svg/app_svg/android_12_splash.png');
+
+  /// File path: assets/svg/app_svg/app_icon.png
+  AssetGenImage get appIcon =>
+      const AssetGenImage('assets/svg/app_svg/app_icon.png');
+
+  /// File path: assets/svg/app_svg/app_launcher_icon.png
+  AssetGenImage get appLauncherIcon =>
+      const AssetGenImage('assets/svg/app_svg/app_launcher_icon.png');
 
   /// File path: assets/svg/app_svg/home.svg
   SvgGenImage get home => const SvgGenImage('assets/svg/app_svg/home.svg');
 
   /// List of all assets
-  List<dynamic> get values => [appLogo, home];
+  List<dynamic> get values => [android12Splash, appIcon, appLauncherIcon, home];
 }
 
 class $AssetsSvgBaseSvgGen {
@@ -203,6 +233,10 @@ class $AssetsSvgBaseSvgGen {
   SvgGenImage get dropDownClose =>
       const SvgGenImage('assets/svg/base_svg/drop_down_close.svg');
 
+  /// File path: assets/svg/base_svg/mazaya_text.png
+  AssetGenImage get mazayaText =>
+      const AssetGenImage('assets/svg/base_svg/mazaya_text.png');
+
   /// File path: assets/svg/base_svg/notification_delete.svg
   SvgGenImage get notificationDelete =>
       const SvgGenImage('assets/svg/base_svg/notification_delete.svg');
@@ -258,6 +292,7 @@ class $AssetsSvgBaseSvgGen {
     deleteAll,
     dropDownArrowDown,
     dropDownClose,
+    mazayaText,
     notificationDelete,
     notificationDialog,
     notificationEmpty,

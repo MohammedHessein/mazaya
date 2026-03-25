@@ -5,19 +5,19 @@ class AppColors {
   static const Color secondary = Color(0xFF0E1317);
   static const Color main = Color(0xFF1A1A1A);
   static const Color orange = Color(0xFFF98B45);
-  
+
   static const Color white = Color(0xFFFFFFFF);
   static const Color black = Color(0xFF000000);
-  
-  static const Color scaffoldBackground = Color(0xFFFAFAFA);
+
+  static const Color scaffoldBackground = Color(0xFFffffff);
   static const Color bgF7 = Color(0xFFF7F7F7);
-  
+
   static const Color hintText = Color(0xFF666666);
   static const Color placeholder = Color(0xFF999999);
-  
+
   static const Color error = Color(0xFFCA0000);
   static const Color success = Color(0xFF00AD00);
-  
+
   static const Color lightGray = Color(0xFFF2F2F2);
   static const Color gray500 = Color(0xFF6B7280);
   static const Color gray600 = Color(0xFF4B5563);
@@ -76,19 +76,19 @@ class AppColorsWithDarkMode {
   static const Color secondary = Color(0xFF0E1317);
   static const Color main = Color(0xFF1A1A1A);
   static const Color orange = Color(0xFFF98B45);
-  
+
   static const Color white = Color(0xFFFFFFFF);
   static const Color black = Color(0xFF000000);
-  
+
   static const Color scaffoldBackground = Color(0xFFFAFAFA);
   static const Color bgF7 = Color(0xFFF7F7F7);
-  
+
   static const Color hintText = Color(0xFF666666);
   static const Color placeholder = Color(0xFF999999);
-  
+
   static const Color error = Color(0xFFCA0000);
   static const Color success = Color(0xFF00AD00);
-  
+
   static const Color lightGray = Color(0xFFF2F2F2);
   static const Color gray500 = Color(0xFF6B7280);
   static const Color gray600 = Color(0xFF4B5563);

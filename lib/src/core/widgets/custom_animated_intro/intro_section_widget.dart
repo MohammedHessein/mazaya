@@ -10,11 +10,15 @@ class IntroSectionWidget extends StatefulWidget {
 
 class _IntroSectionWidgetState extends State<IntroSectionWidget> {
   late Ticker _ticker;
+  double _time = 0.0;
 
   @override
   void initState() {
     _ticker = Ticker((d) {
-      setState(() {});
+      if (!mounted) return;
+      setState(() {
+        _time = DateTime.now().millisecondsSinceEpoch / 2000;
+      });
     })..start();
     super.initState();
   }
@@ -29,55 +33,109 @@ class _IntroSectionWidgetState extends State<IntroSectionWidget> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (_, constraints) {
-        final time = DateTime.now().millisecondsSinceEpoch / 2000;
-        final scaleX = 1.2 + sin(time) * .05;
-        final scaleY = 1.2 + cos(time) * .07;
-        final offsetY = 20 + cos(time) * 20;
+        final scaleX = 1.1 + sin(_time) * .02;
+        final scaleY = 1.1 + cos(_time) * .02;
         final width = constraints.maxWidth;
         final height = constraints.maxHeight;
-        return Stack(
-          alignment: Alignment.center,
-          fit: StackFit.expand,
-          children: <Widget>[
-            Transform.translate(
-              offset: Offset(
-                -(scaleX - 1) / 2 * width,
-                -(scaleY - 1) / 2 * height + offsetY,
-              ),
-              child: Transform(
-                transform: Matrix4.diagonal3Values(scaleX, scaleY, 1),
-                child: Image.asset(widget.introDto.backGroundImagePath),
-              ),
-            ),
-            Container(
-              color: Colors.black38,
-              alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(
-                vertical: AppPadding.pH14,
-                horizontal: AppPadding.pW10,
-              ),
-              child: SafeArea(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: AppMargin.mH40,
-                  children: [
-                    _PointerWithSkipButtonWidget(
-                      pointerImagePath: widget.introDto.pointerImagePath!,
+
+        return Container(
+          color: AppColors.white,
+          child: Column(
+            children: [
+              SizedBox(
+                height: height * 0.5,
+                width: double.infinity,
+                child: ClipPath(
+                  clipper: ConcaveCurveClipper(),
+                  child: Container(
+                    color: AppColors.grey2.withOpacity(0.1),
+                    child: Transform.translate(
+                      offset: Offset(
+                        -(scaleX - 1) / 2 * width,
+                        -(scaleY - 1) / 2 * (height * 0.5),
+                      ),
+                      child: Transform(
+                        transform: Matrix4.diagonal3Values(scaleX, scaleY, 1),
+                        child: Image.asset(
+                          widget.introDto.backGroundImagePath,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
-                    _ContentWidget(
-                      title: widget.introDto.title,
-                      subTitle: widget.introDto.subtitle,
-                    ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+              Expanded(
+                child: Container(
+                  color: AppColors.white,
+                  padding: EdgeInsets.symmetric(
+                    vertical: AppPadding.pH14,
+                    horizontal: AppPadding.pW20,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: AppMargin.mH40,
+                    children: [
+                      _ContentWidget(
+                        title: widget.introDto.title,
+                        subTitle: widget.introDto.subtitle,
+                      ),
+                      Align(
+                        alignment: AlignmentDirectional.centerEnd,
+                        child: Image.asset(
+                          widget.introDto.pointerImagePath!,
+                          width: context.width * .4,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         );
       },
     );
   }
+}
+
+class ConcaveCurveClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    path.lineTo(0.0, size.height - 40);
+
+    final firstControlPoint = Offset(size.width / 4, size.height + 15);
+    final firstEndPoint = Offset(size.width / 2, size.height + 15);
+
+    final secondControlPoint = Offset(
+      size.width - (size.width / 4),
+      size.height + 15,
+    );
+    final secondEndPoint = Offset(size.width, size.height - 40);
+
+    path.quadraticBezierTo(
+      firstControlPoint.dx,
+      firstControlPoint.dy,
+      firstEndPoint.dx,
+      firstEndPoint.dy,
+    );
+    path.quadraticBezierTo(
+      secondControlPoint.dx,
+      secondControlPoint.dy,
+      secondEndPoint.dx,
+      secondEndPoint.dy,
+    );
+
+    path.lineTo(size.width, 0.0);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
 
 class _ContentWidget extends StatelessWidget {
@@ -87,63 +145,47 @@ class _ContentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final translatedTitle = title.tr();
+    final words = translatedTitle.split(' ');
+    final spans = <TextSpan>[];
+
+    if (words.isNotEmpty) {
+      for (int i = 0; i < words.length - 1; i++) {
+        spans.add(TextSpan(text: '${words[i]} '));
+      }
+      spans.add(
+        TextSpan(
+          text: words.last,
+          style: TextStyle(color: AppColors.orange),
+        ),
+      );
+    }
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: AppMargin.mH10,
       children: <Widget>[
         if (title.isNotEmpty) ...[
-          Text(
-            title,
+          RichText(
             textAlign: TextAlign.start,
-            style: context.textStyle.s28.setWhiteColor.bold,
+            text: TextSpan(
+              style: context.textStyle.s28.setBlackColor.bold.copyWith(
+                fontFamily: ConstantManager.fontFamily,
+              ),
+              children: spans.isEmpty
+                  ? [TextSpan(text: translatedTitle)]
+                  : spans,
+            ),
           ),
         ],
         if (subTitle.isNotEmpty) ...[
           Text(
-            subTitle,
+            subTitle.tr(),
             textAlign: TextAlign.start,
-            style: context.textStyle.s13.setWhiteColor.medium,
+            style: context.textStyle.s13.setBlackColor.medium,
           ),
         ],
-      ],
-    );
-  }
-}
-
-class _PointerWithSkipButtonWidget extends StatelessWidget {
-  final String pointerImagePath;
-  const _PointerWithSkipButtonWidget({required this.pointerImagePath});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        GestureDetector(
-          // onTap: () => Go.offAll(const LoginScreen()),
-          child: Container(
-            padding: EdgeInsets.symmetric(
-              vertical: AppPadding.pH6,
-              horizontal: AppPadding.pW14,
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(AppCircular.r40),
-              color: AppColors.white.withAlpha(25),
-              border: Border.all(color: AppColors.white.withAlpha(10)),
-            ),
-            child: Text(
-              LocaleKeys.introSkip,
-              style: context.textStyle.s11.setWhiteColor.regular,
-            ),
-          ),
-        ),
-        Image.asset(
-          pointerImagePath,
-          width: context.width * .4,
-          fit: BoxFit.cover,
-        ),
       ],
     );
   }

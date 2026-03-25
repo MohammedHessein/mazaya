@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../core/extensions/material_color_extension.dart';
 import '../res/config_imports.dart';
 
@@ -15,7 +16,7 @@ class AppTheme {
         modalBackgroundColor: AppColors.white,
         surfaceTintColor: Colors.transparent,
       ),
-      scaffoldBackgroundColor: AppColors.scaffoldBackground,
+      scaffoldBackgroundColor: AppColors.white,
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: AppColors.white,
         selectedItemColor: AppColors.primary,

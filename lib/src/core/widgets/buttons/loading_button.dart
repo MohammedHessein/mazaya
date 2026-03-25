@@ -2,10 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+
 import '../../../config/res/config_imports.dart';
 import '../../extensions/context_extension.dart';
-import '../../extensions/widgets/sized_box_helper.dart';
 import '../../extensions/text_style_extensions.dart';
+import '../../extensions/widgets/sized_box_helper.dart';
 import 'custom_animated_button.dart';
 
 class LoadingButton extends StatelessWidget {
@@ -68,8 +69,8 @@ class LoadingButton extends StatelessWidget {
         gradient: isDissabled
             ? AppColors.disableGradient
             : color != null
-                ? LinearGradient(colors: [color!, color!])
-                : AppColors.gradient,
+            ? LinearGradient(colors: [color!, color!])
+            : AppColors.gradient,
         onTap: isDissabled ? () async {} : onTap,
         elevation: 0,
         padding: EdgeInsets.zero,
@@ -77,7 +78,7 @@ class LoadingButton extends StatelessWidget {
         minWidth: 46.h,
         height: height ?? 46.h,
         // color:gradient != null ? null:  isDissabled ? AppColors.grey2 : color ?? AppColors.primaryColor,
-        borderRadius: borderRadius ?? AppSize.sH12,
+        borderRadius: borderRadius ?? AppCircular.r50,
         disabledColor: color ?? AppColors.primary,
         borderSide: borderSide,
         loader: onSendProgress == null
@@ -129,12 +130,14 @@ class LoadingButton extends StatelessWidget {
                   );
                 },
               ),
-        child: titleAsWidget ??
+        child:
+            titleAsWidget ??
             Text(
               title,
               style: TextStyle(
-                color:
-                    isDissabled ? AppColors.black : textColor ?? Colors.white,
+                color: isDissabled
+                    ? AppColors.black
+                    : textColor ?? Colors.white,
                 fontSize: fontSize ?? FontSizeManager.s14,
                 fontWeight: FontWeight.w600,
               ),

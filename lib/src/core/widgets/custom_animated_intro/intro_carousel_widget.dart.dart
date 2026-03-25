@@ -65,17 +65,56 @@ class IntroCarouselWidgetState extends State<IntroCarouselWidget>
             bottom: AppMargin.mH18,
             right: AppMargin.mW12,
             left: AppMargin.mW12,
-            child: ValueListenableBuilder(
+            child: ValueListenableBuilder<int>(
               valueListenable: indexNotifier,
               builder: (context, value, child) {
-                return DefaultButton(
-                  title: value % length == 2
-                      ? LocaleKeys.introStartnow
-                      : LocaleKeys.introNext,
-                  onTap: () => value % length == 2
-                      ? Go.to(const HomeScreen())
-                      // ? Go.to(const LoginScreen())
-                      : _animateToNextPage(),
+                final int currentIndex = value % length;
+                final bool isLastPage = currentIndex == length - 1;
+
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                        length,
+                        (i) => AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          margin: EdgeInsets.symmetric(horizontal: 4.0),
+                          width: currentIndex == i ? 24.0 : 8.0,
+                          height: 8.0,
+                          decoration: BoxDecoration(
+                            color: currentIndex == i
+                                ? AppColors.orange
+                                : AppColors.grey2.withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    DefaultButton(
+                      borderRadius: BorderRadius.circular(AppCircular.r50),
+                      title: isLastPage
+                          ? LocaleKeys.introStartnow.tr()
+                          : LocaleKeys.introNext.tr(),
+                      onTap: () => isLastPage
+                          ? Go.to(const HomeScreen())
+                          : _animateToNextPage(),
+                    ),
+                    if (!isLastPage) ...[
+                      const SizedBox(height: 16),
+                      GestureDetector(
+                        // onTap: () => Go.offAll(const LoginScreen()),
+                        child: Text(
+                          LocaleKeys.introSkip.tr(),
+                          style: context.textStyle.s16.setBlackColor.regular,
+                        ),
+                      ),
+                    ] else ...[
+                      const SizedBox(height: 16 + 20),
+                    ],
+                  ],
                 );
               },
             ),

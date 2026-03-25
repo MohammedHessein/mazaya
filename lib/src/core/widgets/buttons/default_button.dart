@@ -55,7 +55,7 @@ class DefaultButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: width ?? context.width * .9,
-      height: height ?? AppSize.sH45,
+      height: height ?? AppSize.sH50,
       child: ElevatedButton(
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
@@ -64,7 +64,8 @@ class DefaultButton extends StatelessWidget {
           foregroundColor: color ?? AppColors.buttonColor,
           backgroundColor: color ?? AppColors.buttonColor,
           shape: RoundedRectangleBorder(
-            borderRadius: borderRadius ?? BorderRadius.circular(AppCircular.r8),
+            borderRadius:
+                borderRadius ?? BorderRadius.circular(AppCircular.r50),
             side: borderColor != null
                 ? BorderSide(
                     color: borderColor ?? AppColors.buttonColor,
