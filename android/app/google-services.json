@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "130916516711",
+    "project_id": "mazaya-smart-2026",
+    "storage_bucket": "mazaya-smart-2026.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:130916516711:android:45f5de54639391e2a665c2",
+        "android_client_info": {
+          "package_name": "com.smartvision.mazaya"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeDzSIZdIzcsMXZsEXHQe1jR6pY6Y2FTM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

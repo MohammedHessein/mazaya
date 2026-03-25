@@ -1,0 +1,23 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
+import '../../../../../config/language/locale_keys.g.dart';
+import '../../../../../config/res/config_imports.dart';
+import '../../../../../core/base_crud/code/domain/base_domain_imports.dart';
+import '../../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
+import '../../../../../core/extensions/widgets/padding_extension.dart';
+import '../../../../../core/helpers/validators.dart';
+import '../../../../../core/navigation/navigator.dart';
+import '../../../../../core/network/api_endpoints.dart';
+import '../../../../../core/shared/cubits/user_cubit/user_cubit.dart';
+import '../../../../../core/shared/models/base_model.dart';
+import '../../../../../core/widgets/buttons/loading_button.dart';
+import '../../../../../core/widgets/dialogs/success_dialog.dart';
+import '../../../../../core/widgets/fields/text_fields/custom_text_field.dart';
+import '../../../../../core/widgets/scaffolds/default_scaffold.dart'
+    show DefaultScaffold;
+import '../../entity/contact_us_params.dart';
+
+part '../view/contact_us_view.dart';
+part '../widgets/contact_us_body.dart';
+part '../cubits/contact_us_cubit.dart';
