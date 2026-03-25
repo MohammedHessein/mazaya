@@ -88,6 +88,8 @@ dev_dependencies:
   easy_localization_loader: ^2.0.2
   flutter_gen_runner: ^5.4.0
   injectable_generator: ^2.6.2
+  flutter_native_splash: ^2.4.7
+  flutter_launcher_icons: ^0.14.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -121,6 +123,20 @@ flutter:
         weight: 400
       - asset: assets/fonts/ExpoArabicLight.ttf
         weight: 300
+
+flutter_native_splash:
+  color: "#000000"
+  image: "assets/svg/app_svg/splash_android_11.png"
+  android_12:
+    image: "assets/svg/app_svg/splash_android_11.png"
+    color: "#000000"
+  fullscreen: true
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/svg/app_svg/app_launcher_icon.png"
+  min_sdk_android: 21
 
 flutter_gen:
   output: lib/src/config/res/

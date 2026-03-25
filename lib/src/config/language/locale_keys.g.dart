@@ -412,26 +412,26 @@ abstract class LocaleKeys {
   static const String _logout = 'logout';
   static String get logout => _logout.tr();
 
+  static const String _onboardingTitle1 = 'onboarding_title_1';
+  static String get onboardingTitle1 => _onboardingTitle1.tr();
+
+  static const String _onboardingDesc1 = 'onboarding_desc_1';
+  static String get onboardingDesc1 => _onboardingDesc1.tr();
+
+  static const String _onboardingTitle2 = 'onboarding_title_2';
+  static String get onboardingTitle2 => _onboardingTitle2.tr();
+
+  static const String _onboardingDesc2 = 'onboarding_desc_2';
+  static String get onboardingDesc2 => _onboardingDesc2.tr();
+
+  static const String _onboardingTitle3 = 'onboarding_title_3';
+  static String get onboardingTitle3 => _onboardingTitle3.tr();
+
+  static const String _onboardingDesc3 = 'onboarding_desc_3';
+  static String get onboardingDesc3 => _onboardingDesc3.tr();
+
   static const String _introSkip = 'intro_skip';
   static String get introSkip => _introSkip.tr();
-
-  static const String _introFirststep = 'intro_firststep';
-  static String get introFirststep => _introFirststep.tr();
-
-  static const String _introOverview = 'intro_overview';
-  static String get introOverview => _introOverview.tr();
-
-  static const String _introExplore = 'intro_explore';
-  static String get introExplore => _introExplore.tr();
-
-  static const String _introBrowse = 'intro_browse';
-  static String get introBrowse => _introBrowse.tr();
-
-  static const String _introWelcome = 'intro_welcome';
-  static String get introWelcome => _introWelcome.tr();
-
-  static const String _introPlatforminfo = 'intro_platforminfo';
-  static String get introPlatforminfo => _introPlatforminfo.tr();
 
   static const String _introStartnow = 'intro_startnow';
   static String get introStartnow => _introStartnow.tr();
@@ -618,5 +618,167 @@ abstract class LocaleKeys {
 
   static const String _noOptionsFound = 'no_options_found';
   static String get noOptionsFound => _noOptionsFound.tr();
+
+  static const String _loginSubtitle = 'login_subtitle';
+  static String get loginSubtitle => _loginSubtitle.tr();
+
+  static const String _username = 'username';
+  static String get username => _username.tr();
+
+  static const String _enterUsername = 'enter_username';
+  static String get enterUsername => _enterUsername.tr();
+
+  static const String _setLocation = 'set_location';
+  static String get setLocation => _setLocation.tr();
+
+  static const String _city = 'city';
+  static String get city => _city.tr();
+
+  static const String _selectCity = 'select_city';
+  static String get selectCity => _selectCity.tr();
+
+  static const String _country = 'country';
+  static String get country => _country.tr();
+
+  static const String _selectCountry = 'select_country';
+  static String get selectCountry => _selectCountry.tr();
+
+  static const String _municipality = 'municipality';
+  static String get municipality => _municipality.tr();
+
+  static const String _selectMunicipality = 'select_municipality';
+  static String get selectMunicipality => _selectMunicipality.tr();
+
+  static const String _address = 'address';
+  static String get address => _address.tr();
+
+  static const String _enterAddress = 'enter_address';
+  static String get enterAddress => _enterAddress.tr();
+
+  static const String _useCurrentLocation = 'use_current_location';
+  static String get useCurrentLocation => _useCurrentLocation.tr();
+
+  static const String _forgotPasswordDesc = 'forgot_password_desc';
+  static String get forgotPasswordDesc => _forgotPasswordDesc.tr();
+
+  static const String _verificationCode = 'verification_code';
+  static String get verificationCode => _verificationCode.tr();
+
+  static const String _enterCodeSentTo = 'enter_code_sent_to';
+  static String get enterCodeSentTo => _enterCodeSentTo.tr();
+
+  static const String _verify = 'verify';
+  static String get verify => _verify.tr();
+
+  static const String _resetPasswordTitle = 'reset_password_title';
+  static String get resetPasswordTitle => _resetPasswordTitle.tr();
+
+  static const String _save = 'save';
+  static String get save => _save.tr();
+
+  static const String _coupons = 'coupons';
+  static String get coupons => _coupons.tr();
+
+  static const String _scan = 'scan';
+  static String get scan => _scan.tr();
+
+  static const String _myAccount = 'my_account';
+  static String get myAccount => _myAccount.tr();
+
+  static const String _latestCoupons = 'latest_coupons';
+  static String get latestCoupons => _latestCoupons.tr();
+
+  static const String _sections = 'sections';
+  static String get sections => _sections.tr();
+
+  static const String _silverMembership = 'silver_membership';
+  static String get silverMembership => _silverMembership.tr();
+
+  static const String _goldMembership = 'gold_membership';
+  static String get goldMembership => _goldMembership.tr();
+
+  static const String _diamondMembership = 'diamond_membership';
+  static String get diamondMembership => _diamondMembership.tr();
+
+  static const String _silverMember = 'silver_member';
+  static String get silverMember => _silverMember.tr();
+
+  static const String _goldMember = 'gold_member';
+  static String get goldMember => _goldMember.tr();
+
+  static const String _diamondMember = 'diamond_member';
+  static String get diamondMember => _diamondMember.tr();
+
+  static const String _subscriptionActive = 'subscription_active';
+  static String get subscriptionActive => _subscriptionActive.tr();
+
+  static const String _remainingCoupons = 'remaining_coupons';
+  static String remainingCoupons({required String count}) => _remainingCoupons.tr(namedArgs: {'count': count});
+
+  static const String _totalCoupons = 'total_coupons';
+  static String totalCoupons({required String total}) => _totalCoupons.tr(namedArgs: {'total': total});
+
+  static const String _renewalDate = 'renewal_date';
+  static String renewalDate({required String date}) => _renewalDate.tr(namedArgs: {'date': date});
+
+  static const String _usedCoupons = 'used_coupons';
+  static String get usedCoupons => _usedCoupons.tr();
+
+  static const String _logoutConfirmation = 'logout_confirmation';
+  static String get logoutConfirmation => _logoutConfirmation.tr();
+
+  static const String _logoutDesc = 'logout_desc';
+  static String get logoutDesc => _logoutDesc.tr();
+
+  static const String _deleteAccountConfirmation = 'delete_account_confirmation';
+  static String get deleteAccountConfirmation => _deleteAccountConfirmation.tr();
+
+  static const String _deleteAccountDesc = 'delete_account_desc';
+  static String get deleteAccountDesc => _deleteAccountDesc.tr();
+
+  static const String _confirmAddress = 'confirm_address';
+  static String get confirmAddress => _confirmAddress.tr();
+
+  static const String _resendCode = 'resend_code';
+  static String get resendCode => _resendCode.tr();
+
+  static const String _codeNotSent = 'code_not_sent';
+  static String get codeNotSent => _codeNotSent.tr();
+
+  static const String _incorrectVerificationCode = 'incorrect_verification_code';
+  static String get incorrectVerificationCode => _incorrectVerificationCode.tr();
+
+  static const String _newPasswordLabel = 'new_password_label';
+  static String get newPasswordLabel => _newPasswordLabel.tr();
+
+  static const String _enterNewPassword = 'enter_new_password';
+  static String get enterNewPassword => _enterNewPassword.tr();
+
+  static const String _changePasswordSuccess = 'change_password_success';
+  static String get changePasswordSuccess => _changePasswordSuccess.tr();
+
+  static const String _couponDetails = 'coupon_details';
+  static String get couponDetails => _couponDetails.tr();
+
+  static const String _allWinterCollection = 'all_winter_collection';
+  static String allWinterCollection({required String percent}) => _allWinterCollection.tr(namedArgs: {'percent': percent});
+
+  static const String _scanCouponCode = 'scan_coupon_code';
+  static String get scanCouponCode => _scanCouponCode.tr();
+
+  static const String _placeQrCode = 'place_qr_code';
+  static String get placeQrCode => _placeQrCode.tr();
+
+  static const String _scannedSuccessfully = 'scanned_successfully';
+  static String get scannedSuccessfully => _scannedSuccessfully.tr();
+
+  static const String _returnToHome = 'return_to_home';
+  static String get returnToHome => _returnToHome.tr();
+
+  static const String _noNotificationsYet = 'no_notifications_yet';
+  static String get noNotificationsYet => _noNotificationsYet.tr();
+
+  static const String _notificationReachMsg = 'notification_reach_msg';
+  static String get notificationReachMsg => _notificationReachMsg.tr();
 
 }

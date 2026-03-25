@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mazaya/src/features/settings/intro/presentation/imports/view_imports.dart';
 
 import 'config/res/config_imports.dart';
 import 'config/themes/app_theme.dart';
@@ -13,7 +14,6 @@ import 'core/shared/cubits/user_cubit/user_cubit.dart';
 import 'core/shared/route_observer.dart';
 import 'core/widgets/handling_views/offline_widget.dart';
 import 'core/widgets/un_autheticated/unauthenticated_bottomsheet.dart';
-import 'features/settings/splash/imports/view_imports.dart';
 
 class MazayaApp extends StatefulWidget {
   const MazayaApp({super.key});
@@ -52,7 +52,7 @@ class _MazayaAppState extends State<MazayaApp> {
             locale: context.locale,
             navigatorKey: Go.navigatorKey,
             onGenerateRoute: RouterGenerator.getRoute,
-            home: const SplashScreen(),
+            home: const IntroScreen(),
             navigatorObservers: [AppNavigationObserver()],
             theme: AppTheme.light,
             builder: (context, child) {

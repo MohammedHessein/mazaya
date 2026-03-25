@@ -26,7 +26,6 @@ import '../../../features/settings/notifications/presentation/imports/view_impor
     as _i204;
 import '../../../features/settings/settings/presentation/imports/view_imports.dart'
     as _i1046;
-import '../../../features/settings/splash/imports/view_imports.dart' as _i222;
 import '../../../features/settings/static_pages/presentation/imports/view_imports.dart'
     as _i834;
 import '../../../features/user_profile/presentation/imports/view_imports.dart'
@@ -56,7 +55,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i1046.LangCubit>(() => _i1046.LangCubit());
     gh.factory<_i1046.NotifiyCubit>(() => _i1046.NotifiyCubit());
     gh.factory<_i1046.DeleteAccountCubit>(() => _i1046.DeleteAccountCubit());
-    gh.factory<_i222.SplashCubit>(() => _i222.SplashCubit());
     gh.factory<_i834.StaticPagesCubit>(() => _i834.StaticPagesCubit());
     gh.factory<_i360.UserProfileCubit>(() => _i360.UserProfileCubit());
     gh.lazySingleton<_i996.UserCubit>(() => _i996.UserCubit());
