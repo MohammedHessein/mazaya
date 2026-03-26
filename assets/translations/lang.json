@@ -258,5 +258,6 @@
   "scanned_successfully #$ QR Code scanned successfully": "تم مسح الـ QR Code بنجاح",
   "return_to_home #$ Return to Home": "العودة للرئيسية",
   "no_notifications_yet #$ No notifications yet!": "لا يوجد اشعارات بعد!",
-  "notification_reach_msg #$ We will notify you as soon as new notifications arrive.": "سنعلمك فور وصول أي إشعارات جديدة."
+  "notification_reach_msg #$ We will notify you as soon as new notifications arrive.": "سنعلمك فور وصول أي إشعارات جديدة.",
+  "change_language #$ Change Language": "تغيير اللغه"
 }

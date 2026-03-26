@@ -258,5 +258,6 @@
   "scanned_successfully": "QR Code scanned successfully",
   "return_to_home": "Return to Home",
   "no_notifications_yet": "No notifications yet!",
-  "notification_reach_msg": "We will notify you as soon as new notifications arrive."
+  "notification_reach_msg": "We will notify you as soon as new notifications arrive.",
+  "change_language": "Change Language"
 }

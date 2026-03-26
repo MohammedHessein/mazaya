@@ -781,4 +781,7 @@ abstract class LocaleKeys {
   static const String _notificationReachMsg = 'notification_reach_msg';
   static String get notificationReachMsg => _notificationReachMsg.tr();
 
+  static const String _changeLanguage = 'change_language';
+  static String get changeLanguage => _changeLanguage.tr();
+
 }

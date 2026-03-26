@@ -258,5 +258,6 @@
   "scanned_successfully": "تم مسح الـ QR Code بنجاح",
   "return_to_home": "العودة للرئيسية",
   "no_notifications_yet": "لا يوجد اشعارات بعد!",
-  "notification_reach_msg": "سنعلمك فور وصول أي إشعارات جديدة."
+  "notification_reach_msg": "سنعلمك فور وصول أي إشعارات جديدة.",
+  "change_language": "تغيير اللغه"
 }

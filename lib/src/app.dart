@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -61,7 +63,11 @@ class _MazayaAppState extends State<MazayaApp> {
                   context,
                 ).copyWith(textScaler: const TextScaler.linear(1.0)),
                 child: OfflineWidget(
-                  child: FullScreenLoadingManager(child: child!),
+                  child: FullScreenLoadingManager(
+                    child: Platform.isAndroid
+                        ? SafeArea(child: child!, top: false)
+                        : child!,
+                  ),
                 ),
               );
             },
