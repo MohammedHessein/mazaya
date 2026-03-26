@@ -193,6 +193,10 @@ class $AssetsSvgBaseSvgGen {
   AssetGenImage get uploadDoted =>
       const AssetGenImage('assets/svg/base_svg/Upload_doted.png');
 
+  /// File path: assets/svg/base_svg/arrow-right.svg
+  SvgGenImage get arrowRight =>
+      const SvgGenImage('assets/svg/base_svg/arrow-right.svg');
+
   /// File path: assets/svg/base_svg/arrow_back.svg
   SvgGenImage get arrowBack =>
       const SvgGenImage('assets/svg/base_svg/arrow_back.svg');
@@ -200,6 +204,10 @@ class $AssetsSvgBaseSvgGen {
   /// File path: assets/svg/base_svg/arrow_down.svg
   SvgGenImage get arrowDown =>
       const SvgGenImage('assets/svg/base_svg/arrow_down.svg');
+
+  /// File path: assets/svg/base_svg/arrow_down_menu.svg
+  SvgGenImage get arrowDownMenu =>
+      const SvgGenImage('assets/svg/base_svg/arrow_down_menu.svg');
 
   /// File path: assets/svg/base_svg/change_email.svg
   SvgGenImage get changeEmail =>
@@ -217,13 +225,29 @@ class $AssetsSvgBaseSvgGen {
   AssetGenImage get complainEmpty =>
       const AssetGenImage('assets/svg/base_svg/complain_empty.png');
 
+  /// File path: assets/svg/base_svg/compress.svg
+  SvgGenImage get compress =>
+      const SvgGenImage('assets/svg/base_svg/compress.svg');
+
   /// File path: assets/svg/base_svg/correct.svg
   SvgGenImage get correct =>
       const SvgGenImage('assets/svg/base_svg/correct.svg');
 
+  /// File path: assets/svg/base_svg/curve_background.png
+  AssetGenImage get curveBackground =>
+      const AssetGenImage('assets/svg/base_svg/curve_background.png');
+
   /// File path: assets/svg/base_svg/delete_all.svg
   SvgGenImage get deleteAll =>
       const SvgGenImage('assets/svg/base_svg/delete_all.svg');
+
+  /// File path: assets/svg/base_svg/determine_location.png
+  AssetGenImage get determineLocation =>
+      const AssetGenImage('assets/svg/base_svg/determine_location.png');
+
+  /// File path: assets/svg/base_svg/done_action.png
+  AssetGenImage get doneAction =>
+      const AssetGenImage('assets/svg/base_svg/done_action.png');
 
   /// File path: assets/svg/base_svg/drop_down_arrow_down.svg
   SvgGenImage get dropDownArrowDown =>
@@ -232,6 +256,13 @@ class $AssetsSvgBaseSvgGen {
   /// File path: assets/svg/base_svg/drop_down_close.svg
   SvgGenImage get dropDownClose =>
       const SvgGenImage('assets/svg/base_svg/drop_down_close.svg');
+
+  /// File path: assets/svg/base_svg/lock.png
+  AssetGenImage get lock => const AssetGenImage('assets/svg/base_svg/lock.png');
+
+  /// File path: assets/svg/base_svg/login.png
+  AssetGenImage get login =>
+      const AssetGenImage('assets/svg/base_svg/login.png');
 
   /// File path: assets/svg/base_svg/mazaya_text.png
   AssetGenImage get mazayaText =>
@@ -282,16 +313,24 @@ class $AssetsSvgBaseSvgGen {
     onboarding2,
     onboarding3,
     uploadDoted,
+    arrowRight,
     arrowBack,
     arrowDown,
+    arrowDownMenu,
     changeEmail,
     changePass,
     chatsEmpty,
     complainEmpty,
+    compress,
     correct,
+    curveBackground,
     deleteAll,
+    determineLocation,
+    doneAction,
     dropDownArrowDown,
     dropDownClose,
+    lock,
+    login,
     mazayaText,
     notificationDelete,
     notificationDialog,

@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'get_base_name_and_id_cubit.dart';
 
 class GetBaseEntityState<T extends BaseEntity> extends Equatable {
@@ -7,10 +6,10 @@ class GetBaseEntityState<T extends BaseEntity> extends Equatable {
   });
   final Async<List<T>> dataState;
 
-  GetBaseEntityState copyWith({
+  GetBaseEntityState<T> copyWith({
     Async<List<T>>? data,
   }) {
-    return GetBaseEntityState(
+    return GetBaseEntityState<T>(
       dataState: data ?? dataState,
     );
   }

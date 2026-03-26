@@ -13,6 +13,19 @@ class Validators {
     return null;
   }
 
+  static String? validateName(String? value, {String? fieldTitle}) {
+    if (value?.trim().isEmpty ?? true) {
+      return fieldTitle == null
+          ? LocaleKeys.fillField
+          : '${LocaleKeys.filedValidation} $fieldTitle';
+    } else if (RegExp(r'[<>]').hasMatch(value!)) {
+      return LocaleKeys.scripInjectionValidate;
+    } else if (value.length < 3) {
+      return LocaleKeys.fullNameShouldBeThreeAtLeast;
+    }
+    return null;
+  }
+
   static String? validateEmail(String? value, {String? fieldTitle}) {
     if (value?.trim().isEmpty ?? true) {
       return fieldTitle == null

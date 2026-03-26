@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -66,25 +65,21 @@ class LoadingButton extends StatelessWidget {
     return Padding(
       padding: margin ?? EdgeInsets.zero,
       child: CustomAnimatedButton(
-        gradient: isDissabled
-            ? AppColors.disableGradient
-            : color != null
-            ? LinearGradient(colors: [color!, color!])
-            : AppColors.gradient,
+        color: isDissabled ? null : (color ?? AppColors.buttonColor),
+        gradient: isDissabled ? AppColors.disableGradient : null,
         onTap: isDissabled ? () async {} : onTap,
         elevation: 0,
         padding: EdgeInsets.zero,
         width: width ?? MediaQuery.sizeOf(context).width,
         minWidth: 46.h,
-        height: height ?? 46.h,
-        // color:gradient != null ? null:  isDissabled ? AppColors.grey2 : color ?? AppColors.primaryColor,
+        height: height ?? AppSize.sH50,
         borderRadius: borderRadius ?? AppCircular.r50,
-        disabledColor: color ?? AppColors.primary,
+        disabledColor: AppColors.grey2,
         borderSide: borderSide,
         loader: onSendProgress == null
             ? Center(
                 child: CupertinoActivityIndicator(
-                  color: (color ?? AppColors.primary).isDark
+                  color: (color ?? AppColors.buttonColor).isDark
                       ? AppColors.white
                       : AppColors.black,
                 ),
@@ -95,34 +90,17 @@ class LoadingButton extends StatelessWidget {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // SizedBox(
-                      //   width: 24.w,
-                      //   height: 24.w,
-                      //   child: CircularProgressIndicator(
-                      //     // color: (color ?? AppColors.primaryColor).isDark
-                      //     //     ? AppColors.white
-                      //     //     : AppColors.black,
-                      //     strokeWidth: 3,
-                      //     value: value > 1 ? 1 : value,
-                      //     valueColor: AlwaysStoppedAnimation<Color>(
-                      //       (color ?? AppColors.primaryColor).isDark
-                      //           ? AppColors.white
-                      //           : AppColors.black,
-                      //     ),
-                      //   ),
-                      // ),
-                      // 8.w.szW,
                       SizedBox(
                         width: 60.w,
                         child: Text(
                           "${(value * 100).toStringAsFixed(1)} %",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: (color ?? AppColors.primary).isDark
+                            color: (color ?? AppColors.buttonColor).isDark
                                 ? AppColors.white
                                 : AppColors.black,
-                            fontSize: fontSize ?? FontSizeManager.s14,
-                            fontWeight: FontWeight.bold,
+                            fontSize: fontSize ?? FontSizeManager.s13,
+                            fontWeight: FontWeightManager.medium,
                           ),
                         ),
                       ),
@@ -137,9 +115,10 @@ class LoadingButton extends StatelessWidget {
               style: TextStyle(
                 color: isDissabled
                     ? AppColors.black
-                    : textColor ?? Colors.white,
-                fontSize: fontSize ?? FontSizeManager.s14,
-                fontWeight: FontWeight.w600,
+                    : textColor ?? AppColors.buttonText,
+                fontSize: fontSize ?? FontSizeManager.s16,
+                fontWeight: fontWeight ?? FontWeightManager.bold,
+                fontFamily: fontFamily,
               ),
             ),
       ),

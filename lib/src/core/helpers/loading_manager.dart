@@ -33,11 +33,13 @@ class _FullScreenLoadingManagerState extends State<FullScreenLoadingManager> {
           builder: (context, value, child) {
             return Visibility(
               visible: _isLoading.value,
-              child: Container(
-                height: 1.sh,
-                width: 1.sw,
-                color: Colors.grey.withValues(alpha: 0.3),
-                child: Center(child: CupertinoActivityIndicator(radius: 15.sp)),
+              child: SizedBox.expand(
+                child: Container(
+                  color: Colors.grey.withValues(alpha: 0.3),
+                  child: Center(
+                    child: CupertinoActivityIndicator(radius: 15.r),
+                  ),
+                ),
               ),
             );
           },

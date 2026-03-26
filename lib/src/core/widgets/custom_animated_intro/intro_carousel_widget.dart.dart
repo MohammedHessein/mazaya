@@ -86,7 +86,7 @@ class IntroCarouselWidgetState extends State<IntroCarouselWidget>
                           decoration: BoxDecoration(
                             color: currentIndex == i
                                 ? AppColors.orange
-                                : AppColors.grey2.withOpacity(0.5),
+                                : AppColors.grey2.withValues(alpha: 0.5),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),

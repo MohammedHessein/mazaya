@@ -137,7 +137,9 @@ class AppCircular {
   static double r8 = 8.0.r;
   static double r10 = 10.0.r;
   static double r12 = 12.0.r;
+  static double r14 = 14.0.r;
   static double r15 = 15.0.r;
+  static double r16 = 16.0.r;
   static double r20 = 20.0.r;
   static double r40 = 40.0.r;
   static double r50 = 50.0.r;

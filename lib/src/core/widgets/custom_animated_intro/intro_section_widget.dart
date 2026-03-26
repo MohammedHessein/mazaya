@@ -48,7 +48,7 @@ class _IntroSectionWidgetState extends State<IntroSectionWidget> {
                 child: ClipPath(
                   clipper: ConcaveCurveClipper(),
                   child: Container(
-                    color: AppColors.grey2.withOpacity(0.1),
+                    color: AppColors.grey2.withValues(alpha: 0.1),
                     child: Transform.translate(
                       offset: Offset(
                         -(scaleX - 1) / 2 * width,

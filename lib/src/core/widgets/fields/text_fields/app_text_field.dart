@@ -524,7 +524,7 @@ class _AppTextFieldState extends State<AppTextField> {
               widget.decoration ??
               BoxDecoration(
                 borderRadius: BorderRadius.circular(
-                  widget.borderRadius ?? 12.r,
+                  widget.borderRadius ?? 16.r,
                 ),
                 boxShadow: const [
                   BoxShadow(
@@ -576,7 +576,7 @@ class _AppTextFieldState extends State<AppTextField> {
                   widget.hintStyle ??
                   context.textStyle.s12.regular.setHintColor,
               errorText: widget.errorText,
-              fillColor: widget.fillColor ?? Colors.white,
+              fillColor: widget.fillColor ?? AppColors.white,
               filled: true,
               border: widget.isBordered
                   ? OutlineInputBorder(
@@ -585,7 +585,7 @@ class _AppTextFieldState extends State<AppTextField> {
                       ),
                       borderSide: BorderSide(
                         color: widget.isBordered
-                            ? AppColors.grey2
+                            ? AppColors.border
                             : Colors.transparent,
                         width: .5,
                       ),
@@ -598,7 +598,7 @@ class _AppTextFieldState extends State<AppTextField> {
                   ? OutlineInputBorder(
                       borderSide: BorderSide(
                         color: widget.isBordered
-                            ? AppColors.grey2
+                            ? AppColors.border
                             : Colors.transparent,
                         width: .5,
                       ),
@@ -614,7 +614,7 @@ class _AppTextFieldState extends State<AppTextField> {
                   ? OutlineInputBorder(
                       borderSide: BorderSide(
                         color: widget.isBordered
-                            ? AppColors.grey2
+                            ? AppColors.border
                             : Colors.transparent,
                         width: .5,
                       ),
@@ -625,10 +625,7 @@ class _AppTextFieldState extends State<AppTextField> {
                   : null,
               errorBorder: widget.isBordered
                   ? OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: .5,
-                        color: AppColors.error.withValues(alpha: 0.65),
-                      ),
+                      borderSide: BorderSide(width: 1, color: AppColors.error),
                       borderRadius: BorderRadius.circular(
                         widget.borderRadius ?? 12.r,
                       ),
@@ -647,7 +644,7 @@ class _AppTextFieldState extends State<AppTextField> {
               suffixIconConstraints: BoxConstraints(
                 minHeight: 24.w,
                 minWidth: 24.w,
-                maxHeight: widget.suffixIconMaxHeight ?? 24.w,
+                maxHeight: widget.suffixIconMaxHeight ?? 50.h,
               ),
               prefixIconConstraints: BoxConstraints(
                 minHeight: 24.w,

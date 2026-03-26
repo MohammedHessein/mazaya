@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../config/res/assets.gen.dart';
 import '../../../../../config/res/config_imports.dart';
@@ -12,7 +13,6 @@ class AppDropdown<T> extends StatefulWidget {
   const AppDropdown({
     super.key,
     this.suffixIconColor,
-    this.validator,
     required this.onChanged,
     required List<T> items,
     this.isOptional = false,
@@ -26,8 +26,6 @@ class AppDropdown<T> extends StatefulWidget {
     this.borderRadius,
     required this.itemAsString,
     this.hint,
-    this.formKey,
-    this.autovalidateMode,
     this.contentPadding,
     this.maxHeight,
     this.height,
@@ -46,13 +44,13 @@ class AppDropdown<T> extends StatefulWidget {
     this.readonly = false,
     this.showCustomHeaderMessage = false,
     this.customHeaderMessage,
+    this.hasError = false,
   }) : _items = items,
        assert(
          !isMultiSelect || (selectedValues != null && onMultiChanged != null),
          'selectedValues and onMultiChanged must be provided when isMultiSelect is true',
        );
 
-  final GlobalKey<FormState>? formKey;
   final EdgeInsetsGeometry? contentPadding;
   final List<T> _items;
   final bool isOptional,
@@ -64,17 +62,16 @@ class AppDropdown<T> extends StatefulWidget {
       isMultiSelect,
       showSelectAll,
       readonly,
-      showCustomHeaderMessage;
+      showCustomHeaderMessage,
+      hasError;
   final Color? fillColor, suffixIconColor;
   final T? value;
   final String? label, hint, selectAllText, customHeaderMessage;
   final TextStyle? labelTextStyle, hintTextStyle, style;
   final double? maxHeight, height;
-  final String? Function(T?)? validator;
   final String Function(T) itemAsString;
   final BorderRadius? borderRadius;
   final Function(T?)? onChanged;
-  final AutovalidateMode? autovalidateMode;
   final double itemHeight, minBottomSheetHeight;
   final List<T>? selectedValues;
   final Function(List<T>)? onMultiChanged;
@@ -138,8 +135,6 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
               .toList();
   }
 
-  /// Calculates the optimal height for the bottom sheet, ensuring it doesn't
-  /// get obscured by the on-screen keyboard.
   double _calculateBottomSheetHeight(BuildContext context, int itemCount) {
     final screenHeight = MediaQuery.of(context).size.height;
     final keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
@@ -183,156 +178,70 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
           ? _bottomSheetSelectedValuesNotifier
           : _bottomSheetSelectedValueNotifier,
       builder: (context, value, child) {
-        return FormField<dynamic>(
-          key: widget.formKey,
-          validator: (v) {
-            if (widget.validator != null) {
-              if (widget.isMultiSelect) {
-                final List<T> selectedValues = value as List<T>? ?? [];
-                return widget.validator!(
-                  selectedValues.isEmpty ? null : selectedValues.first,
-                );
-              } else {
-                return widget.validator!(value);
-              }
-            }
-            return null;
-          },
-          autovalidateMode:
-              widget.autovalidateMode ?? AutovalidateMode.onUserInteraction,
-          enabled: !widget.readonly,
-          initialValue: value,
-          builder: (FormFieldState<dynamic> state) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
+        return GestureDetector(
+          onTap: widget.readonly
+              ? null
+              : () async {
+                  if (widget.isMultiSelect) {
+                    final List<T>? result = await _showMultiSelectBottomSheet(
+                      context,
+                      _bottomSheetSelectedValuesNotifier.value,
+                    );
+                    if (result != null) {
+                      _bottomSheetSelectedValuesNotifier.value = result;
+                      widget.onMultiChanged?.call(result);
+                    }
+                  } else {
+                    final T? result = await _showBottomSheet(
+                      context,
+                      _bottomSheetSelectedValueNotifier.value,
+                    );
+                    if (result != null) {
+                      _bottomSheetSelectedValueNotifier.value = result;
+                      widget.onChanged?.call(result);
+                    }
+                  }
+                },
+          child: Container(
+            height: widget.height ?? 50.h,
+            padding: widget.contentPadding ?? EdgeInsets.all(AppPadding.pH12),
+            decoration: BoxDecoration(
+              color: widget.readonly
+                  ? AppColors.gray200.withValues(alpha: 0.3)
+                  : widget.fillColor ?? AppColors.white,
+              borderRadius:
+                  widget.borderRadius ?? BorderRadius.circular(AppCircular.r14),
+              border: Border.all(
+                color: widget.hasError
+                    ? AppColors.error
+                    : (widget.isBordered
+                          ? AppColors.border
+                          : Colors.transparent),
+                width: widget.hasError ? 1.0 : 0.5,
+              ),
+            ),
+            child: Row(
               children: [
-                if (widget.label != null) ...[
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: widget.label,
-                          style:
-                              widget.labelTextStyle ??
-                              context.textStyle.s14.regular.setBlackColor,
-                        ),
-                        if (widget.isOptional) ...[
-                          TextSpan(
-                            text: ' (${LocaleKeys.optional})',
-                            style: context.textStyle.s12.regular.setHintColor,
-                          ),
-                        ],
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: AppSize.sH6),
-                ],
-                Container(
-                  height: widget.height,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12.r),
-                    border: state.hasError
-                        ? Border.all(
-                            width: .5,
-                            color: AppColors.error.withOpacity(0.65),
-                          )
-                        : null,
-                  ),
-                  child: GestureDetector(
-                    onTap: widget.readonly
-                        ? null
-                        : () async {
-                            if (widget.isMultiSelect) {
-                              final List<T>? result =
-                                  await _showMultiSelectBottomSheet(
-                                    context,
-                                    _bottomSheetSelectedValuesNotifier.value,
-                                  );
-                              if (result != null) {
-                                _bottomSheetSelectedValuesNotifier.value =
-                                    result;
-                                widget.onMultiChanged?.call(result);
-                                state.didChange(result);
-                                state.validate();
-                              }
-                            } else {
-                              final T? result = await _showBottomSheet(
-                                context,
-                                _bottomSheetSelectedValueNotifier.value,
-                              );
-                              if (result != null) {
-                                _bottomSheetSelectedValueNotifier.value =
-                                    result;
-                                widget.onChanged?.call(result);
-                                state.didChange(result);
-                                state.validate();
-                              }
-                            }
-                          },
-                    child: Container(
-                      padding:
-                          widget.contentPadding ??
-                          EdgeInsets.all(AppPadding.pH12),
-                      decoration: BoxDecoration(
-                        color: widget.readonly
-                            ? AppColors.grey2.withOpacity(0.3)
-                            : widget.fillColor ?? AppColors.white,
-                        borderRadius:
-                            widget.borderRadius ?? BorderRadius.circular(12.r),
-                        border: Border.all(
-                          color: state.hasError
-                              ? AppColors.error
-                              : (widget.isBordered
-                                    ? AppColors.border
-                                    : Colors.transparent),
-                          width: state.hasError ? 1.0 : 0.5,
-                        ),
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              _getDisplayText(context, value),
-                              style:
-                                  widget.style ??
-                                  (_isValueEmpty(value)
-                                      ? (widget.hintTextStyle ??
-                                            context
-                                                .textStyle
-                                                .s12
-                                                .regular
-                                                .setHintColor)
-                                      : context.textStyle.s14.regular.setColor(
-                                          widget.readonly
-                                              ? AppColors.grey1
-                                              : AppColors.black,
-                                        )),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          _getSuffixWidget(),
-                        ],
-                      ),
-                    ),
+                Expanded(
+                  child: Text(
+                    _getDisplayText(context, value),
+                    style:
+                        widget.style ??
+                        (_isValueEmpty(value)
+                            ? (widget.hintTextStyle ??
+                                  context.textStyle.s12.regular.setHintColor)
+                            : context.textStyle.s14.regular.setColor(
+                                widget.readonly
+                                    ? AppColors.grey1
+                                    : AppColors.black,
+                              )),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                if (state.hasError && state.errorText != null)
-                  Padding(
-                    padding: EdgeInsetsDirectional.only(
-                      top: 6.0.h,
-                      start: 16.w,
-                    ),
-                    child: Text(
-                      state.errorText!,
-                      style: context.textStyle.s12.regular.setColor(
-                        AppColors.error,
-                      ),
-                    ),
-                  ),
+                _getSuffixWidget(),
               ],
-            );
-          },
+            ),
+          ),
         );
       },
     );
@@ -381,10 +290,22 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
     if (widget.readonly) {
       return const SizedBox.shrink();
     }
-    return AppAssets.svg.baseSvg.arrowDown.svg(
-      colorFilter: ColorFilter.mode(
-        widget.suffixIconColor ?? AppColors.black,
-        BlendMode.srcIn,
+    return SizedBox(
+      width: 24.w,
+      height: 24.h,
+      child: Center(
+        child: AppAssets.svg.baseSvg.arrowDownMenu.svg(
+          width: 14.w,
+          colorFilter: ColorFilter.mode(
+            widget.suffixIconColor ?? AppColors.primary,
+            BlendMode.srcIn,
+          ),
+          placeholderBuilder: (context) => Icon(
+            Icons.keyboard_arrow_down_rounded,
+            color: widget.suffixIconColor ?? AppColors.primary,
+            size: 20.r,
+          ),
+        ),
       ),
     );
   }
@@ -463,7 +384,10 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
                         ),
                         child: CustomTextFiled(
                           hint: LocaleKeys.search,
-                          suffixIcon: AppAssets.svg.baseSvg.search.svg(),
+                          suffixIcon: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: AppAssets.svg.baseSvg.search.svg(),
+                          ),
                           controller: _searchController,
                           textInputType: TextInputType.text,
                           textInputAction: TextInputAction.search,
@@ -484,6 +408,7 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
                                 backgroundColor: isEnabled
                                     ? AppColors.primary
                                     : AppColors.grey2,
+                                foregroundColor: AppColors.white,
                                 padding: EdgeInsets.symmetric(vertical: 14.h),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10.r),
@@ -495,7 +420,9 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
                               child: Text(
                                 LocaleKeys.confirm,
                                 style: context.textStyle.s18.medium.setColor(
-                                  isEnabled ? AppColors.white : AppColors.grey1,
+                                  isEnabled
+                                      ? AppColors.white
+                                      : AppColors.secondary,
                                 ),
                               ),
                             );
@@ -598,38 +525,6 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
                           ],
                         ),
                       ),
-                    // Custom Header Message
-                    if (widget.showCustomHeaderMessage &&
-                        widget.customHeaderMessage != null)
-                      Container(
-                        margin: EdgeInsets.symmetric(
-                          horizontal: AppPadding.pH16,
-                          vertical: AppPadding.pH8,
-                        ),
-                        padding: EdgeInsets.all(AppPadding.pH12),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.r),
-                        ),
-                        child: Column(
-                          children: [
-                            Text(
-                              widget.hint ?? '',
-                              style: context.textStyle.s16.bold.setColor(
-                                AppColors.black,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            SizedBox(height: 4.h),
-                            Text(
-                              widget.customHeaderMessage!,
-                              style: context.textStyle.s12.regular.setColor(
-                                AppColors.hintText,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                      ),
                     if (widget.showSearchBox)
                       Padding(
                         padding: EdgeInsets.symmetric(
@@ -638,7 +533,10 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
                         ),
                         child: CustomTextFiled(
                           hint: LocaleKeys.search,
-                          suffixIcon: AppAssets.svg.baseSvg.search.svg(),
+                          suffixIcon: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: AppAssets.svg.baseSvg.search.svg(),
+                          ),
                           controller: _searchController,
                           textInputType: TextInputType.text,
                           textInputAction: TextInputAction.search,
@@ -658,6 +556,7 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
                             return ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: AppColors.primary,
+                                foregroundColor: AppColors.white,
                                 padding: EdgeInsets.symmetric(vertical: 14.h),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10.r),
@@ -719,13 +618,13 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
                 height: widget.itemHeight,
                 decoration: BoxDecoration(
                   color: isSelected
-                      ? AppColors.primary.withOpacity(0.08)
+                      ? AppColors.primary.withValues(alpha: 0.08)
                       : Colors.transparent,
                   borderRadius: BorderRadius.circular(12.r),
                   border: Border.all(
                     color: isSelected
                         ? AppColors.primary
-                        : AppColors.grey2.withOpacity(0.3),
+                        : AppColors.grey2.withValues(alpha: 0.3),
                     width: isSelected ? 1.5 : 0.5,
                   ),
                 ),
@@ -848,13 +747,13 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
             padding: EdgeInsets.symmetric(vertical: 16.0.h, horizontal: 20.0.w),
             decoration: BoxDecoration(
               color: isAllFilteredSelected
-                  ? AppColors.primary.withOpacity(0.08)
+                  ? AppColors.primary.withValues(alpha: 0.08)
                   : Colors.transparent,
               borderRadius: BorderRadius.circular(12.r),
               border: Border.all(
                 color: isAllFilteredSelected
                     ? AppColors.primary
-                    : AppColors.grey2.withOpacity(0.3),
+                    : AppColors.grey2.withValues(alpha: 0.3),
                 width: isAllFilteredSelected ? 1.5 : 0.5,
               ),
             ),
@@ -913,13 +812,13 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
               ),
               decoration: BoxDecoration(
                 color: isSelected
-                    ? AppColors.primary.withOpacity(0.08)
+                    ? AppColors.primary.withValues(alpha: 0.08)
                     : Colors.transparent,
                 borderRadius: BorderRadius.circular(12.r),
                 border: Border.all(
                   color: isSelected
                       ? AppColors.primary
-                      : AppColors.grey2.withOpacity(0.3),
+                      : AppColors.grey2.withValues(alpha: 0.3),
                   width: isSelected ? 1.5 : 0.5,
                 ),
               ),

@@ -16,7 +16,7 @@ class AppTheme {
         modalBackgroundColor: AppColors.white,
         surfaceTintColor: Colors.transparent,
       ),
-      scaffoldBackgroundColor: AppColors.white,
+      scaffoldBackgroundColor: AppColors.bgF7,
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: AppColors.white,
         selectedItemColor: AppColors.primary,

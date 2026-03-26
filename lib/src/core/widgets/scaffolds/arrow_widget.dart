@@ -13,6 +13,7 @@ class ArrowWidget extends StatelessWidget {
   final double? width, height;
   final void Function()? onTap;
   final MainAxisAlignment? mainAxisAlignment;
+  final Color? color;
 
   const ArrowWidget({
     super.key,
@@ -20,6 +21,7 @@ class ArrowWidget extends StatelessWidget {
     this.width,
     this.onTap,
     this.mainAxisAlignment,
+    this.color,
   });
 
   @override
@@ -34,7 +36,12 @@ class ArrowWidget extends StatelessWidget {
               ? Matrix4.rotationY(math.pi)
               : Matrix4.rotationX(math.pi),
           child: AppAssets.svg.baseSvg.arrowBack
-              .svg(width: width ?? AppSize.sH35, height: height ?? AppSize.sH35)
+              .svg(
+                  width: width ?? AppSize.sH35,
+                  height: height ?? AppSize.sH35,
+                  colorFilter: color != null
+                      ? ColorFilter.mode(color!, BlendMode.srcIn)
+                      : null)
               .onClick(onTap: onTap ?? () => Go.back()),
         ),
       ],

@@ -123,12 +123,15 @@ class CustomButtonState extends State<CustomAnimatedButton>
     _controller.reverse();
   }
 
-  dynamic lerpWidth(double a, double b, double t) {
+  double? lerpWidth(double a, double b, double t) {
     if (a == 0.0 || b == 0.0) {
       return null;
-    } else {
-      return a + (b - a) * t;
     }
+    if (t == 0.0) return a;
+    if (t == 1.0) return b;
+    if (!a.isFinite) a = MediaQuery.sizeOf(context).width;
+    if (!b.isFinite) b = MediaQuery.sizeOf(context).width;
+    return a + (b - a) * t;
   }
 
   double get minWidth => _minWidth;

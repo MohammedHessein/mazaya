@@ -5,6 +5,8 @@ String getBaseIdAndNameEntityApi<T extends BaseEntity>(
 ) {
   final Map<Type, String Function(GetBaseEntityParams?)> apiPaths = {
     CountryEntity: (_) => "countries", //Api Key For Countries
+    CityEntity: (params) => "cities-by-country/${params!.id}",
+    RegionEntity: (params) => "regions/${params!.id}",
   };
   if (T == BaseEntity) {
     throw UnsupportedError(
@@ -29,6 +31,8 @@ abstract class BaseEntity extends Equatable {
 
   static final Map<Type, Function> _fromJsonFactories = {
     CountryEntity: (json) => CountryEntity.fromJson(json),
+    CityEntity: (json) => CityEntity.fromJson(json),
+    RegionEntity: (json) => RegionEntity.fromJson(json),
   };
 
   static T fromJson<T extends BaseEntity>(Map<String, dynamic> json) {

@@ -784,4 +784,46 @@ abstract class LocaleKeys {
   static const String _changeLanguage = 'change_language';
   static String get changeLanguage => _changeLanguage.tr();
 
+  static const String _welcomeBack = 'welcome_back';
+  static String get welcomeBack => _welcomeBack.tr();
+
+  static const String _login2 = 'login_2';
+  static String get login2 => _login2.tr();
+
+  static const String _determine = 'determine';
+  static String get determine => _determine.tr();
+
+  static const String _yourLocation = 'your_location';
+  static String get yourLocation => _yourLocation.tr();
+
+  static const String _forgotPassword1 = 'forgot_password_1';
+  static String get forgotPassword1 => _forgotPassword1.tr();
+
+  static const String _forgotPassword2 = 'forgot_password_2';
+  static String get forgotPassword2 => _forgotPassword2.tr();
+
+  static const String _verificationCode1 = 'verification_code_1';
+  static String get verificationCode1 => _verificationCode1.tr();
+
+  static const String _verificationCode2 = 'verification_code_2';
+  static String get verificationCode2 => _verificationCode2.tr();
+
+  static const String _resetPassword1 = 'reset_password_1';
+  static String get resetPassword1 => _resetPassword1.tr();
+
+  static const String _resetPassword2 = 'reset_password_2';
+  static String get resetPassword2 => _resetPassword2.tr();
+
+  static const String _resetPassword3 = 'reset_password_3';
+  static String get resetPassword3 => _resetPassword3.tr();
+
+  static const String _locationServicesDisabled = 'location_services_disabled';
+  static String get locationServicesDisabled => _locationServicesDisabled.tr();
+
+  static const String _locationPermissionDenied = 'location_permission_denied';
+  static String get locationPermissionDenied => _locationPermissionDenied.tr();
+
+  static const String _locationPermissionPermanentlyDenied = 'location_permission_permanently_denied';
+  static String get locationPermissionPermanentlyDenied => _locationPermissionPermanentlyDenied.tr();
+
 }

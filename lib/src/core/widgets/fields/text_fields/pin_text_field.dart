@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pinput/pinput.dart';
+
 import '../../../../config/res/config_imports.dart';
 import '../../../extensions/text_style_extensions.dart';
 import '../../../extensions/widgets/margin_extention.dart';
@@ -29,7 +30,7 @@ class CustomPinTextField extends StatelessWidget {
       ),
     );
     final focusedPinTheme = defaultPinTheme.copyDecorationWith(
-      border: Border.all(color: const Color(0xffC09B30)),
+      border: Border.all(color: AppColors.primary),
     );
     final errorPinTheme = defaultPinTheme.copyDecorationWith(
       border: Border.all(color: AppColors.error),
@@ -53,6 +54,7 @@ class CustomPinTextField extends StatelessWidget {
               closeKeyboardWhenCompleted: true,
               errorTextStyle: const TextStyle().setErrorColor.s10.regular,
               mainAxisAlignment: MainAxisAlignment.center,
+              preFilledWidget: Text('-', style: defaultPinTheme.textStyle),
 
               pinAnimationType: PinAnimationType.scale,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],

@@ -65,7 +65,7 @@ class _MazayaAppState extends State<MazayaApp> {
                 child: OfflineWidget(
                   child: FullScreenLoadingManager(
                     child: Platform.isAndroid
-                        ? SafeArea(child: child!, top: false)
+                        ? SafeArea(top: false, child: child!)
                         : child!,
                   ),
                 ),

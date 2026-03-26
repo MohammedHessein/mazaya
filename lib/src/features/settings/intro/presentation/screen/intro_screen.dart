@@ -27,6 +27,10 @@ class IntroScreenState extends State<IntroScreen> {
     Go.to(const HomeScreen());
   }
 
+  void goLogin() {
+    Go.to(const LoginScreen());
+  }
+
   void handleNext() {
     const Duration duration = Duration(milliseconds: 350);
     const Curve curve = Curves.easeOut;
@@ -35,7 +39,7 @@ class IntroScreenState extends State<IntroScreen> {
       pageController.nextPage(duration: duration, curve: curve);
       return;
     }
-    goHome();
+    goLogin();
   }
 
   @override
@@ -83,21 +87,21 @@ class IntroScreenState extends State<IntroScreen> {
                   pageIndex: 0,
                   currentIndex: currentIndex,
                   onNext: handleNext,
-                  onSkip: goHome,
+                  onSkip: goLogin,
                   imagePath: AppAssets.svg.baseSvg.onboarding1.path,
                 ),
                 IntroSlide(
                   pageIndex: 1,
                   currentIndex: currentIndex,
                   onNext: handleNext,
-                  onSkip: goHome,
+                  onSkip: goLogin,
                   imagePath: AppAssets.svg.baseSvg.onboarding2.path,
                 ),
                 IntroSlide(
                   pageIndex: 2,
                   currentIndex: currentIndex,
                   onNext: handleNext,
-                  onSkip: goHome,
+                  onSkip: goLogin,
                   imagePath: AppAssets.svg.baseSvg.onboarding3.path,
                 ),
               ],

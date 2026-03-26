@@ -102,7 +102,7 @@ extension FormFieldExtension on Widget {
           return Column(
             crossAxisAlignment: crossAxisAlignment,
             children: [
-              this,
+              builder?.call(state) ?? this,
               if (state.errorText != null)
                 Padding(
                   padding: EdgeInsetsDirectional.only(top: 4.0.h, start: 16.w),

@@ -5,6 +5,8 @@ import 'package:multiple_result/multiple_result.dart';
 import '../../../error/failure.dart';
 import '../../../network/network_request.dart';
 import 'entities/country_entity.dart';
+import 'entities/city_entity.dart';
+import 'entities/region_entity.dart';
 
 part 'entities/async.dart';
 part 'entities/base_name_and_id_entity.dart';
