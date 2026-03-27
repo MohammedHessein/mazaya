@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../config/res/config_imports.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
 
 class CustomAvatar extends StatelessWidget {
   final String icon;

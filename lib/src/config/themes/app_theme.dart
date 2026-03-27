@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../core/extensions/material_color_extension.dart';
-import '../res/config_imports.dart';
+import 'package:mazaya/src/core/extensions/material_color_extension.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
 
 class AppTheme {
   static ThemeData get light {

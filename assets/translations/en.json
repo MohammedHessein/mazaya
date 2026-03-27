@@ -51,7 +51,7 @@
   "file": "File",
   "file_selected_successfully": "File uploaded successfully",
   "fill_field": "This field is required",
-  "forgot_password": "Did you forget your password?",
+  "forgot_password": "forget your password?",
   "full_name_should_be_three_at_least": "Full name must be at least three characters",
   "home": "Home",
   "id_number": "ID Number",
@@ -269,9 +269,10 @@
   "verification_code_1": "Verification",
   "verification_code_2": "Code",
   "reset_password_1": "Reset",
-  "reset_password_2": "Password",
-  "reset_password_3": "?",
+  "reset_password_2": "Password?",
   "location_services_disabled": "Location services are disabled.",
   "location_permission_denied": "Location permissions are denied",
-  "location_permission_permanently_denied": "Location permissions are permanently denied, we cannot request permissions."
+  "location_permission_permanently_denied": "Location permissions are permanently denied, we cannot request permissions.",
+  "coupons_title": "Coupons",
+  "welcome_home": "Welcome"
 }

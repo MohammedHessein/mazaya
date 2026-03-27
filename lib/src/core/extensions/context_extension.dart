@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../config/language/languages.dart';
-import '../../config/res/config_imports.dart';
+import 'package:mazaya/src/config/language/languages.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
 import 'text_style_extensions.dart';
 
 extension ContextExtension on BuildContext {

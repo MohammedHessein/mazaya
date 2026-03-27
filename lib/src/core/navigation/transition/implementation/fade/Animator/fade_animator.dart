@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../../Constants/imports_constants.dart';
-import '../../../../Helper/Interfaces/helper_imports.dart';
-import '../Option/fade_animation_option.dart';
+import 'package:mazaya/src/core/navigation/constants/imports_constants.dart';
+import 'package:mazaya/src/core/navigation/helper/interfaces/helper_imports.dart';
+import 'package:mazaya/src/core/navigation/transition/implementation/fade/options/fade_animation_option.dart';
 
 class FadeAnimator extends Animator<double>
     implements TweenBehaviour<double>, CurveBehaviour {

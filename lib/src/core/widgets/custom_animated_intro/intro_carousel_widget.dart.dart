@@ -99,7 +99,7 @@ class IntroCarouselWidgetState extends State<IntroCarouselWidget>
                           ? LocaleKeys.introStartnow.tr()
                           : LocaleKeys.introNext.tr(),
                       onTap: () => isLastPage
-                          ? Go.to(const HomeScreen())
+                          ? Go.to(const MainScreen())
                           : _animateToNextPage(),
                     ),
                     if (!isLastPage) ...[

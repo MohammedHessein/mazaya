@@ -11,7 +11,7 @@ import 'src/app.dart';
 import 'src/config/language/languages.dart';
 import 'src/config/res/config_imports.dart';
 import 'src/core/helpers/helpers.dart';
-import 'src/core/navigation/Constants/imports_constants.dart';
+import 'src/core/navigation/constants/imports_constants.dart';
 import 'src/core/navigation/go.dart';
 import 'src/core/navigation/page_router/implementation/imports_page_router.dart';
 import 'src/core/navigation/page_router/imports_page_router_builder.dart';

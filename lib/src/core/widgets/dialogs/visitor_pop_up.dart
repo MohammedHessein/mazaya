@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../../../config/language/locale_keys.g.dart';
-import '../../../config/res/assets.gen.dart';
-import '../../../config/res/config_imports.dart';
-import '../../extensions/context_extension.dart';
-import '../../extensions/text_style_extensions.dart';
-import '../../extensions/widgets/sized_box_helper.dart';
-import '../../extensions/widgets/widget_extension.dart';
-import '../../navigation/navigator.dart';
-import '../buttons/loading_button.dart';
-import '../pickers/default_bottom_sheet.dart';
+import 'package:mazaya/src/config/language/locale_keys.g.dart';
+import 'package:mazaya/src/config/res/assets.gen.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/extensions/context_extension.dart';
+import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
+import 'package:mazaya/src/core/extensions/widgets/sized_box_helper.dart';
+import 'package:mazaya/src/core/extensions/widgets/widget_extension.dart';
+import 'package:mazaya/src/core/navigation/navigator.dart';
+import 'package:mazaya/src/core/widgets/buttons/loading_button.dart';
+import 'package:mazaya/src/core/widgets/pickers/default_bottom_sheet.dart';
 
 Future<dynamic> visitorDialog(String desc) {
   return showDefaultBottomSheet(child: VisitorBody(desc: desc));

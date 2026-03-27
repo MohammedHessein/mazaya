@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../config/language/locale_keys.g.dart';
-import '../../config/res/config_imports.dart';
-import '../extensions/widgets/padding_extension.dart';
-import '../navigation/navigator.dart';
+import 'package:mazaya/src/config/language/locale_keys.g.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/extensions/widgets/padding_extension.dart';
+import 'package:mazaya/src/core/navigation/navigator.dart';
 
 class ImageHelper {
   static final ImagePicker _picker = ImagePicker();

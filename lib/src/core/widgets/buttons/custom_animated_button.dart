@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:ui' show lerpDouble;
 import 'package:flutter/material.dart';
 
-import '../../../config/res/config_imports.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
 
 enum ButtonStatus { loading, idle }
 

@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../config/res/config_imports.dart';
-import '../../extensions/indexed_map.dart';
-import '../../extensions/widgets/sized_box_helper.dart';
-import '../../helpers/image_helper.dart';
-import '../fields/text_fields/default_text_field.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/extensions/indexed_map.dart';
+import 'package:mazaya/src/core/extensions/widgets/sized_box_helper.dart';
+import 'package:mazaya/src/core/helpers/image_helper.dart';
+import 'package:mazaya/src/core/widgets/fields/text_fields/default_text_field.dart';
 import 'cached_image.dart';
 
 enum UploadImageType { single, multi }

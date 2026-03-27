@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-import '../../../config/res/config_imports.dart';
-import '../../extensions/context_extension.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/extensions/context_extension.dart';
 import 'cached_image.dart';
  
 class ImageSlider extends StatefulWidget {

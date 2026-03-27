@@ -16,7 +16,7 @@ import 'package:mazaya/src/core/widgets/universal_media/enums.dart';
 import 'package:mazaya/src/core/widgets/universal_media/universal_media_widget.dart';
 import 'package:mazaya/src/core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import 'package:mazaya/src/features/auth/otp_verification/imports/otp_verification_imports.dart';
-import '../logic/forget_password_cubit.dart';
+import 'package:mazaya/src/features/auth/forget_password/cubits/forget_password_cubit.dart';
 
 part '../presentation/screen/forget_password_screen.dart';
 part '../presentation/widgets/forget_password_body.dart';

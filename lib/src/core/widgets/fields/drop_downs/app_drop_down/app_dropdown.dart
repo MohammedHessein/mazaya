@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../config/language/locale_keys.g.dart';
-import '../../../../../config/res/assets.gen.dart';
-import '../../../../../config/res/config_imports.dart';
-import '../../../../extensions/context_extension.dart';
-import '../../../../extensions/text_style_extensions.dart';
-import '../../../../helpers/validators.dart';
-import '../../text_fields/custom_text_field.dart';
+import 'package:mazaya/src/config/language/locale_keys.g.dart';
+import 'package:mazaya/src/config/res/assets.gen.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/extensions/context_extension.dart';
+import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
+import 'package:mazaya/src/core/helpers/validators.dart';
+import 'package:mazaya/src/core/widgets/fields/text_fields/custom_text_field.dart';
 
 class AppDropdown<T> extends StatefulWidget {
   const AppDropdown({

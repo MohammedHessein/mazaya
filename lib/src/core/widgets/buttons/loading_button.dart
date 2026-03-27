@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../config/res/config_imports.dart';
-import '../../extensions/context_extension.dart';
-import '../../extensions/text_style_extensions.dart';
-import '../../extensions/widgets/sized_box_helper.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/extensions/context_extension.dart';
+import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
+import 'package:mazaya/src/core/extensions/widgets/sized_box_helper.dart';
 import 'custom_animated_button.dart';
 
 class LoadingButton extends StatelessWidget {

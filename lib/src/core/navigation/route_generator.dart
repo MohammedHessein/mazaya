@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../features/settings/intro/presentation/imports/view_imports.dart';
+import 'package:mazaya/src/features/intro/presentation/imports/view_imports.dart';
 import 'named_routes.dart';
 import 'page_router/imports_page_router_builder.dart';
 

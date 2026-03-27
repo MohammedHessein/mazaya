@@ -3,10 +3,10 @@ import 'dart:developer';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import '../../../../config/res/config_imports.dart';
-import '../../../helpers/cache_service.dart';
-import '../../../network/network_service.dart';
-import '../../models/user_model.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/helpers/cache_service.dart';
+import 'package:mazaya/src/core/network/network_service.dart';
+import 'package:mazaya/src/core/shared/models/user_model.dart';
 part 'user_state.dart';
 part 'user_utils.dart';
 

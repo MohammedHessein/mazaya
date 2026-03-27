@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multiple_result/multiple_result.dart';
-import '../../../../../../config/res/config_imports.dart';
-import '../../../../../error/failure.dart';
-import '../../../../../extensions/base_state.dart';
-import '../../../../../widgets/custom_messages.dart';
-import '../../../domain/base_domain_imports.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/error/failure.dart';
+import 'package:mazaya/src/core/extensions/base_state.dart';
+import 'package:mazaya/src/core/widgets/custom_messages.dart';
+import 'package:mazaya/src/core/base_crud/code/domain/base_domain_imports.dart';
 
 part 'async_state.dart';
 

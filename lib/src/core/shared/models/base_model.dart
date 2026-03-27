@@ -1,5 +1,5 @@
  
-import '../../../config/res/config_imports.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
 
 class BaseModel<T> {
   final String message;

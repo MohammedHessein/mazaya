@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multiple_result/multiple_result.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import '../../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
-import '../../../../../core/error/failure.dart';
-import '../../../../extensions/base_state.dart';
-import '../../../handling_views/error_view.dart';
-import '../../../handling_views/not_contain_data.dart';
-import '../../../universal_media/widgets.dart';
+import 'package:mazaya/src/core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
+import 'package:mazaya/src/core/error/failure.dart';
+import 'package:mazaya/src/core/extensions/base_state.dart';
+import 'package:mazaya/src/core/widgets/handling_views/error_view.dart';
+import 'package:mazaya/src/core/widgets/handling_views/not_contain_data.dart';
+import 'package:mazaya/src/core/widgets/universal_media/widgets.dart';
 
 part '../cubits/paginated_cubit.dart';
 part '../paginated_list_widget.dart';

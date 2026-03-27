@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../widgets/icon_widget.dart';
+import 'package:mazaya/src/core/widgets/icon_widget.dart';
 
 extension TextWithIcon on Text {
   Widget withIcon(

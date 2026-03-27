@@ -268,10 +268,11 @@
   "forgot_password_2": "المرور",
   "verification_code_1": "كود ",
   "verification_code_2": "التحقق",
-  "reset_password_1": "إعادة ",
-  "reset_password_2": "تعيين",
-  "reset_password_3": " كلمة المرور؟",
+  "reset_password_1": "إعادة تعيين ",
+  "reset_password_2": "كلمة المرور؟",
   "location_services_disabled": "خدمات الموقع معطلة.",
   "location_permission_denied": "تم رفض أذونات الموقع",
-  "location_permission_permanently_denied": "تم رفض أذونات الموقع نهائياً، لا يمكننا طلب الأذونات."
+  "location_permission_permanently_denied": "تم رفض أذونات الموقع نهائياً، لا يمكننا طلب الأذونات.",
+  "coupons_title": "الكوبونات",
+  "welcome_home": "اهلا بك!"
 }

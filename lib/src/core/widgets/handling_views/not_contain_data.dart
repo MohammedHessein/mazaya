@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../../config/language/locale_keys.g.dart';
-import '../../../config/res/assets.gen.dart';
-import '../../../config/res/config_imports.dart';
-import '../../extensions/context_extension.dart';
-import '../../extensions/text_style_extensions.dart';
+import 'package:mazaya/src/config/language/locale_keys.g.dart';
+import 'package:mazaya/src/config/res/assets.gen.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/extensions/context_extension.dart';
+import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
 
 class NotContainData extends StatelessWidget {
   final double? width, height;

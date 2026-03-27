@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../../config/res/config_imports.dart';
-import '../../../extensions/text_style_extensions.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
 
 class DefaultTextField extends StatefulWidget {
   final String? title;

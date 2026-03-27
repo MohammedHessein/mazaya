@@ -1,4 +1,4 @@
-import '../shared/models/base_model.dart';
+import 'package:mazaya/src/core/shared/models/base_model.dart';
 import 'network_request.dart';
 
 abstract interface class NetworkService {

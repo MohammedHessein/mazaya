@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import '../../../config/res/config_imports.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
 
 class ImageEntity {
   final int id;

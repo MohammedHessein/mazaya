@@ -1,4 +1,4 @@
-import '../../../../Helper/Interfaces/helper_imports.dart';
+import 'package:mazaya/src/core/navigation/helper/interfaces/helper_imports.dart';
 
 class ShakeAnimationOptions extends AnimationOption {
   final double begin;

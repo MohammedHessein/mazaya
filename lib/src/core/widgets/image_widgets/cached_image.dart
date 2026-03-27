@@ -2,9 +2,9 @@ import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../../config/res/config_imports.dart';
-import '../../extensions/widgets/widget_extension.dart';
-import '../../navigation/navigator.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/extensions/widgets/widget_extension.dart';
+import 'package:mazaya/src/core/navigation/navigator.dart';
 import 'image_view.dart';
 
 class CachedImage extends StatelessWidget {

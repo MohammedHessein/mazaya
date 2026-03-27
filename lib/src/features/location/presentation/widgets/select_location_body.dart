@@ -1,6 +1,6 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../imports/location_imports.dart';
+import 'package:mazaya/src/features/location/imports/location_imports.dart';
 
 class SelectLocationBody extends StatefulWidget {
   const SelectLocationBody({super.key});

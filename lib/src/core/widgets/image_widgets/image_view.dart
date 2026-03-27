@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
-import '../../../config/res/config_imports.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
 
 enum MediaType { image, video }
 

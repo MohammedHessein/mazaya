@@ -52,10 +52,6 @@ class _ResetPasswordBodyState extends State<ResetPasswordBody> {
                         text: LocaleKeys.resetPassword2,
                         style: context.textStyle.s20.bold.setPrimaryColor,
                       ),
-                      TextSpan(
-                        text: LocaleKeys.resetPassword3,
-                        style: context.textStyle.s20.bold,
-                      ),
                     ],
                   ),
                 ),
@@ -144,7 +140,7 @@ class _ResetPasswordBodyState extends State<ResetPasswordBody> {
                       );
 
                       await Future.delayed(const Duration(seconds: 3));
-                      Go.offAll(const HomeScreen());
+                      Go.offAll(const MainScreen());
                     }
                   },
                 ),

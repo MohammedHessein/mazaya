@@ -1,16 +1,15 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mazaya/src/config/language/locale_keys.g.dart';
 import 'package:mazaya/src/config/res/assets.gen.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/extensions/context_extension.dart';
+import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
+import 'package:mazaya/src/core/extensions/widgets/sized_box_helper.dart';
+import 'package:mazaya/src/core/navigation/navigator.dart';
 import 'package:mazaya/src/core/widgets/universal_media/enums.dart';
-
-import '../../../config/language/locale_keys.g.dart';
-import '../../../config/res/config_imports.dart';
-import '../../extensions/context_extension.dart';
-import '../../extensions/text_style_extensions.dart';
-import '../../extensions/widgets/sized_box_helper.dart';
-import '../../navigation/navigator.dart';
-import '../universal_media/universal_media_widget.dart';
+import 'package:mazaya/src/core/widgets/universal_media/universal_media_widget.dart';
 
 class DefaultScaffold extends StatelessWidget {
   final String title;
@@ -25,6 +24,8 @@ class DefaultScaffold extends StatelessWidget {
   final String? userName;
   final String? subTitle;
   final bool showBackButton;
+  final Widget? bottomNavigationBar;
+  final bool extendBody;
 
   const DefaultScaffold({
     super.key,
@@ -40,6 +41,8 @@ class DefaultScaffold extends StatelessWidget {
     this.userName,
     this.subTitle,
     this.showBackButton = true,
+    this.bottomNavigationBar,
+    this.extendBody = false,
   });
 
   @override
@@ -53,7 +56,8 @@ class DefaultScaffold extends StatelessWidget {
         if (onTap != null) onTap!();
       },
       child: Scaffold(
-        backgroundColor: AppColors.scaffoldBackground,
+        extendBody: extendBody,
+        bottomNavigationBar: bottomNavigationBar,
         body: Stack(
           children: [
             SizedBox(
@@ -93,7 +97,7 @@ class DefaultScaffold extends StatelessWidget {
                 CircleAvatar(
                   radius: 24.r,
                   backgroundImage: imageUrl != null
-                      ? NetworkImage(imageUrl!)
+                      ? AssetImage(imageUrl!)
                       : null,
                   backgroundColor: AppColors.gray100,
                   child: imageUrl == null
@@ -105,13 +109,13 @@ class DefaultScaffold extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      LocaleKeys.welcomeBack,
+                      LocaleKeys.welcomeHome,
                       style: context.textStyle.s12.regular.setColor(
                         AppColors.white.withValues(alpha: 0.8),
                       ),
                     ),
                     Text(
-                      userName ?? LocaleKeys.username,
+                      userName ?? 'محمد حسين',
                       style: context.textStyle.s14.bold.setWhiteColor,
                     ),
                   ],
@@ -120,19 +124,22 @@ class DefaultScaffold extends StatelessWidget {
             ),
             Container(
               padding: EdgeInsets.all(8.w),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.white24,
+                border: Border.all(color: AppColors.white, width: 0.2),
               ),
-              child: Icon(
-                Icons.notifications_none_rounded,
-                color: AppColors.white,
-                size: 24.w,
+              child: Badge(
+                alignment: AlignmentDirectional.topStart,
+                child: AppAssets.svg.baseSvg.notificationHome.svg(),
               ),
             ),
           ],
         ),
       );
+    }
+
+    if (!showBackButton && trailing == null) {
+      return const SizedBox.shrink();
     }
 
     return Padding(
@@ -183,7 +190,15 @@ class DefaultScaffold extends StatelessWidget {
             if (headLineWidget != null)
               headLineWidget!
             else if (title.isNotEmpty)
-              Text(title, style: context.textStyle.s16.medium.setWhiteColor),
+              Padding(
+                padding: EdgeInsets.only(top: AppPadding.pH20),
+                child: Center(
+                  child: Text(
+                    title,
+                    style: context.textStyle.s16.medium.setWhiteColor,
+                  ),
+                ),
+              ),
             headerWidget ?? const SizedBox.shrink(),
             if (title.isNotEmpty || headerWidget != null) 30.szH else 80.szH,
           ],
@@ -195,10 +210,11 @@ class DefaultScaffold extends StatelessWidget {
     return Center(
       child: Column(
         children: [
+          50.szH,
           CircleAvatar(
-            radius: AppCircular.r50,
-            backgroundImage: imageUrl != null ? NetworkImage(imageUrl!) : null,
-            backgroundColor: AppColors.white,
+            radius: AppCircular.r40,
+            backgroundImage: imageUrl != null ? AssetImage(imageUrl!) : null,
+            backgroundColor: AppColors.bgF7,
             child: imageUrl == null
                 ? Icon(
                     Icons.person,

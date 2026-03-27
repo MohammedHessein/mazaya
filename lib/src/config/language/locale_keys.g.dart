@@ -814,9 +814,6 @@ abstract class LocaleKeys {
   static const String _resetPassword2 = 'reset_password_2';
   static String get resetPassword2 => _resetPassword2.tr();
 
-  static const String _resetPassword3 = 'reset_password_3';
-  static String get resetPassword3 => _resetPassword3.tr();
-
   static const String _locationServicesDisabled = 'location_services_disabled';
   static String get locationServicesDisabled => _locationServicesDisabled.tr();
 
@@ -825,5 +822,11 @@ abstract class LocaleKeys {
 
   static const String _locationPermissionPermanentlyDenied = 'location_permission_permanently_denied';
   static String get locationPermissionPermanentlyDenied => _locationPermissionPermanentlyDenied.tr();
+
+  static const String _couponsTitle = 'coupons_title';
+  static String get couponsTitle => _couponsTitle.tr();
+
+  static const String _welcomeHome = 'welcome_home';
+  static String get welcomeHome => _welcomeHome.tr();
 
 }

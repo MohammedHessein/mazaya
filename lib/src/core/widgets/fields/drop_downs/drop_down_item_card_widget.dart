@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../../../config/res/assets.gen.dart';
-import '../../../../config/res/config_imports.dart';
-import '../../../extensions/context_extension.dart';
-import '../../../extensions/text_style_extensions.dart';
-import '../../image_widgets/cached_image.dart';
+import 'package:mazaya/src/config/res/assets.gen.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/extensions/context_extension.dart';
+import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
+import 'package:mazaya/src/core/widgets/image_widgets/cached_image.dart';
 
 class DropDownItemCardWidget extends StatelessWidget {
   final bool isSelected;

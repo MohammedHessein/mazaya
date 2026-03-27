@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 
-import '../../config/language/languages.dart';
+import 'package:mazaya/src/config/language/languages.dart';
 import 'backend_configuation.dart';
 
 class ConfigurationInterceptor extends Interceptor {

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../config/language/locale_keys.g.dart';
+import 'package:mazaya/src/config/language/locale_keys.g.dart';
 
 class ServerException extends Equatable implements Exception {
   final String message;

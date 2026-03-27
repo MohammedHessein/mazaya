@@ -14,8 +14,8 @@ import 'package:mazaya/src/core/widgets/universal_media/enums.dart';
 import 'package:mazaya/src/core/widgets/universal_media/universal_media_widget.dart';
 import 'package:mazaya/src/core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import 'package:mazaya/src/features/auth/reset_password/imports/reset_password_imports.dart';
-import '../logic/resend_code_cubit.dart';
-import '../logic/verify_code_cubit.dart';
+import 'package:mazaya/src/features/auth/otp_verification/cubits/resend_code_cubit.dart';
+import 'package:mazaya/src/features/auth/otp_verification/cubits/verify_code_cubit.dart';
 import 'dart:async';
 
 part '../presentation/screen/otp_verification_screen.dart';

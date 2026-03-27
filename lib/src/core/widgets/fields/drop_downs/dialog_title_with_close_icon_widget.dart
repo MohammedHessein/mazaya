@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../config/res/config_imports.dart';
-import '../../../extensions/text_style_extensions.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
 import 'drop_down_close_widget.dart';
 
 class DialogTitleWithCloseIconWidget extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../extensions/context_extension.dart';
-import '../../../extensions/text_style_extensions.dart';
+import 'package:mazaya/src/core/extensions/context_extension.dart';
+import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
 
 class FieldLabel extends StatelessWidget {
   final String label;

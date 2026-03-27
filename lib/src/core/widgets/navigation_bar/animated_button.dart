@@ -2,8 +2,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../config/res/config_imports.dart';
-import '../../extensions/widgets/widget_extension.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/extensions/widgets/widget_extension.dart';
 
 class AnimatedButton extends StatefulWidget {
   const AnimatedButton({

@@ -3,8 +3,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../../config/res/config_imports.dart';
-import '../../../extensions/text_style_extensions.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
 import 'default_text_field.dart';
 
 class CustomTextFiled extends StatelessWidget {

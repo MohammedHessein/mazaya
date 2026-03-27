@@ -1,10 +1,10 @@
 import 'package:flutter/widgets.dart';
-import '../../../config/res/assets.gen.dart';
-import '../../../config/res/config_imports.dart';
-import '../../../core/extensions/context_extension.dart';
-import '../../../core/extensions/text_style_extensions.dart';
-import '../../../core/navigation/navigator.dart';
-import '../pickers/custom_dialog.dart';
+import 'package:mazaya/src/config/res/assets.gen.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/extensions/context_extension.dart';
+import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
+import 'package:mazaya/src/core/navigation/navigator.dart';
+import 'package:mazaya/src/core/widgets/pickers/custom_dialog.dart';
 
 Future<dynamic> successDialog({
   required BuildContext context,

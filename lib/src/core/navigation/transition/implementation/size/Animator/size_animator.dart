@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../Constants/imports_constants.dart';
-import '../../../../Helper/Interfaces/helper_imports.dart';
-import '../Option/size_animation_option.dart';
+import 'package:mazaya/src/core/navigation/constants/imports_constants.dart';
+import 'package:mazaya/src/core/navigation/helper/interfaces/helper_imports.dart';
+import 'package:mazaya/src/core/navigation/transition/implementation/size/options/size_animation_option.dart';
 
 class SizeAnimator extends Animator<double>
     implements CurveBehaviour, TweenBehaviour<double> {

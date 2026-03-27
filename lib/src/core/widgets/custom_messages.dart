@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../config/language/locale_keys.g.dart';
-import '../../config/res/config_imports.dart';
-import '../extensions/base_state.dart';
-import '../extensions/text_style_extensions.dart';
-import '../navigation/navigator.dart';
+import 'package:mazaya/src/config/language/locale_keys.g.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/extensions/base_state.dart';
+import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
+import 'package:mazaya/src/core/navigation/navigator.dart';
 
 class MessageUtils {
   static void showSnackBar({

@@ -1,4 +1,4 @@
- import '../../config/language/locale_keys.g.dart';
+ import 'package:mazaya/src/config/language/locale_keys.g.dart';
  
 class Validators {
   static String? validateEmpty(String? value, {String? fieldTitle}) {

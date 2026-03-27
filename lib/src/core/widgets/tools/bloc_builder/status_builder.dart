@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
-import '../../../../core/extensions/base_state.dart';
-import '../../handling_views/error_view.dart';
-import '../../custom_loading.dart';
+import 'package:mazaya/src/core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
+import 'package:mazaya/src/core/extensions/base_state.dart';
+import 'package:mazaya/src/core/widgets/handling_views/error_view.dart';
+import 'package:mazaya/src/core/widgets/custom_loading.dart';
 
 class StatusBuilder<T> extends StatelessWidget {
   final AsyncState<T> data;

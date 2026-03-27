@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
-import '../../../config/res/config_imports.dart';
-import '../../notification/notification_service.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/notification/notification_service.dart';
 import 'setup_service_locators.config.dart';
 
 @InjectableInit(

@@ -5,8 +5,8 @@ import 'dart:io';
 import "package:firebase_core/firebase_core.dart";
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import '../../config/res/config_imports.dart';
- import '../network/un_authenticated_interceptor.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+ import 'package:mazaya/src/core/network/un_authenticated_interceptor.dart';
 
 part 'navigation_types.dart';
 part 'notification_routes.dart';

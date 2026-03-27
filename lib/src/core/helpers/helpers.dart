@@ -2,9 +2,9 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
-import '../../config/language/languages.dart';
-import '../../config/res/config_imports.dart';
-import '../widgets/custom_loading.dart';
+import 'package:mazaya/src/config/language/languages.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/widgets/custom_loading.dart';
 
 class Helpers {
   static Future<String> getFcmToken() async {

@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:video_player/video_player.dart';
-import '../../../config/res/config_imports.dart';
-import '../image_widgets/cached_image.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/widgets/image_widgets/cached_image.dart';
 import 'controller.dart';
 import 'enums.dart';
 

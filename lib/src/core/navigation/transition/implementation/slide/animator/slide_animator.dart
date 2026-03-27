@@ -1,8 +1,8 @@
 import 'package:flutter/animation.dart';
 
-import '../../../../Constants/imports_constants.dart';
-import '../../../../Helper/Interfaces/helper_imports.dart';
-import '../Option/slide_animation_option.dart';
+import 'package:mazaya/src/core/navigation/constants/imports_constants.dart';
+import 'package:mazaya/src/core/navigation/helper/interfaces/helper_imports.dart';
+import 'package:mazaya/src/core/navigation/transition/implementation/slide/options/slide_animation_option.dart';
 
 class SliderAnimator extends Animator<Offset>
     implements TweenBehaviour<Offset>, CurveBehaviour {

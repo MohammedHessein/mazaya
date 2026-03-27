@@ -1,4 +1,4 @@
-import '../base_domain_imports.dart';
+import 'package:mazaya/src/core/base_crud/code/domain/base_domain_imports.dart';
 
 class RegionEntity extends BaseIdAndNameEntity {
   const RegionEntity({

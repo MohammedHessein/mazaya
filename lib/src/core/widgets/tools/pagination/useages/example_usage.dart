@@ -3,8 +3,8 @@
 // import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:multiple_result/multiple_result.dart';
-// import '../../base_crud/code/domain/base_domain_imports.dart';
-// import '../../error/failure.dart';
+// import 'package:mazaya/src/core/widgets/tools/base_crud/code/domain/base_domain_imports.dart';
+// import 'package:mazaya/src/core/widgets/tools/error/failure.dart';
 // import 'paginated_cubit.dart';
 // import 'paginated_list_config.dart';
 // import 'paginated_list_widget.dart';

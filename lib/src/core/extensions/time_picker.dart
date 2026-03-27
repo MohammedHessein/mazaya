@@ -2,12 +2,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
- import '../../config/language/locale_keys.g.dart';
-import '../../config/res/config_imports.dart';
+ import 'package:mazaya/src/config/language/locale_keys.g.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
 import 'widgets/sized_box_helper.dart';
 import 'text_style_extensions.dart';
-import '../navigation/navigator.dart';
-import '../widgets/buttons/loading_button.dart';
+import 'package:mazaya/src/core/navigation/navigator.dart';
+import 'package:mazaya/src/core/widgets/buttons/loading_button.dart';
 
 extension DateTimeFormatHelper on DateTime {
   String get dispalyTimeFormat => DateFormat("hh:mm a", "en_US").format(this);

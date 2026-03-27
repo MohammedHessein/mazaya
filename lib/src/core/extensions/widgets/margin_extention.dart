@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../config/res/config_imports.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
 
 extension MarginExtension on Widget {
   Widget margin(EdgeInsetsGeometry margin) {

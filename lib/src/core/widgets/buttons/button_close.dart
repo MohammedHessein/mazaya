@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../config/res/config_imports.dart';
-import '../../navigation/navigator.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/navigation/navigator.dart';
 
 class ButtonClose extends StatelessWidget {
   final VoidCallback? onTap;

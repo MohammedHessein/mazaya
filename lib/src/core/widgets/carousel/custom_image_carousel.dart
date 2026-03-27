@@ -2,9 +2,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../config/res/assets.gen.dart';
-import '../../../config/res/config_imports.dart';
-import '../image_widgets/cached_image.dart';
+import 'package:mazaya/src/config/res/assets.gen.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/widgets/image_widgets/cached_image.dart';
 
 class CustomImageCarousel extends StatefulWidget {
   final List<String> imageUrls;

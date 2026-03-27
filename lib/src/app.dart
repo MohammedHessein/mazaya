@@ -4,7 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mazaya/src/features/settings/intro/presentation/imports/view_imports.dart';
+import 'package:mazaya/src/features/intro/presentation/imports/view_imports.dart';
 
 import 'config/res/config_imports.dart';
 import 'config/themes/app_theme.dart';

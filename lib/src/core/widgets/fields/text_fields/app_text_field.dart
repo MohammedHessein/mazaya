@@ -3,11 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../../../../config/language/locale_keys.g.dart';
-import '../../../../config/res/config_imports.dart';
-import '../../../extensions/context_extension.dart';
-import '../../../extensions/text_style_extensions.dart';
-import '../../../helpers/arabic_numbers_formatter.dart';
+import 'package:mazaya/src/config/language/locale_keys.g.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/extensions/context_extension.dart';
+import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
+import 'package:mazaya/src/core/helpers/arabic_numbers_formatter.dart';
 
 class AlwaysDisabledFocusNode extends FocusNode {
   @override

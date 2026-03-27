@@ -1,10 +1,10 @@
  import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../constants/imports_constants.dart';
-import '../../Factory/transition_creator.dart';
-import 'Animator/size_animator.dart';
-import 'Option/size_animation_option.dart';
+import 'package:mazaya/src/core/navigation/constants/imports_constants.dart';
+import 'package:mazaya/src/core/navigation/transition/factory/transition_creator.dart';
+import 'animator/size_animator.dart';
+import 'options/size_animation_option.dart';
 
 class SizeTransitionAnimation implements TransitionCreator {
   final SizeAnimationOptions options;

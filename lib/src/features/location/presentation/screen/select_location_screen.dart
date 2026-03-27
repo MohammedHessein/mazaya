@@ -1,4 +1,4 @@
-import '../../imports/location_imports.dart';
+import 'package:mazaya/src/features/location/imports/location_imports.dart';
 
 class SelectLocationScreen extends StatelessWidget {
   const SelectLocationScreen({super.key});

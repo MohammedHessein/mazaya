@@ -2,8 +2,8 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:multiple_result/multiple_result.dart';
 
-import '../../error/exceptions.dart';
-import '../../error/failure.dart';
+import 'package:mazaya/src/core/error/exceptions.dart';
+import 'package:mazaya/src/core/error/failure.dart';
 
 extension ErrorHandler<T> on Future<T> {
   Future<Result<T, Failure>> handleCallbackWithFailure() async {

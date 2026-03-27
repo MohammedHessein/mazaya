@@ -1,6 +1,6 @@
 import 'package:multiple_result/multiple_result.dart';
 
-import '../../error/failure.dart';
+import 'package:mazaya/src/core/error/failure.dart';
 
 abstract class UseCase<T, Param> {
   Future<Result<Type, Failure>> call(Param param);

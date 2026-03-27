@@ -1,8 +1,8 @@
  import 'package:flutter/material.dart';
 
-import '../../../constants/imports_constants.dart';
-import '../../Factory/transition_creator.dart';
-import 'Option/slide_animation_option.dart';
+import 'package:mazaya/src/core/navigation/constants/imports_constants.dart';
+import 'package:mazaya/src/core/navigation/transition/factory/transition_creator.dart';
+import 'options/slide_animation_option.dart';
 import 'animator/slide_animator.dart';
 
 class SlideTransitionAnimation implements TransitionCreator {

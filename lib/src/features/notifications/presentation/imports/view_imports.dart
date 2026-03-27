@@ -1,0 +1,37 @@
+ import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+ import 'package:injectable/injectable.dart';
+import 'package:multiple_result/multiple_result.dart';
+import 'package:skeletonizer/skeletonizer.dart';
+import 'package:mazaya/src/config/language/locale_keys.g.dart';
+import 'package:mazaya/src/config/res/assets.gen.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/base_crud/code/domain/base_domain_imports.dart';
+import 'package:mazaya/src/core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
+import 'package:mazaya/src/core/error/failure.dart';
+import 'package:mazaya/src/core/extensions/base_state.dart';
+import 'package:mazaya/src/core/extensions/context_extension.dart';
+import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
+import 'package:mazaya/src/core/extensions/widgets/sized_box_helper.dart';
+import 'package:mazaya/src/core/extensions/widgets/widget_extension.dart';
+import 'package:mazaya/src/core/navigation/navigator.dart';
+import 'package:mazaya/src/core/network/api_endpoints.dart';
+import 'package:mazaya/src/core/shared/models/base_model.dart';
+import 'package:mazaya/src/core/widgets/buttons/loading_button.dart';
+import 'package:mazaya/src/core/widgets/custom_messages.dart';
+import 'package:mazaya/src/core/widgets/handling_views/empty_widget.dart';
+import 'package:mazaya/src/core/widgets/pickers/default_bottom_sheet.dart';
+import 'package:mazaya/src/core/widgets/scaffolds/default_scaffold.dart'
+    show DefaultScaffold;
+import 'package:mazaya/src/core/widgets/tools/pagination/imports/pagination_imports.dart';
+import 'package:mazaya/src/features/notifications/entity/notification_entity.dart';
+import 'package:mazaya/src/core/notification/notification_service.dart';
+
+part '../view/notifications_screen.dart';
+part '../widgets/notification_body.dart';
+part '../widgets/notification_card_widget.dart';
+
+part '../cubits/delete_notification_cubit.dart';
+part '../cubits/notifications_cubit.dart';
+
+part '../widgets/dialogs/delete_notifications.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../../config/language/languages.dart';
-import '../../../config/res/config_imports.dart';
-import '../../navigation/navigator.dart';
+import 'package:mazaya/src/config/language/languages.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/navigation/navigator.dart';
 
 Future<DateTime?> showCustomDatePicker({
   required TextEditingController controller,

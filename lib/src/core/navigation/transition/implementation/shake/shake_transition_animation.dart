@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../Factory/transition_creator.dart';
-import 'Options/shake_animation_options.dart';
+import 'package:mazaya/src/core/navigation/transition/factory/transition_creator.dart';
+import 'options/shake_animation_options.dart';
 
 class ShakeTransitionAnimation implements TransitionCreator {
   final ShakeAnimationOptions options;

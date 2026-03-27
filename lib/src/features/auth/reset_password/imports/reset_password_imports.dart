@@ -19,8 +19,8 @@ import 'package:mazaya/src/core/base_crud/code/presentation/cubit/base_cubit/asy
 import 'package:mazaya/src/features/auth/login/imports/login_imports.dart';
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:mazaya/src/core/widgets/pickers/default_bottom_sheet.dart';
-import 'package:mazaya/src/features/logic/home/presentation/imports/view_imports.dart';
-import '../logic/reset_password_cubit.dart';
+import 'package:mazaya/src/features/main/presentation/imports/view_imports.dart';
+import 'package:mazaya/src/features/auth/reset_password/cubits/reset_password_cubit.dart';
 
 part '../presentation/screen/reset_password_screen.dart';
 part '../presentation/widgets/reset_password_body.dart';

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pinput/pinput.dart';
 
-import '../../../../config/res/config_imports.dart';
-import '../../../extensions/text_style_extensions.dart';
-import '../../../extensions/widgets/margin_extention.dart';
-import '../../../helpers/validators.dart';
-import '../../custom_widget_validator.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
+import 'package:mazaya/src/core/extensions/widgets/margin_extention.dart';
+import 'package:mazaya/src/core/helpers/validators.dart';
+import 'package:mazaya/src/core/widgets/custom_widget_validator.dart';
 
 class CustomPinTextField extends StatelessWidget {
   final ValueChanged<String>? onCompleted;

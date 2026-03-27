@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../config/res/config_imports.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
 
 extension TextStyleEx on TextStyle {
   TextStyle get bold => copyWith(fontWeight: FontWeight.bold);
@@ -15,6 +14,7 @@ extension TextStyleEx on TextStyle {
   TextStyle get italic => copyWith(fontStyle: FontStyle.italic);
 
   TextStyle get s8 => copyWith(fontSize: 8.sp);
+  TextStyle get s9 => copyWith(fontSize: 9.sp);
   TextStyle get s10 => copyWith(fontSize: 10.sp);
   TextStyle get s11 => copyWith(fontSize: 11.sp);
   TextStyle get s12 => copyWith(fontSize: 12.sp);

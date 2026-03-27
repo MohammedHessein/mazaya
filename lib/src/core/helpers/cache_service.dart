@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../config/res/config_imports.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
 
 class CacheStorage {
   static late final SharedPreferences _sharedPrefrences;

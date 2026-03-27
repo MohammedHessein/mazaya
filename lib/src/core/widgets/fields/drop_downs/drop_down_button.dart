@@ -2,17 +2,17 @@ import 'package:dropdown_search/dropdown_search.dart';
  import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
- import '../../../../config/language/locale_keys.g.dart';
-import '../../../../config/res/assets.gen.dart';
-import '../../../../config/res/config_imports.dart';
-import '../../../extensions/context_extension.dart';
-import '../../../extensions/text_style_extensions.dart';
-import '../../../extensions/widgets/padding_extension.dart';
-import '../../../helpers/validators.dart';
-import '../../../navigation/navigator.dart';
+ import 'package:mazaya/src/config/language/locale_keys.g.dart';
+import 'package:mazaya/src/config/res/assets.gen.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/extensions/context_extension.dart';
+import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
+import 'package:mazaya/src/core/extensions/widgets/padding_extension.dart';
+import 'package:mazaya/src/core/helpers/validators.dart';
+import 'package:mazaya/src/core/navigation/navigator.dart';
 import 'dialog_title_with_close_icon_widget.dart';
 import 'drop_down_item_card_widget.dart';
-import '../../handling_views/not_contain_data.dart';
+import 'package:mazaya/src/core/widgets/handling_views/not_contain_data.dart';
 
 /// A mixin that provides reusable dropdown helpers for custom dropdown fields
 mixin CustomDropdownHelpers<T> {

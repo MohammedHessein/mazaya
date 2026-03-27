@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../config/res/config_imports.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
  
 extension PaddingExtension on Widget {
   Widget padding(EdgeInsetsGeometry padding) {

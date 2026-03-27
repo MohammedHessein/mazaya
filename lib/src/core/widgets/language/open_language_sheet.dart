@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mazaya/src/core/navigation/navigator.dart';
 
-import '../../../config/language/languages.dart';
+import 'package:mazaya/src/config/language/languages.dart';
 import 'language_bottom_sheet.dart';
 
 Future<void> openLanguageSheet(BuildContext context) async {

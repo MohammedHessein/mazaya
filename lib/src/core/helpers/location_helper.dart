@@ -1,6 +1,6 @@
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import '../../config/language/locale_keys.g.dart';
+import 'package:mazaya/src/config/language/locale_keys.g.dart';
 import 'dart:developer';
 
 class LocationHelper {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../config/res/config_imports.dart';
-import '../../extensions/widgets/sized_box_helper.dart';
-import '../../navigation/navigator.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/extensions/widgets/sized_box_helper.dart';
+import 'package:mazaya/src/core/navigation/navigator.dart';
 
 Future showDefaultBottomSheet({BuildContext? context, required Widget child}) {
   return showModalBottomSheet(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../../config/res/assets.gen.dart';
-import '../../../../config/res/config_imports.dart';
-import '../../../extensions/widgets/widget_extension.dart';
-import '../../../navigation/navigator.dart';
+import 'package:mazaya/src/config/res/assets.gen.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/extensions/widgets/widget_extension.dart';
+import 'package:mazaya/src/core/navigation/navigator.dart';
 
 class DropDownCloseWidget extends StatelessWidget {
   final void Function()? onTap;

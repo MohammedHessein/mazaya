@@ -80,6 +80,8 @@ class AppSize {
   static double sH50 = 50.0.h;
   static double sH55 = 55.0.h;
   static double sH60 = 60.0.h;
+  static double sH65 = 65.0.h;
+
   static double sH70 = 70.0.h;
   static double sH85 = 85.0.h;
 
@@ -101,6 +103,7 @@ class AppSize {
   static double sW40 = 40.0.w;
   static double sW50 = 50.0.w;
   static double sW60 = 60.0.w;
+  static double sW65 = 65.0.w;
   static double sW70 = 70.0.w;
 }
 
@@ -121,7 +124,7 @@ class FontSizeManager {
 
 class ScreenSizes {
   static double width = 375;
-  static double height = 812;
+  static double height = 911;
 }
 
 class FontWeightManager {

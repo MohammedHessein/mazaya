@@ -1,11 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
-import '../../../config/res/config_imports.dart';
-import '../../extensions/text_style_extensions.dart';
-import 'animated_button.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mazaya/src/features/location/imports/location_imports.dart';
+
 import 'navigation_bar_entity.dart';
 
-class CustomNavigationBar extends StatefulWidget {
+class CustomNavigationBar extends StatelessWidget {
   const CustomNavigationBar({
     super.key,
     required this.tabs,
@@ -18,83 +18,108 @@ class CustomNavigationBar extends StatefulWidget {
   final ValueChanged<int>? onTabChange;
 
   @override
-  State<CustomNavigationBar> createState() => _CustomNavigationBarState();
-}
-
-class _CustomNavigationBarState extends State<CustomNavigationBar> {
-  late int _selectedIndex;
-  bool _isClickable = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _selectedIndex = widget.selectedIndex;
-  }
-
-  @override
-  void didUpdateWidget(CustomNavigationBar oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.selectedIndex != oldWidget.selectedIndex) {
-      _selectedIndex = widget.selectedIndex;
-    }
-  }
-
-  void _handleTabPress(int index) {
-    if (!_isClickable) return;
-
-    setState(() {
-      _selectedIndex = index;
-      _isClickable = false;
-    });
-
-    widget.onTabChange?.call(index);
-
-    Future.delayed(const Duration(milliseconds: 600), () {
-      if (mounted) {
-        setState(() => _isClickable = true);
-      }
-    });
-  }
-
-  Widget _buildTab(NavigationBarEntity tab, int index) {
-    context.locale;
-    final isActive = _selectedIndex == index;
-    return Semantics(
-      child: AnimatedButton(
-        icon: tab.icon,
-        text: Text(tab.text, style: const TextStyle().setWhiteColor.s13.medium),
-        active: isActive,
-        color: const Color(0xff5C40C2),
-        onPressed: () => _handleTabPress(index),
-      ),
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
     context.locale;
-    return Container(
-      height: AppSize.sH60,
-      padding: EdgeInsets.all(AppPadding.pH8),
-      decoration: const BoxDecoration(
-        color: AppColors.scaffoldBackground,
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.grey1,
-            blurRadius: 0,
-            offset: Offset(1, -.5),
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: widget.tabs
-            .asMap()
-            .entries
-            .map((entry) => _buildTab(entry.value, entry.key))
-            .toList(),
+    return Padding(
+      padding: EdgeInsets.only(left: 10.w, right: 10.w, bottom: 25.h),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final itemWidth = constraints.maxWidth / tabs.length;
+          final indicatorSize = 70.h;
+
+          return Container(
+            height: 80.h,
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(AppCircular.r50),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.black.withValues(alpha: 0.1),
+                  blurRadius: 20,
+                  offset: const Offset(0, 10),
+                ),
+              ],
+            ),
+            child: Stack(
+              children: [
+                AnimatedPositioned(
+                  duration: const Duration(milliseconds: 200),
+                  curve: Curves.easeOutCubic,
+                  left: context.isRight
+                      ? (tabs.length - 1 - selectedIndex) * itemWidth +
+                            (itemWidth - indicatorSize) / 2
+                      : selectedIndex * itemWidth +
+                            (itemWidth - indicatorSize) / 2,
+                  top: (80.h - indicatorSize) / 2,
+                  child: Container(
+                    width: indicatorSize,
+                    height: indicatorSize,
+                    decoration: const BoxDecoration(
+                      color: AppColors.blue50,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ),
+                Row(
+                  children: List.generate(tabs.length, (index) {
+                    final tab = tabs[index];
+                    final isActive = selectedIndex == index;
+                    return Expanded(
+                      child: GestureDetector(
+                        onTap: () => onTabChange?.call(index),
+                        behavior: HitTestBehavior.opaque,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            _buildIcon(
+                              isActive
+                                  ? (tab.activeIcon ?? tab.icon)
+                                  : tab.icon,
+                              isActive,
+                            ),
+                            2.szH,
+                            Text(
+                              tab.text,
+                              style: const TextStyle()
+                                  .copyWith(
+                                    color: isActive
+                                        ? AppColors.primary
+                                        : AppColors.gray500,
+                                  )
+                                  .s11
+                                  .medium,
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
+  }
+
+  Widget _buildIcon(String path, bool isActive) {
+    if (path.endsWith('.svg')) {
+      return SvgPicture.asset(
+        path,
+        width: 24.h,
+        height: 24.h,
+        colorFilter: !isActive
+            ? const ColorFilter.mode(AppColors.gray500, BlendMode.srcIn)
+            : null,
+      );
+    } else {
+      return Image.asset(
+        path,
+        width: 24.h,
+        height: 24.h,
+        color: !isActive ? AppColors.gray500 : null,
+      );
+    }
   }
 }

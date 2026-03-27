@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
  
-import '../../../constants/imports_constants.dart';
-import '../../Factory/transition_creator.dart';
-import 'Animator/rotation_animator.dart';
-import 'Option/rotation_animation_option.dart';
+import 'package:mazaya/src/core/navigation/constants/imports_constants.dart';
+import 'package:mazaya/src/core/navigation/transition/factory/transition_creator.dart';
+import 'animator/rotation_animator.dart';
+import 'options/rotation_animation_option.dart';
 
 class RotationTransitionAnimation implements TransitionCreator {
   final RotationAnimationOptions options;

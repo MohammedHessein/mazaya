@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../config/language/locale_keys.g.dart';
+import 'package:mazaya/src/config/language/locale_keys.g.dart';
 
 class LauncherHelper {
   static void launchURL({required String url}) async {
