@@ -9,7 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'src/app.dart';
 import 'src/config/language/languages.dart';
-import 'src/config/res/config_imports.dart';
 import 'src/core/helpers/helpers.dart';
 import 'src/core/navigation/constants/imports_constants.dart';
 import 'src/core/navigation/go.dart';
@@ -73,7 +72,7 @@ void main() async {
   }
 
   // Change status bar color globally at app start
-  Helpers.changeStatusbarColor(statusBarColor: AppColors.white);
+  Helpers.changeStatusbarColor(statusBarColor: Colors.transparent);
 
   // Run the actual app wrapped with EasyLocalization widget
   runApp(

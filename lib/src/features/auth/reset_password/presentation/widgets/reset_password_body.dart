@@ -40,6 +40,7 @@ class _ResetPasswordBodyState extends State<ResetPasswordBody> {
             key: _formKey,
             child: Column(
               children: [
+                40.szH,
                 UniversalMediaWidget(path: AppAssets.svg.baseSvg.lock.path),
                 Text.rich(
                   TextSpan(

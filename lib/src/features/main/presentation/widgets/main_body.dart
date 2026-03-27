@@ -8,7 +8,7 @@ class _MainBody extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (index) {
       case 0:
-        return const HomeView();
+        return const HomeScreen();
       case 1:
         return const SizedBox.shrink();
       case 2:

@@ -1,5 +1,4 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:mazaya/src/features/location/imports/location_imports.dart';
 
 class SelectLocationBody extends StatefulWidget {
@@ -61,6 +60,7 @@ class _SelectLocationBodyState extends State<SelectLocationBody> {
         key: _formKey,
         child: Column(
           children: [
+            40.szH,
             AppAssets.svg.baseSvg.determineLocation.image(),
             Text.rich(
               TextSpan(

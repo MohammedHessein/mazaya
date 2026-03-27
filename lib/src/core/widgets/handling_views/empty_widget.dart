@@ -31,11 +31,11 @@ class EmptyWidget extends StatelessWidget {
           height: context.height * .25,
           child: FittedBox(fit: BoxFit.contain, child: _buildMedia()),
         ),
-        Text(title, style: const TextStyle().setMainTextColor.s13.medium),
+        Text(title, style: const TextStyle().setMainTextColor.s16.bold),
         Text(
           desc,
           textAlign: TextAlign.center,
-          style: const TextStyle().setSecondryColor.s11.regular,
+          style: const TextStyle().setSecondryColor.s14.regular,
         ).paddingSymmetric(horizontal: AppPadding.pW14),
       ],
     ).paddingAll(AppPadding.pH10).marginTop(context.height * .1);

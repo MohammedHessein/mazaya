@@ -77,6 +77,7 @@ class _OtpVerificationBodyState extends State<OtpVerificationBody> {
                   key: _formKey,
                   child: Column(
                     children: [
+                      40.szH,
                       UniversalMediaWidget(
                         path: AppAssets.svg.baseSvg.lock.path,
                       ),
@@ -160,10 +161,12 @@ class _OtpVerificationBodyState extends State<OtpVerificationBody> {
                             //   username: widget.username,
                             //   code: otpController.text,
                             // );
-                            Go.to(ResetPasswordScreen(
-                              username: widget.username,
-                              code: otpController.text,
-                            ));
+                            Go.to(
+                              ResetPasswordScreen(
+                                username: widget.username,
+                                code: otpController.text,
+                              ),
+                            );
                           }
                         },
                       ),

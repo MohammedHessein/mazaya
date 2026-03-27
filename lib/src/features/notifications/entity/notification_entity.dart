@@ -19,7 +19,7 @@ class NotificationEntity {
     required this.data,
   });
 
-  factory NotificationEntity.initail() => const NotificationEntity(
+  factory NotificationEntity.initial() => const NotificationEntity(
     id: SkeltonizerManager.short,
     type: SkeltonizerManager.short,
     title: SkeltonizerManager.short,
@@ -35,7 +35,7 @@ class NotificationEntity {
         type: json["type"],
         title: json["title"],
         body: json["body"],
-        data: json["data"] ?? {},
+        data: Map<String, dynamic>.from(json["data"] ?? {}),
         createdAt: json["created_at"],
         read: json["read"],
       );

@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mazaya/src/config/language/locale_keys.g.dart';
 import 'package:mazaya/src/config/res/assets.gen.dart';
@@ -10,6 +11,7 @@ import 'package:mazaya/src/core/extensions/widgets/sized_box_helper.dart';
 import 'package:mazaya/src/core/navigation/navigator.dart';
 import 'package:mazaya/src/core/widgets/universal_media/enums.dart';
 import 'package:mazaya/src/core/widgets/universal_media/universal_media_widget.dart';
+import 'package:mazaya/src/features/notifications/presentation/imports/view_imports.dart';
 
 class DefaultScaffold extends StatelessWidget {
   final String title;
@@ -55,28 +57,35 @@ class DefaultScaffold extends StatelessWidget {
         if (didPop) return;
         if (onTap != null) onTap!();
       },
-      child: Scaffold(
-        extendBody: extendBody,
-        bottomNavigationBar: bottomNavigationBar,
-        body: Stack(
-          children: [
-            SizedBox(
-              width: double.infinity,
-              child: Image.asset(
-                AppAssets.svg.baseSvg.curveBackground.path,
-                fit: BoxFit.fill,
+      child: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: const SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: Brightness.light,
+        ),
+        child: Scaffold(
+          extendBody: extendBody,
+          bottomNavigationBar: bottomNavigationBar,
+          body: Stack(
+            children: [
+              SizedBox(
+                width: double.infinity,
+                height: 220.h,
+                child: Image.asset(
+                  AppAssets.svg.baseSvg.curveBackground.path,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            SafeArea(
-              child: Column(
-                children: [
-                  _buildTopRow(context),
-                  _buildHeaderContent(context),
-                  Expanded(child: body),
-                ],
+              SafeArea(
+                child: Column(
+                  children: [
+                    _buildTopRow(context),
+                    _buildHeaderContent(context),
+                    Expanded(child: body),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -95,7 +104,7 @@ class DefaultScaffold extends StatelessWidget {
             Row(
               children: [
                 CircleAvatar(
-                  radius: 24.r,
+                  radius: 27.r,
                   backgroundImage: imageUrl != null
                       ? AssetImage(imageUrl!)
                       : null,
@@ -108,6 +117,7 @@ class DefaultScaffold extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    15.szH,
                     Text(
                       LocaleKeys.welcomeHome,
                       style: context.textStyle.s12.regular.setColor(
@@ -122,15 +132,18 @@ class DefaultScaffold extends StatelessWidget {
                 ),
               ],
             ),
-            Container(
-              padding: EdgeInsets.all(8.w),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: AppColors.white, width: 0.2),
-              ),
-              child: Badge(
-                alignment: AlignmentDirectional.topStart,
-                child: AppAssets.svg.baseSvg.notificationHome.svg(),
+            InkWell(
+              onTap: () => Go.to(const NotificationScreen()),
+              child: Container(
+                padding: EdgeInsets.all(8.w),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: AppColors.white, width: 0.2),
+                ),
+                child: Badge(
+                  alignment: AlignmentDirectional.topStart,
+                  child: AppAssets.svg.baseSvg.notificationHome.svg(),
+                ),
               ),
             ),
           ],
@@ -138,35 +151,42 @@ class DefaultScaffold extends StatelessWidget {
       );
     }
 
-    if (!showBackButton && trailing == null) {
+    if (!showBackButton && trailing == null && title.isEmpty) {
       return const SizedBox.shrink();
     }
 
     return Padding(
       padding: EdgeInsets.symmetric(
-        vertical: AppPadding.pH12,
+        vertical: AppPadding.pH20,
         horizontal: AppPadding.pW16,
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Stack(
+        alignment: Alignment.center,
         children: [
-          if (showBackButton && context.isArabic)
-            IconButton(
-              onPressed: Go.back,
-              icon: UniversalMediaWidget(
-                path: AppAssets.svg.baseSvg.arrowRight.path,
-                width: 30.w,
-                height: 30.w,
-              ),
-            )
-          else if (showBackButton && !context.isArabic)
-            IconButton(
-              onPressed: Go.back,
-              icon: Icon(Icons.arrow_back_outlined, color: AppColors.white),
-            )
-          else
-            const SizedBox.shrink(),
-          trailing ?? const SizedBox.shrink(),
+          if (headerType == ScaffoldHeaderType.standard && title.isNotEmpty)
+            Text(title, style: context.textStyle.s16.medium.setWhiteColor),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              if (showBackButton && context.isArabic)
+                IconButton(
+                  onPressed: Go.back,
+                  icon: UniversalMediaWidget(
+                    path: AppAssets.svg.baseSvg.arrowRight.path,
+                    width: 30.w,
+                    height: 30.w,
+                  ),
+                )
+              else if (showBackButton && !context.isArabic)
+                IconButton(
+                  onPressed: Go.back,
+                  icon: Icon(Icons.arrow_back_outlined, color: AppColors.white),
+                )
+              else
+                const SizedBox.shrink(),
+              trailing ?? const SizedBox.shrink(),
+            ],
+          ),
         ],
       ),
     );
@@ -187,20 +207,9 @@ class DefaultScaffold extends StatelessWidget {
       case ScaffoldHeaderType.standard:
         return Column(
           children: [
-            if (headLineWidget != null)
-              headLineWidget!
-            else if (title.isNotEmpty)
-              Padding(
-                padding: EdgeInsets.only(top: AppPadding.pH20),
-                child: Center(
-                  child: Text(
-                    title,
-                    style: context.textStyle.s16.medium.setWhiteColor,
-                  ),
-                ),
-              ),
+            if (headLineWidget != null) headLineWidget!,
             headerWidget ?? const SizedBox.shrink(),
-            if (title.isNotEmpty || headerWidget != null) 30.szH else 80.szH,
+            if (headerWidget != null) 30.szH else 80.szH,
           ],
         );
     }

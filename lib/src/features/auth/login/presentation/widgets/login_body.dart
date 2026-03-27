@@ -34,6 +34,7 @@ class _LoginBodyState extends State<LoginBody> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  40.szH,
                   UniversalMediaWidget(path: AppAssets.svg.baseSvg.login.path),
                   context.isArabic
                       ? Text.rich(

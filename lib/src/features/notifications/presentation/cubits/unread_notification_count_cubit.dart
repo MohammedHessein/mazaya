@@ -1,26 +1,20 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
-import 'package:mazaya/src/config/res/config_imports.dart';
-import 'package:mazaya/src/core/base_crud/code/domain/base_domain_imports.dart';
-import 'package:mazaya/src/core/network/api_endpoints.dart';
- 
-
 @lazySingleton
 class UnreadNotificationCountCubit extends Cubit<int> {
   UnreadNotificationCountCubit() : super(0);
 
-  late final BaseCrudUseCase _baseCrudUseCase = injector();
-
   Future<void> fetchUnreadCount() async {
-    final result = await _baseCrudUseCase.call(
-      CrudBaseParams(
-        api: ApiConstants.unReadNotifications,
-        httpRequestType: HttpRequestType.get,
-        mapper: (json) => json['data']['count'] as int? ?? 0,
-      ),
-    );
-    result.when((count) => emit(count), (failure) => emit(0));
+    // final result = await _baseCrudUseCase.call(
+    //   CrudBaseParams(
+    //     api: ApiConstants.unReadNotifications,
+    //     httpRequestType: HttpRequestType.get,
+    //     mapper: (json) => json['data']['count'] as int? ?? 0,
+    //   ),
+    // );
+    // result.when((count) => emit(count), (failure) => emit(0));
+    emit(0);
   }
 
   void decrementCount() {

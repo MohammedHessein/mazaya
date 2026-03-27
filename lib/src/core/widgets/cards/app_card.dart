@@ -113,7 +113,7 @@ class AppCard extends StatelessWidget {
                       vertical: 6.h,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.blue50,
+                      color: AppColors.blue100,
                       borderRadius: BorderRadius.circular(8.r),
                     ),
                     child: Text(
