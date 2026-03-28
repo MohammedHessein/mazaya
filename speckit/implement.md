@@ -1,21 +1,39 @@
-# 🚀 Hattrick App – Implementation Workflows
+# 🚀 Mazaya App – Implementation Workflows
 
 ## Workflow 1: Create a New Feature
 
 1. **Scaffold**: Run `mason make feature --name <feature_name>`.
-2. **Entity**: Define your data entity in `lib/src/features/[type]/[name]/entity/`.
-3. **Cubit**: Implement logic in `presentation/cubits/[name]_cubit.dart` using `AsyncCubit`.
+2. **Entity**: Define your data entity in `lib/src/features/<feature_name>/entity/`.
+3. **Cubit**: Implement logic in `presentation/cubits/<name>_cubit.dart` using `AsyncCubit`.
 4. **DI**: Run `dart run build_runner build --delete-conflicting-outputs`.
 5. **UI**: Build your screen in `presentation/view/`. **Recommendation**: Use `BlocStatelessWidget<C>` or `BlocStatefulWidget<C>` to simplify `BlocProvider` injection.
-6. **State Handling**: Use the `BaseStatus.when()` extension in your UI widgets to handle Loading, Success, and Error states exhaustively.
-7. **Navigation**: Navigate via `Go.to(context, NewScreen())`.
+6. **State Handling**: Use the `BaseStatus.when()` extension or `AsyncBlocBuilder` in your UI widgets to handle Loading, Success, and Error states exhaustively.
+7. **Navigation**: Navigate via `Go.to(NewScreen())`.
 
 ## Workflow 2: Add an API Endpoint
 
-1. **Constants**: Add endpoint to `ApiConstants`.
+1. **Constants**: Add endpoint to `ApiConstants` (`lib/src/core/network/api_endpoints.dart`).
 2. **Params**: Create a `CrudBaseParams` object defining the endpoint and HTTP method.
 3. **Implementation**: Call `baseCrudUseCase.call(params)` within `executeAsync` in your Cubit.
 4. **Mapper**: Provide a mapper function to transform JSON into your entity.
+
+## Workflow 3: Implementing a Screen with DefaultScaffold
+
+1. **Choose Header Type**: Select the appropriate `ScaffoldHeaderType`:
+   - `home` – Shows user avatar, welcome text, username, and notification bell icon.
+   - `auth` – Shows custom header widget (e.g., logo/illustration) with spacing.
+   - `standard` – Shows centered title with back button and optional trailing widget.
+   - `profile` – Shows avatar, user name, and optional subtitle badge.
+2. **Build**: Wrap your screen body with `DefaultScaffold(title: ..., body: ..., headerType: ...)`.
+3. **Curved Background**: All header types automatically display the curved primary background via `curveBackground` asset.
+
+```dart
+DefaultScaffold(
+  title: LocaleKeys.couponsTitle,
+  headerType: ScaffoldHeaderType.standard,
+  body: const CouponsBody(),
+)
+```
 
 ## Workflow 4: Implementing a Paginated List
 
@@ -29,24 +47,75 @@
 1. **Show**: Call `FullScreenLoadingManager.show()` to display a blocking loading indicator.
 2. **Hide**: Call `FullScreenLoadingManager.hide()` to remove it.
 3. **Usage**: Ideal for non-UI-specific operations like "Deleting Account" or "Uploading File".
+4. **Auto-integration**: Already wired globally in `MazayaApp` widget's builder.
 
 ## Workflow 6: Handling Session Expiry (Auth)
 
 1. **Auto-handling**: The `UnAuthenticatedInterceptor` automatically detects 401 errors or `unauthenticated/blocked` keys.
-2. **Global UI**: It triggers an `UnAuthenticatedBottomSheet` automatically (configured in `App` widget).
+2. **Global UI**: It triggers an `UnAuthenticatedBottomSheet` automatically (configured in `MazayaApp` widget).
 3. **Manual Trigger**: You can manually notify listeners via `UnAuthenticatedInterceptor.instance.notifyListeners(true/false)`.
 
 ## Workflow 7: Advanced Navigation Transitions
 
-1. **Standard**: Use `Go.to(context, Page())` for default transitons.
-2. **Custom**: To use specific animations:
+1. **Standard Push**: `Go.to(Page())` – default transition.
+2. **Replace**: `Go.off(Page())` – pushReplacement.
+3. **Clear Stack**: `Go.offAll(Page())` – push and remove all previous routes.
+4. **Navigate Back**: `Go.back()` – pop current route.
+5. **Back to Root**: `Go.backToInitial()` – pop to first route.
+6. **Custom Transitions**:
    ```dart
-   PageRouterBuilder().build(
+   Go.to(
      NewPage(),
-     transition: TransitionType.fade, // or slide, scale, shake, etc.
+     transition: TransitionType.fade,
+     options: FadeAnimationOption(duration: Duration(milliseconds: 300)),
    );
    ```
-3. **Global Config**: Default transitions per platform are set in `main.dart` via `PageRouterBuilder().initAppRouter()`.
+7. **Named Routes**: `Go.toNamed(NamedRoutes.routeName)`, `Go.offNamed()`, `Go.offAllNamed()`.
+
+## Workflow 8: Bottom Navigation (MainScreen)
+
+1. **Navigation Tabs**: Defined in `MainParams.navTabs` (Home, Coupons, QR Scanner, My Account).
+2. **Tab Index**: Managed via `ValueNotifier<int>` in `MainParams`.
+3. **Custom NavBar**: Uses `CustomNavigationBar` with animated position indicator.
+4. **Scaffold per Tab**: Each tab applies the appropriate `ScaffoldHeaderType`:
+   - Tab 0 (Home) → `ScaffoldHeaderType.home`
+   - Tab 1 (Coupons) → `ScaffoldHeaderType.standard`
+   - Tab 2 (Scanner) → Raw `Scaffold` (no curved header)
+   - Tab 3 (My Account) → `ScaffoldHeaderType.profile`
+
+## Workflow 9: Authentication Flow
+
+1. **Intro Screen** → User sees onboarding carousel (`IntroScreen`).
+2. **Login Screen** → Phone/Email login with `CustomAnimatedButton`.
+3. **Forget Password** → Send code → OTP verification (`pinput`) → Reset password.
+4. **OTP Verification** → `verifyAccount` API with 4-field pin code.
+5. **After Login** → Navigate to `MainScreen` via `Go.offAll(MainScreen())`.
+
+## Workflow 10: Notifications
+
+1. **Service**: `NotificationService` handles FCM tokens, foreground/background messages, and local notifications.
+2. **Navigation**: `NotificationNavigator` dispatches to specific screens based on notification payload.
+3. **Cubits**:
+   - `NotificationsCubit` – Fetches notification list (paginated).
+   - `UnreadNotificationCountCubit` – Fetches unread count.
+   - `DeleteNotificationCubit` – Deletes individual or all notifications.
+4. **Screen**: `NotificationScreen` accessible from home header notification bell icon.
+
+## Workflow 11: Coupons Feature
+
+1. **CouponsCubit**: Manages coupon list data with search and filter support.
+2. **CouponsBody**: Displays coupon list using `AppCard` widgets.
+3. **CouponsSearchBar**: Search bar widget with debounced text input.
+4. **CouponsFilterBottomSheet**: Bottom sheet with filter options for categories/status.
+
+## Workflow 12: Language Switching
+
+1. **UI**: Use `LanguageBottomSheet` to display language options (Arabic/English).
+2. **Trigger**: Call `openLanguageSheet(context)` to show the bottom sheet.
+3. **Apply**: Language change applies via `easy_localization` context methods.
+4. **Widgets**: `LanguagePillWidget` for inline language display, `LanguageOption` for radio-style selection.
+
+---
 
 ## 💡 Concrete Examples
 
@@ -147,15 +216,66 @@ PaginatedListWidget<MyItemEntity>(
 );
 ```
 
-### 9. Handling Session Expiry & Blocking
-The app automatically monitors authentication status via `UnAuthenticatedInterceptor`.
-- **Trigger**: Any 401 response or a specialized "blocked" status in the API.
-- **Action**: A global `UnAuthenticatedBottomSheet` is displayed.
-- **Cleanup**: User data is cleared from Cache and SecureStorage via `UserCubit.logout()`.
-- **Navigation**: The user is returned to the login/onboarding root.
+### Example 5: Using LoadingButton
+Async button with built-in loading state.
 
-### 10. Responsive UI Design
-- Use `context.width` and `context.height` for relative sizing.
+```dart
+LoadingButton(
+  title: LocaleKeys.login.tr(),
+  onTap: () async {
+    await context.read<LoginCubit>().login();
+  },
+  color: AppColors.primary,
+  borderRadius: AppCircular.r50,
+)
+```
+
+### Example 6: Using AppCard
+Standard coupon/item card with favorite.
+
+```dart
+AppCard(
+  title: 'خصم 30%',
+  description: 'على جميع المنتجات',
+  imageUrl: AppAssets.svg.baseSvg.couponIcon.path,
+  status: 'متاح',
+  isFavorite: true,
+  onFavoriteTap: () => toggleFavorite(),
+  onTap: () => Go.to(CouponDetailScreen(id: coupon.id)),
+)
+```
+
+### Example 7: DefaultScaffold Header Types
+
+```dart
+// Home header with user info + notification icon
+DefaultScaffold(
+  title: '',
+  headerType: ScaffoldHeaderType.home,
+  userName: 'محمد حسين',
+  imageUrl: AppAssets.svg.baseSvg.profile.path,
+  body: HomeView(),
+)
+
+// Profile header with avatar + subtitle badge
+DefaultScaffold(
+  title: '',
+  headerType: ScaffoldHeaderType.profile,
+  userName: 'محمد حسين',
+  subTitle: 'عضو ذهبي',
+  body: ProfileView(),
+)
+
+// Standard header with centered title
+DefaultScaffold(
+  title: LocaleKeys.notifications.tr(),
+  headerType: ScaffoldHeaderType.standard,
+  body: NotificationBody(),
+)
+```
+
+### Example 8: Responsive UI Design
 - Use `.h`, `.w`, `.sp`, and `.r` for pixel-consistent design.
-- Chain `TextStyleEx` for rapid styling: `Text("...").style(context.textStyle.s16.bold.setPrimaryColor)`.
+- Chain `TextStyleEx` for rapid styling: `context.textStyle.s16.bold.setPrimaryColor`.
 - Use `UniversalMediaWidget` to intelligently handle SVGs, Lottie, and Network images in a single call.
+- Use `SizedBoxHelper`: `10.szH` (vertical space), `15.szW` (horizontal space).
