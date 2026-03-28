@@ -1,4 +1,8 @@
-part of '../base_domain_imports.dart';
+import 'package:injectable/injectable.dart';
+import 'package:multiple_result/multiple_result.dart';
+import 'package:mazaya/src/core/error/failure.dart';
+import '../repositories/base_repository.dart';
+import '../entities/base_name_and_id_entity.dart';
 
 @LazySingleton()
 class GetBaseEntityUseCase {

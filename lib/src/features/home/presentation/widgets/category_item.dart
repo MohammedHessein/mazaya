@@ -35,7 +35,10 @@ class CategoryItem extends StatelessWidget {
           CircleAvatar(
             backgroundColor: AppColors.black,
             radius: AppCircular.r20,
-            backgroundImage: AssetImage(AppAssets.svg.baseSvg.search.path),
+            child: AppAssets.svg.baseSvg.search.svg(
+              width: AppSize.sW16,
+              height: AppSize.sH16,
+            ),
           ),
           8.szW,
           Text('مطاعم', style: context.textStyle.regular.s14),

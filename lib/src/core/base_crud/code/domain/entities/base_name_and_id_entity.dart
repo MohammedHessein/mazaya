@@ -1,4 +1,10 @@
-part of '../base_domain_imports.dart';
+import 'dart:developer';
+import 'package:equatable/equatable.dart';
+import 'category_entity.dart';
+import 'city_entity.dart';
+import 'country_entity.dart';
+import 'region_entity.dart';
+import '../usecases/get_base_id_and_name_usecase.dart';
 
 String getBaseIdAndNameEntityApi<T extends BaseEntity>(
   GetBaseEntityParams? params,
@@ -7,6 +13,7 @@ String getBaseIdAndNameEntityApi<T extends BaseEntity>(
     CountryEntity: (_) => "countries", //Api Key For Countries
     CityEntity: (params) => "cities-by-country/${params!.id}",
     RegionEntity: (params) => "regions/${params!.id}",
+    CategoryEntity: (_) => "categories", //Api Key For Categories
   };
   if (T == BaseEntity) {
     throw UnsupportedError(
@@ -29,21 +36,22 @@ abstract class BaseEntity extends Equatable {
 
   const BaseEntity({required this.id});
 
-  static final Map<Type, Function> _fromJsonFactories = {
+  static final Map<Type, Function> fromJsonFactories = {
     CountryEntity: (json) => CountryEntity.fromJson(json),
     CityEntity: (json) => CityEntity.fromJson(json),
     RegionEntity: (json) => RegionEntity.fromJson(json),
+    CategoryEntity: (json) => CategoryEntity.fromJson(json),
   };
 
   static T fromJson<T extends BaseEntity>(Map<String, dynamic> json) {
-    final fromJsonFactory = _fromJsonFactories[T];
+    final fromJsonFactory = fromJsonFactories[T];
 
     if (fromJsonFactory != null) {
       return fromJsonFactory(json) as T;
     } else {
       log('Type passed: $T');
       throw UnsupportedError(
-        'Type $T is not supported. Please add it to the _fromJsonFactories map in BaseEntity and perform a full app restart.',
+        'Type $T is not supported. Please add it to the fromJsonFactories map in BaseEntity and perform a full app restart.',
       );
     }
   }

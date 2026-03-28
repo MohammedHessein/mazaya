@@ -1,10 +1,20 @@
-part of '../imports/view_imports.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
+import 'package:mazaya/src/features/more/entity/more_menu_item_entity.dart';
 
-class _MoreSectionWidget extends StatelessWidget {
+import '../imports/view_imports.dart';
+
+class MoreSectionWidget extends StatelessWidget {
   final String titleKey;
   final List<MoreItemEntity> items;
 
-  const _MoreSectionWidget({required this.titleKey, required this.items});
+  const MoreSectionWidget({
+    super.key,
+    required this.titleKey,
+    required this.items,
+  });
 
   @override
   Widget build(BuildContext context) {

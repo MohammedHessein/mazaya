@@ -33,9 +33,10 @@ import 'package:mazaya/src/features/notifications/presentation/imports/view_impo
 import 'package:mazaya/src/features/settings/presentation/imports/view_imports.dart';
 import 'package:mazaya/src/features/more/entity/more_menu_item_entity.dart';
 
-part '../view/more_tab_view.dart';
-part '../widgets/more_tab_body.dart';
-part '../widgets/more_section_widget.dart';
+export '../view/more_tab_view.dart';
+export '../widgets/more_tab_body.dart';
+export '../widgets/more_section_widget.dart';
+
 part '../cubits/log_out_cubit.dart';
 part '../widgets/dialogs/log_out_dialog.dart';
 part '../widgets/more_menu_card_widget.dart';

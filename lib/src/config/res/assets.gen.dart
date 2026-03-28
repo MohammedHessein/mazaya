@@ -273,6 +273,9 @@ class $AssetsSvgBaseSvgGen {
   SvgGenImage get dropDownClose =>
       const SvgGenImage('assets/svg/base_svg/drop_down_close.svg');
 
+  /// File path: assets/svg/base_svg/filter.svg
+  SvgGenImage get filter => const SvgGenImage('assets/svg/base_svg/filter.svg');
+
   /// File path: assets/svg/base_svg/inactive_coupons.svg
   SvgGenImage get inactiveCoupons =>
       const SvgGenImage('assets/svg/base_svg/inactive_coupons.svg');
@@ -377,6 +380,7 @@ class $AssetsSvgBaseSvgGen {
     doneAction,
     dropDownArrowDown,
     dropDownClose,
+    filter,
     inactiveCoupons,
     inactiveHome,
     inactiveMore,

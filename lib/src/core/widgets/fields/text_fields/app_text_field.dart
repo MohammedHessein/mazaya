@@ -494,6 +494,7 @@ class _AppTextFieldState extends State<AppTextField> {
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
         if (widget.label != null)
           Padding(

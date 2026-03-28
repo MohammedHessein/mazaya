@@ -1,5 +1,8 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-part of '../base_domain_imports.dart';
+import 'package:injectable/injectable.dart';
+import 'package:multiple_result/multiple_result.dart';
+import 'package:mazaya/src/core/error/failure.dart';
+import 'package:mazaya/src/core/network/network_request.dart';
+import '../repositories/base_repository.dart';
 
 @LazySingleton()
 class BaseCrudUseCase {

@@ -17,6 +17,8 @@ import '../../../features/complains/presentation/imports/view_imports.dart'
     as _i434;
 import '../../../features/contact_us/presentation/imports/contact_us_imports.dart'
     as _i95;
+import '../../../features/coupons/presentation/cubits/coupons_cubit.dart'
+    as _i1022;
 import '../../../features/faqs/presentation/imports/view_imports.dart' as _i901;
 import '../../../features/more/presentation/imports/view_imports.dart' as _i964;
 import '../../../features/notifications/presentation/cubits/unread_notification_count_cubit.dart'
@@ -49,6 +51,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i434.ComplainsCubit>(() => _i434.ComplainsCubit());
     gh.factory<_i95.ContactUsCubit>(() => _i95.ContactUsCubit());
+    gh.factory<_i1022.CouponsCubit>(() => _i1022.CouponsCubit());
     gh.factory<_i901.FaqsCubit>(() => _i901.FaqsCubit());
     gh.factory<_i964.LogOutCubit>(() => _i964.LogOutCubit());
     gh.factory<_i980.NotificationsCubit>(() => _i980.NotificationsCubit());

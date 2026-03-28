@@ -1,7 +1,15 @@
-part of '../imports/view_imports.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:mazaya/src/config/language/locale_keys.g.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/extensions/widgets/padding_extension.dart';
+import 'package:mazaya/src/core/shared/cubits/user_cubit/user_cubit.dart';
+import 'package:mazaya/src/features/more/entity/more_menu_item_entity.dart';
 
-class _MoreTabBody extends StatelessWidget {
-  const _MoreTabBody();
+import '../imports/view_imports.dart';
+
+class MoreTabBody extends StatelessWidget {
+  const MoreTabBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,16 +31,16 @@ class _MoreTabBody extends StatelessWidget {
               spacing: AppMargin.mH18,
               children: [
                 if (UserCubit.instance.isUserLoggedIn) ...[
-                  _MoreSectionWidget(
+                  MoreSectionWidget(
                     titleKey: LocaleKeys.moreGeneralTitle,
                     items: generalItems,
                   ),
-                  _MoreSectionWidget(
+                  MoreSectionWidget(
                     titleKey: LocaleKeys.moreOthersTitle,
                     items: otherItems,
                   ),
                 ] else ...[
-                  _MoreSectionWidget(
+                  MoreSectionWidget(
                     titleKey: ConstantManager.emptyText,
                     items: guestItems,
                   ),

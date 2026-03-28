@@ -1,4 +1,5 @@
-part of '../base_domain_imports.dart';
+import 'package:equatable/equatable.dart';
+import 'package:mazaya/src/core/error/failure.dart';
 
 class Async<T> extends Equatable {
   final T? data;

@@ -1,8 +1,11 @@
-part of '../imports/view_imports.dart';
+import 'package:flutter/material.dart';
+import 'package:mazaya/src/features/home/presentation/view/home_screen.dart';
+import 'package:mazaya/src/features/coupons/presentation/view/coupons_view.dart';
+import 'package:mazaya/src/features/more/presentation/view/more_tab_view.dart';
 
-class _MainBody extends StatelessWidget {
+class MainBody extends StatelessWidget {
   final int index;
-  const _MainBody(this.index);
+  const MainBody(this.index, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +13,7 @@ class _MainBody extends StatelessWidget {
       case 0:
         return const HomeScreen();
       case 1:
-        return const SizedBox.shrink();
+        return const CouponsView();
       case 2:
         return const SizedBox.shrink();
       case 3:

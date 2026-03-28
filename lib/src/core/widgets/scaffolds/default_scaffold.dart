@@ -78,8 +78,8 @@ class DefaultScaffold extends StatelessWidget {
               SafeArea(
                 child: Column(
                   children: [
-                    _buildTopRow(context),
-                    _buildHeaderContent(context),
+                    buildTopRow(context),
+                    buildHeaderContent(context),
                     Expanded(child: body),
                   ],
                 ),
@@ -91,7 +91,7 @@ class DefaultScaffold extends StatelessWidget {
     );
   }
 
-  Widget _buildTopRow(BuildContext context) {
+  Widget buildTopRow(BuildContext context) {
     if (headerType == ScaffoldHeaderType.home) {
       return Padding(
         padding: EdgeInsets.symmetric(
@@ -192,10 +192,10 @@ class DefaultScaffold extends StatelessWidget {
     );
   }
 
-  Widget _buildHeaderContent(BuildContext context) {
+  Widget buildHeaderContent(BuildContext context) {
     switch (headerType) {
       case ScaffoldHeaderType.profile:
-        return _buildProfileDecoration(context);
+        return buildProfileDecoration(context);
       case ScaffoldHeaderType.auth:
         return Column(
           children: [headerWidget ?? const SizedBox.shrink(), 50.szH],
@@ -209,13 +209,13 @@ class DefaultScaffold extends StatelessWidget {
           children: [
             if (headLineWidget != null) headLineWidget!,
             headerWidget ?? const SizedBox.shrink(),
-            if (headerWidget != null) 30.szH else 80.szH,
+            if (headerWidget != null) 24.szH else 80.szH,
           ],
         );
     }
   }
 
-  Widget _buildProfileDecoration(BuildContext context) {
+  Widget buildProfileDecoration(BuildContext context) {
     return Center(
       child: Column(
         children: [

@@ -814,6 +814,9 @@ abstract class LocaleKeys {
   static const String _resetPassword2 = 'reset_password_2';
   static String get resetPassword2 => _resetPassword2.tr();
 
+  static const String _resetPassword3 = 'reset_password_3';
+  static String get resetPassword3 => _resetPassword3.tr();
+
   static const String _locationServicesDisabled = 'location_services_disabled';
   static String get locationServicesDisabled => _locationServicesDisabled.tr();
 
@@ -829,4 +832,30 @@ abstract class LocaleKeys {
   static const String _welcomeHome = 'welcome_home';
   static String get welcomeHome => _welcomeHome.tr();
 
+  static const String _filter = 'filter';
+  static String get filter => _filter.tr();
+
+  static const String _noCouponsTitle = 'no_coupons_title';
+  static String get noCouponsTitle => _noCouponsTitle.tr();
+
+  static const String _noCouponsDesc = 'no_coupons_desc';
+  static String get noCouponsDesc => _noCouponsDesc.tr();
+
+  static const String _reset = 'reset';
+  static String get reset => _reset.tr();
+
+  static const String _selectCategory = 'select_category';
+  static String get selectCategory => _selectCategory.tr();
+
+  static const String _applyFilter = 'apply_filter';
+  static String get applyFilter => _applyFilter.tr();
+
+  static const String _filterTitle = 'filter_title';
+  static String get filterTitle => _filterTitle.tr();
+
+  static const String _searchFor = 'search_for';
+  static String get searchFor => _searchFor.tr();
+
+  static const String _section = 'section';
+  static String get section => _section.tr();
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mazaya/src/config/res/config_imports.dart';
 import 'package:mazaya/src/core/extensions/context_extension.dart';
 import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
@@ -48,21 +49,26 @@ class AppCard extends StatelessWidget {
             Stack(
               children: [
                 Container(
-                  width: AppSize.sH65,
-                  height: AppSize.sH65,
+                  width: 60.w,
+                  height: 65.h,
                   decoration: BoxDecoration(
                     color: AppColors.black,
                     borderRadius: BorderRadius.circular(AppCircular.r8),
-                    image: imageUrl != null
-                        ? DecorationImage(
-                            image: AssetImage(imageUrl!),
-                            fit: BoxFit.cover,
-                          )
-                        : null,
                   ),
-                  child: imageUrl == null
-                      ? Icon(Icons.image, color: AppColors.gray400)
-                      : null,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(AppCircular.r8),
+                    child: imageUrl != null
+                        ? (imageUrl!.endsWith('.svg')
+                              ? Padding(
+                                  padding: EdgeInsets.all(8.w),
+                                  child: SvgPicture.asset(
+                                    imageUrl!,
+                                    fit: BoxFit.contain,
+                                  ),
+                                )
+                              : Image.asset(imageUrl!, fit: BoxFit.cover))
+                        : Icon(Icons.image, color: AppColors.gray400),
+                  ),
                 ),
                 Positioned.directional(
                   textDirection: Directionality.of(context),
@@ -72,7 +78,7 @@ class AppCard extends StatelessWidget {
                     onTap: onFavoriteTap,
                     child: Icon(
                       isFavorite ? Icons.favorite : Icons.favorite_border,
-                      size: AppSize.sH20,
+                      size: AppSize.sH25,
                       color: isFavorite ? AppColors.error : AppColors.white,
                     ),
                   ),
