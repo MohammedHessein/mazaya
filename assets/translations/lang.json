@@ -70,7 +70,7 @@
   "operation_faild #$ Operation failed": "فشلت العملية",
   "optional #$ (Optional)": "اختياري",
   "pass_required_validation #$ Password is required": "كلمة المرور مطلوبة",
-  "pass_validation #$ Your password must be at least 8 characters long, contain an uppercase letter, a lowercase letter, a special character, and a number": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل، وتحتوي على حرف كبير، وحرف صغير، ورمز خاص، ورقم",
+  "pass_validation #$ Password must be at least 8 characters or numbers long": "يجب أن تتكون كلمة المرور من 8 أحرف أو أرقام على الأقل",
   "password #$ Password": "كلمة المرور",
   "phone_number #$ Phone Number": "رقم الهاتف",
   "phone_number_verification #$ Phone Number Verification": "التحقق من رقم الهاتف",
@@ -83,6 +83,7 @@
   "please_enter_the_verification_code_sent_to_your_mobile_phone #$ Please enter the verification code sent to your mobile phone": "الرجاء إدخال رمز التحقق المرسل إلى هاتفك المحمول",
   "please_enter_your_confirm_password #$ Please enter your confirm password": "الرجاء إدخال تأكيد كلمة المرور",
   "please_enter_your_current_password #$ Please enter your current password": "الرجاء إدخال كلمة المرور الحالية",
+  "please_enter_your_email #$ Please enter your email": "الرجاء إدخال بريدك الإلكتروني",
   "please_enter_your_new_email #$ Please enter your new email": "الرجاء إدخال بريدك الإلكتروني الجديد",
   "please_enter_your_new_password #$ Please enter your new password": "الرجاء إدخال كلمة المرور الجديدة",
   "please_enter_your_password #$ Please enter your password": "الرجاء إدخال كلمة المرور",
@@ -102,7 +103,7 @@
   "showDetails #$ Show Details": "عرض التفاصيل",
   "back #$ Back": "رجوع",
   "submit #$ Submit": "إرسال",
-  "pass_symbols #$ Password Must Contain Alphabets, Numbers and Symbols": "يجب أن تحتوي كلمة المرور على حروف وأرقام ورموز",
+  "pass_symbols #$ Password must be at least 6 characters long": "يجب أن تتكون كلمة المرور من 6 خانات على الأقل",
   "pass_example #$ Example: MyPass123!": "مثال: MyPass123!",
   "malee #$ Male": "ذكر",
   "femalee #$ female": "أنثى",
@@ -284,5 +285,6 @@
   "apply_filter #$ Apply Filter": "تطبيق التصفية",
   "search_for #$ Search For": "البحث عن",
   "section #$ Section": "القسم",
-  "filter_title #$ Filter": "تصفية"
+  "filter_title #$ Filter": "تصفية",
+  "success_login #$ Login Successful": "تم تسجيل الدخول بنجاح"
 }

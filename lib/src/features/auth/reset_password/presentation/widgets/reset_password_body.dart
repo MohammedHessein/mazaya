@@ -1,14 +1,10 @@
 part of '../../imports/reset_password_imports.dart';
 
 class ResetPasswordBody extends StatefulWidget {
-  final String username;
+  final String email;
   final String code;
 
-  const ResetPasswordBody({
-    super.key,
-    required this.username,
-    required this.code,
-  });
+  const ResetPasswordBody({super.key, required this.email, required this.code});
 
   @override
   State<ResetPasswordBody> createState() => _ResetPasswordBodyState();
@@ -119,33 +115,12 @@ class _ResetPasswordBodyState extends State<ResetPasswordBody> {
                   title: LocaleKeys.save,
                   onTap: () async {
                     if (_formKey.currentState!.validate()) {
-                      // await context.read<ResetPasswordCubit>().fResetPassword(
-                      //       username: widget.username,
-                      //       code: widget.code,
-                      //       password: passwordController.text,
-                      //       confirmPassword: confirmPasswordController.text,
-                      //     );
-                      showDefaultBottomSheet(
-                        context: context,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            AppAssets.svg.baseSvg.doneAction.image(
-                              height: 120.h,
-                            ),
-                            24.szH,
-                            Text(
-                              LocaleKeys.changePasswordSuccess.tr(),
-                              style: context.textStyle.s18.bold,
-                              textAlign: TextAlign.center,
-                            ),
-                            50.szH,
-                          ],
-                        ),
+                      await context.read<ResetPasswordCubit>().fResetPassword(
+                        email: widget.email,
+                        code: widget.code,
+                        password: passwordController.text,
+                        confirmPassword: confirmPasswordController.text,
                       );
-
-                      await Future.delayed(const Duration(seconds: 3));
-                      Go.offAll(const MainScreen());
                     }
                   },
                 ),

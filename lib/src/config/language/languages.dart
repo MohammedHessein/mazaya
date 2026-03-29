@@ -36,9 +36,18 @@ enum Languages {
   }
 
   static Languages get currentLanguage {
-    final currentLocale =
-        EasyLocalization.of(Go.navigatorKey.currentContext!)!.locale;
-    return Languages.values
-        .firstWhere((element) => element.locale == currentLocale);
+    try {
+      final context = Go.navigatorKey.currentContext;
+      if (context == null) return Languages.arabic;
+      final easyLocale = EasyLocalization.of(context);
+      if (easyLocale == null) return Languages.arabic;
+      final currentLocale = easyLocale.locale;
+      return Languages.values.firstWhere(
+        (element) => element.locale == currentLocale,
+        orElse: () => Languages.arabic,
+      );
+    } catch (_) {
+      return Languages.arabic;
+    }
   }
 }

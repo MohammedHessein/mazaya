@@ -22,8 +22,8 @@ class MessageUtils {
         },
       ),
       backgroundColor: baseStatus == BaseStatus.error
-          ? AppColors.secondary
-          : AppColors.primary,
+          ? AppColors.error
+          : AppColors.success,
       behavior: SnackBarBehavior.floating,
       elevation: 4,
     );

@@ -29,6 +29,7 @@ class _MazayaAppState extends State<MazayaApp> {
   void initState() {
     super.initState();
     _addUnAuthenticatedListener();
+    injector<UserCubit>().init();
   }
 
   void _addUnAuthenticatedListener() {

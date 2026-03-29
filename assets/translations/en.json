@@ -70,7 +70,7 @@
   "operation_faild": "Operation failed",
   "optional": "(Optional)",
   "pass_required_validation": "Password is required",
-  "pass_validation": "Your password must be at least 8 characters long, contain an uppercase letter, a lowercase letter, a special character, and a number",
+  "pass_validation": "Password must be at least 8 characters or numbers long",
   "password": "Password",
   "phone_number": "Phone Number",
   "phone_number_verification": "Phone Number Verification",
@@ -83,6 +83,7 @@
   "please_enter_the_verification_code_sent_to_your_mobile_phone": "Please enter the verification code sent to your mobile phone",
   "please_enter_your_confirm_password": "Please enter your confirm password",
   "please_enter_your_current_password": "Please enter your current password",
+  "please_enter_your_email": "Please enter your email",
   "please_enter_your_new_email": "Please enter your new email",
   "please_enter_your_new_password": "Please enter your new password",
   "please_enter_your_password": "Please enter your password",
@@ -102,7 +103,7 @@
   "show_details": "Show Details",
   "back": "Back",
   "submit": "Submit",
-  "pass_symbols": "Password Must Contain Alphabets, Numbers and Symbols",
+  "pass_symbols": "Password must be at least 6 characters long",
   "pass_example": "Example: MyPass123!",
   "malee": "Male",
   "femalee": "female",
@@ -268,7 +269,7 @@
   "forgot_password_2": "Password",
   "verification_code_1": "Verification",
   "verification_code_2": "Code",
-  "reset_password_1": "Reset ",
+  "reset_password_1": "Reset",
   "reset_password_2": "Password",
   "reset_password_3": "?",
   "location_services_disabled": "Location services are disabled.",
@@ -284,5 +285,6 @@
   "apply_filter": "Apply Filter",
   "search_for": "Search For",
   "section": "Section",
-  "filter_title": "Filter"
+  "filter_title": "Filter",
+  "success_login": "Login Successful"
 }

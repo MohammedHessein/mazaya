@@ -1,23 +1,23 @@
 class ApiConstants {
-  static const String baseUrl = 'https://your-api-url.com/api/';
+  static const String baseUrl =
+      'https://backend.smartvision4p.com/mazaya-app/public/api/v1/';
   // ---------------------- Settings -----------------------------------
   static const String intro = 'get-intros';
   static const String countries = 'countries';
   static const String uploadFiles = 'upload-files';
   // ---------------------- Auth -----------------------------------
-  static const String login = 'user/auth/login';
-  static const String register = 'user/auth/register';
+  static const String login = 'user/login';
+  static const String forgetPassword = 'user/forgot-password';
+  static const String checkResetCode = 'user/check-reset-code';
+  static const String resetPassword = 'user/reset-password';
   static const String cities = 'cities-by-country/';
   static const String registerContent = 'user/get-register-data';
   static const String verifyAccount = 'user/auth/verify-account';
   static const String verifyAccountResendCode =
       'user/auth/verify-account-resend-code';
-  static const String forgetSendCode = 'user/auth/forget-password/send-code';
   static const String forgetReSendCode =
       'user/auth/forget-password/resend-code';
   static const String forgetCheckCode = 'user/auth/forget-password/verify-code';
-  static const String resetPassword =
-      'user/auth/forget-password/reset-password';
 
   // ---------------------- Notifications -----------------------------------
   static const String notifications = 'user/notifications';

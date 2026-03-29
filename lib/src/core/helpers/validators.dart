@@ -1,5 +1,5 @@
- import 'package:mazaya/src/config/language/locale_keys.g.dart';
- 
+import 'package:mazaya/src/config/language/locale_keys.g.dart';
+
 class Validators {
   static String? validateEmpty(String? value, {String? fieldTitle}) {
     if (value == null || value.isEmpty) {
@@ -47,11 +47,10 @@ class Validators {
       return fieldTitle == null
           ? LocaleKeys.fillField
           : "${LocaleKeys.filedValidation} $fieldTitle";
-    } else if (!RegExp(
-      r"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[@#$%^&*()_+=\[\]{};:,.<>?/\\|`~!-]).{8,16}$",
-    ).hasMatch(value!)) {
-      return LocaleKeys.passSymbols;
-    } else if (value.length > 16) {
+    } else if (value!.length < 8) {
+      return LocaleKeys
+          .passValidation; // Assuming this points to a 'min length' message
+    } else if (value.length > 32) {
       return LocaleKeys.passValidation;
     } else if (RegExp(r'[<>]').hasMatch(value)) {
       return LocaleKeys.scripInjectionValidate;

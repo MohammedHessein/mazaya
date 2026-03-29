@@ -156,8 +156,10 @@ Each feature in `lib/src/features/` must follow:
 - **UI**: Wrap with `PaginatedListWidget<T>`.
 
 ### 4. Localization
-- **Add**: Update JSON in `assets/translations/`.
-- **Gen**: Run `dart run generate/strings/main.dart`.
+- **Add**: Update `assets/translations/lang.json` (Source of Truth).
+- **Format**: `key #$ English Text`: `Arabic Text`.
+- **English/Arabic files**: NEVER edit `en.json` or `ar.json` directly. They are generated.
+- **Gen**: Run `dart run generate/strings/main.dart` after ANY change to `lang.json`.
 - **Use**: `LocaleKeys.key.tr()` (Zero hardcoding rule).
 
 ---

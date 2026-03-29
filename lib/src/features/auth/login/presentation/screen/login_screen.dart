@@ -5,11 +5,14 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const DefaultScaffold(
+    return DefaultScaffold(
       showBackButton: true,
       title: '',
       headerType: ScaffoldHeaderType.auth,
-      body: LoginBody(),
+      body: BlocProvider(
+        create: (context) => injector<LoginCubit>(),
+        child: const LoginBody(),
+      ),
     );
   }
 }

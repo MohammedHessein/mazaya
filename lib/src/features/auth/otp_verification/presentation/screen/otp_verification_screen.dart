@@ -1,20 +1,21 @@
 part of '../../imports/otp_verification_imports.dart';
 
 class OtpVerificationScreen extends StatelessWidget {
-  final String username;
-  const OtpVerificationScreen({super.key, required this.username});
+  final String email;
+
+  const OtpVerificationScreen({super.key, required this.email});
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => VerifyCodeCubit()),
-        BlocProvider(create: (context) => ResendCodeCubit()),
+        BlocProvider(create: (context) => ForgetPasswordCubit()),
       ],
       child: DefaultScaffold(
         headerType: ScaffoldHeaderType.auth,
         title: LocaleKeys.verificationCode,
-        body: OtpVerificationBody(username: username),
+        body: OtpVerificationBody(email: email),
       ),
     );
   }

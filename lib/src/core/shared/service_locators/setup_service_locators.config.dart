@@ -33,6 +33,10 @@ import '../../../features/user_profile/presentation/imports/view_imports.dart'
     as _i360;
 import '../../base_crud/code/data/base_data_imports.dart' as _i241;
 import '../../base_crud/code/domain/base_domain_imports.dart' as _i267;
+import '../../base_crud/code/domain/repositories/base_repository.dart' as _i618;
+import '../../base_crud/code/domain/usecases/base_crud.dart' as _i687;
+import '../../base_crud/code/domain/usecases/get_base_id_and_name_usecase.dart'
+    as _i763;
 import '../../network/dio_service.dart' as _i37;
 import '../../network/network_service.dart' as _i632;
 import '../cubits/user_cubit/user_cubit.dart' as _i996;
@@ -75,11 +79,11 @@ extension GetItInjectableX on _i174.GetIt {
         baseRemoteDataSource: gh<_i241.BaseRemoteDataSource>(),
       ),
     );
-    gh.lazySingleton<_i267.BaseCrudUseCase>(
-      () => _i267.BaseCrudUseCase(repository: gh<_i267.BaseRepository>()),
+    gh.lazySingleton<_i687.BaseCrudUseCase>(
+      () => _i687.BaseCrudUseCase(repository: gh<_i618.BaseRepository>()),
     );
-    gh.lazySingleton<_i267.GetBaseEntityUseCase>(
-      () => _i267.GetBaseEntityUseCase(repository: gh<_i267.BaseRepository>()),
+    gh.lazySingleton<_i763.GetBaseEntityUseCase>(
+      () => _i763.GetBaseEntityUseCase(repository: gh<_i618.BaseRepository>()),
     );
     return this;
   }

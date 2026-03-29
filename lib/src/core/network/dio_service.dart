@@ -26,10 +26,10 @@ class DioService implements NetworkService {
   DioService() {
     _dio = Dio()
       ..options.connectTimeout = const Duration(
-        seconds: ConstantManager.connectTimeoutDuration,
+        milliseconds: ConstantManager.connectTimeoutDuration,
       )
       ..options.receiveTimeout = const Duration(
-        seconds: ConstantManager.recieveTimeoutDuration,
+        milliseconds: ConstantManager.recieveTimeoutDuration,
       )
       ..options.responseType = ResponseType.json;
 
@@ -60,8 +60,7 @@ class DioService implements NetworkService {
   @override
   Future<void> updateBaseUrl() async {
     final baseUrl = await getBaseUrl();
-    _dio.options.baseUrl =
-        baseUrl.isNotEmpty ? baseUrl : ApiConstants.baseUrl;
+    _dio.options.baseUrl = baseUrl.isNotEmpty ? baseUrl : ApiConstants.baseUrl;
   }
 
   @override
@@ -123,6 +122,12 @@ class DioService implements NetworkService {
       }
     } on DioException catch (e) {
       return _handleError(e);
+    } catch (e, s) {
+      if (kDebugMode) {
+        debugPrint("Network Error: $e");
+        debugPrint(s.toString());
+      }
+      throw ServerException(LocaleKeys.exceptionError);
     }
   }
 

@@ -12,14 +12,17 @@ class BaseModel<T> {
     Map<String, dynamic> json, {
     T Function(dynamic json)? jsonToModel,
   }) {
+    final msg = json['message'] ?? json['msg'] ?? ConstantManager.emptyText;
+    final status = json['status'] ?? json['key'] ?? ConstantManager.emptyText;
+
     return BaseModel(
-      message: json['msg'] ?? ConstantManager.emptyText,
-      key: json['key'] ?? ConstantManager.emptyText,
+      message: msg,
+      key: status,
       data: jsonToModel != null
           ? json['data'] == null
-                ? jsonToModel({'msg': json['msg'] ?? json['message'] ?? ""})
-                : jsonToModel(json)
-          : json['key'] ?? json['msg'] ?? '',
+              ? jsonToModel({'msg': msg, 'message': msg, 'key': status, 'status': status})
+              : jsonToModel(json)
+          : (json['data'] ?? status),
     );
   }
 }

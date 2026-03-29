@@ -1,11 +1,11 @@
 part of '../../imports/reset_password_imports.dart';
 
 class ResetPasswordScreen extends StatelessWidget {
-  final String username;
+  final String email;
   final String code;
   const ResetPasswordScreen({
     super.key,
-    required this.username,
+    required this.email,
     required this.code,
   });
 
@@ -16,7 +16,7 @@ class ResetPasswordScreen extends StatelessWidget {
       child: DefaultScaffold(
         headerType: ScaffoldHeaderType.auth,
         title: LocaleKeys.resetPasswordTitle,
-        body: ResetPasswordBody(username: username, code: code),
+        body: ResetPasswordBody(email: email, code: code),
       ),
     );
   }

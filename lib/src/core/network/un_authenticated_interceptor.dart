@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'api_endpoints.dart';
 
 /// true  -> blocked
 /// false -> unauthenticated (session expired)
@@ -30,7 +31,8 @@ class UnAuthenticatedInterceptor extends Interceptor {
         : response.data;
 
     final bool isUnauthenticated =
-        response.statusCode == 401 ||
+        (response.statusCode == 401 &&
+            !response.requestOptions.path.contains(ApiConstants.login)) ||
         (response.statusCode == 200 && data['key'] == "unauthenticated");
 
     final bool isBlocked =
@@ -45,7 +47,8 @@ class UnAuthenticatedInterceptor extends Interceptor {
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
-    if (err.response?.statusCode == 401) {
+    if (err.response?.statusCode == 401 &&
+        !err.requestOptions.path.contains(ApiConstants.login)) {
       notifyListeners(false); // unauthenticated
     }
     super.onError(err, handler);

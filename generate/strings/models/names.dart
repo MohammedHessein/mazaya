@@ -32,8 +32,7 @@ class Names {
     }
 
     try {
-      final String camelCase =
-          NamesHelper.snakeToCamelCase(NamesHelper.toSnakeCase(original));
+      final String camelCase = NamesHelper.snakeToCamelCase(snakeCase);
       final String classCase = NamesHelper.camelToClassCase(camelCase);
 
       return Names(

@@ -1,18 +1,25 @@
 import 'dart:io';
-import 'package:dio/dio.dart';
 
+import 'package:dio/dio.dart';
 import 'package:mazaya/src/config/language/languages.dart';
+
+import '../../config/res/config_imports.dart';
 import 'backend_configuation.dart';
 
 class ConfigurationInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     options.headers.addAll({
-      HttpHeaders.acceptHeader: ContentType.json,
-      Headers.contentTypeHeader: Headers.jsonContentType,
+      HttpHeaders.acceptHeader: ConstantManager.acceptHeader,
       HttpHeaders.acceptLanguageHeader:
-          Languages.currentLanguage.locale.languageCode
+          Languages.currentLanguage.locale.languageCode,
     });
+
+    if (options.data is! FormData) {
+      options.headers[HttpHeaders.contentTypeHeader] =
+          ConstantManager.acceptHeader;
+    }
+
     handler.next(options);
   }
 
@@ -25,10 +32,15 @@ class ConfigurationInterceptor extends Interceptor {
   }
 
   void _handleError(Response response) {
-    final errorKey = response.data['key'];
-    final errorMessage = response.data['msg'];
+    if (response.data == null || response.data is! Map) return;
+    if (response.data['status'] == true) return;
 
-    final statusCode = _mapErrorKeyToStatusCode(errorKey);
+    final dynamic errorKey = response.data['key'];
+    final dynamic errorMessage = response.data['msg'];
+
+    if (errorKey == null) return;
+
+    final statusCode = _mapErrorKeyToStatusCode(errorKey.toString());
 
     if (statusCode != null) {
       throw DioException(
@@ -36,14 +48,10 @@ class ConfigurationInterceptor extends Interceptor {
         requestOptions: response.requestOptions,
         response: Response(
           requestOptions: response.requestOptions,
-          data: {
-            'message': errorMessage,
-          },
+          data: {'message': errorMessage},
           statusCode: statusCode,
         ),
-        error: {
-          'message': errorMessage,
-        },
+        error: {'message': errorMessage},
       );
     }
   }

@@ -6,14 +6,14 @@ class ConstantManager {
   static const String bundleId = 'com.smartVision.mazaya';
   static const String appName = 'mazaya';
   static const String fontFamily = 'Madani';
-
+  static const String acceptHeader = 'application/json';
   static const int splashTimer = 3000;
   static const String emptyText = '';
   static const int zero = 0;
   static const zeroAsDouble = 0.0;
   static const int pinCodeFieldsCount = 4;
-  static const int connectTimeoutDuration = 5000;
-  static const int recieveTimeoutDuration = 5000;
+  static const int connectTimeoutDuration = 10000;
+  static const int recieveTimeoutDuration = 10000;
   static const String ar = 'ar';
   static const String en = 'en';
   static const String arabic = 'العربية';

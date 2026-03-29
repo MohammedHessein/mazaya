@@ -9,11 +9,11 @@ class ForgetPasswordBody extends StatefulWidget {
 
 class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
 
   @override
   void dispose() {
-    usernameController.dispose();
+    emailController.dispose();
     super.dispose();
   }
 
@@ -22,7 +22,7 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
     return BlocConsumer<ForgetPasswordCubit, AsyncState<String?>>(
       listener: (context, state) {
         if (state.isSuccess) {
-          Go.to(OtpVerificationScreen(username: usernameController.text));
+          Go.to(OtpVerificationScreen(email: emailController.text));
         }
       },
       builder: (context, state) {
@@ -60,14 +60,14 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
                   style: context.textStyle.s14.regular.setHintColor,
                 ),
                 30.szH,
-                FieldLabel(label: LocaleKeys.username),
+                FieldLabel(label: LocaleKeys.email),
                 8.szH,
                 AppTextField(
-                  hint: LocaleKeys.enterUsername,
-                  controller: usernameController,
-                  validator: (value) => Validators.validateName(
+                  hint: LocaleKeys.pleaseEnterYourEmail,
+                  controller: emailController,
+                  validator: (value) => Validators.validateEmail(
                     value,
-                    fieldTitle: LocaleKeys.username,
+                    fieldTitle: LocaleKeys.email,
                   ),
                 ),
                 40.szH,
@@ -75,13 +75,8 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
                   title: LocaleKeys.next,
                   onTap: () async {
                     if (_formKey.currentState!.validate()) {
-                      // await context.read<ForgetPasswordCubit>().fForgetPassword(
-                      //       username: usernameController.text,
-                      //     );
-                      Go.to(
-                        OtpVerificationScreen(
-                          username: usernameController.text,
-                        ),
+                      await context.read<ForgetPasswordCubit>().fForgetPassword(
+                        email: emailController.text,
                       );
                     }
                   },

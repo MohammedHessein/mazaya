@@ -253,6 +253,9 @@ abstract class LocaleKeys {
   static const String _pleaseEnterYourCurrentPassword = 'please_enter_your_current_password';
   static String get pleaseEnterYourCurrentPassword => _pleaseEnterYourCurrentPassword.tr();
 
+  static const String _pleaseEnterYourEmail = 'please_enter_your_email';
+  static String get pleaseEnterYourEmail => _pleaseEnterYourEmail.tr();
+
   static const String _pleaseEnterYourNewEmail = 'please_enter_your_new_email';
   static String get pleaseEnterYourNewEmail => _pleaseEnterYourNewEmail.tr();
 
@@ -850,12 +853,16 @@ abstract class LocaleKeys {
   static const String _applyFilter = 'apply_filter';
   static String get applyFilter => _applyFilter.tr();
 
-  static const String _filterTitle = 'filter_title';
-  static String get filterTitle => _filterTitle.tr();
-
   static const String _searchFor = 'search_for';
   static String get searchFor => _searchFor.tr();
 
   static const String _section = 'section';
   static String get section => _section.tr();
+
+  static const String _filterTitle = 'filter_title';
+  static String get filterTitle => _filterTitle.tr();
+
+  static const String _successLogin = 'success_login';
+  static String get successLogin => _successLogin.tr();
+
 }

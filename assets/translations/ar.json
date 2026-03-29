@@ -70,7 +70,7 @@
   "operation_faild": "فشلت العملية",
   "optional": "اختياري",
   "pass_required_validation": "كلمة المرور مطلوبة",
-  "pass_validation": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل، وتحتوي على حرف كبير، وحرف صغير، ورمز خاص، ورقم",
+  "pass_validation": "يجب أن تتكون كلمة المرور من 8 أحرف أو أرقام على الأقل",
   "password": "كلمة المرور",
   "phone_number": "رقم الهاتف",
   "phone_number_verification": "التحقق من رقم الهاتف",
@@ -83,6 +83,7 @@
   "please_enter_the_verification_code_sent_to_your_mobile_phone": "الرجاء إدخال رمز التحقق المرسل إلى هاتفك المحمول",
   "please_enter_your_confirm_password": "الرجاء إدخال تأكيد كلمة المرور",
   "please_enter_your_current_password": "الرجاء إدخال كلمة المرور الحالية",
+  "please_enter_your_email": "الرجاء إدخال بريدك الإلكتروني",
   "please_enter_your_new_email": "الرجاء إدخال بريدك الإلكتروني الجديد",
   "please_enter_your_new_password": "الرجاء إدخال كلمة المرور الجديدة",
   "please_enter_your_password": "الرجاء إدخال كلمة المرور",
@@ -102,7 +103,7 @@
   "show_details": "عرض التفاصيل",
   "back": "رجوع",
   "submit": "إرسال",
-  "pass_symbols": "يجب أن تحتوي كلمة المرور على حروف وأرقام ورموز",
+  "pass_symbols": "يجب أن تتكون كلمة المرور من 6 خانات على الأقل",
   "pass_example": "مثال: MyPass123!",
   "malee": "ذكر",
   "femalee": "أنثى",
@@ -284,5 +285,6 @@
   "apply_filter": "تطبيق التصفية",
   "search_for": "البحث عن",
   "section": "القسم",
-  "filter_title": "تصفية"
+  "filter_title": "تصفية",
+  "success_login": "تم تسجيل الدخول بنجاح"
 }
