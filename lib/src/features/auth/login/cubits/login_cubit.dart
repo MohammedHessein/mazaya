@@ -8,9 +8,9 @@ import 'package:mazaya/src/core/network/api_endpoints.dart';
 import 'package:mazaya/src/core/notification/notification_service.dart';
 import 'package:mazaya/src/core/shared/cubits/user_cubit/user_cubit.dart';
 import 'package:mazaya/src/core/shared/models/user_model.dart';
+import 'package:mazaya/src/features/main/presentation/view/main_screen.dart';
 
 import '../../../../core/widgets/custom_messages.dart';
-import '../../../location/presentation/screen/select_location_screen.dart';
 
 @injectable
 class LoginCubit extends AsyncCubit<UserModel?> {
@@ -40,7 +40,7 @@ class LoginCubit extends AsyncCubit<UserModel?> {
             user: user,
             token: user.token!,
           );
-          Go.to(const SelectLocationScreen());
+          Go.offAll(const MainScreen());
           MessageUtils.showSnackBar(
             message: LocaleKeys.successLogin,
             baseStatus: BaseStatus.success,
