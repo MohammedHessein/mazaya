@@ -225,6 +225,12 @@ class $AssetsSvgBaseSvgGen {
   SvgGenImage get arrowDownMenu =>
       const SvgGenImage('assets/svg/base_svg/arrow_down_menu.svg');
 
+  /// File path: assets/svg/base_svg/bill.svg
+  SvgGenImage get bill => const SvgGenImage('assets/svg/base_svg/bill.svg');
+
+  /// File path: assets/svg/base_svg/camera.svg
+  SvgGenImage get camera => const SvgGenImage('assets/svg/base_svg/camera.svg');
+
   /// File path: assets/svg/base_svg/change_email.svg
   SvgGenImage get changeEmail =>
       const SvgGenImage('assets/svg/base_svg/change_email.svg');
@@ -261,6 +267,10 @@ class $AssetsSvgBaseSvgGen {
   AssetGenImage get determineLocation =>
       const AssetGenImage('assets/svg/base_svg/determine_location.png');
 
+  /// File path: assets/svg/base_svg/diamond_member.svg
+  SvgGenImage get diamondMember =>
+      const SvgGenImage('assets/svg/base_svg/diamond_member.svg');
+
   /// File path: assets/svg/base_svg/done_action.png
   AssetGenImage get doneAction =>
       const AssetGenImage('assets/svg/base_svg/done_action.png');
@@ -273,8 +283,22 @@ class $AssetsSvgBaseSvgGen {
   SvgGenImage get dropDownClose =>
       const SvgGenImage('assets/svg/base_svg/drop_down_close.svg');
 
+  /// File path: assets/svg/base_svg/edit_profile.svg
+  SvgGenImage get editProfile =>
+      const SvgGenImage('assets/svg/base_svg/edit_profile.svg');
+
   /// File path: assets/svg/base_svg/filter.svg
   SvgGenImage get filter => const SvgGenImage('assets/svg/base_svg/filter.svg');
+
+  /// File path: assets/svg/base_svg/global.svg
+  SvgGenImage get global => const SvgGenImage('assets/svg/base_svg/global.svg');
+
+  /// File path: assets/svg/base_svg/golden_member.svg
+  SvgGenImage get goldenMember =>
+      const SvgGenImage('assets/svg/base_svg/golden_member.svg');
+
+  /// File path: assets/svg/base_svg/heart.svg
+  SvgGenImage get heart => const SvgGenImage('assets/svg/base_svg/heart.svg');
 
   /// File path: assets/svg/base_svg/inactive_coupons.svg
   SvgGenImage get inactiveCoupons =>
@@ -299,9 +323,16 @@ class $AssetsSvgBaseSvgGen {
   AssetGenImage get login =>
       const AssetGenImage('assets/svg/base_svg/login.png');
 
+  /// File path: assets/svg/base_svg/logout.svg
+  SvgGenImage get logout => const SvgGenImage('assets/svg/base_svg/logout.svg');
+
   /// File path: assets/svg/base_svg/mazaya_text.png
   AssetGenImage get mazayaText =>
       const AssetGenImage('assets/svg/base_svg/mazaya_text.png');
+
+  /// File path: assets/svg/base_svg/more_arrow_arabic.svg
+  SvgGenImage get moreArrowArabic =>
+      const SvgGenImage('assets/svg/base_svg/more_arrow_arabic.svg');
 
   /// File path: assets/svg/base_svg/notification_delete.svg
   SvgGenImage get notificationDelete =>
@@ -327,12 +358,20 @@ class $AssetsSvgBaseSvgGen {
   SvgGenImage get notifications =>
       const SvgGenImage('assets/svg/base_svg/notifications.svg');
 
+  /// File path: assets/svg/base_svg/notifications_bing.svg
+  SvgGenImage get notificationsBing =>
+      const SvgGenImage('assets/svg/base_svg/notifications_bing.svg');
+
   /// File path: assets/svg/base_svg/notify.svg
   SvgGenImage get notify => const SvgGenImage('assets/svg/base_svg/notify.svg');
 
   /// File path: assets/svg/base_svg/profile.png
   AssetGenImage get profile =>
       const AssetGenImage('assets/svg/base_svg/profile.png');
+
+  /// File path: assets/svg/base_svg/profile_delete.svg
+  SvgGenImage get profileDelete =>
+      const SvgGenImage('assets/svg/base_svg/profile_delete.svg');
 
   /// File path: assets/svg/base_svg/read_notification.svg
   SvgGenImage get readNotification =>
@@ -341,13 +380,28 @@ class $AssetsSvgBaseSvgGen {
   /// File path: assets/svg/base_svg/search.svg
   SvgGenImage get search => const SvgGenImage('assets/svg/base_svg/search.svg');
 
+  /// File path: assets/svg/base_svg/security_user.svg
+  SvgGenImage get securityUser =>
+      const SvgGenImage('assets/svg/base_svg/security_user.svg');
+
   /// File path: assets/svg/base_svg/sessions_empty.png
   AssetGenImage get sessionsEmpty =>
       const AssetGenImage('assets/svg/base_svg/sessions_empty.png');
 
+  /// File path: assets/svg/base_svg/silver_member.svg
+  SvgGenImage get silverMember =>
+      const SvgGenImage('assets/svg/base_svg/silver_member.svg');
+
   /// File path: assets/svg/base_svg/un_read_notification.svg
   SvgGenImage get unReadNotification =>
       const SvgGenImage('assets/svg/base_svg/un_read_notification.svg');
+
+  /// File path: assets/svg/base_svg/unlock.svg
+  SvgGenImage get unlock => const SvgGenImage('assets/svg/base_svg/unlock.svg');
+
+  /// File path: assets/svg/base_svg/used_coupons.svg
+  SvgGenImage get usedCoupons =>
+      const SvgGenImage('assets/svg/base_svg/used_coupons.svg');
 
   /// List of all assets
   List<dynamic> get values => [
@@ -368,6 +422,8 @@ class $AssetsSvgBaseSvgGen {
     arrowBack,
     arrowDown,
     arrowDownMenu,
+    bill,
+    camera,
     changeEmail,
     changePass,
     chatsEmpty,
@@ -377,29 +433,42 @@ class $AssetsSvgBaseSvgGen {
     curveBackground,
     deleteAll,
     determineLocation,
+    diamondMember,
     doneAction,
     dropDownArrowDown,
     dropDownClose,
+    editProfile,
     filter,
+    global,
+    goldenMember,
+    heart,
     inactiveCoupons,
     inactiveHome,
     inactiveMore,
     inactiveScanner,
     lock,
     login,
+    logout,
     mazayaText,
+    moreArrowArabic,
     notificationDelete,
     notificationDialog,
     notificationEmpty,
     notificationHome,
     notificationsCopy,
     notifications,
+    notificationsBing,
     notify,
     profile,
+    profileDelete,
     readNotification,
     search,
+    securityUser,
     sessionsEmpty,
+    silverMember,
     unReadNotification,
+    unlock,
+    usedCoupons,
   ];
 }
 
