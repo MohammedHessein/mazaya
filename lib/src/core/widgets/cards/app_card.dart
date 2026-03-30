@@ -91,19 +91,22 @@ class AppCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (status != null)
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 8.w,
-                        vertical: 4.h,
-                      ),
-                      margin: EdgeInsets.only(bottom: 8.h),
-                      decoration: BoxDecoration(
-                        color: AppColors.primary.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(AppCircular.r20),
-                      ),
-                      child: Text(
-                        status!,
-                        style: context.textStyle.s10.bold.setPrimaryColor,
+                    Align(
+                      alignment: AlignmentDirectional.topEnd,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8.w,
+                          vertical: 4.h,
+                        ),
+                        margin: EdgeInsets.only(bottom: 8.h),
+                        decoration: BoxDecoration(
+                          color: AppColors.primary.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(AppCircular.r20),
+                        ),
+                        child: Text(
+                          status!,
+                          style: context.textStyle.s10.bold.setPrimaryColor,
+                        ),
                       ),
                     ),
                   Text(

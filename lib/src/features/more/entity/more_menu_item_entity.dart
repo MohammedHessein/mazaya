@@ -3,6 +3,10 @@ import 'package:mazaya/src/config/language/languages.dart';
 import 'package:mazaya/src/config/language/locale_keys.g.dart';
 import 'package:mazaya/src/config/res/assets.gen.dart';
 import 'package:mazaya/src/core/navigation/navigator.dart';
+import 'package:mazaya/src/core/widgets/language/open_language_sheet.dart';
+import 'package:mazaya/src/features/favourite/presentation/imports/view_imports.dart';
+import 'package:mazaya/src/features/used_coupons/presentation/imports/view_imports.dart';
+import 'package:mazaya/src/features/change_password/imports/change_password_imports.dart';
 import 'package:mazaya/src/features/more/presentation/imports/view_imports.dart';
 import 'package:mazaya/src/features/static_pages/entity/static_pages_enum.dart';
 import 'package:mazaya/src/features/static_pages/presentation/imports/view_imports.dart';
@@ -33,17 +37,17 @@ class MoreItemEntity {
     MoreItemEntity(
       title: LocaleKeys.settingsChangePassword,
       icon: AppAssets.svg.baseSvg.editProfile.path,
-      onTap: () {},
+      onTap: () => Go.to(const ChangePasswordScreen()),
     ),
     MoreItemEntity(
       title: LocaleKeys.favourite,
       icon: AppAssets.svg.baseSvg.heart.path,
-      onTap: () {},
+      onTap: () => Go.to(const FavouriteScreen()),
     ),
     MoreItemEntity(
       title: LocaleKeys.usedCoupons,
       icon: AppAssets.svg.baseSvg.usedCoupons.path,
-      onTap: () {},
+      onTap: () => Go.to(const UsedCouponsScreen()),
     ),
     MoreItemEntity(
       title: LocaleKeys.settingsNotifications,
@@ -54,7 +58,7 @@ class MoreItemEntity {
       title: LocaleKeys.language,
       icon: AppAssets.svg.baseSvg.global.path,
       trailingText: Languages.currentLanguage.title,
-      onTap: () {},
+      onTap: () => openLanguageSheet(context),
     ),
     MoreItemEntity(
       title: LocaleKeys.terms,

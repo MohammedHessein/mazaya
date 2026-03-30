@@ -25,7 +25,8 @@ class CustomNavigationBar extends StatelessWidget {
       child: LayoutBuilder(
         builder: (context, constraints) {
           final itemWidth = constraints.maxWidth / tabs.length;
-          final indicatorSize = 70.h;
+          final indicatorHeight = 70.h;
+          final indicatorWidth = itemWidth - 10.w;
 
           return Container(
             height: 80.h,
@@ -47,16 +48,16 @@ class CustomNavigationBar extends StatelessWidget {
                   curve: Curves.easeOutCubic,
                   left: context.isRight
                       ? (tabs.length - 1 - selectedIndex) * itemWidth +
-                            (itemWidth - indicatorSize) / 2
+                            (itemWidth - indicatorWidth) / 2
                       : selectedIndex * itemWidth +
-                            (itemWidth - indicatorSize) / 2,
-                  top: (80.h - indicatorSize) / 2,
+                            (itemWidth - indicatorWidth) / 2,
+                  top: (80.h - indicatorHeight) / 2,
                   child: Container(
-                    width: indicatorSize,
-                    height: indicatorSize,
-                    decoration: const BoxDecoration(
+                    width: indicatorWidth,
+                    height: indicatorHeight,
+                    decoration: BoxDecoration(
                       color: AppColors.blue50,
-                      shape: BoxShape.circle,
+                      borderRadius: BorderRadius.circular(AppCircular.r50),
                     ),
                   ),
                 ),

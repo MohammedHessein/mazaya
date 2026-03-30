@@ -7,7 +7,7 @@ class MoreTabBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final mainItems = MoreItemEntity.mainItems(context);
     return SliverPadding(
-      padding: EdgeInsets.symmetric(horizontal: AppPadding.pW16),
+      padding: EdgeInsets.symmetric(horizontal: AppPadding.pW20),
       sliver: SliverToBoxAdapter(
         child: Transform.translate(
           offset: Offset(0, -50.h),

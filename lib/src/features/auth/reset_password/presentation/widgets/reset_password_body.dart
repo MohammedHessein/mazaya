@@ -37,7 +37,9 @@ class _ResetPasswordBodyState extends State<ResetPasswordBody> {
             child: Column(
               children: [
                 40.szH,
-                UniversalMediaWidget(path: AppAssets.svg.baseSvg.lock.path),
+                UniversalMediaWidget(
+                  path: AppAssets.svg.baseSvg.verification.path,
+                ),
                 Text.rich(
                   TextSpan(
                     children: [

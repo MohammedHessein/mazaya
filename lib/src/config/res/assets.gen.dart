@@ -135,13 +135,17 @@ class $AssetsTranslationsGen {
 class $AssetsSvgAppSvgGen {
   const $AssetsSvgAppSvgGen();
 
+  /// File path: assets/svg/app_svg/android11_splash.png
+  AssetGenImage get android11Splash =>
+      const AssetGenImage('assets/svg/app_svg/android11_splash.png');
+
   /// File path: assets/svg/app_svg/android_12_splash.png
   AssetGenImage get android12Splash =>
       const AssetGenImage('assets/svg/app_svg/android_12_splash.png');
 
-  /// File path: assets/svg/app_svg/app_icon.png
-  AssetGenImage get appIcon =>
-      const AssetGenImage('assets/svg/app_svg/app_icon.png');
+  /// File path: assets/svg/app_svg/app_icon_part.svg
+  SvgGenImage get appIconPart =>
+      const SvgGenImage('assets/svg/app_svg/app_icon_part.svg');
 
   /// File path: assets/svg/app_svg/app_launcher_icon.png
   AssetGenImage get appLauncherIcon =>
@@ -151,7 +155,13 @@ class $AssetsSvgAppSvgGen {
   SvgGenImage get home => const SvgGenImage('assets/svg/app_svg/home.svg');
 
   /// List of all assets
-  List<dynamic> get values => [android12Splash, appIcon, appLauncherIcon, home];
+  List<dynamic> get values => [
+    android11Splash,
+    android12Splash,
+    appIconPart,
+    appLauncherIcon,
+    home,
+  ];
 }
 
 class $AssetsSvgBaseSvgGen {
@@ -411,6 +421,10 @@ class $AssetsSvgBaseSvgGen {
   SvgGenImage get usedCoupons =>
       const SvgGenImage('assets/svg/base_svg/used_coupons.svg');
 
+  /// File path: assets/svg/base_svg/verification.png
+  AssetGenImage get verification =>
+      const AssetGenImage('assets/svg/base_svg/verification.png');
+
   /// List of all assets
   List<dynamic> get values => [
     carousel1,
@@ -479,6 +493,7 @@ class $AssetsSvgBaseSvgGen {
     unReadNotification,
     unlock,
     usedCoupons,
+    verification,
   ];
 }
 

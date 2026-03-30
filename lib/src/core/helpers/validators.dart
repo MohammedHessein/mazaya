@@ -42,12 +42,21 @@ class Validators {
     return null;
   }
 
+  static String? validateNewPassword(String? value, String? currentPassword, {String? fieldTitle}) {
+    final validation = validatePassword(value, fieldTitle: fieldTitle);
+    if (validation != null) return validation;
+    if (value == currentPassword) {
+      return 'لا يمكن أن تكون كلمة المرور الجديدة هي نفسها كلمة المرور الحالية';
+    }
+    return null;
+  }
+
   static String? validatePassword(String? value, {String? fieldTitle}) {
     if (value?.trim().isEmpty ?? true) {
       return fieldTitle == null
           ? LocaleKeys.fillField
           : "${LocaleKeys.filedValidation} $fieldTitle";
-    } else if (value!.length < 8) {
+    } else if (value!.length < 6) {
       return LocaleKeys
           .passValidation; // Assuming this points to a 'min length' message
     } else if (value.length > 32) {

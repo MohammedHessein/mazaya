@@ -70,7 +70,7 @@
   "operation_faild": "فشلت العملية",
   "optional": "اختياري",
   "pass_required_validation": "كلمة المرور مطلوبة",
-  "pass_validation": "يجب أن تتكون كلمة المرور من 8 أحرف أو أرقام على الأقل",
+  "pass_validation": "يجب أن تتكون كلمة المرور من 6 خانات على الأقل",
   "password": "كلمة المرور",
   "phone_number": "رقم الهاتف",
   "phone_number_verification": "التحقق من رقم الهاتف",
@@ -86,6 +86,7 @@
   "please_enter_your_email": "الرجاء إدخال بريدك الإلكتروني",
   "please_enter_your_new_email": "الرجاء إدخال بريدك الإلكتروني الجديد",
   "please_enter_your_new_password": "الرجاء إدخال كلمة المرور الجديدة",
+  "please_enter_your_new_password_confirmation": "الرجاء إدخال تأكيد كلمة المرور الجديدة",
   "please_enter_your_password": "الرجاء إدخال كلمة المرور",
   "please_enter_your_phone_number": "الرجاء إدخال رقم هاتفك",
   "scrip_injection_validate": "تم العثور على أحرف غير صالحة",
@@ -103,7 +104,7 @@
   "show_details": "عرض التفاصيل",
   "back": "رجوع",
   "submit": "إرسال",
-  "pass_symbols": "يجب أن تتكون كلمة المرور من 6 خانات على الأقل",
+  "pass_symbols": "يجب أن تتكون كلمة المرور من 8 خانات على الأقل",
   "pass_example": "مثال: MyPass123!",
   "malee": "ذكر",
   "femalee": "أنثى",
@@ -289,5 +290,6 @@
   "success_login": "تم تسجيل الدخول بنجاح",
   "language": "اللغه",
   "favourite": "المفضله",
-  "golden_membership__golden_membership": "عضو ذهبى"
+  "golden_membership": "عضو ذهبى",
+  "change": "تغيير"
 }

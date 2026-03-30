@@ -70,7 +70,7 @@
   "operation_faild #$ Operation failed": "فشلت العملية",
   "optional #$ (Optional)": "اختياري",
   "pass_required_validation #$ Password is required": "كلمة المرور مطلوبة",
-  "pass_validation #$ Password must be at least 8 characters or numbers long": "يجب أن تتكون كلمة المرور من 8 أحرف أو أرقام على الأقل",
+  "pass_validation #$ Password must be at least 6 characters long": "يجب أن تتكون كلمة المرور من 6 خانات على الأقل",
   "password #$ Password": "كلمة المرور",
   "phone_number #$ Phone Number": "رقم الهاتف",
   "phone_number_verification #$ Phone Number Verification": "التحقق من رقم الهاتف",
@@ -86,6 +86,7 @@
   "please_enter_your_email #$ Please enter your email": "الرجاء إدخال بريدك الإلكتروني",
   "please_enter_your_new_email #$ Please enter your new email": "الرجاء إدخال بريدك الإلكتروني الجديد",
   "please_enter_your_new_password #$ Please enter your new password": "الرجاء إدخال كلمة المرور الجديدة",
+  "please_enter_your_new_password_confirmation #$ Please enter your new password confirmation": "الرجاء إدخال تأكيد كلمة المرور الجديدة",
   "please_enter_your_password #$ Please enter your password": "الرجاء إدخال كلمة المرور",
   "please_enter_your_phone_number #$ Please enter your phone number": "الرجاء إدخال رقم هاتفك",
   "scripInjectionValidate #$ Invalid characters found": "تم العثور على أحرف غير صالحة",
@@ -103,7 +104,7 @@
   "showDetails #$ Show Details": "عرض التفاصيل",
   "back #$ Back": "رجوع",
   "submit #$ Submit": "إرسال",
-  "pass_symbols #$ Password must be at least 6 characters long": "يجب أن تتكون كلمة المرور من 6 خانات على الأقل",
+  "pass_symbols #$ Password must be at least 8 characters long": "يجب أن تتكون كلمة المرور من 8 خانات على الأقل",
   "pass_example #$ Example: MyPass123!": "مثال: MyPass123!",
   "malee #$ Male": "ذكر",
   "femalee #$ female": "أنثى",
@@ -289,5 +290,6 @@
   "success_login #$ Login Successful": "تم تسجيل الدخول بنجاح",
   "language #$ Language": "اللغه",
   "favourite #$ Favourite": "المفضله",
-  "golden_membership $# Golden Membership": "عضو ذهبى"
+  "golden_membership #$ Golden Membership": "عضو ذهبى",
+  "change #$ Change": "تغيير"
 }

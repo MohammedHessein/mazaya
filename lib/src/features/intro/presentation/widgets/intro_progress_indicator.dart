@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:mazaya/src/config/res/config_imports.dart';
 
 class IntroProgressIndicator extends StatelessWidget {
@@ -24,7 +23,7 @@ class IntroProgressIndicator extends StatelessWidget {
             height: AppSize.sH6,
             decoration: BoxDecoration(
               color: i == activeIndex
-                  ? AppColors.orange
+                  ? AppColors.primary
                   : AppColors.greyB3.withValues(alpha: 0.5),
               borderRadius: BorderRadius.circular(AppCircular.r50),
             ),

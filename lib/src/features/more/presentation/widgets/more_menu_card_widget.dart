@@ -71,11 +71,11 @@ class MoreMenuCardWidget extends StatelessWidget {
                     )
                   : RotatedBox(
                       quarterTurns: context.isRight ? 0 : 2,
-                      child: AppAssets.svg.baseSvg.arrowBack.svg(
+                      child: AppAssets.svg.baseSvg.moreArrowArabic.svg(
                         width: 20.w,
                         height: 20.w,
                         colorFilter: const ColorFilter.mode(
-                          AppColors.greyB3,
+                          AppColors.primary,
                           BlendMode.srcIn,
                         ),
                       ),

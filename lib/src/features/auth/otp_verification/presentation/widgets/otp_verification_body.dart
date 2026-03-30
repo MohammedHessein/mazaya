@@ -57,7 +57,9 @@ class _OtpVerificationBodyState extends State<OtpVerificationBody> {
                 child: Column(
                   children: [
                     40.szH,
-                    UniversalMediaWidget(path: AppAssets.svg.baseSvg.lock.path),
+                    UniversalMediaWidget(
+                      path: AppAssets.svg.baseSvg.verification.path,
+                    ),
                     context.isArabic
                         ? Text.rich(
                             TextSpan(

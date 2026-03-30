@@ -1,7 +1,9 @@
+import 'package:mazaya/src/core/navigation/navigator.dart';
 import 'package:mazaya/src/config/language/locale_keys.g.dart';
 import 'package:mazaya/src/config/res/assets.gen.dart';
 import 'package:mazaya/src/features/more/entity/more_menu_item_entity.dart';
 import 'package:mazaya/src/features/settings/presentation/imports/view_imports.dart';
+import 'package:mazaya/src/features/change_password/imports/change_password_imports.dart';
 
 class SettingsItemEntity {
   static List<MoreItemEntity> get generalItems => [
@@ -20,8 +22,7 @@ class SettingsItemEntity {
     MoreItemEntity(
       title: LocaleKeys.settingsChangePassword,
       icon: AppAssets.svg.baseSvg.changePass.path,
-      // onTap: () => Go.to(const ChangePasswordScreen()),
-      onTap: () {},
+      onTap: () => Go.to(const ChangePasswordScreen()),
     ),
     MoreItemEntity(
       title: LocaleKeys.settingsNotifications,

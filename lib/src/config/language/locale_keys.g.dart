@@ -262,6 +262,9 @@ abstract class LocaleKeys {
   static const String _pleaseEnterYourNewPassword = 'please_enter_your_new_password';
   static String get pleaseEnterYourNewPassword => _pleaseEnterYourNewPassword.tr();
 
+  static const String _pleaseEnterYourNewPasswordConfirmation = 'please_enter_your_new_password_confirmation';
+  static String get pleaseEnterYourNewPasswordConfirmation => _pleaseEnterYourNewPasswordConfirmation.tr();
+
   static const String _pleaseEnterYourPassword = 'please_enter_your_password';
   static String get pleaseEnterYourPassword => _pleaseEnterYourPassword.tr();
 
@@ -871,7 +874,10 @@ abstract class LocaleKeys {
   static const String _favourite = 'favourite';
   static String get favourite => _favourite.tr();
 
-  static const String _goldenMembershipGoldenMembership = 'golden_membership__golden_membership';
-  static String get goldenMembershipGoldenMembership => _goldenMembershipGoldenMembership.tr();
+  static const String _goldenMembership = 'golden_membership';
+  static String get goldenMembership => _goldenMembership.tr();
+
+  static const String _change = 'change';
+  static String get change => _change.tr();
 
 }

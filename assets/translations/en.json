@@ -70,7 +70,7 @@
   "operation_faild": "Operation failed",
   "optional": "(Optional)",
   "pass_required_validation": "Password is required",
-  "pass_validation": "Password must be at least 8 characters or numbers long",
+  "pass_validation": "Password must be at least 6 characters long",
   "password": "Password",
   "phone_number": "Phone Number",
   "phone_number_verification": "Phone Number Verification",
@@ -86,6 +86,7 @@
   "please_enter_your_email": "Please enter your email",
   "please_enter_your_new_email": "Please enter your new email",
   "please_enter_your_new_password": "Please enter your new password",
+  "please_enter_your_new_password_confirmation": "Please enter your new password confirmation",
   "please_enter_your_password": "Please enter your password",
   "please_enter_your_phone_number": "Please enter your phone number",
   "scrip_injection_validate": "Invalid characters found",
@@ -103,7 +104,7 @@
   "show_details": "Show Details",
   "back": "Back",
   "submit": "Submit",
-  "pass_symbols": "Password must be at least 6 characters long",
+  "pass_symbols": "Password must be at least 8 characters long",
   "pass_example": "Example: MyPass123!",
   "malee": "Male",
   "femalee": "female",
@@ -289,5 +290,6 @@
   "success_login": "Login Successful",
   "language": "Language",
   "favourite": "Favourite",
-  "golden_membership__golden_membership": "golden_membership $# Golden Membership"
+  "golden_membership": "Golden Membership",
+  "change": "Change"
 }
