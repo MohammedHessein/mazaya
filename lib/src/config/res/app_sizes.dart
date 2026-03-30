@@ -44,8 +44,10 @@ class AppPadding {
   static double pH35 = 35.0.h;
 
   // VALUES FOR WIDTH
-  static double pW2 = 2.0.h;
-  static double pW4 = 4.0.h;
+  static double pW2 = 2.0.w;
+  static double pW4 = 4.0.w;
+  static double pW5 = 5.0.w;
+  static double pW6 = 6.0.w;
   static double pW8 = 8.0.w;
   static double pW10 = 10.0.w;
   static double pW12 = 12.0.w;
@@ -71,6 +73,7 @@ class AppSize {
   static double sH18 = 18.0.h;
   static double sH20 = 20.0.h;
   static double sH22 = 22.0.h;
+  static double sH24 = 24.0.h;
   static double sH25 = 25.0.h;
   static double sH30 = 30.0.h;
   static double sH35 = 35.0.h;
@@ -98,6 +101,8 @@ class AppSize {
   static double sW16 = 16.0.w;
   static double sW18 = 18.0.w;
   static double sW20 = 20.0.w;
+  static double sW22 = 22.0.w;
+  static double sW24 = 24.0.w;
   static double sW25 = 25.0.w;
   static double sW30 = 30.0.w;
   static double sW40 = 40.0.w;

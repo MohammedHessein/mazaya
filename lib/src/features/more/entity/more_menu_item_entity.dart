@@ -1,60 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:mazaya/src/config/language/languages.dart';
 import 'package:mazaya/src/config/language/locale_keys.g.dart';
 import 'package:mazaya/src/config/res/assets.gen.dart';
 import 'package:mazaya/src/core/navigation/navigator.dart';
-import 'package:mazaya/src/features/complains/presentation/imports/view_imports.dart';
-import 'package:mazaya/src/features/contact_us/presentation/imports/contact_us_imports.dart';
-import 'package:mazaya/src/features/faqs/presentation/imports/view_imports.dart';
+import 'package:mazaya/src/features/more/presentation/imports/view_imports.dart';
 import 'package:mazaya/src/features/static_pages/entity/static_pages_enum.dart';
 import 'package:mazaya/src/features/static_pages/presentation/imports/view_imports.dart';
-import 'package:mazaya/src/features/more/presentation/imports/view_imports.dart';
 
 class MoreItemEntity {
   final String title;
   final String icon;
-  final VoidCallback onTap;
+  final void Function()? onTap;
   final bool disableArrow;
   final bool useSwitch;
+  final String? trailingText;
 
   MoreItemEntity({
     required this.title,
     required this.icon,
-    required this.onTap,
+    this.onTap,
     this.disableArrow = false,
     this.useSwitch = false,
+    this.trailingText,
   });
 
-  static List<MoreItemEntity> get generalItems => [
+  static List<MoreItemEntity> mainItems(BuildContext context) => [
     MoreItemEntity(
-      title: LocaleKeys.profile,
-      icon: AppAssets.svg.appSvg.home.path,
-      // onTap: () => Go.to(const ProfileInfoScreen()),
+      title: LocaleKeys.settingsEditProfile,
+      icon: AppAssets.svg.baseSvg.unlock.path,
       onTap: () {},
     ),
-  ];
-
-  /// Others section menu items
-  static List<MoreItemEntity> get otherItems => [
     MoreItemEntity(
-      title: LocaleKeys.whoUs,
-      icon: AppAssets.svg.appSvg.home.path,
-      onTap: () => Go.to(
-        const StaticPagesScreen(pageType: StaticPageTypeEnum.aboutRita),
-      ),
+      title: LocaleKeys.settingsChangePassword,
+      icon: AppAssets.svg.baseSvg.editProfile.path,
+      onTap: () {},
     ),
     MoreItemEntity(
-      title: LocaleKeys.contactUs,
-      icon: AppAssets.svg.appSvg.home.path,
-      onTap: () => Go.to(const ContactUsScreen()),
+      title: LocaleKeys.favourite,
+      icon: AppAssets.svg.baseSvg.heart.path,
+      onTap: () {},
     ),
     MoreItemEntity(
-      title: LocaleKeys.complaints,
-      icon: AppAssets.svg.appSvg.home.path,
-      onTap: () => Go.to(const ComplainsScreen()),
+      title: LocaleKeys.usedCoupons,
+      icon: AppAssets.svg.baseSvg.usedCoupons.path,
+      onTap: () {},
+    ),
+    MoreItemEntity(
+      title: LocaleKeys.settingsNotifications,
+      icon: AppAssets.svg.baseSvg.notificationMore.path,
+      useSwitch: true,
+    ),
+    MoreItemEntity(
+      title: LocaleKeys.language,
+      icon: AppAssets.svg.baseSvg.global.path,
+      trailingText: Languages.currentLanguage.title,
+      onTap: () {},
     ),
     MoreItemEntity(
       title: LocaleKeys.terms,
-      icon: AppAssets.svg.appSvg.home.path,
+      icon: AppAssets.svg.baseSvg.bill.path,
       onTap: () => Go.to(
         const StaticPagesScreen(
           pageType: StaticPageTypeEnum.termsAndConditions,
@@ -63,69 +67,22 @@ class MoreItemEntity {
     ),
     MoreItemEntity(
       title: LocaleKeys.policy,
-      icon: AppAssets.svg.appSvg.home.path,
+      icon: AppAssets.svg.baseSvg.securityUser.path,
       onTap: () => Go.to(
         const StaticPagesScreen(pageType: StaticPageTypeEnum.usagePolicy),
       ),
-    ),
-    MoreItemEntity(
-      title: LocaleKeys.faqs,
-      icon: AppAssets.svg.appSvg.home.path,
-      onTap: () => Go.to(const FaqsScreen()),
-    ),
-    MoreItemEntity(
-      title: LocaleKeys.logout,
-      icon: AppAssets.svg.appSvg.home.path,
-      disableArrow: true,
-      onTap: () async => await logOut(),
     ),
   ];
 
-  /// Others section menu items
-  static List<MoreItemEntity> get guestItems => [
-    MoreItemEntity(
-      title: LocaleKeys.whoUs,
-      icon: AppAssets.svg.appSvg.home.path,
-      onTap: () => Go.to(
-        const StaticPagesScreen(pageType: StaticPageTypeEnum.aboutRita),
-      ),
-    ),
-    MoreItemEntity(
-      title: LocaleKeys.contactUs,
-      icon: AppAssets.svg.appSvg.home.path,
-      onTap: () => Go.to(const ContactUsScreen()),
-    ),
-    MoreItemEntity(
-      title: LocaleKeys.complaints,
-      icon: AppAssets.svg.appSvg.home.path,
-      onTap: () => Go.to(const ComplainsScreen()),
-    ),
-    MoreItemEntity(
-      title: LocaleKeys.terms,
-      icon: AppAssets.svg.appSvg.home.path,
-      onTap: () => Go.to(
-        const StaticPagesScreen(
-          pageType: StaticPageTypeEnum.termsAndConditions,
-        ),
-      ),
-    ),
-    MoreItemEntity(
-      title: LocaleKeys.policy,
-      icon: AppAssets.svg.appSvg.home.path,
-      onTap: () => Go.to(
-        const StaticPagesScreen(pageType: StaticPageTypeEnum.usagePolicy),
-      ),
-    ),
-    MoreItemEntity(
-      title: LocaleKeys.faqs,
-      icon: AppAssets.svg.appSvg.home.path,
-      onTap: () => Go.to(const FaqsScreen()),
-    ),
-    MoreItemEntity(
-      title: LocaleKeys.logout,
-      icon: AppAssets.svg.appSvg.home.path,
-      disableArrow: true,
-      onTap: () async => await logOut(),
-    ),
-  ];
+  static MoreItemEntity get deleteAccountItem => MoreItemEntity(
+    title: LocaleKeys.settingsDeleteAccount,
+    icon: AppAssets.svg.baseSvg.profileDelete.path,
+    onTap: () {},
+  );
+
+  static MoreItemEntity get logoutItem => MoreItemEntity(
+    title: LocaleKeys.logout,
+    icon: AppAssets.svg.baseSvg.logout.path,
+    onTap: () async => await logOut(),
+  );
 }

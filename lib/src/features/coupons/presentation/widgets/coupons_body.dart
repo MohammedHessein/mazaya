@@ -19,65 +19,64 @@ class CouponsBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return SliverPadding(
       padding: EdgeInsets.symmetric(horizontal: AppPadding.pW20),
-      child: Column(
-        children: [
-          30.szH,
-          CouponsSearchBar(
-            onFilterTap: () {
-              showDefaultBottomSheet(
-                context: context,
-                child: MultiBlocProvider(
-                  providers: [
-                    BlocProvider.value(
-                      value: context.read<GetBaseEntityCubit<CityEntity>>(),
-                    ),
-                    BlocProvider.value(
-                      value: context.read<GetBaseEntityCubit<CategoryEntity>>(),
-                    ),
-                    BlocProvider.value(value: context.read<CouponsCubit>()),
-                  ],
-                  child: const CouponsFilterBottomSheet(),
-                ),
-              );
-            },
-            onChanged: (query) {
-              context.read<CouponsCubit>().fetchInitialData(
-                key: query.isEmpty ? null : query,
-              );
-            },
-          ),
-          20.szH,
-          Expanded(
-            child: PaginatedListWidget<CouponsCubit, CouponEntity>(
-              skeletonItemCount: 10,
-              config: PaginatedListConfig(
-                padding: EdgeInsets.symmetric(vertical: AppPadding.pH10),
-              ),
-              skeletonBuilder: (context) => AppCard(
-                title: CouponEntity.initial().title,
-                description: CouponEntity.initial().description,
-              ),
-              itemBuilder: (context, item, index) => AppCard(
-                title: item.title,
-                description: item.description,
-                imageUrl: item.imageUrl,
-                status: item.status,
-                isFavorite: item.isFavorite,
-                onTap: () {
-                  // Handle coupon tap
-                },
-                onFavoriteTap: () {
-                  context.read<CouponsCubit>().toggleFavorite(item.id);
-                },
-              ),
-              emptyWidget: EmptyWidget(
-                title: LocaleKeys.noCouponsTitle,
-                desc: LocaleKeys.noCouponsDesc,
-              ),
+      sliver: SliverMainAxisGroup(
+        slivers: [
+          SliverToBoxAdapter(
+            child: CouponsSearchBar(
+              onFilterTap: () {
+                showDefaultBottomSheet(
+                  context: context,
+                  child: MultiBlocProvider(
+                    providers: [
+                      BlocProvider.value(
+                        value: context.read<GetBaseEntityCubit<CityEntity>>(),
+                      ),
+                      BlocProvider.value(
+                        value: context
+                            .read<GetBaseEntityCubit<CategoryEntity>>(),
+                      ),
+                      BlocProvider.value(value: context.read<CouponsCubit>()),
+                    ],
+                    child: const CouponsFilterBottomSheet(),
+                  ),
+                );
+              },
+              onChanged: (query) {
+                context.read<CouponsCubit>().fetchInitialData(
+                  key: query.isEmpty ? null : query,
+                );
+              },
             ),
           ),
+          SliverToBoxAdapter(child: 20.szH),
+          PaginatedSliverListWidget<CouponsCubit, CouponEntity>(
+            skeletonItemCount: 10,
+            config: const PaginatedListConfig(),
+            skeletonBuilder: (context) => AppCard(
+              title: CouponEntity.initial().title,
+              description: CouponEntity.initial().description,
+            ),
+            itemBuilder: (context, item, index) => AppCard(
+              title: item.title,
+              description: item.description,
+              imageUrl: item.imageUrl,
+              status: item.status,
+              isFavorite: item.isFavorite,
+              onTap: () {
+                // Handle coupon tap
+              },
+              onFavoriteTap: () {
+                context.read<CouponsCubit>().toggleFavorite(item.id);
+              },
+            ),
+            emptyWidget: EmptyWidget(
+              title: LocaleKeys.noCouponsTitle,
+              desc: LocaleKeys.noCouponsDesc,
+            ),
+          ),
+          SliverToBoxAdapter(child: 40.szH), // Bottom spacing for FAB/Nav
         ],
       ),
     );

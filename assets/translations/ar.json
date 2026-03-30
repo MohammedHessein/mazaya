@@ -149,7 +149,7 @@
   "oops": "عذراً!!",
   "complaints": "الشكاوى والاقتراحات",
   "terms": "الشروط والأحكام",
-  "policy": "سياسة الاستخدام",
+  "policy": "سياسة الخصوصيه",
   "faqs": "الأسئلة الشائعة",
   "who_us": "من نحن",
   "contact_request_send_successfully": "تم إرسال طلب الاتصال بنجاح",
@@ -286,5 +286,8 @@
   "search_for": "البحث عن",
   "section": "القسم",
   "filter_title": "تصفية",
-  "success_login": "تم تسجيل الدخول بنجاح"
+  "success_login": "تم تسجيل الدخول بنجاح",
+  "language": "اللغه",
+  "favourite": "المفضله",
+  "golden_membership__golden_membership": "عضو ذهبى"
 }

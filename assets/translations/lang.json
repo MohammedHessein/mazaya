@@ -149,7 +149,7 @@
   "oops #$ Oops": "عذراً!!",
   "complaints #$ Complaint and Suggestions": "الشكاوى والاقتراحات",
   "terms #$ Terms and Conditions": "الشروط والأحكام",
-  "policy #$ Usage Policy": "سياسة الاستخدام",
+  "policy #$ Privacy Policy": "سياسة الخصوصيه",
   "faqs #$ FAQs": "الأسئلة الشائعة",
   "who_us #$ Who Us": "من نحن",
   "contact_request_send_successfully #$ Contact Request Send Successfully": "تم إرسال طلب الاتصال بنجاح",
@@ -286,5 +286,8 @@
   "search_for #$ Search For": "البحث عن",
   "section #$ Section": "القسم",
   "filter_title #$ Filter": "تصفية",
-  "success_login #$ Login Successful": "تم تسجيل الدخول بنجاح"
+  "success_login #$ Login Successful": "تم تسجيل الدخول بنجاح",
+  "language #$ Language": "اللغه",
+  "favourite #$ Favourite": "المفضله",
+  "golden_membership $# Golden Membership": "عضو ذهبى"
 }

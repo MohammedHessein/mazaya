@@ -1,8 +1,8 @@
 part of '../imports/view_imports.dart';
 
-class _NotificationCardWidget extends StatelessWidget {
+class NotificationCardWidget extends StatelessWidget {
   final NotificationEntity notificationEntity;
-  const _NotificationCardWidget(this.notificationEntity);
+  const NotificationCardWidget(this.notificationEntity, {super.key});
 
   @override
   Widget build(BuildContext context) {

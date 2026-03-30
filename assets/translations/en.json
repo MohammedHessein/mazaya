@@ -149,7 +149,7 @@
   "oops": "Oops",
   "complaints": "Complaint and Suggestions",
   "terms": "Terms and Conditions",
-  "policy": "Usage Policy",
+  "policy": "Privacy Policy",
   "faqs": "FAQs",
   "who_us": "Who Us",
   "contact_request_send_successfully": "Contact Request Send Successfully",
@@ -286,5 +286,8 @@
   "search_for": "Search For",
   "section": "Section",
   "filter_title": "Filter",
-  "success_login": "Login Successful"
+  "success_login": "Login Successful",
+  "language": "Language",
+  "favourite": "Favourite",
+  "golden_membership__golden_membership": "golden_membership $# Golden Membership"
 }

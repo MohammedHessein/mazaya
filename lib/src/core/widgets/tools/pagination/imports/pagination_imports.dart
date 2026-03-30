@@ -15,3 +15,8 @@ part '../paginated_list_widget.dart';
 part '../entity/paginated_data.dart';
 part '../entity/pagination_meta.dart';
 part '../paginated_list_config.dart';
+part '../paginated_sliver_list_widget.dart';
+part '../load_more_indicator_sliver.dart';
+part '../paginated_sliver_list_view.dart';
+part '../paginated_sliver_grid_view.dart';
+part '../paginated_sliver_skeleton_list.dart';

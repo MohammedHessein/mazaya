@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import 'package:mazaya/src/core/extensions/material_color_extension.dart';
 import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/extensions/material_color_extension.dart';
 
 class AppTheme {
   static ThemeData get light {
@@ -46,6 +45,17 @@ class AppTheme {
       inputDecorationTheme: const InputDecorationTheme(
         prefixIconColor: AppColors.border,
       ),
+      switchTheme: SwitchThemeData(
+        thumbColor: const WidgetStatePropertyAll(AppColors.white),
+        trackColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return AppColors.primary;
+          }
+          return AppColors.gray400;
+        }),
+        overlayColor: const WidgetStatePropertyAll(AppColors.primary),
+        trackOutlineColor: const WidgetStatePropertyAll(Colors.transparent),
+      ),
     );
   }
 
@@ -83,6 +93,17 @@ class AppTheme {
       iconTheme: const IconThemeData(color: AppColorsWithDarkMode.white),
       inputDecorationTheme: const InputDecorationTheme(
         prefixIconColor: AppColorsWithDarkMode.border,
+      ),
+      switchTheme: SwitchThemeData(
+        thumbColor: const WidgetStatePropertyAll(AppColorsWithDarkMode.white),
+        trackColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return AppColorsWithDarkMode.primary;
+          }
+          return AppColorsWithDarkMode.gray400;
+        }),
+        overlayColor: const WidgetStatePropertyAll(AppColorsWithDarkMode.primary),
+        trackOutlineColor: const WidgetStatePropertyAll(Colors.transparent),
       ),
     );
   }

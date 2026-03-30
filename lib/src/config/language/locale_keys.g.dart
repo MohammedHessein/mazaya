@@ -865,4 +865,13 @@ abstract class LocaleKeys {
   static const String _successLogin = 'success_login';
   static String get successLogin => _successLogin.tr();
 
+  static const String _language = 'language';
+  static String get language => _language.tr();
+
+  static const String _favourite = 'favourite';
+  static String get favourite => _favourite.tr();
+
+  static const String _goldenMembershipGoldenMembership = 'golden_membership__golden_membership';
+  static String get goldenMembershipGoldenMembership => _goldenMembershipGoldenMembership.tr();
+
 }

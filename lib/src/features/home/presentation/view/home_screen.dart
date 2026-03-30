@@ -9,17 +9,10 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
+    return SliverToBoxAdapter(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          40.szH,
-          const CategoriesSection(),
-          20.szH,
-          const CouponsSection(),
-          100.szH, // Spacing for bottom nav
-        ],
+        children: [const CategoriesSection(), 20.szH, const CouponsSection()],
       ),
     );
   }

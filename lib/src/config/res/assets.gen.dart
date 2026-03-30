@@ -334,6 +334,10 @@ class $AssetsSvgBaseSvgGen {
   SvgGenImage get moreArrowArabic =>
       const SvgGenImage('assets/svg/base_svg/more_arrow_arabic.svg');
 
+  /// File path: assets/svg/base_svg/notification-bing.svg
+  SvgGenImage get notificationBing =>
+      const SvgGenImage('assets/svg/base_svg/notification-bing.svg');
+
   /// File path: assets/svg/base_svg/notification_delete.svg
   SvgGenImage get notificationDelete =>
       const SvgGenImage('assets/svg/base_svg/notification_delete.svg');
@@ -349,6 +353,10 @@ class $AssetsSvgBaseSvgGen {
   /// File path: assets/svg/base_svg/notification_home.svg
   SvgGenImage get notificationHome =>
       const SvgGenImage('assets/svg/base_svg/notification_home.svg');
+
+  /// File path: assets/svg/base_svg/notification_more.svg
+  SvgGenImage get notificationMore =>
+      const SvgGenImage('assets/svg/base_svg/notification_more.svg');
 
   /// File path: assets/svg/base_svg/notifications copy.svg
   SvgGenImage get notificationsCopy =>
@@ -451,10 +459,12 @@ class $AssetsSvgBaseSvgGen {
     logout,
     mazayaText,
     moreArrowArabic,
+    notificationBing,
     notificationDelete,
     notificationDialog,
     notificationEmpty,
     notificationHome,
+    notificationMore,
     notificationsCopy,
     notifications,
     notificationsBing,

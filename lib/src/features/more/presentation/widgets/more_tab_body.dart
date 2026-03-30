@@ -1,55 +1,54 @@
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
-import 'package:mazaya/src/config/language/locale_keys.g.dart';
-import 'package:mazaya/src/config/res/config_imports.dart';
-import 'package:mazaya/src/core/extensions/widgets/padding_extension.dart';
-import 'package:mazaya/src/core/shared/cubits/user_cubit/user_cubit.dart';
-import 'package:mazaya/src/features/more/entity/more_menu_item_entity.dart';
-
-import '../imports/view_imports.dart';
+part of '../imports/view_imports.dart';
 
 class MoreTabBody extends StatelessWidget {
   const MoreTabBody({super.key});
 
   @override
   Widget build(BuildContext context) {
-    context.locale;
-    final generalItems = MoreItemEntity.generalItems;
-    final otherItems = MoreItemEntity.otherItems;
-    final guestItems = MoreItemEntity.guestItems;
-    return Column(
-      spacing: AppMargin.mH30,
-      children: [
-        if (UserCubit.instance.isUserLoggedIn)
-          const ProfileInfoWithIconsWidget(
-            profileIconAppear: ProfileIconAppearEnum.more,
-          ),
-        Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: AppMargin.mH18,
-              children: [
-                if (UserCubit.instance.isUserLoggedIn) ...[
-                  MoreSectionWidget(
-                    titleKey: LocaleKeys.moreGeneralTitle,
-                    items: generalItems,
+    final mainItems = MoreItemEntity.mainItems(context);
+    return SliverPadding(
+      padding: EdgeInsets.symmetric(horizontal: AppPadding.pW16),
+      sliver: SliverToBoxAdapter(
+        child: Transform.translate(
+          offset: Offset(0, -50.h),
+          child: Column(
+            children: [
+              if (UserCubit.instance.isUserLoggedIn) ...[
+                15.szH,
+                const ProfileDecorationWidget(
+                  membershipType: MembershipType.diamond,
+                ),
+                16.szH,
+                const MemberShipCard(membershipType: MembershipType.golden),
+                12.szH,
+              ],
+              ...mainItems.map((item) => MoreMenuCardWidget(menuItem: item)),
+              16.szH,
+              Row(
+                children: [
+                  Expanded(
+                    child: ActionTile(
+                      title: LocaleKeys.logout,
+                      icon: AppAssets.svg.baseSvg.logout.path,
+                      onTap: () async => await logOut(),
+                      color: AppColors.error,
+                    ),
                   ),
-                  MoreSectionWidget(
-                    titleKey: LocaleKeys.moreOthersTitle,
-                    items: otherItems,
-                  ),
-                ] else ...[
-                  MoreSectionWidget(
-                    titleKey: ConstantManager.emptyText,
-                    items: guestItems,
+                  12.szW,
+                  Expanded(
+                    child: ActionTile(
+                      title: LocaleKeys.settingsDeleteAccount,
+                      icon: AppAssets.svg.baseSvg.profileDelete.path,
+                      onTap: () {},
+                      color: AppColors.error,
+                    ),
                   ),
                 ],
-              ],
-            ),
+              ),
+            ],
           ),
         ),
-      ],
-    ).paddingAll(AppPadding.pH14);
+      ),
+    );
   }
 }

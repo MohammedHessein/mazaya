@@ -4,11 +4,14 @@ import 'package:mazaya/src/config/language/locale_keys.g.dart';
 import 'package:mazaya/src/config/res/assets.gen.dart';
 import 'package:mazaya/src/core/notification/notification_service.dart';
 import 'package:mazaya/src/core/widgets/navigation_bar/navigation_bar.dart';
-import 'package:mazaya/src/core/widgets/scaffolds/default_scaffold.dart';
+import 'package:mazaya/src/core/widgets/scaffolds/sliver_scaffold_body.dart';
 import 'package:mazaya/src/features/main/entity/main_params.dart';
 
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/widgets/universal_media/enums.dart';
+import '../../../home/presentation/view/home_screen.dart';
+import '../../../more/presentation/imports/view_imports.dart';
+import '../../../coupons/presentation/view/coupons_view.dart';
 import '../widgets/main_body.dart';
 
 class MainScreen extends StatefulWidget {
@@ -48,47 +51,49 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
     return ValueListenableBuilder<int>(
       valueListenable: params.selectedIndexNotifier,
       builder: (context, value, child) {
-        String title = '';
-        ScaffoldHeaderType headerType = ScaffoldHeaderType.home;
-
-        if (value == 2) {
-          return Scaffold(
-            body: MainBody(value),
-            bottomNavigationBar: CustomNavigationBar(
-              selectedIndex: value,
-              onTabChange: (newIndex) => params.updateNavValue(newIndex),
-              tabs: params.navTabs,
-            ),
-          );
-        }
-
-        switch (value) {
-          case 0:
-            headerType = ScaffoldHeaderType.home;
-            break;
-          case 1:
-            headerType = ScaffoldHeaderType.standard;
-            title = LocaleKeys.couponsTitle;
-            break;
-          case 3:
-            headerType = ScaffoldHeaderType.profile;
-            break;
-          default:
-            headerType = ScaffoldHeaderType.home;
-        }
-
-        return DefaultScaffold(
-          title: title,
-          headerType: headerType,
-          showBackButton: false,
-          userName: 'محمد حسين',
-          imageUrl: AppAssets.svg.baseSvg.profile.path,
+        return Scaffold(
           extendBody: true,
-          body: MainBody(value),
           bottomNavigationBar: CustomNavigationBar(
             selectedIndex: value,
             onTabChange: (newIndex) => params.updateNavValue(newIndex),
             tabs: params.navTabs,
+          ),
+          body: IndexedStack(
+            index: value,
+            children: [
+              // Tab 0: Home
+              SliverScaffoldBody(
+                headerType: ScaffoldHeaderType.home,
+                imageUrl: AppAssets.svg.baseSvg.profile.path,
+                userName: 'محمد حسين',
+                showBackButton: false,
+                title: '',
+                slivers: const [HomeScreen()],
+                extendBody: true,
+              ),
+              // Tab 1: Coupons
+              SliverScaffoldBody(
+                headerType: ScaffoldHeaderType.standard,
+                imageUrl: AppAssets.svg.baseSvg.profile.path,
+                userName: 'محمد حسين',
+                showBackButton: false,
+                title: LocaleKeys.couponsTitle.tr(),
+                slivers: const [CouponsView()],
+                extendBody: true,
+              ),
+              // Tab 2: Scan
+              MainBody(2),
+              // Tab 3: More
+              SliverScaffoldBody(
+                headerType: ScaffoldHeaderType.profile,
+                imageUrl: AppAssets.svg.baseSvg.profile.path,
+                userName: 'محمد حسين',
+                showBackButton: false,
+                title: '',
+                slivers: const [MoreTabBody()],
+                extendBody: true,
+              ),
+            ],
           ),
         );
       },

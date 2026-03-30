@@ -3,7 +3,6 @@ import 'package:mazaya/src/config/language/locale_keys.g.dart';
 import 'package:mazaya/src/config/res/config_imports.dart';
 import 'package:mazaya/src/core/extensions/context_extension.dart';
 import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
-import 'package:mazaya/src/core/extensions/widgets/sized_box_helper.dart';
 import 'package:mazaya/src/core/widgets/cards/app_card.dart';
 
 class CouponsSection extends StatefulWidget {
@@ -14,7 +13,7 @@ class CouponsSection extends StatefulWidget {
 }
 
 class _CouponsSectionState extends State<CouponsSection> {
-  final Set<int> _favorites = {1}; // Index 1 is favorite by default for demo
+  final Set<int> _favorites = {1};
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +37,8 @@ class _CouponsSectionState extends State<CouponsSection> {
               ),
             ],
           ),
-          12.szH,
           ListView.builder(
+            padding: EdgeInsets.zero,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: 4,
