@@ -18,11 +18,7 @@ class ButtonClose extends StatelessWidget {
           borderRadius: BorderRadius.circular(AppCircular.r20),
         ),
         child: Center(
-          child: Icon(
-            Icons.close,
-            color: AppColors.black,
-            size: AppSize.sH25,
-          ),
+          child: Icon(Icons.close, color: AppColors.black, size: AppSize.sH25),
         ),
       ),
     );

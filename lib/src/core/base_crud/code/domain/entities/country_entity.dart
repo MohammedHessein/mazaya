@@ -35,4 +35,3 @@ class CountryEntity extends BaseIdAndNameEntity {
     flag: json["flag"],
   );
 }
-

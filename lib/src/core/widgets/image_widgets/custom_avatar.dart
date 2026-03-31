@@ -31,11 +31,7 @@ class CustomAvatar extends StatelessWidget {
       ),
       child: Padding(
         padding: padding ?? EdgeInsets.all(AppPadding.pH8),
-        child: SvgPicture.asset(
-          icon,
-          height: height,
-          width: width,
-        ),
+        child: SvgPicture.asset(icon, height: height, width: width),
       ),
     );
   }

@@ -6,11 +6,7 @@ class FieldLabel extends StatelessWidget {
   final String label;
   final TextStyle? style;
 
-  const FieldLabel({
-    super.key,
-    required this.label,
-    this.style,
-  });
+  const FieldLabel({super.key, required this.label, this.style});
 
   @override
   Widget build(BuildContext context) {

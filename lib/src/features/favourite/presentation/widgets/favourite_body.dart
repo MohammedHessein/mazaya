@@ -6,26 +6,28 @@ class FavouriteBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultScaffold(
-      title: LocaleKeys.favourite,
-      body: PaginatedListWidget<FavouriteCubit, CouponEntity>(
-        config: PaginatedListConfig(
+      header: HeaderConfig(title: LocaleKeys.favourite, showBackButton: false),
+      slivers: [
+        SliverPadding(
           padding: EdgeInsets.symmetric(horizontal: AppPadding.pW20),
+          sliver: PaginatedSliverListWidget<FavouriteCubit, CouponEntity>(
+            skeletonBuilder: (context) => AppCard(
+              title: CouponEntity.initial().name,
+              description: CouponEntity.initial().description ?? '',
+            ),
+            itemBuilder: (context, coupon, index) {
+              return AppCard(
+                title: coupon.name,
+                description: coupon.description ?? '',
+                isFavorite: coupon.isFav,
+                onFavoriteTap: () =>
+                    context.read<FavouriteCubit>().toggleFavorite(coupon.id),
+                onTap: () {},
+              );
+            },
+          ),
         ),
-        skeletonBuilder: (context) => AppCard(
-          title: CouponEntity.initial().title,
-          description: CouponEntity.initial().description,
-        ),
-        itemBuilder: (context, coupon, index) {
-          return AppCard(
-            title: coupon.title,
-            description: coupon.description,
-            isFavorite: coupon.isFavorite,
-            onFavoriteTap: () =>
-                context.read<FavouriteCubit>().toggleFavorite(coupon.id),
-            onTap: () {},
-          );
-        },
-      ),
+      ],
     );
   }
 }

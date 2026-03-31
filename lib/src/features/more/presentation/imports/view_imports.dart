@@ -26,6 +26,9 @@ import 'package:mazaya/src/core/widgets/buttons/action_tile.dart';
 import 'package:mazaya/src/core/widgets/buttons/loading_button.dart';
 import 'package:mazaya/src/core/widgets/custom_messages.dart';
 import 'package:mazaya/src/core/widgets/pickers/default_bottom_sheet.dart';
+import 'package:mazaya/src/core/widgets/scaffolds/app_header_sliver.dart';
+import 'package:mazaya/src/core/widgets/scaffolds/header_config.dart';
+import 'package:mazaya/src/core/widgets/scaffolds/scaffold_top_row.dart';
 import 'package:mazaya/src/core/widgets/universal_media/enums.dart';
 import 'package:mazaya/src/core/widgets/universal_media/widgets.dart';
 import 'package:mazaya/src/features/more/entity/more_menu_item_entity.dart';
@@ -36,10 +39,16 @@ export '../view/more_tab_view.dart';
 // export '../widgets/more_tab_body.dart';
 // export '../widgets/profile_decoration_widget.dart';
 
-part '../cubits/log_out_cubit.dart';
-part '../widgets/dialogs/log_out_dialog.dart';
+import '../cubits/logout_cubit.dart';
+import '../cubits/more_delete_account_cubit.dart';
+import '../widgets/logout_bottom_sheet.dart';
+import '../widgets/delete_account_bottom_sheet.dart';
+
 part '../widgets/membership_card.dart';
 part '../widgets/more_menu_card_widget.dart';
 part '../widgets/more_tab_body.dart';
+part '../widgets/profile_header_sliver.dart';
+part '../widgets/profile_avatar_widget.dart';
+part '../widgets/profile_info_widget.dart';
 part '../widgets/profile_decoration_widget.dart';
 part '../widgets/switch_notify_widget.dart';

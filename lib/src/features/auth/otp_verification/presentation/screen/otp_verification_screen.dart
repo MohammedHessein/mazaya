@@ -13,9 +13,12 @@ class OtpVerificationScreen extends StatelessWidget {
         BlocProvider(create: (context) => ForgetPasswordCubit()),
       ],
       child: DefaultScaffold(
-        headerType: ScaffoldHeaderType.auth,
-        title: LocaleKeys.verificationCode,
-        body: OtpVerificationBody(email: email),
+        header: HeaderConfig(
+          showBackButton: false,
+          type: ScaffoldHeaderType.auth,
+          title: LocaleKeys.verificationCode,
+        ),
+        slivers: [SliverToBoxAdapter(child: OtpVerificationBody(email: email))],
       ),
     );
   }

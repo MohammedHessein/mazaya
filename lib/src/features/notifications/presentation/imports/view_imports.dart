@@ -1,7 +1,7 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
- import 'package:injectable/injectable.dart';
+import 'package:injectable/injectable.dart';
 import 'package:multiple_result/multiple_result.dart';
 import 'package:mazaya/src/config/language/locale_keys.g.dart';
 import 'package:mazaya/src/config/res/assets.gen.dart';
@@ -21,8 +21,8 @@ import 'package:mazaya/src/core/widgets/buttons/loading_button.dart';
 import 'package:mazaya/src/core/widgets/custom_messages.dart';
 import 'package:mazaya/src/core/widgets/handling_views/empty_widget.dart';
 import 'package:mazaya/src/core/widgets/pickers/default_bottom_sheet.dart';
-import 'package:mazaya/src/core/widgets/scaffolds/default_scaffold.dart'
-    show DefaultScaffold;
+import 'package:mazaya/src/core/widgets/scaffolds/default_scaffold.dart';
+import 'package:mazaya/src/core/widgets/scaffolds/header_config.dart';
 import 'package:mazaya/src/core/widgets/tools/pagination/imports/pagination_imports.dart';
 import 'package:mazaya/src/features/notifications/entity/notification_entity.dart';
 import 'package:mazaya/src/core/notification/notification_service.dart';

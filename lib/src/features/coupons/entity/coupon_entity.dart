@@ -1,61 +1,122 @@
+import 'package:equatable/equatable.dart';
 import 'package:mazaya/src/config/res/config_imports.dart';
 
-class CouponEntity {
-  final String id;
-  final String title;
-  final String description;
-  final String? imageUrl;
-  final String? status;
-  final bool isFavorite;
+class CouponEntity extends Equatable {
+  final int id;
+  final String name;
+  final String? shortDescription;
+  final String? description;
+  final String productImage;
+  final dynamic discount;
+  final String? discountType;
+  final String? sku;
+  final int vendorId;
+  final String? vendorName;
+  final String? vendorImage;
+  final int categoryId;
+  final String? categoryName;
+  final bool isFav;
 
   const CouponEntity({
     required this.id,
-    required this.title,
-    required this.description,
-    this.imageUrl,
-    this.status,
-    this.isFavorite = false,
+    required this.name,
+    this.shortDescription,
+    this.description,
+    required this.productImage,
+    this.discount,
+    this.discountType,
+    this.sku,
+    this.vendorId = 0,
+    this.vendorName,
+    this.vendorImage,
+    this.categoryId = 0,
+    this.categoryName,
+    this.isFav = false,
   });
 
-  factory CouponEntity.initial() => const CouponEntity(
-        id: SkeltonizerManager.short,
-        title: SkeltonizerManager.short,
-        description: SkeltonizerManager.medium,
-        isFavorite: false,
-      );
+  factory CouponEntity.fromJson(Map<String, dynamic> json) {
+    int toInt(dynamic value) {
+      if (value == null) return 0;
+      if (value is int) return value;
+      return int.tryParse(value.toString()) ?? 0;
+    }
 
-  factory CouponEntity.fromJson(Map<String, dynamic> json) => CouponEntity(
-        id: json["id"],
-        title: json["title"],
-        description: json["description"],
-        imageUrl: json["image_url"],
-        status: json["status"],
-        isFavorite: json["is_favorite"] ?? false,
-      );
+    return CouponEntity(
+      id: toInt(json['id']),
+      name: json['name'] ?? json['title'] ?? '',
+      shortDescription: json['short_description'],
+      description: json['description'],
+      productImage: json['product_image'] ?? '',
+      discount: json['discount'],
+      discountType: json['discount_type'],
+      sku: json['sku'],
+      vendorId: toInt(json['vendor_id']),
+      vendorName: json['vendor_name'],
+      vendorImage: json['vendor_image'],
+      categoryId: toInt(json['category_id']),
+      categoryName: json['category_name'],
+      isFav: json['is_fav'] ?? false,
+    );
+  }
 
-  Map<String, dynamic> get toMap => {
-        'id': id,
-        'title': title,
-        'description': description,
-        'image_url': imageUrl,
-        'status': status,
-        'is_favorite': isFavorite,
-      };
+  factory CouponEntity.initial() {
+    return const CouponEntity(
+      id: 0,
+      name: SkeltonizerManager.short,
+      description: SkeltonizerManager.medium,
+      productImage: '',
+    );
+  }
 
   CouponEntity copyWith({
-    String? id,
-    String? title,
+    int? id,
+    String? name,
+    String? shortDescription,
     String? description,
-    String? imageUrl,
-    String? status,
-    bool? isFavorite,
-  }) =>
-      CouponEntity(
-        id: id ?? this.id,
-        title: title ?? this.title,
-        description: description ?? this.description,
-        imageUrl: imageUrl ?? this.imageUrl,
-        status: status ?? this.status,
-        isFavorite: isFavorite ?? this.isFavorite,
-      );
+    String? productImage,
+    dynamic discount,
+    String? discountType,
+    String? sku,
+    int? vendorId,
+    String? vendorName,
+    String? vendorImage,
+    int? categoryId,
+    String? categoryName,
+    bool? isFav,
+  }) {
+    return CouponEntity(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      shortDescription: shortDescription ?? this.shortDescription,
+      description: description ?? this.description,
+      productImage: productImage ?? this.productImage,
+      discount: discount ?? this.discount,
+      discountType: discountType ?? this.discountType,
+      sku: sku ?? this.sku,
+      vendorId: vendorId ?? this.vendorId,
+      vendorName: vendorName ?? this.vendorName,
+      vendorImage: vendorImage ?? this.vendorImage,
+      categoryId: categoryId ?? this.categoryId,
+      categoryName: categoryName ?? this.categoryName,
+      isFav: isFav ?? this.isFav,
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+        id,
+        name,
+        shortDescription,
+        description,
+        productImage,
+        discount,
+        discountType,
+        sku,
+        vendorId,
+        vendorName,
+        vendorImage,
+        categoryId,
+        categoryName,
+        isFav,
+      ];
 }

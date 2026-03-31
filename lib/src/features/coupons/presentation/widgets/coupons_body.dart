@@ -55,15 +55,15 @@ class CouponsBody extends StatelessWidget {
             skeletonItemCount: 10,
             config: const PaginatedListConfig(),
             skeletonBuilder: (context) => AppCard(
-              title: CouponEntity.initial().title,
-              description: CouponEntity.initial().description,
+              title: CouponEntity.initial().name,
+              description: CouponEntity.initial().description ?? '',
             ),
             itemBuilder: (context, item, index) => AppCard(
-              title: item.title,
-              description: item.description,
-              imageUrl: item.imageUrl,
-              status: item.status,
-              isFavorite: item.isFavorite,
+              title: item.name,
+              description: item.description ?? '',
+              imageUrl: item.productImage,
+              status: item.categoryName, // Using categoryName as status for now
+              isFavorite: item.isFav,
               onTap: () {
                 // Handle coupon tap
               },

@@ -6,26 +6,32 @@ class UsedCouponsBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultScaffold(
-      title: LocaleKeys.usedCoupons,
-      body: PaginatedListWidget<UsedCouponsCubit, CouponEntity>(
-        config: PaginatedListConfig(
-          padding: EdgeInsets.symmetric(horizontal: AppPadding.pW20),
-        ),
-        skeletonBuilder: (context) => AppCard(
-          title: CouponEntity.initial().title,
-          description: CouponEntity.initial().description,
-        ),
-        itemBuilder: (context, coupon, index) {
-          return AppCard(
-            title: coupon.title,
-            description: coupon.description,
-            status: coupon.status ?? '',
-            isFavorite: false,
-            onFavoriteTap: null,
-            onTap: () {},
-          );
-        },
+      header: HeaderConfig(
+        title: LocaleKeys.usedCoupons,
+        showBackButton: false,
       ),
+      slivers: [
+        SliverPadding(
+          padding: EdgeInsets.symmetric(horizontal: AppPadding.pW20),
+          sliver: PaginatedSliverListWidget<UsedCouponsCubit, CouponEntity>(
+            skeletonBuilder: (context) => AppCard(
+              title: CouponEntity.initial().name,
+              description: CouponEntity.initial().description ?? '',
+            ),
+            itemBuilder: (context, coupon, index) {
+              return AppCard(
+                title: coupon.name,
+                description: coupon.description ?? '',
+                status: coupon.categoryName ?? '',
+                isFavorite: coupon.isFav,
+                onFavoriteTap: () =>
+                    context.read<UsedCouponsCubit>().toggleFavorite(coupon.id),
+                onTap: () {},
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

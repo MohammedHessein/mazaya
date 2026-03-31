@@ -11,11 +11,7 @@ enum Languages {
   final Locale locale;
   final String languageCode;
 
-  const Languages(
-    this.locale,
-    this.title,
-    this.languageCode,
-  );
+  const Languages(this.locale, this.title, this.languageCode);
 
   static List<Locale> get supportLocales =>
       Languages.values.map((e) => e.locale).toList();

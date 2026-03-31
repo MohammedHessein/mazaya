@@ -22,13 +22,17 @@ class PaginationMeta extends Equatable {
 
   factory PaginationMeta.fromJson(Map<String, dynamic> json) {
     return PaginationMeta(
-      totalItems: json['total_items'] ?? 0,
-      countItems: json['count_items'] ?? 0,
-      perPage: json['per_page'] ?? 30,
-      totalPages: json['total_pages'] ?? 1,
+      totalItems: json['total'] ?? json['total_items'] ?? 0,
+      countItems: json['count'] ??
+          json['count_items'] ??
+          ((json['to'] != null && json['from'] != null)
+              ? (json['to'] as int) - (json['from'] as int) + 1
+              : 0),
+      perPage: json['per_page'] ?? json['paginate'] ?? ConstantManager.pgSize,
+      totalPages: json['last_page'] ?? json['total_pages'] ?? 1,
       currentPage: json['current_page'] ?? 1,
       nextPageUrl: json['next_page_url'],
-      prevPageUrl: json['perv_page_url'],
+      prevPageUrl: json['prev_page_url'] ?? json['perv_page_url'],
     );
   }
 

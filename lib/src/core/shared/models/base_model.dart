@@ -1,4 +1,3 @@
- 
 import 'package:mazaya/src/config/res/config_imports.dart';
 
 class BaseModel<T> {
@@ -20,8 +19,13 @@ class BaseModel<T> {
       key: status,
       data: jsonToModel != null
           ? json['data'] == null
-              ? jsonToModel({'msg': msg, 'message': msg, 'key': status, 'status': status})
-              : jsonToModel(json)
+                ? jsonToModel({
+                    'msg': msg,
+                    'message': msg,
+                    'key': status,
+                    'status': status,
+                  })
+                : jsonToModel(json)
           : (json['data'] ?? status),
     );
   }

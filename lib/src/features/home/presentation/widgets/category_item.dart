@@ -1,47 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mazaya/src/config/res/assets.gen.dart';
 import 'package:mazaya/src/core/extensions/context_extension.dart';
 import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
 import 'package:mazaya/src/core/extensions/widgets/sized_box_helper.dart';
+import 'package:mazaya/src/core/widgets/image_widgets/cached_image.dart';
 
-import '../../../../config/res/config_imports.dart';
+import '../../model/category_model.dart';
 
 class CategoryItem extends StatelessWidget {
-  const CategoryItem({super.key});
+  final CategoryModel category;
+
+  const CategoryItem({super.key, required this.category});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(
-        vertical: AppPadding.pH8,
-        horizontal: AppPadding.pW12,
-      ),
-      height: 40.h,
+      constraints: BoxConstraints(minWidth: 120.w),
+      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(AppCircular.r50),
-        color: AppColors.white,
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.black.withValues(alpha: 0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(50.r),
+        border: Border.all(color: Colors.transparent, width: 1),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          CircleAvatar(
-            backgroundColor: AppColors.black,
-            radius: AppCircular.r20,
-            child: AppAssets.svg.baseSvg.search.svg(
-              width: AppSize.sW16,
-              height: AppSize.sH16,
+          Container(
+            width: 50.w,
+            height: 50.w,
+            decoration: const BoxDecoration(shape: BoxShape.circle),
+            child: ClipOval(
+              child: CachedImage(url: category.image, fit: BoxFit.cover),
             ),
           ),
           8.szW,
-          Text('مطاعم', style: context.textStyle.regular.s14),
+          Flexible(
+            child: Text(
+              category.name.isEmpty ? '---' : category.name,
+              style: context.textStyle.s12.medium,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
         ],
       ),
     );

@@ -7,53 +7,56 @@ class FavouriteCubit extends PaginatedCubit<CouponEntity> {
     int page, {
     String? key,
   }) async {
-    // Simulate network delay
-    await Future.delayed(const Duration(milliseconds: 500));
-
-    return Success({
-      'data': {
-        'data': [
-          {
-            'id': '1',
-            'title': 'ملابس زارا',
-            'description': 'خصم 25% علي جميع المنتجات',
-          },
-          {
-            'id': '2',
-            'title': 'ملابس زارا',
-            'description': 'خصم 25% علي جميع المنتجات',
-            'is_favorite': true,
-          },
-        ],
-        'pagination': {
-          'total': 2,
-          'count': 2,
-          'per_page': 10,
-          'current_page': 1,
-          'total_pages': 1,
-        },
-      },
-    });
+    return await baseCrudUseCase.call(
+      CrudBaseParams(
+        api: ApiConstants.favorites,
+        httpRequestType: HttpRequestType.get,
+        queryParameters: ConstantManager.paginateJson(page),
+        mapper: (json) => json,
+      ),
+    );
   }
 
   @override
-  List<CouponEntity> parseItems(json) => (json['data'] as List)
-      .map((e) => CouponEntity.fromJson(Map<String, dynamic>.from(e)))
-      .toList();
+  List<CouponEntity> parseItems(json) {
+    if (json == null || json['data'] == null || json['data']['data'] == null) {
+      return [];
+    }
+    return (json['data']['data'] as List).map((e) {
+      final coupon = CouponEntity.fromJson(Map<String, dynamic>.from(e));
+      return coupon.copyWith(isFav: true);
+    }).toList();
+  }
 
   @override
-  PaginationMeta parsePagination(json) =>
-      PaginationMeta.fromJson(json['pagination']);
+  PaginationMeta parsePagination(json) {
+    if (json == null || json['data'] == null || json['data']['meta'] == null) {
+      return const PaginationMeta(
+          totalItems: 0,
+          countItems: 0,
+          perPage: 10,
+          totalPages: 1,
+          currentPage: 1);
+    }
+    return PaginationMeta.fromJson(json['data']['meta']);
+  }
 
-  void toggleFavorite(String id) {
+  void toggleFavorite(int id) async {
     final currentData = state.data;
-    final updatedItems = currentData.items.map((coupon) {
-      if (coupon.id == id) {
-        return coupon.copyWith(isFavorite: !coupon.isFavorite);
-      }
-      return coupon;
-    }).toList();
+    // Remove the item from the list if it's currently fav (unfavoriting)
+    final updatedItems =
+        currentData.items.where((coupon) => coupon.id != id).toList();
 
     setSuccess(data: currentData.copyWith(items: updatedItems));
+
+    // Call API to sync with server
+    await baseCrudUseCase.call(
+      CrudBaseParams(
+        api: ApiConstants.toggleFavorite,
+        httpRequestType: HttpRequestType.post,
+        body: {'product_id': id},
+        mapper: (json) => json,
+      ),
+    );
   }
 }

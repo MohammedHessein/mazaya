@@ -10,13 +10,13 @@ class UserModel {
   final String? address;
   final int? locationId;
   final String? locationName;
-  final String userPackageName;
-  final String memberType;
-  final String userPackageImage;
-  final int userPackageCouponsLimit;
-  final int userPackageUsedCoupons;
-  final String userPackageStartDate;
-  final String userPackageEndDate;
+  final String? userPackageName;
+  final String? memberType;
+  final String? userPackageImage;
+  final int? userPackageCouponsLimit;
+  final int? userPackageUsedCoupons;
+  final String? userPackageStartDate;
+  final String? userPackageEndDate;
   final bool userPackageIsActive;
   final String createdAt;
   final String? token;
@@ -41,13 +41,13 @@ class UserModel {
     this.address,
     this.locationId,
     this.locationName,
-    required this.userPackageName,
-    required this.memberType,
-    required this.userPackageImage,
-    required this.userPackageCouponsLimit,
-    required this.userPackageUsedCoupons,
-    required this.userPackageStartDate,
-    required this.userPackageEndDate,
+    this.userPackageName,
+    this.memberType,
+    this.userPackageImage,
+    this.userPackageCouponsLimit,
+    this.userPackageUsedCoupons,
+    this.userPackageStartDate,
+    this.userPackageEndDate,
     required this.userPackageIsActive,
     required this.createdAt,
     this.token,
@@ -57,31 +57,31 @@ class UserModel {
   });
 
   factory UserModel.initial() => UserModel(
-        id: 0,
-        name: '',
-        email: '',
-        mobile: '',
-        countryCode: null,
-        emailVerifiedAt: null,
-        photoProfile: '',
-        status: '',
-        address: null,
-        locationId: null,
-        locationName: null,
-        userPackageName: '',
-        memberType: '',
-        userPackageImage: '',
-        userPackageCouponsLimit: 0,
-        userPackageUsedCoupons: 0,
-        userPackageStartDate: '',
-        userPackageEndDate: '',
-        userPackageIsActive: false,
-        createdAt: '',
-        token: '',
-        isExpired: false,
-        allowNotify: false,
-        userType: 0,
-      );
+    id: 0,
+    name: '',
+    email: '',
+    mobile: '',
+    countryCode: null,
+    emailVerifiedAt: null,
+    photoProfile: '',
+    status: '',
+    address: null,
+    locationId: null,
+    locationName: null,
+    userPackageName: null,
+    memberType: null,
+    userPackageImage: null,
+    userPackageCouponsLimit: null,
+    userPackageUsedCoupons: null,
+    userPackageStartDate: null,
+    userPackageEndDate: null,
+    userPackageIsActive: false,
+    createdAt: '',
+    token: '',
+    isExpired: false,
+    allowNotify: false,
+    userType: 0,
+  );
 
   UserModel copyWith({
     int? id,
@@ -124,8 +124,10 @@ class UserModel {
       userPackageName: userPackageName ?? this.userPackageName,
       memberType: memberType ?? this.memberType,
       userPackageImage: userPackageImage ?? this.userPackageImage,
-      userPackageCouponsLimit: userPackageCouponsLimit ?? this.userPackageCouponsLimit,
-      userPackageUsedCoupons: userPackageUsedCoupons ?? this.userPackageUsedCoupons,
+      userPackageCouponsLimit:
+          userPackageCouponsLimit ?? this.userPackageCouponsLimit,
+      userPackageUsedCoupons:
+          userPackageUsedCoupons ?? this.userPackageUsedCoupons,
       userPackageStartDate: userPackageStartDate ?? this.userPackageStartDate,
       userPackageEndDate: userPackageEndDate ?? this.userPackageEndDate,
       userPackageIsActive: userPackageIsActive ?? this.userPackageIsActive,
@@ -141,12 +143,17 @@ class UserModel {
     // Handle nested data if passed full response, otherwise handle the user object directly
     final Map<String, dynamic> data =
         (json.containsKey('data') && json['data'] is Map)
-            ? json['data'] as Map<String, dynamic>
-            : json;
+        ? json['data'] as Map<String, dynamic>
+        : json;
     final Map<String, dynamic> user =
         (data.containsKey('user') && data['user'] is Map)
-            ? data['user'] as Map<String, dynamic>
-            : data;
+        ? data['user'] as Map<String, dynamic>
+        : data;
+
+    final Map<String, dynamic> package =
+        (user.containsKey('package') && user['package'] is Map)
+        ? user['package'] as Map<String, dynamic>
+        : {};
 
     return UserModel(
       id: user['id'] ?? 0,
@@ -160,46 +167,49 @@ class UserModel {
       address: user['address'],
       locationId: user['location_id'],
       locationName: user['location_name'] ?? user['city'] ?? '',
-      userPackageName: user['user_package_name'] ?? '',
-      memberType: user['member_type'] ?? '',
-      userPackageImage: user['user_package_image'] ?? '',
-      userPackageCouponsLimit: user['user_package_coupons_limit'] ?? 0,
-      userPackageUsedCoupons: user['user_package_used_coupons'] ?? 0,
-      userPackageStartDate: user['user_package_start_date'] ?? '',
-      userPackageEndDate: user['user_package_end_date'] ?? '',
-      userPackageIsActive: user['userPackageIsActive'] ?? false,
+      userPackageName: user['user_package_name'],
+      memberType: user['member_type'],
+      userPackageImage: user['user_package_image'],
+      userPackageCouponsLimit: user['user_package_coupons_limit'] ?? package['coupons_limit'],
+      userPackageUsedCoupons: user['user_package_used_coupons'] ?? package['used_coupons'],
+      userPackageStartDate: user['user_package_start_date'] ?? package['start_date'],
+      userPackageEndDate: user['user_package_end_date'] ?? package['end_date'],
+      userPackageIsActive: user['userPackageIsActive'] ?? (package['is_active'] ?? false),
       createdAt: user['created_at'] ?? '',
-      token: data['token'] ?? (json.containsKey('token') ? json['token'] : null),
-      isExpired: data['isExpired'] ?? (json.containsKey('isExpired') ? json['isExpired'] : null),
+      token:
+          data['token'] ?? (json.containsKey('token') ? json['token'] : null),
+      isExpired:
+          data['isExpired'] ??
+          (json.containsKey('isExpired') ? json['isExpired'] : null),
       allowNotify: user['allowNotify'] ?? false,
       userType: user['userType'] ?? 0,
     );
   }
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'email': email,
-        'mobile': mobile,
-        'country_code': countryCode,
-        'email_verified_at': emailVerifiedAt,
-        'photo_profile': photoProfile,
-        'status': status,
-        'address': address,
-        'location_id': locationId,
-        'location_name': locationName,
-        'user_package_name': userPackageName,
-        'member_type': memberType,
-        'user_package_image': userPackageImage,
-        'user_package_coupons_limit': userPackageCouponsLimit,
-        'user_package_used_coupons': userPackageUsedCoupons,
-        'user_package_start_date': userPackageStartDate,
-        'user_package_end_date': userPackageEndDate,
-        'userPackageIsActive': userPackageIsActive,
-        'created_at': createdAt,
-        'token': token,
-        'isExpired': isExpired,
-        'allowNotify': allowNotify,
-        'userType': userType,
-      };
+    'id': id,
+    'name': name,
+    'email': email,
+    'mobile': mobile,
+    'country_code': countryCode,
+    'email_verified_at': emailVerifiedAt,
+    'photo_profile': photoProfile,
+    'status': status,
+    'address': address,
+    'location_id': locationId,
+    'location_name': locationName,
+    'user_package_name': userPackageName,
+    'member_type': memberType,
+    'user_package_image': userPackageImage,
+    'user_package_coupons_limit': userPackageCouponsLimit,
+    'user_package_used_coupons': userPackageUsedCoupons,
+    'user_package_start_date': userPackageStartDate,
+    'user_package_end_date': userPackageEndDate,
+    'userPackageIsActive': userPackageIsActive,
+    'created_at': createdAt,
+    'token': token,
+    'isExpired': isExpired,
+    'allowNotify': allowNotify,
+    'userType': userType,
+  };
 }

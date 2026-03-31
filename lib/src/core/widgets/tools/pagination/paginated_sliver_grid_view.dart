@@ -22,27 +22,25 @@ class PaginatedSliverGridView<T> extends StatelessWidget {
     final totalCount = itemsCount + (isLoadingMore ? 1 : 0);
 
     return SliverGrid(
-      gridDelegate: config.gridDelegate ??
+      gridDelegate:
+          config.gridDelegate ??
           const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             childAspectRatio: 1.0,
             crossAxisSpacing: 8.0,
             mainAxisSpacing: 8.0,
           ),
-      delegate: SliverChildBuilderDelegate(
-        (context, index) {
-          if (index >= itemsCount) {
-            return LoadMoreIndicatorSliver(indicator: loadMoreIndicator);
-          }
-          final itemWidget = itemBuilder(context, items[index], index);
+      delegate: SliverChildBuilderDelegate((context, index) {
+        if (index >= itemsCount) {
+          return LoadMoreIndicatorSliver(indicator: loadMoreIndicator);
+        }
+        final itemWidget = itemBuilder(context, items[index], index);
 
-          if (config.itemMargin != null) {
-            return Padding(padding: config.itemMargin!, child: itemWidget);
-          }
-          return itemWidget;
-        },
-        childCount: totalCount,
-      ),
+        if (config.itemMargin != null) {
+          return Padding(padding: config.itemMargin!, child: itemWidget);
+        }
+        return itemWidget;
+      }, childCount: totalCount),
     );
   }
 }

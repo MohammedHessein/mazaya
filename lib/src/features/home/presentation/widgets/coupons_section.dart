@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mazaya/src/config/language/locale_keys.g.dart';
 import 'package:mazaya/src/config/res/config_imports.dart';
 import 'package:mazaya/src/core/extensions/context_extension.dart';
 import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
 import 'package:mazaya/src/core/widgets/cards/app_card.dart';
+import 'package:mazaya/src/core/widgets/tools/bloc_builder/async_bloc_builder.dart';
+import 'package:mazaya/src/core/navigation/navigator.dart';
+import 'package:mazaya/src/features/coupons/presentation/view/coupons_view.dart';
+import '../cubits/home_cubit.dart';
+import '../../model/home_model.dart';
 
 class CouponsSection extends StatefulWidget {
   const CouponsSection({super.key});
@@ -13,7 +19,6 @@ class CouponsSection extends StatefulWidget {
 }
 
 class _CouponsSectionState extends State<CouponsSection> {
-  final Set<int> _favorites = {1};
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +34,9 @@ class _CouponsSectionState extends State<CouponsSection> {
                 style: context.textStyle.s16.bold.setBlackColor,
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Go.to(const CouponsView());
+                },
                 child: Text(
                   LocaleKeys.showMore,
                   style: context.textStyle.s14.regular.setHintColor,
@@ -37,26 +44,38 @@ class _CouponsSectionState extends State<CouponsSection> {
               ),
             ],
           ),
-          ListView.builder(
-            padding: EdgeInsets.zero,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: 4,
-            itemBuilder: (context, index) {
-              final isFavorite = _favorites.contains(index);
-              return AppCard(
-                title: 'ملابس زارا',
-                description: 'خصم 25% علي جميع المنتجات',
+          AsyncBlocBuilder<HomeCubit, HomeModel?>(
+            skeletonBuilder: (context) => ListView.builder(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: 4,
+              itemBuilder: (context, index) => const AppCard(
+                title: 'Loading...',
+                description: 'Loading description...',
                 status: null,
-                isFavorite: isFavorite,
-                onFavoriteTap: () {
-                  setState(() {
-                    if (isFavorite) {
-                      _favorites.remove(index);
-                    } else {
-                      _favorites.add(index);
-                    }
-                  });
+              ),
+            ),
+            builder: (context, home) {
+              final products = home?.products ?? [];
+              return ListView.builder(
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: products.length,
+                itemBuilder: (context, index) {
+                  final product = products[index];
+                  return AppCard(
+                    title: product.name,
+                    description: product.shortDescription ?? '',
+                    imageUrl: product.productImage,
+                    status: null,
+                    isFavorite: product.isFav,
+                    onFavoriteTap: () {
+                      context.read<HomeCubit>().toggleFavorite(product.id);
+                    },
+                    onTap: () {},
+                  );
                 },
               );
             },

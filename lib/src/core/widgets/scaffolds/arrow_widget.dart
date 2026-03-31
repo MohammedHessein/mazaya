@@ -37,11 +37,12 @@ class ArrowWidget extends StatelessWidget {
               : Matrix4.rotationX(math.pi),
           child: AppAssets.svg.baseSvg.arrowBack
               .svg(
-                  width: width ?? AppSize.sH35,
-                  height: height ?? AppSize.sH35,
-                  colorFilter: color != null
-                      ? ColorFilter.mode(color!, BlendMode.srcIn)
-                      : null)
+                width: width ?? AppSize.sH35,
+                height: height ?? AppSize.sH35,
+                colorFilter: color != null
+                    ? ColorFilter.mode(color!, BlendMode.srcIn)
+                    : null,
+              )
               .onClick(onTap: onTap ?? () => Go.back()),
         ),
       ],

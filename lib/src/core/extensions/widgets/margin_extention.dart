@@ -4,16 +4,10 @@ import 'package:mazaya/src/config/res/config_imports.dart';
 
 extension MarginExtension on Widget {
   Widget margin(EdgeInsetsGeometry margin) {
-    return Container(
-      margin: margin,
-      child: this,
-    );
+    return Container(margin: margin, child: this);
   }
 
-  Widget marginSymmetric({
-    double? horizontal,
-    double? vertical,
-  }) {
+  Widget marginSymmetric({double? horizontal, double? vertical}) {
     return Container(
       margin: EdgeInsets.symmetric(
         horizontal: horizontal ?? ConstantManager.zeroAsDouble,
@@ -24,10 +18,7 @@ extension MarginExtension on Widget {
   }
 
   Widget marginAll(double margin) {
-    return Container(
-      margin: EdgeInsets.all(margin),
-      child: this,
-    );
+    return Container(margin: EdgeInsets.all(margin), child: this);
   }
 
   Widget marginLeft(double margin) {

@@ -7,8 +7,8 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     context.locale;
     return DefaultScaffold(
-      title: LocaleKeys.settingsTitle,
-      body: const _SettingsTabBody(),
+      header: HeaderConfig(title: LocaleKeys.settingsTitle),
+      slivers: const [SliverToBoxAdapter(child: _SettingsTabBody())],
     );
   }
 }

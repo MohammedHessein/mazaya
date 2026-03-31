@@ -11,10 +11,7 @@ class AsyncState<T> extends Equatable {
     this.errorMessage,
   });
 
-  factory AsyncState.initial({
-    required T data,
-    String? errorMessage,
-  }) {
+  factory AsyncState.initial({required T data, String? errorMessage}) {
     return AsyncState<T>(
       status: BaseStatus.initial,
       data: data,
@@ -22,16 +19,14 @@ class AsyncState<T> extends Equatable {
     );
   }
 
-  AsyncState<T> loading({
-    T? data,
-    String? errorMessage,
-  }) {
+  AsyncState<T> loading({T? data, String? errorMessage}) {
     return AsyncState<T>(
       status: BaseStatus.loading,
       data: data ?? this.data,
       errorMessage: errorMessage ?? this.errorMessage,
     );
   }
+
   AsyncState<T> loadingMore({T? data, String? errorMessage}) {
     return AsyncState<T>(
       status: BaseStatus.loadingMore,
@@ -40,10 +35,7 @@ class AsyncState<T> extends Equatable {
     );
   }
 
-  AsyncState<T> success({
-    required T data,
-    String? errorMessage,
-  }) {
+  AsyncState<T> success({required T data, String? errorMessage}) {
     return AsyncState<T>(
       status: BaseStatus.success,
       data: data,
@@ -51,10 +43,7 @@ class AsyncState<T> extends Equatable {
     );
   }
 
-  AsyncState<T> error({
-    String? errorMessage,
-    T? data,
-  }) {
+  AsyncState<T> error({String? errorMessage, T? data}) {
     return AsyncState<T>(
       status: BaseStatus.error,
       data: data ?? this.data,
@@ -75,11 +64,7 @@ class AsyncState<T> extends Equatable {
 
   bool get isError => status.isError;
 
-  AsyncState<T> copyWith({
-    BaseStatus? status,
-    T? data,
-    String? errorMessage,
-  }) {
+  AsyncState<T> copyWith({BaseStatus? status, T? data, String? errorMessage}) {
     return AsyncState<T>(
       status: status ?? this.status,
       data: data ?? this.data,

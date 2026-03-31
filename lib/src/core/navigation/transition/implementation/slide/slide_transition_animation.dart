@@ -1,4 +1,4 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 import 'package:mazaya/src/core/navigation/constants/imports_constants.dart';
 import 'package:mazaya/src/core/navigation/transition/factory/transition_creator.dart';
@@ -18,7 +18,8 @@ class SlideTransitionAnimation implements TransitionCreator {
       position: SliderAnimator(options).animator(animation),
       child: child,
     ).buildSecondaryTransition(
-        animation: animation,
-        applySecondaryTransition: options.secondaryTransition);
+      animation: animation,
+      applySecondaryTransition: options.secondaryTransition,
+    );
   }
 }

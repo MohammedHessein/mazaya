@@ -5,7 +5,6 @@ import 'package:mazaya/src/config/res/config_imports.dart';
 import 'package:mazaya/src/core/extensions/context_extension.dart';
 import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
 import 'package:mazaya/src/core/navigation/navigator.dart';
- 
 
 class FormFieldWrapper<T> extends StatelessWidget {
   final FormFieldValidator<T>? validator;
@@ -52,9 +51,9 @@ class FormFieldWrapper<T> extends StatelessWidget {
                   borderRadius: BorderRadius.circular(borderRadius ?? 12.r),
                   border: state.hasError
                       ? Border.all(
-                    width: .5,
-                    color: AppColors.error.withValues(alpha: 0.65),
-                  )
+                          width: .5,
+                          color: AppColors.error.withValues(alpha: 0.65),
+                        )
                       : null,
                 ),
                 child: builder(state),

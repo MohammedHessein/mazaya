@@ -1,4 +1,5 @@
 {
+  "fetching_location": "Fetching location...",
   "are_you_sure_you_want_to_delete_account": "Are you sure you want to delete your account?",
   "bad_request": "Bad request, please try again",
   "camera": "Camera",
@@ -243,9 +244,14 @@
   "renewal_date": "Renewal Date: {date}",
   "used_coupons": "Used Coupons",
   "logout_confirmation": "Do you want to log out?!",
-  "logout_desc": "You can come back at any time!",
-  "delete_account_confirmation": "Do you want to delete the account?",
-  "delete_account_desc": "You will not be able to recover your data after deletion.",
+  "logout_desc": "Do you want to logout now? You can come back at any time!",
+  "logout_confirm": "Logout",
+  "logout_confirmation": "Logout",
+  "logout_desc": "Are you sure you want to log out of the application?",
+  "logout_confirm": "Log Out",
+  "delete_account_confirmation": "Delete Account",
+  "delete_account_desc": "Are you sure you want to delete your account? This will erase all your personal data.",
+  "delete_account_confirm": "Delete Account",
   "confirm_address": "Confirm Address",
   "resend_code": "Resend",
   "code_not_sent": "Code not sent?",
@@ -291,5 +297,6 @@
   "language": "Language",
   "favourite": "Favourite",
   "golden_membership": "Golden Membership",
-  "change": "Change"
+  "change": "Change",
+  "categories": "Categories"
 }

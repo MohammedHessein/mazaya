@@ -1,83 +1,56 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mazaya/src/config/language/locale_keys.g.dart';
-import 'package:mazaya/src/config/res/assets.gen.dart';
-import 'package:mazaya/src/config/res/config_imports.dart';
-import 'package:mazaya/src/core/extensions/context_extension.dart';
-import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
-import 'package:mazaya/src/core/extensions/widgets/sized_box_helper.dart';
-import 'package:mazaya/src/core/navigation/navigator.dart';
-import 'package:mazaya/src/core/widgets/universal_media/universal_media_widget.dart';
-import 'package:mazaya/src/core/widgets/universal_media/enums.dart';
+import 'package:mazaya/src/core/shared/cubits/user_cubit/user_cubit.dart';
+import 'package:mazaya/src/core/widgets/image_widgets/cached_image.dart';
 import 'package:mazaya/src/features/notifications/presentation/imports/view_imports.dart';
 
-class ScaffoldTopRow extends StatelessWidget {
-  final ScaffoldHeaderType headerType;
-  final String? imageUrl;
-  final String? userName;
-  final bool showBackButton;
-  final String title;
-  final Widget? trailing;
+import '../../../features/location/imports/location_imports.dart';
 
-  const ScaffoldTopRow({
-    super.key,
-    required this.headerType,
-    this.imageUrl,
-    this.userName,
-    required this.showBackButton,
-    required this.title,
-    this.trailing,
-  });
+class ScaffoldTopRow extends StatelessWidget {
+  final HeaderConfig config;
+
+  const ScaffoldTopRow({super.key, required this.config});
 
   @override
   Widget build(BuildContext context) {
-    if (headerType == ScaffoldHeaderType.home) {
+    if (config.type == ScaffoldHeaderType.home) {
       return Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: AppPadding.pW16,
-          vertical: AppPadding.pH12,
-        ),
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               children: [
                 CircleAvatar(
-                  radius: 27.r,
-                  backgroundImage: imageUrl != null ? AssetImage(imageUrl!) : null,
-                  backgroundColor: AppColors.gray100,
-                  child: imageUrl == null
-                      ? Icon(Icons.person, color: AppColors.primary)
-                      : null,
+                  radius: 30.r,
+                  backgroundColor: AppColors.white,
+                  child: CachedImage(url: UserCubit.instance.user.image),
                 ),
-                12.szW,
+                12.horizontalSpace,
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    15.szH,
                     Text(
                       LocaleKeys.welcomeHome,
-                      style: context.textStyle.s12.regular.setColor(
-                        AppColors.white.withValues(alpha: 0.8),
-                      ),
+                      style: context.textStyle.s14.medium.setWhiteColor,
                     ),
                     Text(
-                      userName ?? 'محمد حسين',
-                      style: context.textStyle.s14.bold.setWhiteColor,
+                      config.userName ?? '',
+                      style: context.textStyle.s14.regular.setWhiteColor,
                     ),
                   ],
                 ),
               ],
             ),
-            InkWell(
-              onTap: () => Go.to(const NotificationScreen()),
-              child: Container(
-                padding: EdgeInsets.all(8.w),
+            IconButton(
+              onPressed: () => Go.to(const NotificationScreen()),
+              icon: Container(
+                padding: EdgeInsets.all(12.r),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(color: AppColors.white, width: 0.2),
+                  border: Border.all(color: AppColors.white, width: 0.5),
                 ),
                 child: Badge(
+                  smallSize: 8,
                   alignment: AlignmentDirectional.topStart,
                   child: AppAssets.svg.baseSvg.notificationHome.svg(),
                 ),
@@ -88,42 +61,23 @@ class ScaffoldTopRow extends StatelessWidget {
       );
     }
 
-    if (!showBackButton && trailing == null && title.isEmpty) {
-      return const SizedBox.shrink();
-    }
-
     return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: AppPadding.pH20,
-        horizontal: AppPadding.pW16,
-      ),
-      child: Stack(
-        alignment: Alignment.center,
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (headerType == ScaffoldHeaderType.standard && title.isNotEmpty)
-            Text(title, style: context.textStyle.s16.medium.setWhiteColor),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              if (showBackButton && context.isArabic)
-                IconButton(
-                  onPressed: Go.back,
-                  icon: UniversalMediaWidget(
-                    path: AppAssets.svg.baseSvg.arrowRight.path,
-                    width: 30.w,
-                    height: 30.w,
-                  ),
-                )
-              else if (showBackButton && !context.isArabic)
-                IconButton(
-                  onPressed: Go.back,
-                  icon: Icon(Icons.arrow_back_outlined, color: AppColors.white),
-                )
-              else
-                const SizedBox.shrink(),
-              trailing ?? const SizedBox.shrink(),
-            ],
+          if (config.showBackButton)
+            IconButton(
+              onPressed: Go.back,
+              icon: const Icon(Icons.arrow_back, color: Colors.white),
+            ),
+          Center(
+            child: Text(
+              config.title,
+              style: context.textStyle.s16.medium.setWhiteColor,
+            ),
           ),
+          config.trailing ?? const SizedBox(),
         ],
       ),
     );

@@ -61,10 +61,11 @@ class CacheStorage {
 class SecureStorage {
   SecureStorage._();
   static const _storage = FlutterSecureStorage(
-      aOptions: AndroidOptions(
-    encryptedSharedPreferences: true,
-    resetOnError: true,
-  ));
+    aOptions: AndroidOptions(
+      encryptedSharedPreferences: true,
+      resetOnError: true,
+    ),
+  );
 
   static Future<void> write(String key, String value) async {
     await _storage.write(key: key, value: value);

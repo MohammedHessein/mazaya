@@ -22,10 +22,7 @@ class RotationAnimator extends Animator<double>
 
   @override
   Tween<double> setTween() {
-    final tween = Tween<double>(
-      begin: options.begin,
-      end: options.end,
-    );
+    final tween = Tween<double>(begin: options.begin, end: options.end);
     return tween;
   }
 

@@ -59,10 +59,7 @@ class TextOnlyFormatter extends TextInputFormatter {
   final bool allowSpaces;
   final bool allowArabic;
 
-  TextOnlyFormatter({
-    this.allowSpaces = true,
-    this.allowArabic = true,
-  });
+  TextOnlyFormatter({this.allowSpaces = true, this.allowArabic = true});
 
   @override
   TextEditingValue formatEditUpdate(
@@ -97,10 +94,7 @@ class TextWithNumberFormatter extends TextInputFormatter {
   final bool allowSpaces;
   final bool allowArabic;
 
-  TextWithNumberFormatter({
-    this.allowSpaces = true,
-    this.allowArabic = true,
-  });
+  TextWithNumberFormatter({this.allowSpaces = true, this.allowArabic = true});
 
   @override
   TextEditingValue formatEditUpdate(
@@ -175,10 +169,7 @@ class IntegerNumberFormatter extends TextInputFormatter {
   final bool allowNegative;
   final int? maxValue;
 
-  IntegerNumberFormatter({
-    this.allowNegative = false,
-    this.maxValue,
-  });
+  IntegerNumberFormatter({this.allowNegative = false, this.maxValue});
 
   @override
   TextEditingValue formatEditUpdate(
@@ -217,10 +208,7 @@ class DecimalNumberFormatter extends TextInputFormatter {
   final bool allowNegative;
   final int? decimalPlaces;
 
-  DecimalNumberFormatter({
-    this.allowNegative = false,
-    this.decimalPlaces,
-  });
+  DecimalNumberFormatter({this.allowNegative = false, this.decimalPlaces});
 
   @override
   TextEditingValue formatEditUpdate(

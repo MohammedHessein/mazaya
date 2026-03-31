@@ -25,7 +25,7 @@ class ConstantManager {
 
   static Map<String, dynamic>? paginateJson(int page) => {
     'page': page,
-    'paginate': pgSize,
+    'per_page': pgSize,
   };
 }
 

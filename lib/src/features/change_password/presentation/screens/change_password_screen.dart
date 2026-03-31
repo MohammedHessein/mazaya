@@ -6,13 +6,19 @@ class ChangePasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultScaffold(
-      showBackButton: true,
-      title: LocaleKeys.changePassword,
-      headerType: ScaffoldHeaderType.standard,
-      body: BlocProvider(
-        create: (context) => injector<ChangePasswordCubit>(),
-        child: const ChangePasswordBody(),
+      header: HeaderConfig(
+        showBackButton: false,
+        title: LocaleKeys.changePassword,
+        type: ScaffoldHeaderType.standard,
       ),
+      slivers: [
+        SliverToBoxAdapter(
+          child: BlocProvider(
+            create: (context) => injector<ChangePasswordCubit>(),
+            child: const ChangePasswordBody(),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -102,7 +102,9 @@ class AppTheme {
           }
           return AppColorsWithDarkMode.gray400;
         }),
-        overlayColor: const WidgetStatePropertyAll(AppColorsWithDarkMode.primary),
+        overlayColor: const WidgetStatePropertyAll(
+          AppColorsWithDarkMode.primary,
+        ),
         trackOutlineColor: const WidgetStatePropertyAll(Colors.transparent),
       ),
     );

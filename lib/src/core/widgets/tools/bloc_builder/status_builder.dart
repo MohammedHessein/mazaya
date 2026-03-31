@@ -24,8 +24,7 @@ class StatusBuilder<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return data.status.when(
       onSuccess: () => onSuccess(data.data, context),
-      onLoading: () =>
-          onLoading?.call() ?? CustomLoading.showLoadingView(),
+      onLoading: () => onLoading?.call() ?? CustomLoading.showLoadingView(),
       onError: () =>
           onFail?.call() ??
           ErrorView(error: errorMessage ?? data.errorMessage ?? 'حدث خطأ'),

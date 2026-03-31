@@ -25,9 +25,7 @@ class LocationHelper {
 
     if (permission == LocationPermission.deniedForever) {
       // Permissions are denied forever, handle appropriately.
-      return Future.error(
-        LocaleKeys.locationPermissionPermanentlyDenied,
-      );
+      return Future.error(LocaleKeys.locationPermissionPermanentlyDenied);
     }
 
     // When we have permission, we can get the current position.

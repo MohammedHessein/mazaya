@@ -48,13 +48,13 @@ class Async<T> extends Equatable {
 
   @override
   List<Object?> get props => [
-        data,
-        _successWithoutData,
-        _loading,
-        isFailure,
-        isLoading,
-        isSuccess,
-        isInitial,
-        failure,
-      ];
+    data,
+    _successWithoutData,
+    _loading,
+    isFailure,
+    isLoading,
+    isSuccess,
+    isInitial,
+    failure,
+  ];
 }

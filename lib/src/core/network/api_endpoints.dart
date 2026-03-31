@@ -1,14 +1,19 @@
 class ApiConstants {
   static const String baseUrl =
       'https://backend.smartvision4p.com/mazaya-app/public/api/v1/';
-  static const String intro = 'get-intros';
-  static const String countries = 'countries';
-  static const String uploadFiles = 'upload-files';
   static const String login = 'user/login';
   static const String forgetPassword = 'user/forgot-password';
   static const String checkResetCode = 'user/check-reset-code';
   static const String resetPassword = 'user/reset-password';
   static const String changePassword = 'user/change-password';
+  static const String home = 'home';
+  static const String categories = 'categorys';
+  static const String coupons = 'coupons';
+  static const String toggleFavorite = 'user/favorites/toggle';
+  static const String favorites = 'user/favorites';
+  static const String profile = 'user/profile';
+  static const String logout = 'user/logout';
+  static const String deleteAccount = 'user/delete-account';
 
   static const String cities = 'cities-by-country/';
   static const String registerContent = 'user/get-register-data';
@@ -25,7 +30,6 @@ class ApiConstants {
   static const String switchNotification = 'user/notifications/change-status';
   static const String updateProfile = 'user/profile/update';
   static const String changeLang = 'user/change-lang';
-  static const String deleteAccount = 'user/delete-account';
   static const String updateCountry = 'user/profile/change-currency-country';
   static const String changeEmailCheckPassword =
       'user/profile/change-email-check-password';
@@ -43,5 +47,4 @@ class ApiConstants {
   static const String complain = 'user/complaints/get-complaint-data';
   static const String addComplain = 'user/complaints/send';
   static const String complainDetails = 'user/complaints/';
-  static const String logOut = 'user/sign-out';
 }

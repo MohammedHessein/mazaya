@@ -1,38 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:mazaya/src/core/extensions/widgets/sized_box_helper.dart';
 import 'package:mazaya/src/core/widgets/universal_media/enums.dart';
 
-class ScaffoldHeaderContent extends StatelessWidget {
-  final ScaffoldHeaderType headerType;
-  final Widget? headerWidget;
-  final Widget? headLineWidget;
+import 'package:mazaya/src/core/widgets/scaffolds/header_config.dart';
 
-  const ScaffoldHeaderContent({
-    super.key,
-    required this.headerType,
-    this.headerWidget,
-    this.headLineWidget,
-  });
+class HeaderContent extends StatelessWidget {
+  final HeaderConfig config;
+
+  const HeaderContent({super.key, required this.config});
 
   @override
   Widget build(BuildContext context) {
-    switch (headerType) {
+    switch (config.type) {
       case ScaffoldHeaderType.profile:
-        return SizedBox();
+        return config.headerWidget ?? const SizedBox();
+
+      case ScaffoldHeaderType.home:
       case ScaffoldHeaderType.auth:
         return Column(
-          children: [headerWidget ?? const SizedBox.shrink(), 50.szH],
+          children: [
+            config.headerWidget ?? const SizedBox(),
+            const SizedBox(height: 50),
+          ],
         );
-      case ScaffoldHeaderType.home:
-        return Column(
-          children: [headerWidget ?? const SizedBox.shrink(), 50.szH],
-        );
+
       case ScaffoldHeaderType.standard:
         return Column(
           children: [
-            if (headLineWidget != null) headLineWidget!,
-            headerWidget ?? const SizedBox.shrink(),
-            if (headerWidget != null) 24.szH else 80.szH,
+            if (config.headLineWidget != null) config.headLineWidget!,
+            config.headerWidget ?? const SizedBox(),
+            const SizedBox(height: 24),
           ],
         );
     }

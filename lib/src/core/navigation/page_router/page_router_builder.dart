@@ -8,9 +8,7 @@ class PageRouterBuilder {
 
   PageRouterCreator _creator = CustomPageRouterCreator();
 
-  void initAppRouter({
-    PlatformConfig? config,
-  }) {
+  void initAppRouter({PlatformConfig? config}) {
     final platform = Platform.operatingSystem;
     switch (platform) {
       case 'android':
@@ -20,7 +18,8 @@ class PageRouterBuilder {
         _creator = config?.ios ?? CupertinoPageRouterCreator();
         break;
       case 'windows':
-        _creator = config?.web ??
+        _creator =
+            config?.web ??
             CustomPageRouterCreator(parentTransition: TransitionType.fade);
         break;
       default:
@@ -47,9 +46,5 @@ class PlatformConfig {
   final PageRouterCreator? android;
   final PageRouterCreator? ios;
   final PageRouterCreator? web;
-  PlatformConfig({
-    this.android,
-    this.ios,
-    this.web,
-  });
+  PlatformConfig({this.android, this.ios, this.web});
 }

@@ -11,15 +11,13 @@ class GetBaseEntityUseCase {
   GetBaseEntityUseCase({required this.repository});
 
   Future<Result<List<T>, Failure>> call<T extends BaseEntity>(
-      GetBaseEntityParams? param) async {
+    GetBaseEntityParams? param,
+  ) async {
     return await repository.getBaseIdAndNameEntity<T>(param);
   }
 }
 
-enum ParamsType {
-  path,
-  query,
-}
+enum ParamsType { path, query }
 
 class GetBaseEntityParams<T extends BaseIdAndNameEntity> {
   final int? id;
@@ -27,11 +25,12 @@ class GetBaseEntityParams<T extends BaseIdAndNameEntity> {
   final Map<String, dynamic> queryParameters;
   // ignore: avoid_types_as_parameter_names
   final T Function<T>(Map<String, dynamic> json)? mapper;
-  GetBaseEntityParams(
-      {this.id,
-      this.mapper,
-      this.paramsType = ParamsType.path,
-      this.queryParameters = const {}});
+  GetBaseEntityParams({
+    this.id,
+    this.mapper,
+    this.paramsType = ParamsType.path,
+    this.queryParameters = const {},
+  });
   //toJson
   Map<String, dynamic> toJson() {
     if (paramsType == ParamsType.path) return {};

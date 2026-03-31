@@ -4,6 +4,8 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/network/api_endpoints.dart';
+import 'package:mazaya/src/core/network/network_request.dart';
 import 'package:mazaya/src/core/helpers/cache_service.dart';
 import 'package:mazaya/src/core/network/network_service.dart';
 import 'package:mazaya/src/core/shared/models/user_model.dart';
@@ -31,7 +33,7 @@ class UserCubit extends Cubit<UserState> with UserUtils {
       CacheStorage.delete(_userKey),
       SecureStorage.delete(_tokenKey),
     ]);
-    _clearUser();
+    clearUser();
     emit(state.copyWith(userStatus: UserStatus.loggedOut));
   }
 
@@ -42,6 +44,20 @@ class UserCubit extends Cubit<UserState> with UserUtils {
   Future<void> updateUser(UserModel user) async {
     await _saveUser(user);
     emit(state.copyWith(userModel: user));
+  }
+
+  Future<void> getProfile() async {
+    final request = NetworkRequest(
+      method: RequestMethod.get,
+      path: ApiConstants.profile,
+    );
+    final response = await injector<NetworkService>().callApi<UserModel>(
+      request,
+      mapper: (json) => UserModel.fromJson(json),
+    );
+    if (response.key == 'success') {
+      await updateUser(response.data);
+    }
   }
 
   Future<bool> init() async {
@@ -64,7 +80,7 @@ class UserCubit extends Cubit<UserState> with UserUtils {
     return false;
   }
 
-  void _clearUser() {
+  void clearUser() {
     injector<NetworkService>().removeToken();
     emit(UserState.initial());
   }

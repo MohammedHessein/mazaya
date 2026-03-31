@@ -6,6 +6,7 @@ import 'package:mazaya/src/core/base_crud/code/presentation/cubit/base_cubit/asy
 import 'package:mazaya/src/core/base_crud/code/domain/base_domain_imports.dart';
 import 'package:mazaya/src/core/widgets/custom_html_widget.dart';
 import 'package:mazaya/src/core/widgets/scaffolds/default_scaffold.dart';
+import 'package:mazaya/src/core/widgets/scaffolds/header_config.dart';
 import 'package:mazaya/src/core/widgets/tools/bloc_builder/async_bloc_builder.dart';
 import 'package:mazaya/src/features/static_pages/entity/static_pages_enum.dart';
 

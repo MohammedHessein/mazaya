@@ -12,6 +12,7 @@ import 'package:mazaya/src/core/widgets/buttons/loading_button.dart';
 import 'package:mazaya/src/core/widgets/fields/text_fields/app_text_field.dart';
 import 'package:mazaya/src/core/widgets/fields/text_fields/field_label.dart';
 import 'package:mazaya/src/core/widgets/scaffolds/default_scaffold.dart';
+import 'package:mazaya/src/core/widgets/scaffolds/header_config.dart';
 import 'package:mazaya/src/core/widgets/universal_media/enums.dart';
 import 'package:mazaya/src/core/widgets/universal_media/universal_media_widget.dart';
 import 'package:mazaya/src/core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';

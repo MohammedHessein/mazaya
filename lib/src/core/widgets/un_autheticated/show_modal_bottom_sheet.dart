@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:mazaya/src/core/extensions/context_extension.dart';
 import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
-import 'package:mazaya/src/core/extensions/widgets/sized_box_helper.dart'; 
+import 'package:mazaya/src/core/extensions/widgets/sized_box_helper.dart';
 
 Future<T?> showAppModalBottomSheet<T>({
   required BuildContext context,

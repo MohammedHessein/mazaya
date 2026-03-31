@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:mazaya/src/config/res/config_imports.dart';
- 
+
 extension PaddingExtension on Widget {
   Widget padding(EdgeInsetsGeometry padding) {
-    return Padding(
-      padding: padding,
-      child: this,
-    );
+    return Padding(padding: padding, child: this);
   }
 
-  Widget paddingSymmetric({
-    double? horizontal,
-    double? vertical,
-  }) {
+  Widget paddingSymmetric({double? horizontal, double? vertical}) {
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: horizontal ?? ConstantManager.zeroAsDouble,
@@ -24,10 +18,7 @@ extension PaddingExtension on Widget {
   }
 
   Widget paddingAll(double padding) {
-    return Padding(
-      padding: EdgeInsets.all(padding),
-      child: this,
-    );
+    return Padding(padding: EdgeInsets.all(padding), child: this);
   }
 
   Widget paddingLeft(double padding) {

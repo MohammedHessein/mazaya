@@ -37,7 +37,10 @@ extension NetworkRequestExtension on NetworkRequest {
 
 extension MultiPartFileConverter on File {
   MultipartFile toMultiPart() {
-    return MultipartFile.fromFileSync(path, contentType: BackendConfiguation.type.isPhp ? getTypeOfFile() : null);
+    return MultipartFile.fromFileSync(
+      path,
+      contentType: BackendConfiguation.type.isPhp ? getTypeOfFile() : null,
+    );
   }
 }
 
@@ -85,18 +88,24 @@ extension MediaTypeHelper on File {
       case 'doc':
         return DioMediaType('application', 'msword');
       case 'docx':
-        return DioMediaType('application',
-            'vnd.openxmlformats-officedocument.wordprocessingml.document');
+        return DioMediaType(
+          'application',
+          'vnd.openxmlformats-officedocument.wordprocessingml.document',
+        );
       case 'xls':
         return DioMediaType('application', 'vnd.ms-excel');
       case 'xlsx':
-        return DioMediaType('application',
-            'vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        return DioMediaType(
+          'application',
+          'vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        );
       case 'ppt':
         return DioMediaType('application', 'vnd.ms-powerpoint');
       case 'pptx':
-        return DioMediaType('application',
-            'vnd.openxmlformats-officedocument.presentationml.presentation');
+        return DioMediaType(
+          'application',
+          'vnd.openxmlformats-officedocument.presentationml.presentation',
+        );
       case 'txt':
         return DioMediaType('text', 'plain');
       case 'rtf':

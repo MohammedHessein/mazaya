@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
- import 'package:mazaya/src/config/language/locale_keys.g.dart';
+import 'package:mazaya/src/config/language/locale_keys.g.dart';
 import 'package:mazaya/src/config/res/config_imports.dart';
 import 'widgets/sized_box_helper.dart';
 import 'text_style_extensions.dart';
@@ -58,8 +58,10 @@ extension DateTimeOnString on String {
   String get hoursTimeFromApiFormat {
     if (contains(":")) {
       final hours = DateFormat("hh:mm:ss", "en_US").parse(this).hour.toString();
-      final minutes =
-          DateFormat("hh:mm:ss", "en_US").parse(this).minute.toString();
+      final minutes = DateFormat(
+        "hh:mm:ss",
+        "en_US",
+      ).parse(this).minute.toString();
       final hasMinuts =
           num.tryParse(minutes) != null && num.tryParse(minutes) != 0;
       return "$hours${!hasMinuts ? "" : ".${(num.tryParse(minutes) ?? 0 / 60).toInt()}"}";
@@ -178,20 +180,28 @@ class SingleDatePickerBottomSheet extends StatefulWidget {
 
 class _SingleDatePickerBottomSheetState
     extends State<SingleDatePickerBottomSheet> {
-  late final DateTime minmum = widget.minmumDate?.copyWith(
+  late final DateTime minmum =
+      widget.minmumDate?.copyWith(
         hour: 0,
         minute: 0,
         second: 0,
         millisecond: 0,
         microsecond: 0,
       ) ??
-      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 0,
-          0, 0);
+      DateTime(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day,
+        0,
+        0,
+        0,
+      );
 
   late final ValueNotifier<DateTime?> _selectedDate = ValueNotifier(
-      (widget.initialDate?.isBefore(minmum) ?? true)
-          ? minmum
-          : widget.initialDate);
+    (widget.initialDate?.isBefore(minmum) ?? true)
+        ? minmum
+        : widget.initialDate,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -201,55 +211,54 @@ class _SingleDatePickerBottomSheetState
         children: [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0.w),
-            child: Column(children: [
-              16.h.szH,
-              Row(
-                children: [
-                  InkWell(
-                    onTap: () => Go.back(),
-                    child: const Icon(
-                      Icons.close,
-                      color: AppColors.black,
+            child: Column(
+              children: [
+                16.h.szH,
+                Row(
+                  children: [
+                    InkWell(
+                      onTap: () => Go.back(),
+                      child: const Icon(Icons.close, color: AppColors.black),
                     ),
-                  ),
-                  8.w.szW,
-                  Expanded(
-                    child: Text(
-                      widget.title,
-                      style: const TextStyle().s16.bold,
-                    ),
-                  ),
-                ],
-              ),
-              20.w.szW,
-              Localizations.override(
-                context: context,
-                // locale: const Locale("en"),
-                child: ValueListenableBuilder(
-                  valueListenable: _selectedDate,
-                  builder: (context, value, child) {
-                    return SizedBox(
-                      height: 200.h,
-                      child: CupertinoDatePicker(
-                        initialDateTime:
-                            !(widget.initialDate?.isBefore(minmum) ?? true)
-                                ? widget.initialDate
-                                : minmum,
-                        minimumDate:
-                            (widget.initialDate?.isBefore(minmum) ?? false)
-                                ? widget.initialDate
-                                : minmum,
-                        maximumDate: widget.maximumDate,
-                        mode: CupertinoDatePickerMode.date,
-                        onDateTimeChanged: (date) {
-                          _selectedDate.value = date;
-                        },
+                    8.w.szW,
+                    Expanded(
+                      child: Text(
+                        widget.title,
+                        style: const TextStyle().s16.bold,
                       ),
-                    );
-                  },
+                    ),
+                  ],
                 ),
-              ),
-            ]),
+                20.w.szW,
+                Localizations.override(
+                  context: context,
+                  // locale: const Locale("en"),
+                  child: ValueListenableBuilder(
+                    valueListenable: _selectedDate,
+                    builder: (context, value, child) {
+                      return SizedBox(
+                        height: 200.h,
+                        child: CupertinoDatePicker(
+                          initialDateTime:
+                              !(widget.initialDate?.isBefore(minmum) ?? true)
+                              ? widget.initialDate
+                              : minmum,
+                          minimumDate:
+                              (widget.initialDate?.isBefore(minmum) ?? false)
+                              ? widget.initialDate
+                              : minmum,
+                          maximumDate: widget.maximumDate,
+                          mode: CupertinoDatePickerMode.date,
+                          onDateTimeChanged: (date) {
+                            _selectedDate.value = date;
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
           SafeArea(
             child: Padding(

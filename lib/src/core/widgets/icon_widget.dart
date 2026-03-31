@@ -27,11 +27,7 @@ class IconWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     try {
       if (icon is IconData) {
-        return Icon(
-          icon as IconData,
-          size: height ?? 24.r,
-          color: color,
-        );
+        return Icon(icon as IconData, size: height ?? 24.r, color: color);
       }
 
       if (icon is! String) {
@@ -51,8 +47,9 @@ class IconWidget extends StatelessWidget {
           height: height ?? defaultSize,
           width: width ?? defaultSize,
           fit: fit ?? BoxFit.contain,
-          colorFilter:
-              color != null ? ColorFilter.mode(color!, BlendMode.srcIn) : null,
+          colorFilter: color != null
+              ? ColorFilter.mode(color!, BlendMode.srcIn)
+              : null,
         );
       }
 

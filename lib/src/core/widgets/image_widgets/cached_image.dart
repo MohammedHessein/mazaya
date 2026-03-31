@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mazaya/src/config/res/config_imports.dart';
 import 'package:mazaya/src/core/extensions/widgets/widget_extension.dart';
 import 'package:mazaya/src/core/navigation/navigator.dart';
@@ -44,6 +45,26 @@ class CachedImage extends StatelessWidget {
   Widget build(BuildContext context) {
     final devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
     final bool haveRadius = BoxShape.circle != boxShape;
+
+    if (url.isEmpty) {
+      return Container(
+        width: width,
+        height: height,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          borderRadius: haveRadius
+              ? borderRadius ?? BorderRadius.circular(AppCircular.r2)
+              : null,
+          shape: boxShape ?? BoxShape.rectangle,
+          color: bgColor ?? AppColors.primary.withValues(alpha: .1),
+        ),
+        child: Icon(
+          Icons.image_not_supported_outlined,
+          color: AppColors.primary,
+          size: width != null ? width! * 0.4 : 24.w,
+        ),
+      );
+    }
 
     // Helper function to safely calculate cache dimensions
     int? calculateCacheDimension(double? dimension) {
@@ -99,8 +120,23 @@ class CachedImage extends StatelessWidget {
         ),
         child: const CupertinoActivityIndicator(color: AppColors.white),
       ),
-      // errorWidget: (context, url, error) =>
-      //     AppAssets.svg.loggo.image(width: width, height: height),
+      errorWidget: (context, url, error) => Container(
+        width: width,
+        height: height,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          borderRadius: haveRadius
+              ? borderRadius ?? BorderRadius.circular(AppCircular.r2)
+              : null,
+          shape: boxShape ?? BoxShape.rectangle,
+          color: bgColor ?? AppColors.primary.withValues(alpha: .1),
+        ),
+        child: Icon(
+          Icons.broken_image_outlined,
+          color: AppColors.primary,
+          size: width != null ? width! * 0.4 : 24.w,
+        ),
+      ),
     ).onClick(
       onTap:
           onTap ??

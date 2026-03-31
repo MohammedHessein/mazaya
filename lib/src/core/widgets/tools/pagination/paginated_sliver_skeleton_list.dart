@@ -16,7 +16,8 @@ class PaginatedSliverSkeletonList extends StatelessWidget {
   Widget build(BuildContext context) {
     if (config.viewType == ListViewType.grid) {
       return SliverGrid(
-        gridDelegate: config.gridDelegate ??
+        gridDelegate:
+            config.gridDelegate ??
             const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               childAspectRatio: 1.0,

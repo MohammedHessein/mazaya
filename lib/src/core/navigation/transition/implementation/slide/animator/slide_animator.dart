@@ -24,9 +24,7 @@ class SliderAnimator extends Animator<Offset>
   }
 
   @override
-  CurvedAnimation setCurveAnimation(
-    Animation<double> animation,
-  ) {
+  CurvedAnimation setCurveAnimation(Animation<double> animation) {
     return CurvedAnimation(
       parent: animation,
       curve: options.curve ?? RouterConstants.transitionCurve,

@@ -20,13 +20,9 @@ enum Level {
   info(color: AnsiColors.greenColor, text: '[INFO]'),
   warning(color: AnsiColors.yellowColor, text: '[WARNING]'),
   error(color: AnsiColors.redColor, text: '[ERROR]'),
-  alien(color: AnsiColors.redColor, text: '[ALIEN]'),
-  ;
+  alien(color: AnsiColors.redColor, text: '[ALIEN]');
 
-  const Level({
-    required this.color,
-    required this.text,
-  });
+  const Level({required this.color, required this.text});
 
   final String color;
   final String text;
@@ -42,8 +38,10 @@ void logDebug(String message, {Level level = Level.info}) {
     try {
       final String logMessage =
           '${level.color}${level.text}[$timeString] ${message.split('\n').map((e) => '${level.color}$e').join('\n')}${AnsiColors.resetColor}';
-      log(logMessage,
-          name: '${AnsiColors.blueColor}Network${AnsiColors.resetColor}');
+      log(
+        logMessage,
+        name: '${AnsiColors.blueColor}Network${AnsiColors.resetColor}',
+      );
     } catch (e) {
       log(e.toString());
     }
@@ -56,13 +54,18 @@ class LoggerInterceptor extends Interceptor {
     final options = err.requestOptions;
     final requestPath = '${options.baseUrl}${options.path}';
 
-    logDebug('onError: ${options.method} request => $requestPath',
-        level: Level.error);
-    logDebug('onError: ${err.error}, Message: ${err.message}',
-        level: Level.error);
     logDebug(
-        'onError: StatusCode: ${err.response?.statusCode}, Data: ${_prettyJsonEncode(err.response?.data)}',
-        level: Level.error);
+      'onError: ${options.method} request => $requestPath',
+      level: Level.error,
+    );
+    logDebug(
+      'onError: ${err.error}, Message: ${err.message}',
+      level: Level.error,
+    );
+    logDebug(
+      'onError: StatusCode: ${err.response?.statusCode}, Data: ${_prettyJsonEncode(err.response?.data)}',
+      level: Level.error,
+    );
 
     return super.onError(err, handler);
   }
@@ -73,21 +76,28 @@ class LoggerInterceptor extends Interceptor {
 
     // Log request details
     logDebug(
-        '\n\n\n\n.........................................................................');
-    logDebug('onRequest: ${options.method} request => $requestPath',
-        level: Level.info);
+      '\n\n\n\n.........................................................................',
+    );
     logDebug(
-        'onRequest: Request Headers => \n${options.headers.entries.map((e) => '${e.key}: ${e.value}').join('\n')}',
-        level: Level.info);
+      'onRequest: ${options.method} request => $requestPath',
+      level: Level.info,
+    );
+    logDebug(
+      'onRequest: Request Headers => \n${options.headers.entries.map((e) => '${e.key}: ${e.value}').join('\n')}',
+      level: Level.info,
+    );
     if (options.data != null) {
-      logDebug('onRequest: Request Data => ${_prettyJsonEncode(options.data)}',
-          level: Level.info);
+      logDebug(
+        'onRequest: Request Data => ${_prettyJsonEncode(options.data)}',
+        level: Level.info,
+      );
 
       if (options.data is FormData) {
         final formData = options.data as FormData;
         logDebug(
-            'onRequest: Request FormData => ${formData.fields.map((e) => '${e.key}: ${e.value}').join('\n')}',
-            level: Level.info);
+          'onRequest: Request FormData => ${formData.fields.map((e) => '${e.key}: ${e.value}').join('\n')}',
+          level: Level.info,
+        );
       }
     }
     return super.onRequest(options, handler);
@@ -100,14 +110,17 @@ class LoggerInterceptor extends Interceptor {
     final requestPath = getRequestPath(options);
 
     logDebug(
-        'onResponse: ${response.requestOptions.method} request => $requestPath',
-        level: Level.debug);
+      'onResponse: ${response.requestOptions.method} request => $requestPath',
+      level: Level.debug,
+    );
     logDebug(
-        'onResponse: StatusCode: ${response.statusCode}, Data: ${_prettyJsonEncode(response.data)}',
-        level: Level.debug);
+      'onResponse: StatusCode: ${response.statusCode}, Data: ${_prettyJsonEncode(response.data)}',
+      level: Level.debug,
+    );
     logDebug(
-        '.........................................................................\n\n\n\n',
-        level: Level.debug);
+      '.........................................................................\n\n\n\n',
+      level: Level.debug,
+    );
 
     return super.onResponse(response, handler);
   }

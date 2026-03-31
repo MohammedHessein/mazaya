@@ -1,10 +1,11 @@
 {
+  "fetching_location": "جاري جلب الموقع...",
   "are_you_sure_you_want_to_delete_account": "هل أنت متأكد أنك تريد حذف حسابك؟",
   "bad_request": "طلب خاطئ، الرجاء المحاولة مرة أخرى",
   "camera": "الكاميرا",
   "select_file": "اختر ملف",
   "select_image": "اختر صورة",
-  "cancel": "إلغاء",
+  "cancel": "تراجع",
   "cannot_select_attachments_except_pdf": "يُسمح فقط بمرفقات PDF",
   "category": "الفئة",
   "change_email": "تغيير البريد الإلكتروني",
@@ -243,9 +244,14 @@
   "renewal_date": "تاريخ التجديد: {date}",
   "used_coupons": "الكوبونات المستخدمة",
   "logout_confirmation": "هل تريد تسجيل الخروج؟!",
-  "logout_desc": "يمكنك العودة في أي وقت!",
+  "logout_desc": "هل تريد تسجيل الخروج الآن؟ يمكنك العودة في أي وقت!",
+  "logout_confirm": "إلغاء",
+  "logout_confirmation": "هل تريد تسجيل الخروج؟!",
+  "logout_desc": "هل تريد تسجيل الخروج الآن؟ يمكنك العودة في أي وقت!",
+  "logout_confirm": "تسجيل الخروج",
   "delete_account_confirmation": "هل تريد حذف الحساب؟",
-  "delete_account_desc": "لن تتمكن من استعادة بياناتك بعد الحذف.",
+  "delete_account_desc": "هل أنت متأكد أنك تريد حذف حسابك نهائيًا؟ لن تتمكن من استعادة بياناتك بعد الحذف.",
+  "delete_account_confirm": "حذف الحساب",
   "confirm_address": "تأكيد العنوان",
   "resend_code": "إعادة الإرسال",
   "code_not_sent": "لم يتم إرسال الكود؟",
@@ -291,5 +297,6 @@
   "language": "اللغه",
   "favourite": "المفضله",
   "golden_membership": "عضو ذهبى",
-  "change": "تغيير"
+  "change": "تغيير",
+  "categories": "الاقسام"
 }

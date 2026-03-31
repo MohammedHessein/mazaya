@@ -7,18 +7,19 @@ import 'package:flutter/widgets.dart';
 ///     - asset: assets/fonts/riyal.ttf
 ///
 
-
 const IconData saudiRiyalSymbolIconData = IconData(0xe800, fontFamily: 'Riyal');
+
 class RiyalPriceText extends StatelessWidget {
   final String price;
   final TextStyle? priceTextStyle;
   final TextStyle? currencyTextStyle;
 
-  const RiyalPriceText(
-      {super.key,
-      required this.price,
-      this.priceTextStyle,
-      this.currencyTextStyle});
+  const RiyalPriceText({
+    super.key,
+    required this.price,
+    this.priceTextStyle,
+    this.currencyTextStyle,
+  });
 
   bool checkIfPriceOnly() {
     final regx = RegExp(r'(\d+\.\d+)');
@@ -36,38 +37,34 @@ class RiyalPriceText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RichText(
-        textHeightBehavior: const TextHeightBehavior(
-          applyHeightToFirstAscent: false,
-          applyHeightToLastDescent: false,
-        ),
-        text: TextSpan(
-
-      children: [
-        TextSpan(
-          text: "${getPrice()} ",
-              style: priceTextStyle,
-        ),
-        WidgetSpan(
-          child: Text(
-                String.fromCharCode(saudiRiyalSymbolIconData.codePoint),
-                style: (currencyTextStyle?.copyWith(
-                  fontFamily: saudiRiyalSymbolIconData.fontFamily,
-                ) ??
-                priceTextStyle?.copyWith(
-                  fontFamily: saudiRiyalSymbolIconData.fontFamily,
-                ) ??
-                TextStyle(
-                  fontFamily: saudiRiyalSymbolIconData.fontFamily,
-                        ))
-                    .copyWith(height: 1
-                ),
+      textHeightBehavior: const TextHeightBehavior(
+        applyHeightToFirstAscent: false,
+        applyHeightToLastDescent: false,
+      ),
+      text: TextSpan(
+        children: [
+          TextSpan(text: "${getPrice()} ", style: priceTextStyle),
+          WidgetSpan(
+            child: Text(
+              String.fromCharCode(saudiRiyalSymbolIconData.codePoint),
+              style:
+                  (currencyTextStyle?.copyWith(
+                            fontFamily: saudiRiyalSymbolIconData.fontFamily,
+                          ) ??
+                          priceTextStyle?.copyWith(
+                            fontFamily: saudiRiyalSymbolIconData.fontFamily,
+                          ) ??
+                          TextStyle(
+                            fontFamily: saudiRiyalSymbolIconData.fontFamily,
+                          ))
+                      .copyWith(height: 1),
+            ),
           ),
-        ),
-      ],
-    ));
+        ],
+      ),
+    );
   }
 }
-
 
 extension RiyalPrice on Text {
   Widget withRiyalPrice({
@@ -81,10 +78,12 @@ extension RiyalPrice on Text {
     return RiyalPriceText(
       price: data.toString(),
       priceTextStyle: finalPriceColor != null
-          ? style?.copyWith(color: finalPriceColor) ?? TextStyle(color: finalPriceColor)
+          ? style?.copyWith(color: finalPriceColor) ??
+                TextStyle(color: finalPriceColor)
           : style,
       currencyTextStyle: finalCurrencyColor != null
-          ? style?.copyWith(color: finalCurrencyColor) ?? TextStyle(color: finalCurrencyColor)
+          ? style?.copyWith(color: finalCurrencyColor) ??
+                TextStyle(color: finalCurrencyColor)
           : style,
     );
   }

@@ -26,13 +26,12 @@ class _ForgetPasswordBodyState extends State<ForgetPasswordBody> {
         }
       },
       builder: (context, state) {
-        return SingleChildScrollView(
+        return Padding(
           padding: EdgeInsets.symmetric(horizontal: AppPadding.pW20),
           child: Form(
             key: _formKey,
             child: Column(
               children: [
-                40.szH,
                 UniversalMediaWidget(path: AppAssets.svg.baseSvg.login.path),
                 context.isArabic
                     ? Text.rich(

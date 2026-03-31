@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:mazaya/src/features/intro/presentation/imports/view_imports.dart';
 import 'named_routes.dart';
 import 'page_router/imports_page_router_builder.dart';
@@ -15,9 +14,9 @@ class RouterGenerator {
     );
     return switch (namedRoute) {
       NamedRoutes.intro => _pageRouter.build(
-        const IntroScreen(),
-        settings: settings,
-      ),
+          const IntroScreen(),
+          settings: settings,
+        ),
     };
   }
 

@@ -15,7 +15,8 @@ class CouponsFilterBottomSheet extends StatefulWidget {
   const CouponsFilterBottomSheet({super.key});
 
   @override
-  State<CouponsFilterBottomSheet> createState() => CouponsFilterBottomSheetState();
+  State<CouponsFilterBottomSheet> createState() =>
+      CouponsFilterBottomSheetState();
 }
 
 class CouponsFilterBottomSheetState extends State<CouponsFilterBottomSheet> {
@@ -41,8 +42,10 @@ class CouponsFilterBottomSheetState extends State<CouponsFilterBottomSheet> {
           ),
           20.szH,
           // City Dropdown
-          BlocBuilder<GetBaseEntityCubit<CityEntity>,
-              GetBaseEntityState<CityEntity>>(
+          BlocBuilder<
+            GetBaseEntityCubit<CityEntity>,
+            GetBaseEntityState<CityEntity>
+          >(
             builder: (context, state) {
               return AppDropdown<CityEntity>(
                 items: state.dataState.data ?? [],
@@ -60,8 +63,10 @@ class CouponsFilterBottomSheetState extends State<CouponsFilterBottomSheet> {
           ),
           16.szH,
           // Category Dropdown
-          BlocBuilder<GetBaseEntityCubit<CategoryEntity>,
-              GetBaseEntityState<CategoryEntity>>(
+          BlocBuilder<
+            GetBaseEntityCubit<CategoryEntity>,
+            GetBaseEntityState<CategoryEntity>
+          >(
             builder: (context, state) {
               return AppDropdown<CategoryEntity>(
                 items: state.dataState.data ?? [],
@@ -85,8 +90,9 @@ class CouponsFilterBottomSheetState extends State<CouponsFilterBottomSheet> {
               // In this project's PaginatedCubit pattern, we can pass a map or key to fetchInitialData
               // For now, we follow the instruction to just go back and fetch
               context.read<CouponsCubit>().fetchInitialData(
-                    key: null, // Resetting search query for now, or we could pass filter params
-                  );
+                key:
+                    null, // Resetting search query for now, or we could pass filter params
+              );
               Navigator.pop(context);
             },
           ),

@@ -14,9 +14,16 @@ class ResetPasswordScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => ResetPasswordCubit(),
       child: DefaultScaffold(
-        headerType: ScaffoldHeaderType.auth,
-        title: LocaleKeys.resetPasswordTitle,
-        body: ResetPasswordBody(email: email, code: code),
+        header: HeaderConfig(
+          showBackButton: false,
+          type: ScaffoldHeaderType.auth,
+          title: LocaleKeys.resetPasswordTitle,
+        ),
+        slivers: [
+          SliverToBoxAdapter(
+            child: ResetPasswordBody(email: email, code: code),
+          ),
+        ],
       ),
     );
   }

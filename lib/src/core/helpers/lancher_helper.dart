@@ -52,8 +52,9 @@ class LauncherHelper {
   }
 
   static Future<void> launchTwitter(String userName) async {
-    final twitterProfileUrl =
-        Uri.parse('twitter://user?screen_name=$userName'); // Twitter app URL
+    final twitterProfileUrl = Uri.parse(
+      'twitter://user?screen_name=$userName',
+    ); // Twitter app URL
     final Uri webUrl = Uri.parse('https://twitter.com/$userName'); // Web URL
     try {
       if (await canLaunchUrl(twitterProfileUrl)) {
@@ -72,9 +73,11 @@ class LauncherHelper {
 
   static Future<void> launchInstagram(String userName) async {
     final Uri instagramProfileUrl = Uri.parse(
-        'https://www.instagram.com/$userName'); // Replace with your Instagram profile URL
-    final Uri instagramNativeApp =
-        Uri.parse('instagram://user?username=$userName');
+      'https://www.instagram.com/$userName',
+    ); // Replace with your Instagram profile URL
+    final Uri instagramNativeApp = Uri.parse(
+      'instagram://user?username=$userName',
+    );
 
     try {
       if (await canLaunchUrl(instagramNativeApp)) {
@@ -93,15 +96,14 @@ class LauncherHelper {
 
   void launchFacebook(String userName) async {
     final Uri nativeUrl = Uri.parse(
-        'fb://facewebmodal/f?href=https://www.facebook.com/$userName');
+      'fb://facewebmodal/f?href=https://www.facebook.com/$userName',
+    );
     final Uri webUrl = Uri.parse('https://www.facebook.com/$userName');
     if (await canLaunchUrl(nativeUrl)) {
       await launchUrl(nativeUrl);
     } else {
       if (await canLaunchUrl(webUrl)) {
-        await launchUrl(
-          webUrl,
-        );
+        await launchUrl(webUrl);
       } else {
         throw 'Could not launch $webUrl';
       }
@@ -109,8 +111,9 @@ class LauncherHelper {
   }
 
   static Future<void> launchSnapchat(String userName) async {
-    final snapchatProfileUrl =
-        Uri.parse('https://www.snapchat.com/add/$userName');
+    final snapchatProfileUrl = Uri.parse(
+      'https://www.snapchat.com/add/$userName',
+    );
     final snapChatNativeApp = Uri.parse('snapchat://add/$userName');
 
     try {
@@ -134,7 +137,8 @@ class LauncherHelper {
     try {
       if (await canLaunchUrl(Uri.parse('com.zhiliaoapp.musically'))) {
         await launchUrl(
-            Uri.parse('com.zhiliaoapp.musically://user?u=$userName'));
+          Uri.parse('com.zhiliaoapp.musically://user?u=$userName'),
+        );
       } else {
         if (await canLaunchUrl(tiktokProfileUrl)) {
           await launchUrl(tiktokProfileUrl);

@@ -71,9 +71,9 @@ class _ImageViewState extends State<ImageView> {
     } catch (e) {
       setState(() => _isLoading = false);
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error loading video: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error loading video: $e')));
       }
     }
   }
@@ -97,7 +97,7 @@ class _ImageViewState extends State<ImageView> {
             child: CircularProgressIndicator(
               value: loadingProgress.expectedTotalBytes != null
                   ? loadingProgress.cumulativeBytesLoaded /
-                      loadingProgress.expectedTotalBytes!
+                        loadingProgress.expectedTotalBytes!
                   : null,
             ),
           );
@@ -241,9 +241,7 @@ class _ImageViewState extends State<ImageView> {
           ),
           Padding(
             padding: EdgeInsets.all(AppPadding.pH12),
-            child: const CloseButton(
-              color: Colors.white,
-            ),
+            child: const CloseButton(color: Colors.white),
           ),
         ],
       ),

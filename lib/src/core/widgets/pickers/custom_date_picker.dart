@@ -24,9 +24,7 @@ Future<DateTime?> showCustomDatePicker({
             onSurface: AppColors.primary,
           ),
           textButtonTheme: TextButtonThemeData(
-            style: TextButton.styleFrom(
-              foregroundColor: AppColors.primary,
-            ),
+            style: TextButton.styleFrom(foregroundColor: AppColors.primary),
           ),
         ),
         child: child!,
@@ -34,9 +32,10 @@ Future<DateTime?> showCustomDatePicker({
     },
   );
   if (pickedDate != null) {
-    final String formattedDate = DateFormat(dateFormat ?? 'EEE, M/d/y',
-            Languages.currentLanguage.locale.languageCode)
-        .format(pickedDate);
+    final String formattedDate = DateFormat(
+      dateFormat ?? 'EEE, M/d/y',
+      Languages.currentLanguage.locale.languageCode,
+    ).format(pickedDate);
     controller.text = formattedDate;
   }
   return pickedDate;

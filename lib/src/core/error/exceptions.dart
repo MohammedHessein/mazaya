@@ -38,12 +38,12 @@ class ConflictException extends ServerException {
 
 class InternalServerErrorException extends ServerException {
   InternalServerErrorException([String? message])
-      : super(message ?? LocaleKeys.checkInternet);
+    : super(message ?? LocaleKeys.checkInternet);
 }
 
 class NoInternetConnectionException extends ServerException {
   NoInternetConnectionException([String? message])
-      : super(message ?? LocaleKeys.checkInternet);
+    : super(message ?? LocaleKeys.checkInternet);
 }
 
 class CacheException implements Exception {}

@@ -1,8 +1,8 @@
 import 'package:dropdown_search/dropdown_search.dart';
- import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
- import 'package:mazaya/src/config/language/locale_keys.g.dart';
+import 'package:mazaya/src/config/language/locale_keys.g.dart';
 import 'package:mazaya/src/config/res/assets.gen.dart';
 import 'package:mazaya/src/config/res/config_imports.dart';
 import 'package:mazaya/src/core/extensions/context_extension.dart';
@@ -296,8 +296,12 @@ final suffixProps = DropdownSuffixProps(
   ),
   dropdownButtonProps: DropdownButtonProps(
     padding: EdgeInsets.zero,
-    iconOpened: AppAssets.svg.baseSvg.dropDownArrowDown.svg(height: AppSize.sH8),
-    iconClosed: AppAssets.svg.baseSvg.dropDownArrowDown.svg(height: AppSize.sH8),
+    iconOpened: AppAssets.svg.baseSvg.dropDownArrowDown.svg(
+      height: AppSize.sH8,
+    ),
+    iconClosed: AppAssets.svg.baseSvg.dropDownArrowDown.svg(
+      height: AppSize.sH8,
+    ),
     visualDensity: const VisualDensity(horizontal: 0, vertical: 0),
   ),
 );

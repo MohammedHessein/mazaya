@@ -15,10 +15,12 @@ abstract class BlocStatelessWidget<C extends AsyncCubit>
   Widget build(BuildContext context) {
     return BlocProvider<AsyncCubit>(
       create: (context) => create,
-      child: Builder(builder: (context) {
-        final cubit = BlocProvider.of<C>(context);
-        return buildContent(context, cubit);
-      }),
+      child: Builder(
+        builder: (context) {
+          final cubit = BlocProvider.of<C>(context);
+          return buildContent(context, cubit);
+        },
+      ),
     );
   }
 }
@@ -56,10 +58,12 @@ class _BlocStatefulWidgetState<C extends AsyncCubit>
   Widget build(BuildContext context) {
     return BlocProvider<AsyncCubit>(
       create: (context) => widget.create,
-      child: Builder(builder: (context) {
-        final cubit = BlocProvider.of<C>(context);
-        return widget.buildContent(context, cubit, this);
-      }),
+      child: Builder(
+        builder: (context) {
+          final cubit = BlocProvider.of<C>(context);
+          return widget.buildContent(context, cubit, this);
+        },
+      ),
     );
   }
 }

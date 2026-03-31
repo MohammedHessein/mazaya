@@ -7,9 +7,15 @@ import 'package:mazaya/src/core/widgets/language/open_language_sheet.dart';
 import 'package:mazaya/src/features/favourite/presentation/imports/view_imports.dart';
 import 'package:mazaya/src/features/used_coupons/presentation/imports/view_imports.dart';
 import 'package:mazaya/src/features/change_password/imports/change_password_imports.dart';
-import 'package:mazaya/src/features/more/presentation/imports/view_imports.dart';
 import 'package:mazaya/src/features/static_pages/entity/static_pages_enum.dart';
 import 'package:mazaya/src/features/static_pages/presentation/imports/view_imports.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mazaya/src/core/widgets/pickers/default_bottom_sheet.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/features/settings/presentation/imports/view_imports.dart';
+import 'package:mazaya/src/features/more/presentation/cubits/logout_cubit.dart';
+import 'package:mazaya/src/features/more/presentation/widgets/delete_account_bottom_sheet.dart';
+import 'package:mazaya/src/features/more/presentation/widgets/logout_bottom_sheet.dart';
 
 class MoreItemEntity {
   final String title;
@@ -81,12 +87,22 @@ class MoreItemEntity {
   static MoreItemEntity get deleteAccountItem => MoreItemEntity(
     title: LocaleKeys.settingsDeleteAccount,
     icon: AppAssets.svg.baseSvg.profileDelete.path,
-    onTap: () {},
+    onTap: () => showDefaultBottomSheet(
+      child: BlocProvider(
+        create: (context) => injector<DeleteAccountCubit>(), // Since we refactored DeleteAccountCubit in settings
+        child: const DeleteAccountBottomSheet(),
+      ),
+    ),
   );
 
   static MoreItemEntity get logoutItem => MoreItemEntity(
     title: LocaleKeys.logout,
     icon: AppAssets.svg.baseSvg.logout.path,
-    onTap: () async => await logOut(),
+    onTap: () => showDefaultBottomSheet(
+      child: BlocProvider(
+        create: (context) => injector<LogoutCubit>(),
+        child: const LogoutBottomSheet(),
+      ),
+    ),
   );
 }

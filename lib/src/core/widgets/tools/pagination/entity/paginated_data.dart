@@ -5,10 +5,7 @@ class PaginatedData<T> extends Equatable {
   final List<T> items;
   final PaginationMeta meta;
 
-  const PaginatedData({
-    required this.items,
-    required this.meta,
-  });
+  const PaginatedData({required this.items, required this.meta});
 
   factory PaginatedData.initial() {
     return const PaginatedData(
@@ -23,22 +20,13 @@ class PaginatedData<T> extends Equatable {
     );
   }
 
-  PaginatedData<T> copyWith({
-    List<T>? items,
-    PaginationMeta? meta,
-  }) {
-    return PaginatedData(
-      items: items ?? this.items,
-      meta: meta ?? this.meta,
-    );
+  PaginatedData<T> copyWith({List<T>? items, PaginationMeta? meta}) {
+    return PaginatedData(items: items ?? this.items, meta: meta ?? this.meta);
   }
 
   /// Add more items (for load more functionality)
   PaginatedData<T> addItems(List<T> newItems, PaginationMeta newMeta) {
-    return PaginatedData(
-      items: [...items, ...newItems],
-      meta: newMeta,
-    );
+    return PaginatedData(items: [...items, ...newItems], meta: newMeta);
   }
 
   @override

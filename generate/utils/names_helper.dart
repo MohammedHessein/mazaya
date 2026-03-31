@@ -8,8 +8,9 @@ abstract class NamesHelper {
   static String toSnakeCase(String input) {
     // Replace all non-alphanumeric characters (except underscore) with underscores
 
-    String snakeCase =
-        input.replaceAll(RegExp(r'[^\w\s]'), '').replaceAll(' ', '_');
+    String snakeCase = input
+        .replaceAll(RegExp(r'[^\w\s]'), '')
+        .replaceAll(' ', '_');
     // Check if input String needs to be converted to snake case
     if (!snakeCase.contains('_')) {
       final String snakeWithoutUnderscore = snakeCase;
@@ -40,8 +41,9 @@ abstract class NamesHelper {
   static String snakeToCamelCase(String input) {
     final List<String> parts = input.replaceAll('?', '').split('_');
     // تجاهل الأجزاء الفارغة الناتجة عن أكثر من "_" متتالية
-    final List<String> nonEmptyParts =
-        parts.where((part) => part.isNotEmpty).toList();
+    final List<String> nonEmptyParts = parts
+        .where((part) => part.isNotEmpty)
+        .toList();
     if (nonEmptyParts.isEmpty) return '';
 
     String camelCase = nonEmptyParts[0];

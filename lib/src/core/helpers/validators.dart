@@ -42,7 +42,11 @@ class Validators {
     return null;
   }
 
-  static String? validateNewPassword(String? value, String? currentPassword, {String? fieldTitle}) {
+  static String? validateNewPassword(
+    String? value,
+    String? currentPassword, {
+    String? fieldTitle,
+  }) {
     final validation = validatePassword(value, fieldTitle: fieldTitle);
     if (validation != null) return validation;
     if (value == currentPassword) {

@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'package:mazaya/src/config/res/config_imports.dart';
 
-Future showCustomDialog(BuildContext context,
-    {required Widget child,
-    BorderRadiusGeometry? borderRadius,
-    EdgeInsetsGeometry? padding,
-    EdgeInsetsGeometry? margin,
-    bool barrierDismissible = true,
-    Color? color}) async {
+Future showCustomDialog(
+  BuildContext context, {
+  required Widget child,
+  BorderRadiusGeometry? borderRadius,
+  EdgeInsetsGeometry? padding,
+  EdgeInsetsGeometry? margin,
+  bool barrierDismissible = true,
+  Color? color,
+}) async {
   showGeneralDialog(
     context: context,
     barrierLabel: ConstantManager.emptyText,
@@ -35,10 +37,7 @@ Future showCustomDialog(BuildContext context,
     transitionBuilder: (_, anim, _, child) {
       return ScaleTransition(
         scale: anim,
-        child: FadeTransition(
-          opacity: anim,
-          child: child,
-        ),
+        child: FadeTransition(opacity: anim, child: child),
       );
     },
   );

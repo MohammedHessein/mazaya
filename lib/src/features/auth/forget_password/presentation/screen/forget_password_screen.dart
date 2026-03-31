@@ -8,9 +8,11 @@ class ForgetPasswordScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => ForgetPasswordCubit(),
       child: DefaultScaffold(
-        headerType: ScaffoldHeaderType.auth,
-        title: LocaleKeys.forgotPassword,
-        body: const ForgetPasswordBody(),
+        header: HeaderConfig(
+          showBackButton: false,
+          type: ScaffoldHeaderType.auth,
+        ),
+        slivers: const [SliverToBoxAdapter(child: ForgetPasswordBody())],
       ),
     );
   }

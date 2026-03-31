@@ -4,10 +4,7 @@ class CustomPageRouterCreator implements PageRouterCreator {
   final TransitionType? parentTransition;
   final AnimationOption? parentOptions;
 
-  CustomPageRouterCreator({
-    this.parentTransition,
-    this.parentOptions,
-  });
+  CustomPageRouterCreator({this.parentTransition, this.parentOptions});
   @override
   Route<T> create<T>(
     Widget page, {
@@ -17,7 +14,8 @@ class CustomPageRouterCreator implements PageRouterCreator {
   }) {
     final transitionType =
         transition ?? parentTransition ?? RouterConstants.defaultTransition;
-    final options = animationOptions ??
+    final options =
+        animationOptions ??
         (transitionType == parentTransition ? parentOptions : null);
     // animationOptions ?? parentOptions;
 
@@ -29,17 +27,18 @@ class CustomPageRouterCreator implements PageRouterCreator {
           options?.duration ?? RouterConstants.transitionDuration,
       reverseTransitionDuration:
           options?.reverseDuration ?? RouterConstants.reverseTransitionDuration,
-      transitionsBuilder: (BuildContext context, Animation<double> animation,
-          Animation<double> secondaryAnimation, Widget child) {
-        return TransitionTypeBuilder.create(
-          type: transitionType,
-          options: options,
-        ).animate(
-          animation,
-          secondaryAnimation,
-          child,
-        );
-      },
+      transitionsBuilder:
+          (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) {
+            return TransitionTypeBuilder.create(
+              type: transitionType,
+              options: options,
+            ).animate(animation, secondaryAnimation, child);
+          },
     );
   }
 }

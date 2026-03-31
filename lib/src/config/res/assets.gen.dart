@@ -269,6 +269,10 @@ class $AssetsSvgBaseSvgGen {
   AssetGenImage get curveBackground =>
       const AssetGenImage('assets/svg/base_svg/curve_background.png');
 
+  /// File path: assets/svg/base_svg/delete_account.png
+  AssetGenImage get deleteAccount =>
+      const AssetGenImage('assets/svg/base_svg/delete_account.png');
+
   /// File path: assets/svg/base_svg/delete_all.svg
   SvgGenImage get deleteAll =>
       const SvgGenImage('assets/svg/base_svg/delete_all.svg');
@@ -335,6 +339,10 @@ class $AssetsSvgBaseSvgGen {
 
   /// File path: assets/svg/base_svg/logout.svg
   SvgGenImage get logout => const SvgGenImage('assets/svg/base_svg/logout.svg');
+
+  /// File path: assets/svg/base_svg/logout_dialog.png
+  AssetGenImage get logoutDialog =>
+      const AssetGenImage('assets/svg/base_svg/logout_dialog.png');
 
   /// File path: assets/svg/base_svg/mazaya_text.png
   AssetGenImage get mazayaText =>
@@ -453,6 +461,7 @@ class $AssetsSvgBaseSvgGen {
     compress,
     correct,
     curveBackground,
+    deleteAccount,
     deleteAll,
     determineLocation,
     diamondMember,
@@ -471,6 +480,7 @@ class $AssetsSvgBaseSvgGen {
     lock,
     login,
     logout,
+    logoutDialog,
     mazayaText,
     moreArrowArabic,
     notificationBing,

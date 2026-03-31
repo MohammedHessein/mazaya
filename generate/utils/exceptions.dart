@@ -1,10 +1,10 @@
-class NamesException implements Exception{
+class NamesException implements Exception {
   String message;
 
   NamesException(this.message);
 }
 
-class DartTypeException implements Exception{
+class DartTypeException implements Exception {
   String message;
 
   DartTypeException(this.message);

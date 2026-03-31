@@ -10,9 +10,11 @@ class NotificationScreen extends StatelessWidget {
       child: Builder(
         builder: (context) {
           return DefaultScaffold(
-            title: LocaleKeys.notificationsTitle,
-            slivers: [const NotificationBody()],
-            body: const SizedBox.shrink(),
+            header: HeaderConfig(
+              title: LocaleKeys.notificationsTitle,
+              showBackButton: false,
+            ),
+            slivers: const [NotificationBody()],
           );
         },
       ),

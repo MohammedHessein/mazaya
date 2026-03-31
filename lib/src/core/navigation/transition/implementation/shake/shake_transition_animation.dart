@@ -20,8 +20,11 @@ class ShakeTransitionAnimation implements TransitionCreator {
       curve: Curves.easeInOutBack,
       builder: (_, double value, child) {
         return Transform.translate(
-          offset: getOffset(value,
-              shakeFactor: -10, direction: ShakeDirection.horizontal),
+          offset: getOffset(
+            value,
+            shakeFactor: -10,
+            direction: ShakeDirection.horizontal,
+          ),
           child: child,
         );
       },

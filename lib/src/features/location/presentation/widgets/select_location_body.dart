@@ -14,6 +14,7 @@ class _SelectLocationBodyState extends State<SelectLocationBody> {
   CountryEntity? _selectedCountry;
   CityEntity? _selectedCity;
   RegionEntity? _selectedMunicipality;
+  bool _isFetchingLocation = false;
 
   void _onCountryChanged(CountryEntity? country) {
     setState(() {
@@ -54,13 +55,12 @@ class _SelectLocationBodyState extends State<SelectLocationBody> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Form(
         key: _formKey,
         child: Column(
           children: [
-            40.szH,
             AppAssets.svg.baseSvg.determineLocation.image(),
             Text.rich(
               TextSpan(
@@ -213,37 +213,60 @@ class _SelectLocationBodyState extends State<SelectLocationBody> {
             ),
             15.szH,
             InkWell(
-              onTap: () async {
-                try {
-                  final position = await LocationHelper.getCurrentLocation();
-                  final address = await LocationHelper.getAddressFromLatLng(
-                    position,
-                  );
-                  if (address != null) {
-                    _addressController.text = address;
-                  }
-                } catch (e) {
-                  if (context.mounted) {
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showSnackBar(SnackBar(content: Text(e.toString())));
-                  }
-                }
-              },
+              onTap: _isFetchingLocation
+                  ? null
+                  : () async {
+                      setState(() => _isFetchingLocation = true);
+                      try {
+                        final position =
+                            await LocationHelper.getCurrentLocation();
+                        final address =
+                            await LocationHelper.getAddressFromLatLng(position);
+                        if (address != null) {
+                          _addressController.text = address;
+                        }
+                      } catch (e) {
+                        if (context.mounted) {
+                          MessageUtils.showSnackBar(
+                            context: context,
+                            baseStatus: BaseStatus.error,
+                            message: e.toString(),
+                          );
+                        }
+                      } finally {
+                        if (mounted) {
+                          setState(() => _isFetchingLocation = false);
+                        }
+                      }
+                    },
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  AppAssets.svg.baseSvg.compress.svg(
-                    width: 20.r,
-                    height: 20.r,
-                    colorFilter: const ColorFilter.mode(
-                      AppColors.primary,
-                      BlendMode.srcIn,
+                  if (_isFetchingLocation)
+                    SizedBox(
+                      width: 20.r,
+                      height: 20.r,
+                      child: const CircularProgressIndicator(
+                        strokeWidth: 2,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          AppColors.primary,
+                        ),
+                      ),
+                    )
+                  else
+                    AppAssets.svg.baseSvg.compress.svg(
+                      width: 20.r,
+                      height: 20.r,
+                      colorFilter: const ColorFilter.mode(
+                        AppColors.primary,
+                        BlendMode.srcIn,
+                      ),
                     ),
-                  ),
                   8.szW,
                   Text(
-                    LocaleKeys.useCurrentLocation,
+                    _isFetchingLocation
+                        ? LocaleKeys.fetchingLocation
+                        : LocaleKeys.useCurrentLocation,
                     style: context.textStyle.s14.bold.setPrimaryColor,
                   ),
                 ],

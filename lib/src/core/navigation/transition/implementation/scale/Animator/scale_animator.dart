@@ -22,10 +22,7 @@ class ScaleAnimator extends Animator<double>
 
   @override
   Tween<double> setTween() {
-    return Tween<double>(
-      begin: options.begin,
-      end: options.end,
-    );
+    return Tween<double>(begin: options.begin, end: options.end);
   }
 
   @override

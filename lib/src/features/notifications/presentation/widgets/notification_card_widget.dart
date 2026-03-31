@@ -29,17 +29,18 @@ class NotificationCardWidget extends StatelessWidget {
               color: isUnread ? const Color(0xFFF5F8FD) : AppColors.lightGray,
               borderRadius: BorderRadius.circular(8.r),
             ),
-            child: (isUnread
-                    ? AppAssets.svg.baseSvg.unReadNotification
-                    : AppAssets.svg.baseSvg.readNotification)
-                .svg(
-              width: 24.w,
-              height: 24.w,
-              colorFilter: ColorFilter.mode(
-                isUnread ? const Color(0xFF2D6EC9) : AppColors.gray400,
-                BlendMode.srcIn,
-              ),
-            ),
+            child:
+                (isUnread
+                        ? AppAssets.svg.baseSvg.unReadNotification
+                        : AppAssets.svg.baseSvg.readNotification)
+                    .svg(
+                      width: 24.w,
+                      height: 24.w,
+                      colorFilter: ColorFilter.mode(
+                        isUnread ? const Color(0xFF2D6EC9) : AppColors.gray400,
+                        BlendMode.srcIn,
+                      ),
+                    ),
           ),
           Expanded(
             child: Column(

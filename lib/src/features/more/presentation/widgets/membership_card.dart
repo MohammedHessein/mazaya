@@ -1,12 +1,28 @@
 part of '../imports/view_imports.dart';
 
 class MemberShipCard extends StatelessWidget {
-  final MembershipType membershipType;
-
-  const MemberShipCard({super.key, required this.membershipType});
+  const MemberShipCard({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final user = UserCubit.instance.user;
+
+    if (user.userPackageName == null) {
+      return const SizedBox.shrink();
+    }
+
+    final membershipType = user.memberType == 'golden'
+        ? MembershipType.golden
+        : user.memberType == 'silver'
+        ? MembershipType.sliver
+        : MembershipType.diamond;
+
+    final totalCoupons = user.userPackageCouponsLimit ?? 0;
+    final usedCoupons = user.userPackageUsedCoupons ?? 0;
+    final remainingCoupons =
+        totalCoupons > usedCoupons ? totalCoupons - usedCoupons : 0;
+    final progress = totalCoupons > 0 ? usedCoupons / totalCoupons : 0.0;
+
     return Container(
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
@@ -47,21 +63,18 @@ class MemberShipCard extends StatelessWidget {
                           ),
                     12.szW,
                     Text(
-                      membershipType == MembershipType.sliver
-                          ? LocaleKeys.silverMembership
-                          : membershipType == MembershipType.golden
-                          ? LocaleKeys.goldMembership
-                          : LocaleKeys.diamondMembership,
+                      user.userPackageName ?? '',
                       style: context.textStyle.s14.bold.setMainTextColor,
                     ),
                   ],
                 ),
-                Text(
-                  LocaleKeys.subscriptionActive,
-                  style: context.textStyle.s12.medium.setColor(
-                    AppColors.success,
+                if (user.userPackageIsActive)
+                  Text(
+                    LocaleKeys.subscriptionActive.tr(),
+                    style: context.textStyle.s12.medium.setColor(
+                      AppColors.success,
+                    ),
                   ),
-                ),
               ],
             ),
             16.szH,
@@ -69,11 +82,11 @@ class MemberShipCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  LocaleKeys.totalCoupons(total: '20'),
+                  LocaleKeys.totalCoupons(total: totalCoupons.toString()),
                   style: context.textStyle.s14.medium.setMainTextColor,
                 ),
                 Text(
-                  LocaleKeys.remainingCoupons(count: '15'),
+                  LocaleKeys.remainingCoupons(count: remainingCoupons.toString()),
                   style: context.textStyle.s14.regular.setMainTextColor,
                 ),
               ],
@@ -82,7 +95,7 @@ class MemberShipCard extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(AppCircular.r10),
               child: LinearProgressIndicator(
-                value: 0.75,
+                value: progress,
                 backgroundColor: AppColors.gray100,
                 valueColor: const AlwaysStoppedAnimation<Color>(
                   AppColors.primary,
@@ -90,14 +103,24 @@ class MemberShipCard extends StatelessWidget {
                 minHeight: 10.h,
               ),
             ),
-            15.szH,
-            Align(
-              alignment: AlignmentDirectional.topStart,
-              child: Text(
-                LocaleKeys.renewalDate(date: '20 أكتوبر 2023'),
-                style: context.textStyle.s12.regular.setPrimaryColor,
+            if (user.userPackageEndDate != null) ...[
+              15.szH,
+              Align(
+                alignment: AlignmentDirectional.topStart,
+                child: Builder(
+                  builder: (context) {
+                    final endDate = DateTime.tryParse(user.userPackageEndDate!);
+                    final isExpired = endDate != null && endDate.isBefore(DateTime.now());
+                    return Text(
+                      LocaleKeys.renewalDate(date: user.userPackageEndDate!),
+                      style: context.textStyle.s12.regular.setColor(
+                        isExpired ? AppColors.error : AppColors.success,
+                      ),
+                    );
+                  },
+                ),
               ),
-            ),
+            ],
           ],
         ),
       ),

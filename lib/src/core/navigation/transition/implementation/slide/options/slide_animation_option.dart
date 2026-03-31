@@ -20,6 +20,6 @@ class SlideAnimationOptions extends AnimationOption {
   });
 
   /// You must provide either a [direction] or a [customTween]
-// :assert((direction == null && customTween != null) || (direction != null && customTween == null),
-//           'You must provide either a [direction] or a [customTween]');
+  // :assert((direction == null && customTween != null) || (direction != null && customTween == null),
+  //           'You must provide either a [direction] or a [customTween]');
 }

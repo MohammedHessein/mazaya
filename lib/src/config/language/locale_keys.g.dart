@@ -1,6 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 
 abstract class LocaleKeys {
+  static const String _fetchingLocation = 'fetching_location';
+  static String get fetchingLocation => _fetchingLocation.tr();
+
   static const String _areYouSureYouWantToDeleteAccount = 'are_you_sure_you_want_to_delete_account';
   static String get areYouSureYouWantToDeleteAccount => _areYouSureYouWantToDeleteAccount.tr();
 
@@ -736,11 +739,17 @@ abstract class LocaleKeys {
   static const String _logoutDesc = 'logout_desc';
   static String get logoutDesc => _logoutDesc.tr();
 
+  static const String _logoutConfirm = 'logout_confirm';
+  static String get logoutConfirm => _logoutConfirm.tr();
+
   static const String _deleteAccountConfirmation = 'delete_account_confirmation';
   static String get deleteAccountConfirmation => _deleteAccountConfirmation.tr();
 
   static const String _deleteAccountDesc = 'delete_account_desc';
   static String get deleteAccountDesc => _deleteAccountDesc.tr();
+
+  static const String _deleteAccountConfirm = 'delete_account_confirm';
+  static String get deleteAccountConfirm => _deleteAccountConfirm.tr();
 
   static const String _confirmAddress = 'confirm_address';
   static String get confirmAddress => _confirmAddress.tr();
@@ -879,5 +888,8 @@ abstract class LocaleKeys {
 
   static const String _change = 'change';
   static String get change => _change.tr();
+
+  static const String _categories = 'categories';
+  static String get categories => _categories.tr();
 
 }

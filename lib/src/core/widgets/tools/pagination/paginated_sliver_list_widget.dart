@@ -94,7 +94,11 @@ class _PaginatedSliverListWidgetState<C extends PaginatedCubit<T>, T>
           // Show error state
           if (state.status == BaseStatus.error) {
             return SliverToBoxAdapter(
-              child: widget.errorBuilder?.call(context, state.errorMessage ?? '') ??
+              child:
+                  widget.errorBuilder?.call(
+                    context,
+                    state.errorMessage ?? '',
+                  ) ??
                   ErrorView(error: state.errorMessage ?? ''),
             );
           }

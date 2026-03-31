@@ -42,8 +42,8 @@ abstract class PaginatedCubit<T> extends AsyncCubit<PaginatedData<T>> {
 
     result.when(
       (success) {
-        final items = parseItems(success['data']);
-        final meta = parsePagination(success['data']);
+        final items = parseItems(success);
+        final meta = parsePagination(success);
 
         setSuccess(
           data: PaginatedData(items: items, meta: meta),
@@ -68,8 +68,8 @@ abstract class PaginatedCubit<T> extends AsyncCubit<PaginatedData<T>> {
 
     result.when(
       (success) {
-        final newItems = parseItems(success['data']);
-        final newMeta = parsePagination(success['data']);
+        final newItems = parseItems(success);
+        final newMeta = parsePagination(success);
         final updatedData = state.data.addItems(newItems, newMeta);
         setSuccess(data: updatedData);
         _isLoadingMore = false;

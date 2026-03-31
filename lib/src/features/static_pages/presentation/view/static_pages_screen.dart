@@ -8,11 +8,13 @@ class StaticPagesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => injector<StaticPagesCubit>()
-        ..fetchStaticPage(pageType),
+      create: (context) =>
+          injector<StaticPagesCubit>()..fetchStaticPage(pageType),
       child: DefaultScaffold(
-        title: pageType.title,
-        body: StaticPagesBody(pageType: pageType),
+        header: HeaderConfig(title: pageType.title, showBackButton: false),
+        slivers: [
+          SliverToBoxAdapter(child: StaticPagesBody(pageType: pageType)),
+        ],
       ),
     );
   }

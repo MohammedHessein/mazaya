@@ -1,4 +1,5 @@
-part of'imports/pagination_imports.dart';
+part of 'imports/pagination_imports.dart';
+
 /// Enum for list view type
 enum ListViewType { list, grid }
 
@@ -104,9 +105,13 @@ class PaginatedListConfig {
       primary: primary ?? this.primary,
       controller: controller ?? this.controller,
       enableRefresh: enableRefresh ?? this.enableRefresh,
-      refreshIndicatorColor: refreshIndicatorColor ?? this.refreshIndicatorColor,
-      refreshIndicatorBackgroundColor: refreshIndicatorBackgroundColor ?? this.refreshIndicatorBackgroundColor,
-      refreshIndicatorDisplacement: refreshIndicatorDisplacement ?? this.refreshIndicatorDisplacement,
+      refreshIndicatorColor:
+          refreshIndicatorColor ?? this.refreshIndicatorColor,
+      refreshIndicatorBackgroundColor:
+          refreshIndicatorBackgroundColor ??
+          this.refreshIndicatorBackgroundColor,
+      refreshIndicatorDisplacement:
+          refreshIndicatorDisplacement ?? this.refreshIndicatorDisplacement,
     );
   }
 }

@@ -39,7 +39,9 @@ extension FormatString on String {
   String toCamelCase() {
     return this[0].toUpperCase() +
         substring(1).replaceAllMapped(
-            RegExp('[_-](.)'), (Match match) => match.group(1)!.toLowerCase());
+          RegExp('[_-](.)'),
+          (Match match) => match.group(1)!.toLowerCase(),
+        );
   }
 }
 

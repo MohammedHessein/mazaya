@@ -5,6 +5,7 @@ import 'package:mazaya/src/config/res/config_imports.dart';
 import 'package:mazaya/src/core/extensions/context_extension.dart';
 import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
 import 'package:mazaya/src/core/extensions/widgets/sized_box_helper.dart';
+import 'package:mazaya/src/core/widgets/image_widgets/cached_image.dart';
 
 class AppCard extends StatelessWidget {
   final String title;
@@ -45,44 +46,51 @@ class AppCard extends StatelessWidget {
           ],
         ),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Stack(
               children: [
                 Container(
-                  width: 60.w,
-                  height: 65.h,
+                  width: 65.w,
+                  height: 85.h,
                   decoration: BoxDecoration(
                     color: AppColors.black,
                     borderRadius: BorderRadius.circular(AppCircular.r8),
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(AppCircular.r8),
-                    child: imageUrl != null
-                        ? (imageUrl!.endsWith('.svg')
-                              ? Padding(
-                                  padding: EdgeInsets.all(8.w),
-                                  child: SvgPicture.asset(
-                                    imageUrl!,
-                                    fit: BoxFit.contain,
-                                  ),
-                                )
-                              : Image.asset(imageUrl!, fit: BoxFit.cover))
+                    child: (imageUrl != null && imageUrl!.isNotEmpty)
+                        ? (imageUrl!.startsWith('http')
+                              ? CachedImage(url: imageUrl!, fit: BoxFit.cover)
+                              : (imageUrl!.endsWith('.svg')
+                                    ? Padding(
+                                        padding: EdgeInsets.all(8.w),
+                                        child: SvgPicture.asset(
+                                          imageUrl!,
+                                          fit: BoxFit.contain,
+                                        ),
+                                      )
+                                    : Image.asset(
+                                        imageUrl!,
+                                        fit: BoxFit.cover,
+                                      )))
                         : Icon(Icons.image, color: AppColors.gray400),
                   ),
                 ),
-                Positioned.directional(
-                  textDirection: Directionality.of(context),
-                  top: 4.h,
-                  end: 4.w,
-                  child: GestureDetector(
-                    onTap: onFavoriteTap,
-                    child: Icon(
-                      isFavorite ? Icons.favorite : Icons.favorite_border,
-                      size: AppSize.sH25,
-                      color: isFavorite ? AppColors.error : AppColors.white,
+                if (onFavoriteTap != null)
+                  Positioned.directional(
+                    textDirection: Directionality.of(context),
+                    top: 4.h,
+                    end: 4.w,
+                    child: GestureDetector(
+                      onTap: onFavoriteTap,
+                      child: Icon(
+                        isFavorite ? Icons.favorite : Icons.favorite_border,
+                        size: AppSize.sH30,
+                        color: isFavorite ? AppColors.error : AppColors.white,
+                      ),
                     ),
                   ),
-                ),
               ],
             ),
             12.szW,
@@ -101,7 +109,9 @@ class AppCard extends StatelessWidget {
                         margin: EdgeInsets.only(bottom: 8.h),
                         decoration: BoxDecoration(
                           color: AppColors.primary.withValues(alpha: 0.1),
-                          borderRadius: BorderRadius.circular(AppCircular.r20),
+                          borderRadius: BorderRadius.circular(
+                            AppCircular.r20,
+                          ),
                         ),
                         child: Text(
                           status!,
@@ -116,24 +126,25 @@ class AppCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   4.szH,
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 8.w,
-                      vertical: 6.h,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.blue100,
-                      borderRadius: BorderRadius.circular(8.r),
-                    ),
-                    child: Text(
-                      description,
-                      style: context.textStyle.s14.regular.setColor(
-                        AppColors.gray400,
+                  if (description.isNotEmpty)
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 8.w,
+                        vertical: 6.h,
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                      decoration: BoxDecoration(
+                        color: AppColors.blue100,
+                        borderRadius: BorderRadius.circular(8.r),
+                      ),
+                      child: Text(
+                        description,
+                        style: context.textStyle.s14.regular.setColor(
+                          AppColors.gray400,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-                  ),
                 ],
               ),
             ),

@@ -25,14 +25,13 @@ class _LoginBodyState extends State<LoginBody> {
     return BlocConsumer<LoginCubit, AsyncState<UserModel?>>(
       listener: (context, state) {},
       builder: (context, state) {
-        return SingleChildScrollView(
+        return Padding(
           padding: EdgeInsets.symmetric(horizontal: AppPadding.pW20),
           child: Form(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                40.szH,
                 UniversalMediaWidget(path: AppAssets.svg.baseSvg.login.path),
                 context.isArabic
                     ? Text.rich(
@@ -44,8 +43,7 @@ class _LoginBodyState extends State<LoginBody> {
                             ),
                             TextSpan(
                               text: LocaleKeys.login2,
-                              style:
-                                  context.textStyle.s20.bold.setPrimaryColor,
+                              style: context.textStyle.s20.bold.setPrimaryColor,
                             ),
                           ],
                         ),
@@ -86,8 +84,7 @@ class _LoginBodyState extends State<LoginBody> {
                     fieldTitle: LocaleKeys.password,
                   ),
                   suffixIcon: IconButton(
-                    onPressed: () =>
-                        setState(() => obscureText = !obscureText),
+                    onPressed: () => setState(() => obscureText = !obscureText),
                     icon: Icon(
                       obscureText
                           ? Icons.visibility_off_outlined

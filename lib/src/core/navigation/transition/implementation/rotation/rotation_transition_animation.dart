@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
- 
+
 import 'package:mazaya/src/core/navigation/constants/imports_constants.dart';
 import 'package:mazaya/src/core/navigation/transition/factory/transition_creator.dart';
 import 'animator/rotation_animator.dart';
@@ -8,9 +8,7 @@ import 'options/rotation_animation_option.dart';
 class RotationTransitionAnimation implements TransitionCreator {
   final RotationAnimationOptions options;
 
-  const RotationTransitionAnimation({
-    required this.options,
-  });
+  const RotationTransitionAnimation({required this.options});
 
   @override
   Widget animate(
@@ -26,7 +24,8 @@ class RotationTransitionAnimation implements TransitionCreator {
       filterQuality: options.filterQuality,
       child: child,
     ).buildSecondaryTransition(
-        animation: animation,
-        applySecondaryTransition: options.secondaryTransition);
+      animation: animation,
+      applySecondaryTransition: options.secondaryTransition,
+    );
   }
 }
