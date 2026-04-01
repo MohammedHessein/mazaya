@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mazaya/src/config/language/languages.dart';
 import 'package:mazaya/src/config/language/locale_keys.g.dart';
 import 'package:mazaya/src/config/res/assets.gen.dart';
-import 'package:mazaya/src/core/navigation/navigator.dart';
-import 'package:mazaya/src/core/widgets/language/open_language_sheet.dart';
-import 'package:mazaya/src/features/favourite/presentation/imports/view_imports.dart';
-import 'package:mazaya/src/features/used_coupons/presentation/imports/view_imports.dart';
-import 'package:mazaya/src/features/change_password/imports/change_password_imports.dart';
-import 'package:mazaya/src/features/static_pages/entity/static_pages_enum.dart';
-import 'package:mazaya/src/features/static_pages/presentation/imports/view_imports.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mazaya/src/core/widgets/pickers/default_bottom_sheet.dart';
 import 'package:mazaya/src/config/res/config_imports.dart';
-import 'package:mazaya/src/features/settings/presentation/imports/view_imports.dart';
+import 'package:mazaya/src/core/navigation/navigator.dart';
+import 'package:mazaya/src/core/network/api_endpoints.dart';
+import 'package:mazaya/src/core/widgets/language/open_language_sheet.dart';
+import 'package:mazaya/src/core/widgets/pickers/default_bottom_sheet.dart';
+import 'package:mazaya/src/core/widgets/web_view/webview_screen.dart';
+import 'package:mazaya/src/features/change_password/imports/change_password_imports.dart';
+import 'package:mazaya/src/features/favourite/presentation/imports/view_imports.dart';
 import 'package:mazaya/src/features/more/presentation/cubits/logout_cubit.dart';
 import 'package:mazaya/src/features/more/presentation/widgets/delete_account_bottom_sheet.dart';
 import 'package:mazaya/src/features/more/presentation/widgets/logout_bottom_sheet.dart';
+import 'package:mazaya/src/features/settings/presentation/imports/view_imports.dart';
+import 'package:mazaya/src/features/used_coupons/presentation/imports/view_imports.dart';
 
 class MoreItemEntity {
   final String title;
@@ -38,7 +38,7 @@ class MoreItemEntity {
     MoreItemEntity(
       title: LocaleKeys.settingsEditProfile,
       icon: AppAssets.svg.baseSvg.unlock.path,
-      onTap: () {},
+      onTap: () => Go.to(const UpdateProfileScreen()),
     ),
     MoreItemEntity(
       title: LocaleKeys.settingsChangePassword,
@@ -70,8 +70,9 @@ class MoreItemEntity {
       title: LocaleKeys.terms,
       icon: AppAssets.svg.baseSvg.bill.path,
       onTap: () => Go.to(
-        const StaticPagesScreen(
-          pageType: StaticPageTypeEnum.termsAndConditions,
+        WebViewScreen(
+          url: ApiConstants.termsAndConditions,
+          title: LocaleKeys.terms,
         ),
       ),
     ),
@@ -79,7 +80,10 @@ class MoreItemEntity {
       title: LocaleKeys.policy,
       icon: AppAssets.svg.baseSvg.securityUser.path,
       onTap: () => Go.to(
-        const StaticPagesScreen(pageType: StaticPageTypeEnum.usagePolicy),
+        WebViewScreen(
+          url: ApiConstants.privacyPolicy,
+          title: LocaleKeys.policy,
+        ),
       ),
     ),
   ];
@@ -89,7 +93,10 @@ class MoreItemEntity {
     icon: AppAssets.svg.baseSvg.profileDelete.path,
     onTap: () => showDefaultBottomSheet(
       child: BlocProvider(
-        create: (context) => injector<DeleteAccountCubit>(), // Since we refactored DeleteAccountCubit in settings
+        create: (context) =>
+            injector<
+              DeleteAccountCubit
+            >(), // Since we refactored DeleteAccountCubit in settings
         child: const DeleteAccountBottomSheet(),
       ),
     ),

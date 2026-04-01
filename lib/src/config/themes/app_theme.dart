@@ -56,6 +56,9 @@ class AppTheme {
         overlayColor: const WidgetStatePropertyAll(AppColors.primary),
         trackOutlineColor: const WidgetStatePropertyAll(Colors.transparent),
       ),
+      progressIndicatorTheme: ProgressIndicatorThemeData(
+        color: AppColors.primary,
+      ),
     );
   }
 

@@ -96,8 +96,8 @@ class IntroCarouselWidgetState extends State<IntroCarouselWidget>
                     DefaultButton(
                       borderRadius: BorderRadius.circular(AppCircular.r50),
                       title: isLastPage
-                          ? LocaleKeys.introStartnow.tr()
-                          : LocaleKeys.introNext.tr(),
+                          ? LocaleKeys.introStartnow
+                          : LocaleKeys.introNext,
                       onTap: () => isLastPage
                           ? Go.to(const MainScreen())
                           : _animateToNextPage(),
@@ -107,7 +107,7 @@ class IntroCarouselWidgetState extends State<IntroCarouselWidget>
                       GestureDetector(
                         // onTap: () => Go.offAll(const LoginScreen()),
                         child: Text(
-                          LocaleKeys.introSkip.tr(),
+                          LocaleKeys.introSkip,
                           style: context.textStyle.s16.setBlackColor.regular,
                         ),
                       ),

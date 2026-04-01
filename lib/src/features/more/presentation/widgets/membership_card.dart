@@ -19,8 +19,9 @@ class MemberShipCard extends StatelessWidget {
 
     final totalCoupons = user.userPackageCouponsLimit ?? 0;
     final usedCoupons = user.userPackageUsedCoupons ?? 0;
-    final remainingCoupons =
-        totalCoupons > usedCoupons ? totalCoupons - usedCoupons : 0;
+    final remainingCoupons = totalCoupons > usedCoupons
+        ? totalCoupons - usedCoupons
+        : 0;
     final progress = totalCoupons > 0 ? usedCoupons / totalCoupons : 0.0;
 
     return Container(
@@ -70,7 +71,7 @@ class MemberShipCard extends StatelessWidget {
                 ),
                 if (user.userPackageIsActive)
                   Text(
-                    LocaleKeys.subscriptionActive.tr(),
+                    LocaleKeys.subscriptionActive,
                     style: context.textStyle.s12.medium.setColor(
                       AppColors.success,
                     ),
@@ -86,7 +87,9 @@ class MemberShipCard extends StatelessWidget {
                   style: context.textStyle.s14.medium.setMainTextColor,
                 ),
                 Text(
-                  LocaleKeys.remainingCoupons(count: remainingCoupons.toString()),
+                  LocaleKeys.remainingCoupons(
+                    count: remainingCoupons.toString(),
+                  ),
                   style: context.textStyle.s14.regular.setMainTextColor,
                 ),
               ],
@@ -110,11 +113,12 @@ class MemberShipCard extends StatelessWidget {
                 child: Builder(
                   builder: (context) {
                     final endDate = DateTime.tryParse(user.userPackageEndDate!);
-                    final isExpired = endDate != null && endDate.isBefore(DateTime.now());
+                    final isExpired =
+                        endDate != null && endDate.isBefore(DateTime.now());
                     return Text(
                       LocaleKeys.renewalDate(date: user.userPackageEndDate!),
                       style: context.textStyle.s12.regular.setColor(
-                        isExpired ? AppColors.error : AppColors.success,
+                        isExpired ? AppColors.error : AppColors.primary,
                       ),
                     );
                   },

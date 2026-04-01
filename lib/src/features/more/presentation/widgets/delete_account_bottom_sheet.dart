@@ -1,4 +1,5 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mazaya/src/core/shared/cubits/user_cubit/user_cubit.dart';
 import 'package:mazaya/src/core/widgets/universal_media/universal_media_widget.dart';
 import 'package:mazaya/src/features/location/imports/location_imports.dart';
 
@@ -47,7 +48,10 @@ class DeleteAccountBottomSheet extends StatelessWidget {
                 color: AppColors.error,
                 onTap: () async =>
                     context.read<DeleteAccountCubit>().deleteAccount(
-                      successEmitter: (data) => Go.offAll(const LoginScreen()),
+                      successEmitter: (data) {
+                        UserCubit.instance.logout(clearOnboarding: true);
+                        Go.offAll(const LoginScreen());
+                      },
                     ),
               ),
             ),

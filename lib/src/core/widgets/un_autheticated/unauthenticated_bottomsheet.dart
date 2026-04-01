@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mazaya/src/features/auth/login/imports/login_imports.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mazaya/src/config/language/locale_keys.g.dart';
 import 'package:mazaya/src/config/res/config_imports.dart';
@@ -55,13 +56,8 @@ class UnAuthenticatedBottomSheet extends StatelessWidget {
         DefaultButton(
           title: LocaleKeys.login,
           onTap: () {
-            Future.delayed(const Duration(seconds: 1), () {
-              if (context.mounted) {
-                Navigator.of(context).popUntil((route) => route.isFirst);
-              }
-            });
             injector<UserCubit>().logout();
-            // Go.offAll(const LoginScreen());
+            Go.offAll(const LoginScreen());
           },
         ),
         const SizedBox(height: 12),

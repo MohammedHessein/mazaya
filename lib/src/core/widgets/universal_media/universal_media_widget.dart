@@ -52,10 +52,6 @@ class _UniversalMediaWidgetState extends State<UniversalMediaWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.path.isEmpty) {
-      return const SizedBox.shrink();
-    }
-
     return SizedBox(
       width: widget.width,
       height: widget.height,

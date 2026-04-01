@@ -139,6 +139,13 @@ class UserModel {
     );
   }
 
+  static int? _toInt(dynamic value) {
+    if (value == null) return null;
+    if (value is int) return value;
+    if (value is String) return int.tryParse(value);
+    return null;
+  }
+
   factory UserModel.fromJson(Map<String, dynamic> json) {
     // Handle nested data if passed full response, otherwise handle the user object directly
     final Map<String, dynamic> data =
@@ -156,7 +163,7 @@ class UserModel {
         : {};
 
     return UserModel(
-      id: user['id'] ?? 0,
+      id: _toInt(user['id']) ?? 0,
       name: user['name'] ?? user['fullName'] ?? '',
       email: user['email'] ?? '',
       mobile: user['mobile'] ?? user['phoneNumber'] ?? '',
@@ -165,13 +172,13 @@ class UserModel {
       photoProfile: user['photo_profile'] ?? user['image'] ?? '',
       status: user['status'] ?? '',
       address: user['address'],
-      locationId: user['location_id'],
+      locationId: _toInt(user['location_id']),
       locationName: user['location_name'] ?? user['city'] ?? '',
       userPackageName: user['user_package_name'],
       memberType: user['member_type'],
       userPackageImage: user['user_package_image'],
-      userPackageCouponsLimit: user['user_package_coupons_limit'] ?? package['coupons_limit'],
-      userPackageUsedCoupons: user['user_package_used_coupons'] ?? package['used_coupons'],
+      userPackageCouponsLimit: _toInt(user['user_package_coupons_limit'] ?? package['coupons_limit']),
+      userPackageUsedCoupons: _toInt(user['user_package_used_coupons'] ?? package['used_coupons']),
       userPackageStartDate: user['user_package_start_date'] ?? package['start_date'],
       userPackageEndDate: user['user_package_end_date'] ?? package['end_date'],
       userPackageIsActive: user['userPackageIsActive'] ?? (package['is_active'] ?? false),
@@ -182,7 +189,7 @@ class UserModel {
           data['isExpired'] ??
           (json.containsKey('isExpired') ? json['isExpired'] : null),
       allowNotify: user['allowNotify'] ?? false,
-      userType: user['userType'] ?? 0,
+      userType: _toInt(user['userType']) ?? 0,
     );
   }
 

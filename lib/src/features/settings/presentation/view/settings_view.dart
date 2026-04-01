@@ -6,9 +6,16 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.locale;
-    return DefaultScaffold(
-      header: HeaderConfig(title: LocaleKeys.settingsTitle),
-      slivers: const [SliverToBoxAdapter(child: _SettingsTabBody())],
+    return BlocProvider(
+      create: (context) => injector<UpdatePhotoCubit>(),
+      child: DefaultScaffold(
+        header: HeaderConfig(
+          title: LocaleKeys.settingsTitle,
+          type: ScaffoldHeaderType.profile,
+          overlayWidget: const ProfileAvatarWidget(),
+        ),
+        slivers: const [SliverToBoxAdapter(child: _SettingsTabBody())],
+      ),
     );
   }
 }

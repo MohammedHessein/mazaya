@@ -16,62 +16,65 @@ class CouponsSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 62.h,
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(AppCircular.r50),
         border: Border.all(color: AppColors.gray100),
       ),
-      child: Row(
-        children: [
-          Expanded(
-            child: AppTextField.withoutBorder(
-              fillColor: Colors.transparent,
-              contentPadding: EdgeInsets.zero,
-              hint: LocaleKeys.search,
-              onChanged: (val) {
-                if (onChanged != null) onChanged!(val ?? '');
-              },
-              prefixIcon: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 2.h),
-                child: AppAssets.svg.baseSvg.search.svg(
-                  width: AppSize.sW16,
-                  height: AppSize.sH16,
-                  colorFilter: ColorFilter.mode(
-                    AppColors.gray400,
-                    BlendMode.srcIn,
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: AppTextField.withoutBorder(
+                fillColor: Colors.transparent,
+                contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                hint: LocaleKeys.search,
+                onChanged: (val) {
+                  if (onChanged != null) onChanged!(val ?? '');
+                },
+                prefixIcon: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 2.h),
+                  child: AppAssets.svg.baseSvg.search.svg(
+                    width: AppSize.sW16,
+                    height: AppSize.sH16,
+                    colorFilter: ColorFilter.mode(
+                      AppColors.gray400,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                ),
+                hintStyle: context.textStyle.s14.regular.setColor(
+                  AppColors.gray400,
+                ),
+              ),
+            ),
+            // Filter Button
+            GestureDetector(
+              onTap: onFilterTap,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: AppPadding.pW20),
+                decoration: BoxDecoration(
+                  color: AppColors.primary,
+                  borderRadius: BorderRadiusDirectional.only(
+                    topEnd: Radius.circular(AppCircular.r50),
+                    bottomEnd: Radius.circular(AppCircular.r50),
+                  ),
+                ),
+                child: Center(
+                  child: AppAssets.svg.baseSvg.filter.svg(
+                    width: AppSize.sW20,
+                    height: AppSize.sH20,
+                    colorFilter: const ColorFilter.mode(
+                      AppColors.white,
+                      BlendMode.srcIn,
+                    ),
                   ),
                 ),
               ),
-              hintStyle: context.textStyle.s14.regular.setColor(
-                AppColors.gray400,
-              ),
             ),
-          ),
-          // Filter Button
-          GestureDetector(
-            onTap: onFilterTap,
-            child: Container(
-              height: 62.h,
-              padding: EdgeInsets.symmetric(horizontal: AppPadding.pW16),
-              decoration: BoxDecoration(
-                color: AppColors.primary,
-                borderRadius: BorderRadiusDirectional.only(
-                  topEnd: Radius.circular(AppCircular.r50),
-                  bottomEnd: Radius.circular(AppCircular.r50),
-                ),
-              ),
-              child: AppAssets.svg.baseSvg.filter.svg(
-                width: AppSize.sW20,
-                height: AppSize.sH20,
-                colorFilter: const ColorFilter.mode(
-                  AppColors.white,
-                  BlendMode.srcIn,
-                ),
-              ),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

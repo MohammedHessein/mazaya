@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -9,7 +8,6 @@ import 'package:mazaya/src/config/language/languages.dart';
 import 'package:mazaya/src/config/res/config_imports.dart';
 import 'package:mazaya/src/core/error/exceptions.dart';
 import 'package:mazaya/src/core/helpers/cache_service.dart';
-import 'package:mazaya/src/core/navigation/navigator.dart';
 import 'package:mazaya/src/core/shared/models/base_model.dart';
 import 'api_endpoints.dart';
 import 'backend_configuation.dart';
@@ -77,9 +75,9 @@ class DioService implements NetworkService {
 
   @override
   void changeLocale({String? locale}) {
-    _dio.options.headers[HttpHeaders.acceptLanguageHeader] =
-        locale ?? Go.context.locale.languageCode;
-    _dio.options.headers['lang'] = locale ?? Go.context.locale.languageCode;
+    final langCode = locale ?? Languages.currentLanguage.languageCode;
+    _dio.options.headers[HttpHeaders.acceptLanguageHeader] = langCode;
+    _dio.options.headers['lang'] = langCode;
   }
 
   Future<Map<String, dynamic>> publicHeaders() async {

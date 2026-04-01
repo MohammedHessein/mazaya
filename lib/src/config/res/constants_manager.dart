@@ -23,6 +23,9 @@ class ConstantManager {
   static const int maxLines = 5;
   static String platform = Platform.isAndroid ? 'android' : 'ios';
 
+  static const String sawOnboarding = 'sawOnboarding';
+  static const String selectedLocation = 'selectedLocation';
+
   static Map<String, dynamic>? paginateJson(int page) => {
     'page': page,
     'per_page': pgSize,

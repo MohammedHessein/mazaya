@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-
 import 'package:mazaya/src/config/res/config_imports.dart';
 import 'package:mazaya/src/core/extensions/context_extension.dart';
 import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
 import 'package:mazaya/src/core/extensions/widgets/sized_box_helper.dart';
+
 import 'custom_animated_button.dart';
 
 class LoadingButton extends StatelessWidget {
@@ -163,8 +163,8 @@ class _LoadingButtonWithIconState extends State<LoadingButtonWithIcon> {
       child: Container(
         padding: EdgeInsets.all(12.h),
         decoration: BoxDecoration(
-          gradient: AppColors.gradient,
-          borderRadius: BorderRadius.circular(12.r),
+          color: AppColors.primary,
+          borderRadius: BorderRadius.circular(20.r),
         ),
         child: isLoading
             ? SizedBox(

@@ -22,12 +22,13 @@ class BaseRemoteDataSourceImpl implements BaseRemoteDataSource {
         queryParameters: param?.toJson(),
         method: RequestMethod.get,
       ),
-      mapper: (json) => param?.mapper != null
-          ? param!.mapper!<List<T>>(json)
-          : List<T>.from(
-              json.map((x) => BaseEntity.fromJson<T>(x)),
-              //json.map((x) => baseIdAndNameEntityFromJson<T>(x)),
-            ),
+      mapper: (json) {
+        if (param?.mapper != null) return param!.mapper!<List<T>>(json);
+        final list = (json is Map && json.containsKey('data'))
+            ? json['data'] as List
+            : json as List;
+        return List<T>.from(list.map((x) => BaseEntity.fromJson<T>(x)));
+      },
     )).data;
   }
   // @override

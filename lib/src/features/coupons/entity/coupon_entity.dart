@@ -34,6 +34,22 @@ class CouponEntity extends Equatable {
     this.isFav = false,
   });
 
+  const CouponEntity.empty()
+      : id = 0,
+        name = '',
+        shortDescription = '',
+        description = '',
+        productImage = '',
+        discount = 0.0,
+        discountType = '',
+        sku = '',
+        vendorId = 0,
+        vendorName = '',
+        vendorImage = '',
+        categoryId = 0,
+        categoryName = '',
+        isFav = false;
+
   factory CouponEntity.fromJson(Map<String, dynamic> json) {
     int toInt(dynamic value) {
       if (value == null) return 0;
@@ -63,6 +79,7 @@ class CouponEntity extends Equatable {
     return const CouponEntity(
       id: 0,
       name: SkeltonizerManager.short,
+      shortDescription: SkeltonizerManager.medium,
       description: SkeltonizerManager.medium,
       productImage: '',
     );

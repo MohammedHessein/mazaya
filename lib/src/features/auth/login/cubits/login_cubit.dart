@@ -5,15 +5,13 @@ import 'package:mazaya/src/core/shared/cubits/user_cubit/user_cubit.dart';
 import 'package:mazaya/src/core/shared/models/user_model.dart';
 import 'package:mazaya/src/features/location/imports/location_imports.dart';
 
-import '../../../main/presentation/view/main_screen.dart';
-
 @injectable
 class LoginCubit extends AsyncCubit<UserModel?> {
   LoginCubit() : super(null);
 
   Future<void> login(String username, String password) async {
     final String fcmToken = NotificationService.deviceToken.isEmpty
-        ? 'www'
+        ? 'no'
         : NotificationService.deviceToken;
     await executeAsync(
       operation: () async => await baseCrudUseCase.call(
@@ -35,8 +33,13 @@ class LoginCubit extends AsyncCubit<UserModel?> {
             user: user,
             token: user.token!,
           );
-          Go.offAll(const MainScreen());
-          // Go.to(SelectLocationScreen());
+          final bool isLocationSelected =
+              CacheStorage.read(ConstantManager.selectedLocation) ?? false;
+          if (user.locationId != null && isLocationSelected) {
+            Go.offAll(const MainScreen());
+          } else {
+            Go.offAll(const SelectLocationScreen());
+          }
           MessageUtils.showSnackBar(
             message: LocaleKeys.successLogin,
             baseStatus: BaseStatus.success,

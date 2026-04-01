@@ -2,14 +2,11 @@ import 'package:mazaya/src/config/language/locale_keys.g.dart';
 import 'package:mazaya/src/core/network/api_endpoints.dart';
 
 enum StaticPageTypeEnum {
-  aboutRita,
   termsAndConditions,
   usagePolicy;
 
   String get title {
     switch (this) {
-      case StaticPageTypeEnum.aboutRita:
-        return LocaleKeys.whoUs;
       case StaticPageTypeEnum.termsAndConditions:
         return LocaleKeys.terms;
       case StaticPageTypeEnum.usagePolicy:
@@ -19,12 +16,10 @@ enum StaticPageTypeEnum {
 
   String get apiEndpoint {
     switch (this) {
-      case StaticPageTypeEnum.aboutRita:
-        return ApiConstants.about;
       case StaticPageTypeEnum.termsAndConditions:
-        return ApiConstants.terms;
+        return ApiConstants.termsAndConditions;
       case StaticPageTypeEnum.usagePolicy:
-        return ApiConstants.privacy;
+        return ApiConstants.privacyPolicy;
     }
   }
 }

@@ -14,7 +14,7 @@ class DeleteAccountCubit extends AsyncCubit<String> {
         ),
       ),
       successEmitter: (success) {
-        UserCubit.instance.clearUser();
+        UserCubit.instance.logout(clearOnboarding: true);
         if (successEmitter != null) {
           successEmitter(success);
         }

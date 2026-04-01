@@ -6,7 +6,7 @@ class UsedCouponsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => injector<UsedCouponsCubit>()..fetchInitialData(),
+      create: (context) => injector<UsedCouponsCubit>()..fetchUsedCoupons(),
       child: const UsedCouponsBody(),
     );
   }

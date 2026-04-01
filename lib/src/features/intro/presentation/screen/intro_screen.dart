@@ -24,10 +24,12 @@ class IntroScreenState extends State<IntroScreen> {
   }
 
   void goHome() {
+    CacheStorage.write(ConstantManager.sawOnboarding, true);
     Go.to(const MainScreen());
   }
 
   void goLogin() {
+    CacheStorage.write(ConstantManager.sawOnboarding, true);
     Go.to(const LoginScreen());
   }
 

@@ -12,8 +12,8 @@ class FavouriteBody extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: AppPadding.pW20),
           sliver: PaginatedSliverListWidget<FavouriteCubit, CouponEntity>(
             skeletonBuilder: (context) => AppCard(
-              title: CouponEntity.initial().name,
-              description: CouponEntity.initial().description ?? '',
+              title: CouponEntity.empty().name,
+              description: CouponEntity.empty().description ?? '',
             ),
             itemBuilder: (context, coupon, index) {
               return AppCard(
@@ -22,7 +22,9 @@ class FavouriteBody extends StatelessWidget {
                 isFavorite: coupon.isFav,
                 onFavoriteTap: () =>
                     context.read<FavouriteCubit>().toggleFavorite(coupon.id),
-                onTap: () {},
+                onTap: () {
+                  Go.to(CouponDetailsScreen(id: coupon.id));
+                },
               );
             },
           ),

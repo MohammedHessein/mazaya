@@ -20,6 +20,13 @@ import 'src/core/network/backend_configuation.dart';
 import 'src/core/shared/bloc_observer.dart';
 import 'src/core/shared/service_locators/setup_service_locators.dart';
 import 'src/core/widgets/handling_views/exeption_view.dart';
+import 'src/features/intro/presentation/imports/view_imports.dart';
+import 'src/features/auth/login/imports/login_imports.dart';
+import 'src/features/location/imports/location_imports.dart';
+import 'src/features/main/presentation/view/main_screen.dart';
+import 'src/core/shared/cubits/user_cubit/user_cubit.dart';
+import 'src/config/res/config_imports.dart';
+import 'src/core/notification/notification_service.dart';
 
 void main() async {
   Bloc.observer = AppBlocObserver();
@@ -58,6 +65,10 @@ void main() async {
   // Restart animations when hot reload happens (developer experience)
   Animate.restartOnHotReload = true;
 
+  // Initialize notifications early to fetch FCM token for login
+  NotificationNavigator();
+  injector<NotificationService>().setupNotifications();
+
   // In release mode → replace Flutter’s red error screen with custom widget
   if (kReleaseMode) {
     ErrorWidget.builder = (FlutterErrorDetails details) =>
@@ -75,6 +86,24 @@ void main() async {
   // Change status bar color globally at app start
   Helpers.changeStatusbarColor(statusBarColor: Colors.transparent);
 
+  final bool isLoggedIn = await injector<UserCubit>().init();
+  final bool sawOnboarding =
+      CacheStorage.read(ConstantManager.sawOnboarding) ?? false;
+  final bool selectedLocation =
+      CacheStorage.read(ConstantManager.selectedLocation) ?? false;
+
+  Widget initialScreen;
+  if (!sawOnboarding) {
+    initialScreen = const IntroScreen();
+  } else if (!isLoggedIn) {
+    initialScreen = const LoginScreen();
+  } else if (!selectedLocation &&
+      injector<UserCubit>().user.locationId == null) {
+    initialScreen = const SelectLocationScreen();
+  } else {
+    initialScreen = const MainScreen();
+  }
+
   // Run the actual app wrapped with EasyLocalization widget
   runApp(
     EasyLocalization(
@@ -82,7 +111,7 @@ void main() async {
       path: 'assets/translations',
       fallbackLocale: const Locale('en'),
       saveLocale: true,
-      child: const MazayaApp(),
+      child: MazayaApp(home: initialScreen),
     ),
   );
 }

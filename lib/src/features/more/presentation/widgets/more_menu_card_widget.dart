@@ -46,7 +46,7 @@ class MoreMenuCardWidget extends StatelessWidget {
           5.szW,
           Expanded(
             child: Text(
-              menuItem.title.tr(),
+              menuItem.title,
               style: context.textStyle.s14.regular.setMainTextColor,
             ),
           ),
@@ -57,7 +57,7 @@ class MoreMenuCardWidget extends StatelessWidget {
               Padding(
                 padding: EdgeInsetsDirectional.only(end: 8.w),
                 child: Text(
-                  menuItem.trailingText!.tr(),
+                  menuItem.trailingText!,
                   style: context.textStyle.s14.regular.setColor(
                     AppColors.gray500,
                   ),

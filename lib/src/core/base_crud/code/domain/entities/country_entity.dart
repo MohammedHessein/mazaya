@@ -1,14 +1,14 @@
 import 'package:mazaya/src/core/base_crud/code/domain/base_domain_imports.dart';
 
 class CountryEntity extends BaseIdAndNameEntity {
-  final String key;
-  final String flag;
+  final String? key;
+  final String? flag;
 
   const CountryEntity({
     required super.id,
     required super.name,
-    required this.key,
-    required this.flag,
+    this.key,
+    this.flag,
   });
 
   @override

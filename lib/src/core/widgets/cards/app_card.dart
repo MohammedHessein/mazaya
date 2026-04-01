@@ -98,6 +98,7 @@ class AppCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  8.szH,
                   if (status != null)
                     Align(
                       alignment: AlignmentDirectional.topEnd,
@@ -109,9 +110,7 @@ class AppCard extends StatelessWidget {
                         margin: EdgeInsets.only(bottom: 8.h),
                         decoration: BoxDecoration(
                           color: AppColors.primary.withValues(alpha: 0.1),
-                          borderRadius: BorderRadius.circular(
-                            AppCircular.r20,
-                          ),
+                          borderRadius: BorderRadius.circular(AppCircular.r20),
                         ),
                         child: Text(
                           status!,

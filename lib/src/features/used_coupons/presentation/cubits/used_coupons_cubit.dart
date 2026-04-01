@@ -1,49 +1,75 @@
 part of '../imports/view_imports.dart';
 
 @injectable
-class UsedCouponsCubit extends PaginatedCubit<CouponEntity> {
-  @override
-  Future<Result<Map<String, dynamic>, Failure>> fetchPageData(
-    int page, {
-    String? key,
-  }) async {
-    // Simulate network delay
-    await Future.delayed(const Duration(milliseconds: 500));
+class UsedCouponsCubit extends AsyncCubit<List<CouponEntity>> {
+  UsedCouponsCubit() : super([]);
 
-    return Success({
-      'data': {
-        'data': [
-          {
-            'id': 101,
-            'title': 'كوبون كارفور مٌستخدم',
-            'description': 'خصم 25% علي جميع المنتجات',
-            'is_fav': false,
-            'status': 'مستخدم',
-          },
-        ],
-        'pagination': {
-          'total': 1,
-          'count': 1,
-          'per_page': 10,
-          'current_page': 1,
-          'total_pages': 1,
-        },
+  Future<void> fetchUsedCoupons() async {
+    await executeAsync(
+      operation: () async {
+        final result = await baseCrudUseCase.call<List<CouponEntity>>(
+          CrudBaseParams<List<CouponEntity>>(
+            api: ApiConstants.usedCoupons,
+            httpRequestType: HttpRequestType.get,
+            mapper: (json) {
+              if (json == null || json['data'] == null) {
+                return [];
+              }
+              return (json['data'] as List)
+                  .map((e) => CouponEntity.fromJson(Map<String, dynamic>.from(e)))
+                  .toList();
+            },
+          ),
+        );
+        return result;
       },
-    });
+    );
+  }
+
+  Future<void> deleteCoupon(int id) async {
+    // Optimistic UI update: Remove the item from the list immediately
+    final currentList = List<CouponEntity>.from(state.data);
+    final updatedList = currentList.where((coupon) => coupon.id != id).toList();
+    updateData(updatedList);
+
+    final result = await baseCrudUseCase.call(
+      CrudBaseParams(
+        api: "${ApiConstants.usedCoupons}/$id",
+        httpRequestType: HttpRequestType.post,
+        body: {'_method': 'DELETE'},
+        mapper: (json) => json,
+      ),
+    );
+
+    result.when(
+      (success) {
+        MessageUtils.showSnackBar(
+          message: LocaleKeys.successMsg,
+          baseStatus: BaseStatus.success,
+        );
+      },
+      (failure) {
+        // Rollback on failure
+        updateData(currentList);
+        MessageUtils.showSnackBar(
+          message: failure.message,
+          baseStatus: BaseStatus.error,
+        );
+      },
+    );
   }
 
   void toggleFavorite(int id) async {
     final currentData = state.data;
-    final updatedItems = currentData.items.map((coupon) {
+    final updatedItems = currentData.map((coupon) {
       if (coupon.id == id) {
         return coupon.copyWith(isFav: !coupon.isFav);
       }
       return coupon;
     }).toList();
 
-    setSuccess(data: currentData.copyWith(items: updatedItems));
+    updateData(updatedItems);
 
-    // Call API (Even if dummy, we call it to demonstrate consistency)
     await baseCrudUseCase.call(
       CrudBaseParams(
         api: ApiConstants.toggleFavorite,
@@ -52,30 +78,5 @@ class UsedCouponsCubit extends PaginatedCubit<CouponEntity> {
         mapper: (json) => json,
       ),
     );
-  }
-
-  @override
-  List<CouponEntity> parseItems(json) {
-    if (json == null || json['data'] == null || json['data']['data'] == null) {
-      return [];
-    }
-    return (json['data']['data'] as List)
-        .map((e) => CouponEntity.fromJson(Map<String, dynamic>.from(e)))
-        .toList();
-  }
-
-  @override
-  PaginationMeta parsePagination(json) {
-    if (json == null ||
-        json['data'] == null ||
-        json['data']['pagination'] == null) {
-      return const PaginationMeta(
-          totalItems: 0,
-          countItems: 0,
-          perPage: 10,
-          totalPages: 1,
-          currentPage: 1);
-    }
-    return PaginationMeta.fromJson(json['data']['pagination']);
   }
 }

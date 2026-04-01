@@ -176,7 +176,7 @@ class FaqsScreen extends BlocStatelessWidget<FaqsCubit> {
   @override
   Widget buildContent(BuildContext context, FaqsCubit ref) {
     return DefaultScaffold(
-      title: LocaleKeys.faqs.tr(),
+      title: LocaleKeys.faqs,
       body: const FaqsBody(),
     );
   }

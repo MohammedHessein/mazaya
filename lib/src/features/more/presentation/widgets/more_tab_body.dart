@@ -36,7 +36,7 @@ class MoreTabBody extends StatelessWidget {
                     icon: AppAssets.svg.baseSvg.profileDelete.path,
                     onTap: () async => await showDefaultBottomSheet(
                       child: BlocProvider(
-                        create: (context) => injector<MoreDeleteAccountCubit>(),
+                        create: (context) => injector<DeleteAccountCubit>(),
                         child: const DeleteAccountBottomSheet(),
                       ),
                     ),

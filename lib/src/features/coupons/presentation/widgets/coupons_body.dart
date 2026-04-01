@@ -13,6 +13,8 @@ import 'package:mazaya/src/features/coupons/entity/coupon_entity.dart';
 import 'package:mazaya/src/features/coupons/presentation/cubits/coupons_cubit.dart';
 import 'package:mazaya/src/features/coupons/presentation/widgets/coupons_filter_bottom_sheet.dart';
 import 'package:mazaya/src/features/coupons/presentation/widgets/coupons_search_bar.dart';
+import 'package:mazaya/src/features/coupons/presentation/view/coupon_details_screen.dart';
+import 'package:mazaya/src/core/navigation/navigator.dart';
 
 class CouponsBody extends StatelessWidget {
   const CouponsBody({super.key});
@@ -55,17 +57,16 @@ class CouponsBody extends StatelessWidget {
             skeletonItemCount: 10,
             config: const PaginatedListConfig(),
             skeletonBuilder: (context) => AppCard(
-              title: CouponEntity.initial().name,
-              description: CouponEntity.initial().description ?? '',
+              title: CouponEntity.empty().name,
+              description: CouponEntity.empty().shortDescription ?? '',
             ),
             itemBuilder: (context, item, index) => AppCard(
               title: item.name,
-              description: item.description ?? '',
+              description: item.shortDescription ?? '',
               imageUrl: item.productImage,
-              status: item.categoryName, // Using categoryName as status for now
               isFavorite: item.isFav,
               onTap: () {
-                // Handle coupon tap
+                Go.to(CouponDetailsScreen(id: item.id));
               },
               onFavoriteTap: () {
                 context.read<CouponsCubit>().toggleFavorite(item.id);

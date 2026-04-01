@@ -8,6 +8,7 @@ import 'package:mazaya/src/core/widgets/cards/app_card.dart';
 import 'package:mazaya/src/core/widgets/tools/bloc_builder/async_bloc_builder.dart';
 import 'package:mazaya/src/core/navigation/navigator.dart';
 import 'package:mazaya/src/features/coupons/presentation/view/coupons_view.dart';
+import 'package:mazaya/src/features/coupons/presentation/view/coupon_details_screen.dart';
 import '../cubits/home_cubit.dart';
 import '../../model/home_model.dart';
 
@@ -29,9 +30,11 @@ class _CouponsSectionState extends State<CouponsSection> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                LocaleKeys.latestCoupons,
-                style: context.textStyle.s16.bold.setBlackColor,
+              Expanded(
+                child: Text(
+                  LocaleKeys.latestCoupons,
+                  style: context.textStyle.s16.bold.setBlackColor,
+                ),
               ),
               TextButton(
                 onPressed: () {
@@ -74,7 +77,9 @@ class _CouponsSectionState extends State<CouponsSection> {
                     onFavoriteTap: () {
                       context.read<HomeCubit>().toggleFavorite(product.id);
                     },
-                    onTap: () {},
+                    onTap: () {
+                      Go.to(CouponDetailsScreen(id: product.id));
+                    },
                   );
                 },
               );

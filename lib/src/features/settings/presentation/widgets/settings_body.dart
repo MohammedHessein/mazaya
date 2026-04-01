@@ -8,9 +8,10 @@ class _SettingsTabBody extends StatelessWidget {
     context.locale;
     final generalItems = SettingsItemEntity.generalItems;
     return ListView.builder(
-      padding: EdgeInsets.all(AppPadding.pH14),
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      padding: EdgeInsets.symmetric(horizontal: AppPadding.pH14).copyWith(top: 60.h),
       itemCount: generalItems.length,
-
       itemBuilder: (context, index) {
         return MoreMenuCardWidget(menuItem: generalItems[index]);
       },

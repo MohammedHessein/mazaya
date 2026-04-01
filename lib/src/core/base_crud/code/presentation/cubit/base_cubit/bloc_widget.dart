@@ -13,7 +13,7 @@ abstract class BlocStatelessWidget<C extends AsyncCubit>
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AsyncCubit>(
+    return BlocProvider<C>(
       create: (context) => create,
       child: Builder(
         builder: (context) {
@@ -56,7 +56,7 @@ class _BlocStatefulWidgetState<C extends AsyncCubit>
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AsyncCubit>(
+    return BlocProvider<C>(
       create: (context) => widget.create,
       child: Builder(
         builder: (context) {

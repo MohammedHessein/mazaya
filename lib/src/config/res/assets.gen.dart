@@ -241,6 +241,10 @@ class $AssetsSvgBaseSvgGen {
   /// File path: assets/svg/base_svg/camera.svg
   SvgGenImage get camera => const SvgGenImage('assets/svg/base_svg/camera.svg');
 
+  /// File path: assets/svg/base_svg/camera_alt.svg
+  SvgGenImage get cameraAlt =>
+      const SvgGenImage('assets/svg/base_svg/camera_alt.svg');
+
   /// File path: assets/svg/base_svg/change_email.svg
   SvgGenImage get changeEmail =>
       const SvgGenImage('assets/svg/base_svg/change_email.svg');
@@ -264,6 +268,9 @@ class $AssetsSvgBaseSvgGen {
   /// File path: assets/svg/base_svg/correct.svg
   SvgGenImage get correct =>
       const SvgGenImage('assets/svg/base_svg/correct.svg');
+
+  /// File path: assets/svg/base_svg/coupon.svg
+  SvgGenImage get coupon => const SvgGenImage('assets/svg/base_svg/coupon.svg');
 
   /// File path: assets/svg/base_svg/curve_background.png
   AssetGenImage get curveBackground =>
@@ -303,6 +310,10 @@ class $AssetsSvgBaseSvgGen {
 
   /// File path: assets/svg/base_svg/filter.svg
   SvgGenImage get filter => const SvgGenImage('assets/svg/base_svg/filter.svg');
+
+  /// File path: assets/svg/base_svg/gallery.svg
+  SvgGenImage get gallery =>
+      const SvgGenImage('assets/svg/base_svg/gallery.svg');
 
   /// File path: assets/svg/base_svg/global.svg
   SvgGenImage get global => const SvgGenImage('assets/svg/base_svg/global.svg');
@@ -391,6 +402,10 @@ class $AssetsSvgBaseSvgGen {
   /// File path: assets/svg/base_svg/notify.svg
   SvgGenImage get notify => const SvgGenImage('assets/svg/base_svg/notify.svg');
 
+  /// File path: assets/svg/base_svg/percentage.svg
+  SvgGenImage get percentage =>
+      const SvgGenImage('assets/svg/base_svg/percentage.svg');
+
   /// File path: assets/svg/base_svg/profile.png
   AssetGenImage get profile =>
       const AssetGenImage('assets/svg/base_svg/profile.png');
@@ -413,6 +428,9 @@ class $AssetsSvgBaseSvgGen {
   /// File path: assets/svg/base_svg/sessions_empty.png
   AssetGenImage get sessionsEmpty =>
       const AssetGenImage('assets/svg/base_svg/sessions_empty.png');
+
+  /// File path: assets/svg/base_svg/share.svg
+  SvgGenImage get share => const SvgGenImage('assets/svg/base_svg/share.svg');
 
   /// File path: assets/svg/base_svg/silver_member.svg
   SvgGenImage get silverMember =>
@@ -454,12 +472,14 @@ class $AssetsSvgBaseSvgGen {
     arrowDownMenu,
     bill,
     camera,
+    cameraAlt,
     changeEmail,
     changePass,
     chatsEmpty,
     complainEmpty,
     compress,
     correct,
+    coupon,
     curveBackground,
     deleteAccount,
     deleteAll,
@@ -470,6 +490,7 @@ class $AssetsSvgBaseSvgGen {
     dropDownClose,
     editProfile,
     filter,
+    gallery,
     global,
     goldenMember,
     heart,
@@ -493,12 +514,14 @@ class $AssetsSvgBaseSvgGen {
     notifications,
     notificationsBing,
     notify,
+    percentage,
     profile,
     profileDelete,
     readNotification,
     search,
     securityUser,
     sessionsEmpty,
+    share,
     silverMember,
     unReadNotification,
     unlock,

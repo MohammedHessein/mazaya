@@ -9,11 +9,15 @@ import 'package:mazaya/src/core/network/network_request.dart';
 import 'package:mazaya/src/core/helpers/cache_service.dart';
 import 'package:mazaya/src/core/network/network_service.dart';
 import 'package:mazaya/src/core/shared/models/user_model.dart';
+import 'package:mazaya/src/core/base_crud/code/domain/base_domain_imports.dart';
 part 'user_state.dart';
 part 'user_utils.dart';
 
 const String _userKey = 'user';
 const String _tokenKey = 'token';
+const String _selectedCountryKey = 'selected_country';
+const String _selectedCityKey = 'selected_city';
+const String _selectedRegionKey = 'selected_region';
 
 @lazySingleton
 class UserCubit extends Cubit<UserState> with UserUtils {
@@ -25,13 +29,51 @@ class UserCubit extends Cubit<UserState> with UserUtils {
   }) async {
     await Future.wait([_saveUser(user), _saveToken(token)]);
     injector<NetworkService>().setToken(token);
-    emit(state.copyWith(userModel: user, userStatus: UserStatus.loggedIn));
+
+    // Restore hierarchy from cache after logout cleared the state
+    final countryMap = CacheStorage.read(_selectedCountryKey, isDecoded: true);
+    final cityMap = CacheStorage.read(_selectedCityKey, isDecoded: true);
+    final regionMap = CacheStorage.read(_selectedRegionKey, isDecoded: true);
+
+    emit(
+      state.copyWith(
+        userModel: user,
+        userStatus: UserStatus.loggedIn,
+        selectedCountry:
+            countryMap != null ? CountryEntity.fromJson(countryMap) : null,
+        selectedCity: cityMap != null ? CityEntity.fromJson(cityMap) : null,
+        selectedRegion:
+            regionMap != null ? RegionEntity.fromJson(regionMap) : null,
+      ),
+    );
   }
 
-  Future<void> logout() async {
+  Future<void> updateLocationHierarchy({
+    CountryEntity? country,
+    CityEntity? city,
+    RegionEntity? region,
+  }) async {
+    await Future.wait([
+      if (country != null)
+        CacheStorage.write(_selectedCountryKey, country.toJson()),
+      if (city != null) CacheStorage.write(_selectedCityKey, city.toJson()),
+      if (region != null) CacheStorage.write(_selectedRegionKey, region.toJson()),
+    ]);
+
+    emit(
+      state.copyWith(
+        selectedCountry: country,
+        selectedCity: city,
+        selectedRegion: region,
+      ),
+    );
+  }
+
+  Future<void> logout({bool clearOnboarding = false}) async {
     await Future.wait([
       CacheStorage.delete(_userKey),
       SecureStorage.delete(_tokenKey),
+      if (clearOnboarding) CacheStorage.delete(ConstantManager.sawOnboarding),
     ]);
     clearUser();
     emit(state.copyWith(userStatus: UserStatus.loggedOut));
@@ -66,6 +108,12 @@ class UserCubit extends Cubit<UserState> with UserUtils {
       isDecoded: true,
     );
     final token = await SecureStorage.read(_tokenKey);
+
+    // Restore location hierarchy
+    final countryMap = CacheStorage.read(_selectedCountryKey, isDecoded: true);
+    final cityMap = CacheStorage.read(_selectedCityKey, isDecoded: true);
+    final regionMap = CacheStorage.read(_selectedRegionKey, isDecoded: true);
+
     log('userMap $userMap, token $token');
     if (token != null && userMap != null) {
       injector<NetworkService>().setToken(token);
@@ -73,6 +121,11 @@ class UserCubit extends Cubit<UserState> with UserUtils {
         state.copyWith(
           userModel: UserModel.fromJson(userMap),
           userStatus: UserStatus.loggedIn,
+          selectedCountry:
+              countryMap != null ? CountryEntity.fromJson(countryMap) : null,
+          selectedCity: cityMap != null ? CityEntity.fromJson(cityMap) : null,
+          selectedRegion:
+              regionMap != null ? RegionEntity.fromJson(regionMap) : null,
         ),
       );
       return true;

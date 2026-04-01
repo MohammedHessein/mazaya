@@ -685,6 +685,9 @@ abstract class LocaleKeys {
   static const String _save = 'save';
   static String get save => _save.tr();
 
+  static const String _saveChanges = 'save_changes';
+  static String get saveChanges => _saveChanges.tr();
+
   static const String _coupons = 'coupons';
   static String get coupons => _coupons.tr();
 
@@ -786,6 +789,9 @@ abstract class LocaleKeys {
 
   static const String _scannedSuccessfully = 'scanned_successfully';
   static String get scannedSuccessfully => _scannedSuccessfully.tr();
+
+  static const String _couponUsedSuccessfully = 'coupon_used_successfully';
+  static String get couponUsedSuccessfully => _couponUsedSuccessfully.tr();
 
   static const String _returnToHome = 'return_to_home';
   static String get returnToHome => _returnToHome.tr();
@@ -891,5 +897,29 @@ abstract class LocaleKeys {
 
   static const String _categories = 'categories';
   static String get categories => _categories.tr();
+
+  static const String _governorate = 'governorate';
+  static String get governorate => _governorate.tr();
+
+  static const String _selectGovernorate = 'select_governorate';
+  static String get selectGovernorate => _selectGovernorate.tr();
+
+  static const String _successUpdateProfile = 'success_update_profile';
+  static String get successUpdateProfile => _successUpdateProfile.tr();
+
+  static const String _editPhotoProfile = 'edit_photo_profile';
+  static String get editPhotoProfile => _editPhotoProfile.tr();
+
+  static const String _successUpdatePhoto = 'success_update_photo';
+  static String get successUpdatePhoto => _successUpdatePhoto.tr();
+
+  static const String _exitAppTitle = 'exit_app_title';
+  static String get exitAppTitle => _exitAppTitle.tr();
+
+  static const String _exitAppDesc = 'exit_app_desc';
+  static String get exitAppDesc => _exitAppDesc.tr();
+
+  static const String _cameraError = 'camera_error';
+  static String get cameraError => _cameraError.tr();
 
 }

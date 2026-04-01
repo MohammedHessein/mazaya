@@ -84,36 +84,31 @@ extension FormFieldExtension on Widget {
     bool enabled = true,
     FormFieldSetter<T>? onSaved,
     FormFieldBuilder<T>? builder,
-    GlobalKey<FormState>? fieldKey,
+    GlobalKey<FormFieldState<T>>? fieldKey,
   }) {
-    return StatefulBuilder(
-      builder: (context, setState) => FormField<T>(
-        key: fieldKey,
-        validator: (value) {
-          setState(() {});
-          return validator?.call(value);
-        },
-        initialValue: initialValue,
-        autovalidateMode: autovalidateMode,
-        enabled: enabled,
-        onSaved: onSaved,
-        builder: (FormFieldState<T> state) {
-          return Column(
-            crossAxisAlignment: crossAxisAlignment,
-            children: [
-              builder?.call(state) ?? this,
-              if (state.errorText != null)
-                Padding(
-                  padding: EdgeInsetsDirectional.only(top: 4.0.h, start: 16.w),
-                  child: Text(
-                    state.errorText!,
-                    style: context.textStyle.s12.regular.setErrorColor,
-                  ),
+    return FormField<T>(
+      key: fieldKey,
+      validator: validator,
+      initialValue: initialValue,
+      autovalidateMode: autovalidateMode,
+      enabled: enabled,
+      onSaved: onSaved,
+      builder: (FormFieldState<T> state) {
+        return Column(
+          crossAxisAlignment: crossAxisAlignment,
+          children: [
+            builder?.call(state) ?? this,
+            if (state.errorText != null)
+              Padding(
+                padding: EdgeInsetsDirectional.only(top: 4.0.h, start: 16.w),
+                child: Text(
+                  state.errorText!,
+                  style: Go.context.textStyle.s12.regular.setErrorColor,
                 ),
-            ],
-          );
-        },
-      ),
+              ),
+          ],
+        );
+      },
     );
   }
 

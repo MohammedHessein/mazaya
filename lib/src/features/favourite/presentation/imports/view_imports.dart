@@ -8,6 +8,9 @@ import 'package:mazaya/src/config/res/config_imports.dart';
 
 import '../../../location/imports/location_imports.dart';
 
+import 'package:mazaya/src/core/navigation/navigator.dart';
+import 'package:mazaya/src/features/coupons/presentation/view/coupon_details_screen.dart';
+
 part '../cubits/favourite_cubit.dart';
 part '../view/favourite_screen.dart';
 part '../widgets/favourite_body.dart';

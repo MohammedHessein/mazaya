@@ -18,7 +18,8 @@ import 'core/widgets/handling_views/offline_widget.dart';
 import 'core/widgets/un_autheticated/unauthenticated_bottomsheet.dart';
 
 class MazayaApp extends StatefulWidget {
-  const MazayaApp({super.key});
+  final Widget? home;
+  const MazayaApp({super.key, this.home});
 
   @override
   State<MazayaApp> createState() => _MazayaAppState();
@@ -29,7 +30,8 @@ class _MazayaAppState extends State<MazayaApp> {
   void initState() {
     super.initState();
     _addUnAuthenticatedListener();
-    injector<UserCubit>().init();
+    // UserCubit init is now handled in main.dart if needed, 
+    // or we can keep it here for safety, but we'll use the result from main.
   }
 
   void _addUnAuthenticatedListener() {
@@ -55,7 +57,7 @@ class _MazayaAppState extends State<MazayaApp> {
             locale: context.locale,
             navigatorKey: Go.navigatorKey,
             onGenerateRoute: RouterGenerator.getRoute,
-            home: const IntroScreen(),
+            home: widget.home ?? const IntroScreen(),
             navigatorObservers: [AppNavigationObserver()],
             theme: AppTheme.light,
             builder: (context, child) {

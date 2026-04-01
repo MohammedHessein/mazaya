@@ -10,9 +10,9 @@ String getBaseIdAndNameEntityApi<T extends BaseEntity>(
   GetBaseEntityParams? params,
 ) {
   final Map<Type, String Function(GetBaseEntityParams?)> apiPaths = {
-    CountryEntity: (_) => "countries", //Api Key For Countries
-    CityEntity: (params) => "cities-by-country/${params!.id}",
-    RegionEntity: (params) => "regions/${params!.id}",
+    CountryEntity: (_) => "locations/governorates", //Api Key For Countries
+    CityEntity: (params) => "locations/cities/${params!.id}",
+    RegionEntity: (params) => "locations/districts/${params!.id}",
     CategoryEntity: (_) => "categories", //Api Key For Categories
   };
   if (T == BaseEntity) {

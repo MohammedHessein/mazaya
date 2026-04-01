@@ -17,14 +17,16 @@ import '../../../features/categories/presentation/cubits/categories_cubit.dart'
     as _i40;
 import '../../../features/change_password/presentation/cubits/change_password_cubit.dart'
     as _i778;
+import '../../../features/coupons/presentation/cubits/coupon_details_cubit.dart'
+    as _i102;
 import '../../../features/coupons/presentation/cubits/coupons_cubit.dart'
     as _i1022;
 import '../../../features/favourite/presentation/imports/view_imports.dart'
     as _i203;
 import '../../../features/home/presentation/cubits/home_cubit.dart' as _i246;
+import '../../../features/location/presentation/cubits/update_profile_cubit.dart'
+    as _i667;
 import '../../../features/more/presentation/cubits/logout_cubit.dart' as _i577;
-import '../../../features/more/presentation/cubits/more_delete_account_cubit.dart'
-    as _i871;
 import '../../../features/notifications/presentation/cubits/unread_notification_count_cubit.dart'
     as _i857;
 import '../../../features/notifications/presentation/imports/view_imports.dart'
@@ -55,17 +57,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i668.LoginCubit>(() => _i668.LoginCubit());
     gh.factory<_i40.CategoriesCubit>(() => _i40.CategoriesCubit());
     gh.factory<_i778.ChangePasswordCubit>(() => _i778.ChangePasswordCubit());
+    gh.factory<_i102.CouponDetailsCubit>(() => _i102.CouponDetailsCubit());
     gh.factory<_i1022.CouponsCubit>(() => _i1022.CouponsCubit());
     gh.factory<_i203.FavouriteCubit>(() => _i203.FavouriteCubit());
     gh.factory<_i246.HomeCubit>(() => _i246.HomeCubit());
+    gh.factory<_i667.UpdateProfileCubit>(() => _i667.UpdateProfileCubit());
     gh.factory<_i577.LogoutCubit>(() => _i577.LogoutCubit());
-    gh.factory<_i871.MoreDeleteAccountCubit>(
-      () => _i871.MoreDeleteAccountCubit(),
-    );
     gh.factory<_i980.NotificationsCubit>(() => _i980.NotificationsCubit());
     gh.factory<_i972.LangCubit>(() => _i972.LangCubit());
     gh.factory<_i972.NotifyCubit>(() => _i972.NotifyCubit());
     gh.factory<_i972.DeleteAccountCubit>(() => _i972.DeleteAccountCubit());
+    gh.factory<_i972.UpdatePhotoCubit>(() => _i972.UpdatePhotoCubit());
     gh.factory<_i816.StaticPagesCubit>(() => _i816.StaticPagesCubit());
     gh.factory<_i519.UsedCouponsCubit>(() => _i519.UsedCouponsCubit());
     gh.lazySingleton<_i996.UserCubit>(() => _i996.UserCubit());
