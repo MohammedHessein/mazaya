@@ -5,7 +5,8 @@ import 'package:mazaya/src/core/navigation/navigator.dart';
 
 enum Languages {
   english(Locale('en'), 'English', "en"),
-  arabic(Locale('ar'), 'العربية', "ar");
+  arabic(Locale('ar'), 'العربية', "ar"),
+  swedish(Locale('sv'), 'Svenska', "sv");
 
   final String title;
   final Locale locale;

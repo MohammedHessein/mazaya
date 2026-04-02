@@ -1,21 +1,20 @@
-import 'dart:io';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 import 'package:mazaya/src/features/intro/presentation/imports/view_imports.dart';
 
-import 'config/res/config_imports.dart';
-import 'config/themes/app_theme.dart';
-import 'core/helpers/loading_manager.dart';
-import 'core/navigation/navigator.dart';
-import 'core/navigation/route_generator.dart';
-import 'core/network/un_authenticated_interceptor.dart';
-import 'core/shared/cubits/user_cubit/user_cubit.dart';
-import 'core/shared/route_observer.dart';
-import 'core/widgets/handling_views/offline_widget.dart';
-import 'core/widgets/un_autheticated/unauthenticated_bottomsheet.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/config/themes/app_theme.dart';
+import 'package:mazaya/src/core/helpers/loading_manager.dart';
+import 'package:mazaya/src/core/navigation/navigator.dart';
+import 'package:mazaya/src/core/navigation/route_generator.dart';
+import 'package:mazaya/src/core/network/un_authenticated_interceptor.dart';
+import 'package:mazaya/src/core/shared/cubits/user_cubit/user_cubit.dart';
+import 'package:mazaya/src/core/shared/route_observer.dart';
+import 'package:mazaya/src/core/widgets/handling_views/no_internet_view.dart';
+import 'package:mazaya/src/core/widgets/un_autheticated/unauthenticated_bottomsheet.dart';
 
 class MazayaApp extends StatefulWidget {
   final Widget? home;
@@ -30,7 +29,7 @@ class _MazayaAppState extends State<MazayaApp> {
   void initState() {
     super.initState();
     _addUnAuthenticatedListener();
-    // UserCubit init is now handled in main.dart if needed, 
+    // UserCubit init is now handled in main.dart if needed,
     // or we can keep it here for safety, but we'll use the result from main.
   }
 
@@ -65,12 +64,25 @@ class _MazayaAppState extends State<MazayaApp> {
                 data: MediaQuery.of(
                   context,
                 ).copyWith(textScaler: const TextScaler.linear(1.0)),
-                child: OfflineWidget(
-                  child: FullScreenLoadingManager(
-                    child: Platform.isAndroid
-                        ? SafeArea(top: false, child: child!)
-                        : child!,
-                  ),
+                child: OfflineBuilder(
+                  connectivityBuilder: (context, connectivity, _) {
+                    final bool isNotConnected =
+                        connectivity.isEmpty ||
+                        connectivity.contains(ConnectivityResult.none);
+
+                    return Stack(
+                      children: [
+                        FullScreenLoadingManager(
+                          child: SafeArea(
+                            top: false,
+                            child: child!,
+                          ),
+                        ),
+                        if (isNotConnected) const NoInternetView(),
+                      ],
+                    );
+                  },
+                  builder: (context) => const SizedBox.shrink(),
                 ),
               );
             },

@@ -2,16 +2,23 @@ import 'package:mazaya/src/core/base_crud/code/presentation/cubit/base_cubit/blo
 import 'package:mazaya/src/features/coupons/presentation/cubits/coupon_details_cubit.dart';
 
 import '../../../location/imports/location_imports.dart';
+import '../../../qr_scanner/presentation/view/scan_coupon_view.dart';
 import 'view_imports.dart';
 
 class CouponDetailsScreen extends BlocStatelessWidget<CouponDetailsCubit> {
   final int id;
+  final CouponEntity? coupon;
 
-  const CouponDetailsScreen({super.key, required this.id});
+  const CouponDetailsScreen({super.key, required this.id, this.coupon});
 
   @override
-  CouponDetailsCubit get create =>
-      injector<CouponDetailsCubit>()..getCouponDetails(id.toString());
+  CouponDetailsCubit get create {
+    final cubit = injector<CouponDetailsCubit>();
+    if (coupon != null) {
+      cubit.setInitialData(coupon!);
+    }
+    return cubit..getCouponDetails(id.toString());
+  }
 
   @override
   Widget buildContent(BuildContext context, CouponDetailsCubit ref) {
@@ -27,8 +34,21 @@ class CouponDetailsScreen extends BlocStatelessWidget<CouponDetailsCubit> {
                 padding: EdgeInsets.all(AppPadding.pW20),
                 child: LoadingButtonWithIcon(
                   title: LocaleKeys.scanCouponCode,
+                  isDissabled: state.isSuccess && (state.data.isUsed ?? false),
                   onTap: () async {
-                    Go.offAll(const MainScreen(initialTabIndex: 2));
+                    if (state.isSuccess) {
+                      final currentCoupon = state.data;
+                      Go.to(ScanCouponView(
+                        isActive: true,
+                        couponId: id,
+                        initialQrPayload: currentCoupon.qrPayload,
+                      ));
+                    } else if (state.isError) {
+                      MessageUtils.showSnackBar(
+                        message: state.errorMessage ?? LocaleKeys.operationFaild,
+                        baseStatus: BaseStatus.error,
+                      );
+                    }
                   },
                   icon: AppAssets.svg.baseSvg.coupon.path,
                 ),

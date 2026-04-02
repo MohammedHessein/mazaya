@@ -56,7 +56,10 @@ class IntroScreenState extends State<IntroScreen> {
             ),
             child: Align(
               alignment: AlignmentDirectional.topStart,
-              child: LanguagePill(onTap: () => openLanguageSheet(context)),
+              child: LanguagePill(onTap: () => openLanguageSheet(context))
+                  .animate()
+                  .fadeIn(duration: 600.ms, delay: 200.ms)
+                  .slideX(begin: -0.2, end: 0, curve: Curves.easeOutQuad),
             ),
           ),
           Padding(
@@ -75,7 +78,10 @@ class IntroScreenState extends State<IntroScreen> {
                   height: AppSize.sH30,
                   width: context.width * 0.3,
                   fit: BoxFit.contain,
-                ),
+                )
+                    .animate()
+                    .fadeIn(duration: 600.ms)
+                    .scale(begin: const Offset(0.8, 0.8), end: const Offset(1, 1)),
               ),
             ),
           ),

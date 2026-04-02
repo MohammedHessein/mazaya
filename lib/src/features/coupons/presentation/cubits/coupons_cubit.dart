@@ -25,7 +25,7 @@ class CouponsCubit extends PaginatedCubit<CouponEntity> {
           ...ConstantManager.paginateJson(page)!,
           if (_categoryId != null) 'category_id': _categoryId,
           if (_locationId != null) 'location_id': _locationId,
-          if (key != null && key.isNotEmpty) 'name': key,
+          if (key != null && key.isNotEmpty) 'search': key,
         },
         mapper: (json) => json,
       ),

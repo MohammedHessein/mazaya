@@ -20,6 +20,10 @@ class CouponDetailsCubit extends AsyncCubit<CouponEntity> {
     );
   }
 
+  void setInitialData(CouponEntity coupon) {
+    updateData(coupon);
+  }
+
   void toggleFavorite(int id) async {
     final currentData = state.data;
     final updatedData = currentData.copyWith(isFav: !currentData.isFav);

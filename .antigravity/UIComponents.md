@@ -113,6 +113,9 @@
 42. **CustomImageCarousel**: `carousel/custom_image_carousel.dart` – Image carousel.
 43. **IntroCarouselWidget**: `custom_animated_intro/intro_carousel_widget.dart` – Onboarding carousel.
 44. **LanguagePillWidget**: `language/language_pill_widget.dart` – Inline language display.
+45. **ScannerWidget**: `features/scan/presentation/widgets/scanner_widget.dart` – QR/Barcode camera interface.
+46. **LanguageOption**: `language/language_option.dart` – Selectable language item with flag.
+47. **LoadingButtonWithIcon**: (Defined in `loading_button.dart`) – Button with leading SVG.
 
 ---
 
@@ -152,3 +155,4 @@
 - Always use `DefaultScaffold` for screen structure.
 - Use `TextStyleEx` chains for all text styling.
 - Use `UniversalMediaWidget` for mixed media types.
+- Use `ScannerWidget` for all QR/Barcode scanning needs.

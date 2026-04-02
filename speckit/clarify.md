@@ -36,6 +36,18 @@
 - **Decision**: Separate notification concerns into three cubits: `NotificationsCubit` (list), `UnreadNotificationCountCubit` (badge), `DeleteNotificationCubit` (actions).
 - **Rationale**: Follows Single Responsibility Principle. Each cubit handles one concern, making them independently testable and composable.
 
+### ADR-009: QR Scanner String Payload Handling
+- **Decision**: All QR code payloads are treated as `String` throughout the `ScanCubit` and `CouponDetailsCubit`.
+- **Rationale**: Backend expects the payload as a string regardless of whether it's a numeric ID or a complex token. This prevents 400/500 errors caused by type mismatches.
+
+### ADR-010: Swedish Language Support
+- **Decision**: Added Swedish (`sv`) as a third supported locale.
+- **Rationale**: Expands the app's reach to the Swedish-speaking market while maintaining the RTL-first architecture for the primary Arabic audience.
+
+### ADR-011: Feature Consolidation (Settings → More)
+- **Decision**: Merged the `settings` feature into the `more` feature.
+- **Rationale**: Simplifies the main navigation and reduces architectural overhead by centralizing all user-preference and account-management actions under a single "More" tab.
+
 ---
 
 ## Technical Clarifications
@@ -67,6 +79,12 @@
 
 ### Q: What font family does the project use?
 **A**: **Madani Arabic** with weights from Thin (100) to Black (900). Set via `ConstantManager.fontFamily` and configured in `pubspec.yaml`.
+
+### Q: How is the QR scanner payload handled?
+**A**: The scanner captures a string from the QR code. This string is then passed to the `VerifyCouponUseCase`. If the scan originates from the `CouponDetailsScreen`, the `couponId` is also included in the request path and the payload is sent in the body. If scanned from the main tabs, only the payload is sent.
+
+### Q: How was Swedish added to the localization system?
+**A**: A new `sv` column was added to `lang.json`. The `generate/strings/main.dart` script was updated to parse this new column and generate `sv.json` and `locale_keys.g.dart` entries. The `LanguageBottomSheet` was updated to include a Swedish option with its corresponding flag.
 
 ### Q: What is the design reference size?
 **A**: 375 × 911 (`ScreenSizes.width` × `ScreenSizes.height`), set in `ScreenUtilInit` for responsive scaling.

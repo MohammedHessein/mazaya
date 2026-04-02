@@ -132,6 +132,7 @@ class _ChangePasswordBodyState extends State<ChangePasswordBody>
                 }
               },
             ),
+            30.szH,
           ],
         ),
       ),

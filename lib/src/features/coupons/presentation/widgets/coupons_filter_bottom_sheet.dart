@@ -7,6 +7,7 @@ import 'package:mazaya/src/core/base_crud/code/presentation/cubit/get_base_name_
 import 'package:mazaya/src/core/extensions/context_extension.dart';
 import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
 import 'package:mazaya/src/core/extensions/widgets/sized_box_helper.dart';
+import 'package:mazaya/src/core/shared/cubits/user_cubit/user_cubit.dart';
 import 'package:mazaya/src/core/widgets/buttons/loading_button.dart';
 import 'package:mazaya/src/core/widgets/fields/drop_downs/app_drop_down/app_dropdown.dart';
 import 'package:mazaya/src/features/coupons/presentation/cubits/coupons_cubit.dart';
@@ -20,7 +21,7 @@ class CouponsFilterBottomSheet extends StatefulWidget {
 }
 
 class CouponsFilterBottomSheetState extends State<CouponsFilterBottomSheet> {
-  CityEntity? selectedCity;
+  RegionEntity? selectedRegion;
   CategoryEntity? selectedCategory;
 
   @override
@@ -41,28 +42,31 @@ class CouponsFilterBottomSheetState extends State<CouponsFilterBottomSheet> {
             ),
           ),
           20.szH,
-          // City Dropdown
           BlocBuilder<
-            GetBaseEntityCubit<CityEntity>,
-            GetBaseEntityState<CityEntity>
+            GetBaseEntityCubit<RegionEntity>,
+            GetBaseEntityState<RegionEntity>
           >(
             builder: (context, state) {
-              return AppDropdown<CityEntity>(
+              final userState = context.read<UserCubit>().state;
+              final isEgypt =
+                  userState.selectedCountry?.id == 257 ||
+                  userState.selectedCountry?.id == 1;
+
+              return AppDropdown<RegionEntity>(
                 items: state.dataState.data ?? [],
-                value: selectedCity,
-                itemAsString: (city) => city.name,
-                onChanged: (city) {
+                value: selectedRegion,
+                itemAsString: (region) => region.name,
+                onChanged: (region) {
                   setState(() {
-                    selectedCity = city;
+                    selectedRegion = region;
                   });
                 },
-                hint: LocaleKeys.city,
+                hint: isEgypt ? LocaleKeys.city : LocaleKeys.municipality,
                 isLoading: state.dataState.isLoading,
               );
             },
           ),
           16.szH,
-          // Category Dropdown
           BlocBuilder<
             GetBaseEntityCubit<CategoryEntity>,
             GetBaseEntityState<CategoryEntity>
@@ -86,12 +90,9 @@ class CouponsFilterBottomSheetState extends State<CouponsFilterBottomSheet> {
           LoadingButton(
             title: LocaleKeys.search,
             onTap: () async {
-              // Apply filter logic
-              // In this project's PaginatedCubit pattern, we can pass a map or key to fetchInitialData
-              // For now, we follow the instruction to just go back and fetch
-              context.read<CouponsCubit>().fetchInitialData(
-                key:
-                    null, // Resetting search query for now, or we could pass filter params
+              context.read<CouponsCubit>().applyFilters(
+                categoryId: selectedCategory?.id,
+                locationId: selectedRegion?.id,
               );
               Navigator.pop(context);
             },

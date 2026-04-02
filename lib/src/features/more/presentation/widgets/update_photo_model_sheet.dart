@@ -1,4 +1,4 @@
-part of '../../imports/view_imports.dart';
+part of '../imports/view_imports.dart';
 
 Future updatePhotoModelSheet(BuildContext context) async {
   final cubit = context.read<UpdatePhotoCubit>();

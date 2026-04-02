@@ -1,8 +1,7 @@
-import 'dart:developer';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'dart:developer';
 
 import 'internet_exeption.dart';
 
@@ -24,17 +23,22 @@ class _OfflineWidgetState extends State<OfflineWidget> {
             List<ConnectivityResult> connectivity,
             Widget child,
           ) {
-            final bool isNotConnected = connectivity.contains(
-              ConnectivityResult.none,
-            );
+            final bool isNotConnected =
+                connectivity.isEmpty ||
+                connectivity.contains(ConnectivityResult.none);
             log('isNotConnected: $isNotConnected');
             return Stack(
               fit: StackFit.expand,
               children: [
                 child,
                 Positioned(
-                  bottom: 20.h,
-                  child: InternetExpetion(isNotConnected: isNotConnected),
+                  bottom: 110.h,
+                  left: 25.w,
+                  right: 25.w,
+                  child: SafeArea(
+                    top: false,
+                    child: InternetExpetion(isNotConnected: isNotConnected),
+                  ),
                 ),
               ],
             );

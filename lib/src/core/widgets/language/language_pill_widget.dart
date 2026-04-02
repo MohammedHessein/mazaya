@@ -14,9 +14,7 @@ class LanguagePill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Languages lang = Languages.currentLanguage;
-    final String label = lang == Languages.arabic
-        ? ConstantManager.arabic
-        : ConstantManager.english;
+    final String label = lang.title;
 
     return InkWell(
       onTap: onTap,

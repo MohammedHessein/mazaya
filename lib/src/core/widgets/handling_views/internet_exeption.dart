@@ -94,9 +94,16 @@ class _InternetExpetionState extends State<InternetExpetion>
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 350),
           height: isNotConnected ? 50.h : 0,
-          width: context.mediaQuery.size.width,
           decoration: BoxDecoration(
             color: isRestored ? AppColors.primary : AppColors.grey1,
+            borderRadius: BorderRadius.circular(AppCircular.r50),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.black.withValues(alpha: 0.1),
+                blurRadius: 10,
+                offset: const Offset(0, 5),
+              ),
+            ],
           ),
           child: AnimatedSwitcher(
             duration: 500.ms,

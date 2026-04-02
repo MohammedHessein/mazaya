@@ -305,5 +305,9 @@
   "success_update_photo": "تم تحديث الصورة الشخصية بنجاح",
   "exit_app_title": "الخروج من التطبيق",
   "exit_app_desc": "هل أنت متأكد من رغبتك في الخروج من التطبيق؟",
-  "camera_error": "خطأ في الكاميرا: "
+  "camera_error": "خطأ في الكاميرا: ",
+  "camera_permission_denied": "تم رفض إذن الكاميرا",
+  "retry": "إعادة المحاولة",
+  "align_coupon_inside_frame": "قم بمحاذاة كود الكوبون داخل الإطار",
+  "please_scan_a_code_first": "من فضلك قم بمسح الرمز أولاً"
 }

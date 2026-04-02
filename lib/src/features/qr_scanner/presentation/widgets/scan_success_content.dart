@@ -9,13 +9,13 @@ import 'package:mazaya/src/core/extensions/widgets/sized_box_helper.dart';
 import 'package:mazaya/src/core/navigation/navigator.dart';
 import 'package:mazaya/src/core/widgets/buttons/loading_button.dart';
 import 'package:mazaya/src/core/widgets/universal_media/universal_media_widget.dart';
-import 'package:mazaya/src/features/coupons/entity/coupon_entity.dart';
 import 'package:mazaya/src/features/main/presentation/view/main_screen.dart';
+import 'package:mazaya/src/features/qr_scanner/entity/scan_result.dart';
 
 class ScanSuccessContent extends StatelessWidget {
-  final CouponEntity coupon;
+  final ScanResult scanResult;
 
-  const ScanSuccessContent({super.key, required this.coupon});
+  const ScanSuccessContent({super.key, required this.scanResult});
 
   @override
   Widget build(BuildContext context) {
@@ -34,17 +34,31 @@ class ScanSuccessContent extends StatelessWidget {
             color: const Color(0xFFE8F5E9), // Light Green
             borderRadius: BorderRadius.circular(AppCircular.r20),
           ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
+          child: Column(
             children: [
-              Text(
-                LocaleKeys.scannedSuccessfully,
-                style: context.textStyle.s14.bold.copyWith(
-                  color: AppColors.success,
-                ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    LocaleKeys.scannedSuccessfully,
+                    style: context.textStyle.s14.bold.copyWith(
+                      color: AppColors.success,
+                    ),
+                  ),
+                  Icon(Icons.check, size: 18.sp, color: AppColors.success),
+                  8.szW,
+                ],
               ),
-              Icon(Icons.check, size: 18.sp, color: AppColors.success),
-              8.szW,
+              if (scanResult.message.isNotEmpty) ...[
+                4.szH,
+                Text(
+                  scanResult.message,
+                  style: context.textStyle.s12.medium.setColor(
+                    AppColors.success,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ],
           ),
         ),
@@ -61,9 +75,7 @@ class ScanSuccessContent extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(AppCircular.r8),
                 child: UniversalMediaWidget(
-                  path:
-                      coupon.vendorImage ??
-                      AppAssets.svg.appSvg.appLauncherIcon.path,
+                  path: AppAssets.svg.appSvg.appLauncherIcon.path,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -74,11 +86,11 @@ class ScanSuccessContent extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    coupon.categoryName ?? '',
+                    scanResult.categoryName,
                     style: context.textStyle.s12.medium.setHintColor,
                   ),
                   Text(
-                    coupon.vendorName ?? '',
+                    scanResult.productName,
                     style: context.textStyle.s16.bold.setBlackColor,
                   ),
                 ],
@@ -87,11 +99,11 @@ class ScanSuccessContent extends StatelessWidget {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
               decoration: BoxDecoration(
-                color: const Color(0xFFE3F2FD), // Light Blue
+                color: AppColors.primary.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(AppCircular.r8),
               ),
               child: Text(
-                '${LocaleKeys.oFF} ${coupon.discount}%',
+                '${LocaleKeys.oFF} ${scanResult.discount}${scanResult.discountType == 'percentage' ? '%' : ''}',
                 style: context.textStyle.s12.bold.copyWith(
                   color: AppColors.primary,
                 ),
@@ -107,7 +119,6 @@ class ScanSuccessContent extends StatelessWidget {
             Go.offAll(const MainScreen());
           },
         ),
-        10.szH,
       ],
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:mazaya/src/config/res/assets.gen.dart';
 import 'package:mazaya/src/config/res/config_imports.dart';
@@ -12,26 +13,34 @@ class ErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: width ?? context.width,
-      height: height ?? context.height,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        spacing: AppMargin.mH10,
-        children: [
-          AppAssets.lottie.error1.lottie(
-            width: width ?? context.width * .8,
-            height: height != null ? (height! * .8) : context.height * .3,
-            fit: BoxFit.fill,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final maxHeight = constraints.maxHeight;
+        final isFinite = maxHeight.isFinite;
+        final isSmall = isFinite && maxHeight < 250;
+
+        return Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            spacing: isSmall ? AppMargin.mH6 : AppMargin.mH10,
+            children: [
+              AppAssets.lottie.error1.lottie(
+                height: height ?? (isSmall ? (maxHeight * .5) : 150.h),
+                fit: BoxFit.contain,
+              ),
+              Flexible(
+                child: Text(
+                  error,
+                  style: context.textStyle.setSecondryColor.s13.bold,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
           ),
-          Text(
-            error,
-            style: const TextStyle().setSecondryColor.s13.medium,
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

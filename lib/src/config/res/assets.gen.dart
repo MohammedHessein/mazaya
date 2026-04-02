@@ -128,8 +128,11 @@ class $AssetsTranslationsGen {
   /// File path: assets/translations/lang.json
   String get lang => 'assets/translations/lang.json';
 
+  /// File path: assets/translations/sv.json
+  String get sv => 'assets/translations/sv.json';
+
   /// List of all assets
-  List<String> get values => [ar, en, lang];
+  List<String> get values => [ar, en, lang, sv];
 }
 
 class $AssetsSvgAppSvgGen {

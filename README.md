@@ -9,7 +9,7 @@ This project follows a strict **Clean Architecture (Feature-First)** approach, e
 
 - **`lib/src/config/`**: Styling tokens, Material 3 themes, localization assets, generated code.
 - **`lib/src/core/`**: Shared infrastructure, 44+ reusable widgets, and centralized logic for networking, navigation, and notifications.
-- **`lib/src/features/`**: 17 modular, self-contained features (Auth, Home, Coupons, Notifications, Profile, Settings, and more).
+- **`lib/src/features/`**: 18 modular, self-contained features (Auth, Home, Coupons, QR Scanner, Notifications, Profile, More, and more).
 
 ---
 
@@ -45,8 +45,8 @@ For comprehensive technical guides and architectural decisions, please refer to:
 IntroScreen → LoginScreen → MainScreen (Bottom Nav)
                                 ├── Home (tab 0) – Categories + Coupons
                                 ├── Coupons (tab 1) – Search + Filter
-                                ├── QR Scanner (tab 2)
-                                └── My Account (tab 3) – Profile + Settings
+                                ├── QR Scanner (tab 2) – QR Scanning & Verification
+                                └── More (tab 3) – Profile, Password, Language, Settings
 ```
 
 ---
@@ -79,7 +79,7 @@ mason make feature --name <feature_name>
 ---
 
 ## 🌍 Localization
-The app is **RTL-first** with primary support for **Arabic** and secondary support for **English**. 
+The app is **RTL-first** with primary support for **Arabic**, and secondary support for **English** and **Swedish**. 
 - **Translations Assets**: `assets/translations/`
 - **Generated Keys**: `lib/src/config/language/locale_keys.g.dart`
 - **Logic**: All strings must use `.tr()` extension for reactive localization.

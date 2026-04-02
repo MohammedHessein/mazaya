@@ -10,17 +10,16 @@ import 'package:mazaya/src/features/main/entity/main_params.dart';
 import 'package:mazaya/src/core/widgets/dialogs/exit_app_bottom_sheet.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../config/res/config_imports.dart';
-import '../../../../core/widgets/universal_media/enums.dart';
-import '../../../coupons/presentation/widgets/coupons_body.dart';
-import '../../../coupons/presentation/cubits/coupons_cubit.dart';
-import '../../../home/presentation/view/home_screen.dart';
-import '../../../home/presentation/cubits/home_cubit.dart';
-import '../../../../core/base_crud/code/domain/base_domain_imports.dart';
-import '../../../../core/base_crud/code/presentation/cubit/get_base_name_and_id/get_base_name_and_id_cubit.dart';
-import '../../../more/presentation/imports/view_imports.dart';
-import '../../../settings/presentation/imports/view_imports.dart';
-import '../widgets/main_body.dart';
+import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/widgets/universal_media/enums.dart';
+import 'package:mazaya/src/features/coupons/presentation/widgets/coupons_body.dart';
+import 'package:mazaya/src/features/coupons/presentation/cubits/coupons_cubit.dart';
+import 'package:mazaya/src/features/home/presentation/view/home_screen.dart';
+import 'package:mazaya/src/features/home/presentation/cubits/home_cubit.dart';
+import 'package:mazaya/src/core/base_crud/code/domain/base_domain_imports.dart';
+import 'package:mazaya/src/core/base_crud/code/presentation/cubit/get_base_name_and_id/get_base_name_and_id_cubit.dart';
+import 'package:mazaya/src/features/more/presentation/imports/view_imports.dart';
+import 'package:mazaya/src/features/main/presentation/widgets/main_body.dart';
 
 class MainScreen extends StatefulWidget {
   final int initialTabIndex;
@@ -67,7 +66,6 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
             }
           },
           child: Scaffold(
-            extendBody: true,
             bottomNavigationBar: CustomNavigationBar(
               selectedIndex: value,
               onTabChange: (newIndex) => params.updateNavValue(newIndex),
@@ -80,70 +78,121 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
                 children: [
                   BlocProvider<HomeCubit>(
                     create: (context) => injector<HomeCubit>()..getHomeData(),
-                    child: Builder(
-                      builder: (context) {
-                        return RefreshIndicator(
-                          onRefresh: () =>
-                              context.read<HomeCubit>().getHomeData(),
-                          color: AppColors.primary,
-                          child: CustomScrollView(
-                            physics: const BouncingScrollPhysics(
-                              parent: AlwaysScrollableScrollPhysics(),
-                            ),
-                            slivers: [
-                              AppHeaderSliver(
-                                config: HeaderConfig(
-                                  type: ScaffoldHeaderType.home,
-                                  imageUrl: AppAssets.svg.baseSvg.profile.path,
-                                  userName: UserCubit.instance.user.name,
-                                  showBackButton: false,
-                                ),
-                              ),
-                              const HomeScreen(),
-                              const SliverToBoxAdapter(
-                                child: SizedBox(height: 100),
-                              ),
-                            ],
-                          ),
-                        );
+                    child: BlocListener<UserCubit, UserState>(
+                      listenWhen: (prev, curr) =>
+                          prev.selectedCity?.id != curr.selectedCity?.id ||
+                          prev.selectedCountry?.id != curr.selectedCountry?.id,
+                      listener: (context, state) {
+                        context.read<HomeCubit>().getHomeData();
                       },
+                      child: Builder(
+                        builder: (context) {
+                          return RefreshIndicator(
+                            onRefresh: () =>
+                                context.read<HomeCubit>().getHomeData(),
+                            color: AppColors.primary,
+                            child: CustomScrollView(
+                              physics: const BouncingScrollPhysics(
+                                parent: AlwaysScrollableScrollPhysics(),
+                              ),
+                              slivers: [
+                                BlocBuilder<UserCubit, UserState>(
+                                  builder: (context, state) {
+                                    return AppHeaderSliver(
+                                      config: HeaderConfig(
+                                        type: ScaffoldHeaderType.home,
+                                        imageUrl: AppAssets.svg.baseSvg.profile.path,
+                                        userName: state.userModel.name,
+                                        showBackButton: false,
+                                      ),
+                                    );
+                                  }
+                                ),
+                                const HomeScreen(),
+                                const SliverToBoxAdapter(
+                                  child: SizedBox(height: 100),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
                   MultiBlocProvider(
                     providers: [
                       BlocProvider<CouponsCubit>(
+                        lazy: false,
                         create: (context) =>
                             injector<CouponsCubit>()..fetchInitialData(),
                       ),
-                      BlocProvider<GetBaseEntityCubit<CityEntity>>(
-                        create: (context) => GetBaseEntityCubit<CityEntity>(),
+                      BlocProvider<GetBaseEntityCubit<RegionEntity>>(
+                        lazy: false,
+                        create: (context) {
+                          final userState = context.read<UserCubit>().state;
+                          final parentId = userState.selectedCity?.id;
+
+                          return GetBaseEntityCubit<RegionEntity>()
+                            ..fGetBaseNameAndId(id: parentId);
+                        },
                       ),
                       BlocProvider<GetBaseEntityCubit<CategoryEntity>>(
+                        lazy: false,
                         create: (context) =>
                             GetBaseEntityCubit<CategoryEntity>()
                               ..fGetBaseNameAndId(),
                       ),
                     ],
-                    child: CustomScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      slivers: [
-                        AppHeaderSliver(
-                          config: HeaderConfig(
-                            type: ScaffoldHeaderType.standard,
-                            imageUrl: AppAssets.svg.baseSvg.profile.path,
-                            userName: 'محمد حسين',
-                            showBackButton: false,
-                            title: LocaleKeys.couponsTitle.tr(),
-                          ),
-                        ),
-                        const CouponsBody(),
-                        const SliverToBoxAdapter(child: SizedBox(height: 100)),
-                      ],
+                    child: BlocListener<UserCubit, UserState>(
+                      listenWhen: (prev, curr) =>
+                          prev.selectedCity?.id != curr.selectedCity?.id ||
+                          prev.selectedCountry?.id != curr.selectedCountry?.id,
+                      listener: (context, state) {
+                        final parentId = state.selectedCity?.id;
+                        
+                        // Refresh Region/Municipality only if we have a valid parent
+                        if (parentId != null) {
+                          context
+                              .read<GetBaseEntityCubit<RegionEntity>>()
+                              .fGetBaseNameAndId(id: parentId);
+                        }
+                            
+                        // Refresh Categories
+                        context
+                            .read<GetBaseEntityCubit<CategoryEntity>>()
+                            .fGetBaseNameAndId();
+                            
+                        // Also refresh the coupons themselves
+                        context.read<CouponsCubit>().fetchInitialData();
+                      },
+                      child: Builder(
+                        builder: (context) {
+                          return CustomScrollView(
+                            physics: const BouncingScrollPhysics(),
+                            slivers: [
+                              BlocBuilder<UserCubit, UserState>(
+                                builder: (context, state) {
+                                  return AppHeaderSliver(
+                                    config: HeaderConfig(
+                                      type: ScaffoldHeaderType.standard,
+                                      imageUrl: AppAssets.svg.baseSvg.profile.path,
+                                      userName: state.userModel.name,
+                                      showBackButton: false,
+                                      title: LocaleKeys.couponsTitle.tr(),
+                                    ),
+                                  );
+                                }
+                              ),
+                              const CouponsBody(),
+                              const SliverToBoxAdapter(child: SizedBox(height: 100)),
+                            ],
+                          );
+                        }
+                      ),
                     ),
                   ),
-                  MainBody(2),
+                  MainBody(2, currentIndex: value),
                   CustomScrollView(
-                    clipBehavior: Clip.none,
                     physics: const BouncingScrollPhysics(),
                     slivers: [
                       const ProfileHeaderSliver(),

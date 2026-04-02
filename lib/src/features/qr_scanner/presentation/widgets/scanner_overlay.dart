@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mazaya/src/config/res/config_imports.dart';
+
 import 'scanner_corner.dart';
 
 class ScannerOverlay extends StatelessWidget {
@@ -36,8 +37,6 @@ class ScannerOverlay extends StatelessWidget {
             ],
           ),
         ),
-
-        // Blue Corners
         Center(
           child: SizedBox(
             width: 280.w,

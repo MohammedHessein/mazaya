@@ -14,7 +14,7 @@ import 'package:mazaya/src/features/favourite/presentation/imports/view_imports.
 import 'package:mazaya/src/features/more/presentation/cubits/logout_cubit.dart';
 import 'package:mazaya/src/features/more/presentation/widgets/delete_account_bottom_sheet.dart';
 import 'package:mazaya/src/features/more/presentation/widgets/logout_bottom_sheet.dart';
-import 'package:mazaya/src/features/settings/presentation/imports/view_imports.dart';
+import 'package:mazaya/src/features/more/presentation/imports/view_imports.dart';
 import 'package:mazaya/src/features/used_coupons/presentation/imports/view_imports.dart';
 
 class MoreItemEntity {

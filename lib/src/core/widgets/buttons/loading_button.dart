@@ -132,10 +132,14 @@ class LoadingButtonWithIcon extends StatefulWidget {
     required this.onTap,
     required this.title,
     required this.icon,
+    this.isDissabled = false,
+    this.color,
   });
   final Future<void> Function() onTap;
   final String title;
   final String icon;
+  final bool isDissabled;
+  final Color? color;
   @override
   State<LoadingButtonWithIcon> createState() => _LoadingButtonWithIconState();
 }
@@ -152,18 +156,23 @@ class _LoadingButtonWithIconState extends State<LoadingButtonWithIcon> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () async {
-        try {
-          toggleIsLoading();
-          await widget.onTap();
-        } finally {
-          toggleIsLoading();
-        }
-      },
+      onTap: widget.isDissabled
+          ? null
+          : () async {
+              try {
+                toggleIsLoading();
+                await widget.onTap();
+              } finally {
+                toggleIsLoading();
+              }
+            },
       child: Container(
         padding: EdgeInsets.all(12.h),
         decoration: BoxDecoration(
-          color: AppColors.primary,
+          color: widget.isDissabled
+              ? null
+              : (widget.color ?? AppColors.primary),
+          gradient: widget.isDissabled ? AppColors.disableGradient : null,
           borderRadius: BorderRadius.circular(20.r),
         ),
         child: isLoading
@@ -180,7 +189,11 @@ class _LoadingButtonWithIconState extends State<LoadingButtonWithIcon> {
                   8.w.szW,
                   Text(
                     widget.title,
-                    style: context.textStyle.s16.semiBold.setWhiteColor,
+                    style: context.textStyle.s16.semiBold.copyWith(
+                      color: widget.isDissabled
+                          ? AppColors.black
+                          : AppColors.white,
+                    ),
                   ),
                 ],
               ),

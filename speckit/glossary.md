@@ -37,7 +37,7 @@ Common terms and concepts used within the codebase.
 | **IconWidget** | A versatile icon renderer supporting SVG, image assets, and Material icons. Located at `lib/src/core/widgets/icon_widget.dart`. |
 | **ImageHelper** | Utility for picking, cropping, and processing images. Located at `lib/src/core/helpers/image_helper.dart`. |
 | **IntroCarouselWidget** | The onboarding/intro animated carousel with page indicators. Located at `lib/src/core/widgets/custom_animated_intro/`. |
-| **LanguageBottomSheet** | A bottom sheet for switching between Arabic and English. Located at `lib/src/core/widgets/language/`. |
+| **LanguageBottomSheet** | A bottom sheet for switching between Arabic, English, and Swedish. Located at `lib/src/core/widgets/language/`. |
 | **LauncherHelper** | Utility for launching URLs, phone calls, and emails. Located at `lib/src/core/helpers/lancher_helper.dart`. |
 | **LoadingButton** | A specialized button supporting async operations with built-in loading spinner or progress tracking. Located at `lib/src/core/widgets/buttons/loading_button.dart`. |
 | **LoadingButtonWithIcon** | Variant of LoadingButton with a leading SVG icon. |
@@ -71,3 +71,6 @@ Common terms and concepts used within the codebase.
 | **UserModel** | The standard data structure representing the logged-in user, including profile details and auth token. Located at `lib/src/core/shared/models/`. |
 | **Validators** | Form field validation logic with security guards against script injection. Located at `lib/src/core/helpers/validators.dart`. |
 | **VisitorPopUp** | A dialog shown to non-authenticated users when they try to access restricted features. Located at `lib/src/core/widgets/dialogs/visitor_pop_up.dart`. |
+| **QR Payload** | The raw string data extracted from a QR code, used for coupon verification and merchant actions. |
+| **Swedish Support** | Full localization support for the Swedish language (`sv`), integrated into the `lang.json` source and translation generation pipeline. |
+| **More Tab** | A consolidated navigation destination (Tab 3) that merges user profile, security settings, language preferences, and account management. |

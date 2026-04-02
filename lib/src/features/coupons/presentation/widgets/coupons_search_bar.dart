@@ -28,13 +28,20 @@ class CouponsSearchBar extends StatelessWidget {
             Expanded(
               child: AppTextField.withoutBorder(
                 fillColor: Colors.transparent,
-                contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                debounceOnChanged: false,
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 16.w,
+                  vertical: 16.h,
+                ),
                 hint: LocaleKeys.search,
                 onChanged: (val) {
                   if (onChanged != null) onChanged!(val ?? '');
                 },
                 prefixIcon: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 2.h),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.w,
+                    vertical: 2.h,
+                  ),
                   child: AppAssets.svg.baseSvg.search.svg(
                     width: AppSize.sW16,
                     height: AppSize.sH16,
@@ -49,7 +56,6 @@ class CouponsSearchBar extends StatelessWidget {
                 ),
               ),
             ),
-            // Filter Button
             GestureDetector(
               onTap: onFilterTap,
               child: Container(

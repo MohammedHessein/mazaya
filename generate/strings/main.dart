@@ -28,6 +28,7 @@ void main() async {
     jsonMap: jsonMap,
   );
   await generateJsonTranslate(lang: 'ar', jsonMap: jsonMap);
+  await generateJsonTranslate(lang: 'sv', jsonMap: jsonMap);
   await generateAppStrings(jsonEnMap);
   print('Watching for changes in: ${watcher.path}');
 }
@@ -55,6 +56,7 @@ void handleFileChange(File file, String previousContent) async {
       jsonMap: jsonMap,
     );
     await generateJsonTranslate(lang: 'ar', jsonMap: jsonMap);
+    await generateJsonTranslate(lang: 'sv', jsonMap: jsonMap);
     await generateAppStrings(jsonEnMap);
   } catch (e) {
     print('Uknown Key');
@@ -66,65 +68,61 @@ Future<Map<String, dynamic>> generateJsonTranslate({
   required Map<String, dynamic> jsonMap,
 }) async {
   final StringBuffer buffer = StringBuffer();
-  final String filePath = lang == 'en'
-      ? GenerateConstants.langEnJsonAssetFilePath
-      : lang == 'ar'
-      ? GenerateConstants.langArJsonAssetFilePath
-      : '';
+  String filePath = '';
+  if (lang == 'en') {
+    filePath = GenerateConstants.langEnJsonAssetFilePath;
+  } else if (lang == 'ar') {
+    filePath = GenerateConstants.langArJsonAssetFilePath;
+  } else if (lang == 'sv') {
+    filePath = GenerateConstants.langSvJsonAssetFilePath;
+  }
+  
   final File file = File(filePath);
   buffer.writeln('{');
-  // String content = file.readAsStringSync().trim();
-  // final Map<String, dynamic> fileMap = json.decode(content);
-  // List<String> lines = content.split('\n');
-  // List<String> linesWithoutLastCurlBrace = lines.sublist(0, lines.length - 1);
-  // buffer.writeAll(linesWithoutLastCurlBrace, '\n');
-  // String bufferStringTrim = buffer.toString().trim();
-  // bufferStringTrim = '$bufferStringTrim,';
-  // buffer.clear();
-  // buffer.writeln(bufferStringTrim);
+  
   int counter = 0;
-  //print('fileMap ${fileMap.toString()}');
   jsonMap.forEach((String key, dynamic value) {
-    //print('$lang($counter)  "$key": "$value"');
     try {
       final Names keyNames = Names.fromString(key);
-      final String valueStr = value.toString();
+      
+      // Expected value format is a Map: {"en": "...", "ar": "...", "sv": "..."}
+      final Map<String, dynamic> langMap = value as Map<String, dynamic>;
+      final String valueStr = (langMap[lang] ?? '').toString();
+      
       // Check if value contains variables like {name}
       final bool hasVariables = RegExp(r'\{\w+\}').hasMatch(valueStr);
 
-      // if (!fileMap.containsKey(keyNames.snakeCase)) {
-      //print('$lang($counter)  !containsKey "${keyNames.snakeCase}" ');
       if (lang == 'en') {
         if (hasVariables) {
-          // For English with variables: generate English text from key and preserve variables
           final String englishWithVars = generateEnglishWithVariables(
-            keyNames.original,
+            valueStr.isNotEmpty ? valueStr : keyNames.original,
             extractVariables(valueStr),
           );
           buffer.write('  "${keyNames.snakeCase}": "$englishWithVars"');
         } else {
-          buffer.write('  "${keyNames.snakeCase}": "${keyNames.original}"');
+          buffer.write('  "${keyNames.snakeCase}": "${valueStr.isNotEmpty ? valueStr : keyNames.original}"');
         }
       } else {
         buffer.write('  "${keyNames.snakeCase}": "$valueStr"');
       }
+      
       if (counter < jsonMap.length - 1) {
         buffer.write(',');
-        // }
         buffer.writeln();
       }
-    } on NamesException {
+    } on Exception catch(e) {
       final String keyStr = '[$key]';
       const String errorMessage = 'is not valid!';
       print(
-        '${GenerateConstants.blueColorCode} $keyStr ${GenerateConstants.redColorCode}$errorMessage',
+        '${GenerateConstants.blueColorCode} $keyStr ${GenerateConstants.redColorCode}$errorMessage: $e',
       );
     }
     counter++;
   });
+  
   final List<String> linesAfterWrite = buffer.toString().trim().split('\n');
   String lastLineOfLinesAfterWrite = linesAfterWrite.last.trimRight();
-  //print('lastLineOfLinesAfterWrite $lastLineOfLinesAfterWrite');
+  
   if (lastLineOfLinesAfterWrite[lastLineOfLinesAfterWrite.length - 1] == ',') {
     lastLineOfLinesAfterWrite = lastLineOfLinesAfterWrite.substring(
       0,
@@ -140,7 +138,17 @@ Future<Map<String, dynamic>> generateJsonTranslate({
   print(
     '${GenerateConstants.greenColorCode} Lang Json File Updated successfully at $filePath ${GenerateConstants.resetColorCode}',
   );
-  return json.decode(buffer.toString());
+  
+  // Create simple key-value map for return to prevent breaking generateAppStrings
+  final Map<String, dynamic> returnMap = {};
+  jsonMap.forEach((k, v) {
+    if (v is Map) {
+      returnMap[k] = v['en'] ?? '';
+    } else {
+      returnMap[k] = v;
+    }
+  });
+  return returnMap;
 }
 
 /// Extracts unique variable names from a translation string

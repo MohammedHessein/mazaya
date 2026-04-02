@@ -2,9 +2,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mazaya/src/core/shared/cubits/user_cubit/user_cubit.dart';
 import 'package:mazaya/src/core/widgets/universal_media/universal_media_widget.dart';
 import 'package:mazaya/src/features/location/imports/location_imports.dart';
+import 'package:mazaya/src/features/more/presentation/imports/view_imports.dart';
 
 import '../../../auth/login/imports/login_imports.dart';
-import '../../../settings/presentation/imports/view_imports.dart';
 
 class DeleteAccountBottomSheet extends StatelessWidget {
   const DeleteAccountBottomSheet({super.key});

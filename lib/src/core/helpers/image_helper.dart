@@ -115,7 +115,7 @@ class ImageHelper {
             children: <Widget>[
               ListTile(
                 leading: const Icon(Icons.file_copy),
-                title: const Text("LocaleKeys.selectFiles"),
+                title: Text(LocaleKeys.selectFile),
                 onTap: () async {
                   if (isSingle) {
                     image = [await getMedia()];
@@ -127,7 +127,7 @@ class ImageHelper {
               ),
               ListTile(
                 leading: const Icon(Icons.image),
-                title: const Text("LocaleKeys.selectImages"),
+                title: Text(LocaleKeys.selectImage),
                 onTap: () async {
                   if (isSingle) {
                     image = [await getImage()];
@@ -168,10 +168,13 @@ class ImageHelper {
       sourcePath: sourcePath,
       uiSettings: [
         AndroidUiSettings(
-          toolbarTitle: 'Cropper',
+          toolbarTitle: LocaleKeys.cropper,
           toolbarColor: AppColors.primary,
+          statusBarColor: AppColors.primary,
           toolbarWidgetColor: Colors.white,
           activeControlsWidgetColor: AppColors.primary,
+          backgroundColor: Colors.white,
+          dimmedLayerColor: Colors.black54,
           aspectRatioPresets: [
             CropAspectRatioPreset.original,
             CropAspectRatioPreset.square,
@@ -179,7 +182,8 @@ class ImageHelper {
           ],
         ),
         IOSUiSettings(
-          title: 'Cropper',
+          title: LocaleKeys.cropper,
+          hidesNavigationBar: false,
           aspectRatioPresets: [
             CropAspectRatioPreset.original,
             CropAspectRatioPreset.square,
@@ -188,6 +192,7 @@ class ImageHelper {
         ),
       ],
     );
+
     return croppedFile != null ? File(croppedFile.path) : null;
   }
 

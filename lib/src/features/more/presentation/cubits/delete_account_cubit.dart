@@ -10,7 +10,7 @@ class DeleteAccountCubit extends AsyncCubit<String> {
         CrudBaseParams(
           api: ApiConstants.deleteAccount,
           httpRequestType: HttpRequestType.delete,
-          mapper: (json) => BaseModel.fromJson(json)?.message ?? "Success",
+          mapper: (json) => BaseModel.fromJson(json).message,
         ),
       ),
       successEmitter: (success) {

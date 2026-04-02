@@ -16,8 +16,10 @@ class ConstantManager {
   static const int recieveTimeoutDuration = 10000;
   static const String ar = 'ar';
   static const String en = 'en';
+  static const String sv = 'sv';
   static const String arabic = 'العربية';
   static const String english = 'English';
+  static const String swedish = 'Svenska';
   static const int pgSize = 10;
   static const int pgFirst = 1;
   static const int maxLines = 5;

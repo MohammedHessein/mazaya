@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,20 +5,30 @@ import 'package:mazaya/src/config/language/locale_keys.g.dart';
 import 'package:mazaya/src/config/res/assets.gen.dart';
 import 'package:mazaya/src/config/res/config_imports.dart';
 import 'package:mazaya/src/core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
+import 'package:mazaya/src/core/extensions/base_state.dart';
 import 'package:mazaya/src/core/extensions/context_extension.dart';
 import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
 import 'package:mazaya/src/core/extensions/widgets/sized_box_helper.dart';
 import 'package:mazaya/src/core/widgets/buttons/loading_button.dart';
+import 'package:mazaya/src/core/widgets/custom_messages.dart';
 import 'package:mazaya/src/core/widgets/pickers/default_bottom_sheet.dart';
-import 'package:mazaya/src/features/coupons/entity/coupon_entity.dart';
-import 'package:mazaya/src/features/coupons/presentation/cubits/coupon_details_cubit.dart';
+import 'package:mazaya/src/features/qr_scanner/entity/scan_result.dart';
+import 'package:mazaya/src/features/qr_scanner/presentation/cubits/scan_cubit.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 import 'scan_success_bottom_sheet.dart';
 import 'scanner_overlay.dart';
 
 class ScanCouponBody extends StatefulWidget {
-  const ScanCouponBody({super.key});
+  final bool isActive;
+  final int? couponId;
+  final String? initialQrPayload;
+  const ScanCouponBody({
+    super.key,
+    required this.isActive,
+    this.couponId,
+    this.initialQrPayload,
+  });
 
   @override
   State<ScanCouponBody> createState() => _ScanCouponBodyState();
@@ -30,16 +38,43 @@ class _ScanCouponBodyState extends State<ScanCouponBody>
     with WidgetsBindingObserver {
   late final MobileScannerController controller;
   bool isScanned = false;
+  String? scannedCode;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     controller = MobileScannerController(
-      detectionSpeed: DetectionSpeed.normal,
-      facing: CameraFacing.back,
+      detectionSpeed: DetectionSpeed.noDuplicates,
+      formats: [BarcodeFormat.qrCode],
       autoStart: true,
     );
+  }
+
+  @override
+  void didUpdateWidget(covariant ScanCouponBody oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.isActive != oldWidget.isActive) {
+      if (widget.isActive) {
+        _startCamera();
+      } else {
+        _stopCamera();
+      }
+    }
+  }
+
+  void _startCamera() {
+    if (!controller.value.isRunning && widget.isActive) {
+      controller.start().catchError((e) {
+        debugPrint('Error starting camera: $e');
+      });
+    }
+  }
+
+  void _stopCamera() {
+    if (controller.value.isRunning) {
+      controller.stop();
+    }
   }
 
   @override
@@ -48,14 +83,14 @@ class _ScanCouponBodyState extends State<ScanCouponBody>
 
     switch (state) {
       case AppLifecycleState.resumed:
-        controller.start();
+        if (widget.isActive) _startCamera();
         break;
       case AppLifecycleState.inactive:
       case AppLifecycleState.paused:
       case AppLifecycleState.detached:
-        controller.stop();
+        _stopCamera();
         break;
-      default:
+      case AppLifecycleState.hidden:
         break;
     }
   }
@@ -69,55 +104,38 @@ class _ScanCouponBodyState extends State<ScanCouponBody>
 
   void _onDetect(BarcodeCapture capture) {
     if (isScanned) return;
-    if (context.read<CouponDetailsCubit>().isLoading) return;
 
-    final List<Barcode> barcodes = capture.barcodes;
-    if (barcodes.isEmpty) return;
-
-    final String? rawValue = barcodes.first.rawValue;
-    if (rawValue == null || rawValue.isEmpty) return;
-
-    String scannedValue = rawValue;
-
-    // Try parsing as JSON first
-    try {
-      final jsonMap = jsonDecode(rawValue);
-      if (jsonMap is Map && jsonMap.containsKey('id')) {
-        scannedValue = jsonMap['id'].toString();
-      }
-    } catch (e) {
-      // Not a valid JSON, try to extract from URL if present
-      if (rawValue.contains('/')) {
-        scannedValue = rawValue.split('/').last;
-      }
-    }
-
-    if (mounted) {
+    final String? code = capture.barcodes.first.rawValue;
+    if (code != null) {
       setState(() {
         isScanned = true;
+        scannedCode = code;
       });
     }
-
-    // Fetch coupon details via Cubit with extracted real ID
-    context.read<CouponDetailsCubit>().getCouponDetails(scannedValue);
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<CouponDetailsCubit, AsyncState<CouponEntity>>(
+    return BlocListener<ScanCubit, AsyncState<ScanResult>>(
       listener: (context, state) {
         if (state.isSuccess) {
           showDefaultBottomSheet(
             context: context,
-            child: ScanSuccessBottomSheet(coupon: state.data),
+            child: ScanSuccessBottomSheet(scanResult: state.data),
           ).then((value) {
             if (mounted) {
               setState(() {
                 isScanned = false;
+                scannedCode = null;
               });
             }
           });
         } else if (state.isError) {
+          // Provide visual feedback for errors
+          MessageUtils.showSnackBar(
+            message: state.errorMessage ?? LocaleKeys.operationFaild,
+            baseStatus: BaseStatus.error,
+          );
           if (mounted) {
             setState(() {
               isScanned = false;
@@ -135,55 +153,78 @@ class _ScanCouponBodyState extends State<ScanCouponBody>
               fit: BoxFit.cover,
               errorBuilder: (context, error, child) {
                 return Center(
-                  child: Text(
-                    '${LocaleKeys.cameraError}${error.errorCode}',
-                    style: context.textStyle.s14.medium.setWhiteColor,
-                    textAlign: TextAlign.center,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.error_outline,
+                        color: AppColors.white,
+                        size: 48,
+                      ),
+                      16.szH,
+                      Text(
+                        LocaleKeys.cameraPermissionDenied,
+                        style: context.textStyle.s16.setWhiteColor,
+                      ),
+                      16.szH,
+                      LoadingButton(
+                        title: LocaleKeys.retry,
+                        onTap: () async => _startCamera(),
+                      ),
+                    ],
                   ),
                 );
               },
             ),
             const ScannerOverlay(),
             Positioned(
-              bottom: 40.h,
-              left: 20.w,
-              right: 20.w,
+              bottom: 120.h,
+              left: 0,
+              right: 0,
               child: Column(
-                mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
                     LocaleKeys.placeQrCode,
-                    style: context.textStyle.s16.medium.setWhiteColor,
-                    textAlign: TextAlign.center,
+                    style: context.textStyle.s17.setWhiteColor.copyWith(
+                      color: AppColors.white.withValues(alpha: 0.8),
+                    ),
                   ),
                   30.szH,
-                  LoadingButtonWithIcon(
-                    icon: AppAssets.svg.baseSvg.coupon.path,
-                    title: LocaleKeys.scanCouponCode,
-                    onTap: () async {
-                      // Show the success bottom sheet directly for UI testing
-                      showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        backgroundColor: Colors.transparent,
-                        builder: (context) => ScanSuccessBottomSheet(
-                          coupon: CouponEntity(
-                            id: 7,
-                            categoryName: 'مقاهي',
-                            vendorName: 'ستاربكس',
-                            discount: 15,
-                            name: 'خصم 15% على المشروبات',
-                            vendorImage:
-                                AppAssets.svg.appSvg.appLauncherIcon.path,
-                            description: 'صالح لمدة 3 أيام',
-                            isFav: false,
-                            productImage: '',
-                          ),
-                        ),
-                      );
-                    },
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: LoadingButtonWithIcon(
+                      title: LocaleKeys.scanCouponCode,
+                      icon: AppAssets.svg.baseSvg.coupon.path,
+                      onTap: () async {
+                        final cubit = context.read<ScanCubit>();
+                        String? payload;
+                        debugPrint('--- Manual Scan Triggered ---');
+                        debugPrint('scannedCode: $scannedCode');
+                        debugPrint(
+                          'initialQrPayload: ${widget.initialQrPayload}',
+                        );
+                        debugPrint('couponId: ${widget.couponId}');
+                        if (scannedCode != null && scannedCode!.isNotEmpty) {
+                          payload = scannedCode!;
+                          debugPrint('Payload source: Scanned Camera');
+                        } else if (widget.initialQrPayload != null &&
+                            widget.initialQrPayload!.isNotEmpty) {
+                          payload = widget.initialQrPayload!;
+                          debugPrint('Payload source: Initial Data');
+                        }
+                        if (payload == null) {
+                          debugPrint('No payload available. Aborting scan.');
+                          MessageUtils.showSnackBar(
+                            message: LocaleKeys.pleaseScanACodeFirst,
+                            baseStatus: BaseStatus.initial,
+                          );
+                          return;
+                        }
+                        debugPrint('Sending payload: $payload');
+                        await cubit.scanQR(payload, widget.couponId);
+                      },
+                    ),
                   ),
-                  100.szH,
                 ],
               ),
             ),

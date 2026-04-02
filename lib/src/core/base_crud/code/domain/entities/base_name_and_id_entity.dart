@@ -13,7 +13,7 @@ String getBaseIdAndNameEntityApi<T extends BaseEntity>(
     CountryEntity: (_) => "locations/governorates", //Api Key For Countries
     CityEntity: (params) => "locations/cities/${params!.id}",
     RegionEntity: (params) => "locations/districts/${params!.id}",
-    CategoryEntity: (_) => "categories", //Api Key For Categories
+    CategoryEntity: (_) => "categorys", //Api Key For Categories (from User instructions)
   };
   if (T == BaseEntity) {
     throw UnsupportedError(

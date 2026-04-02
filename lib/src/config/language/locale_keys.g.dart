@@ -922,4 +922,16 @@ abstract class LocaleKeys {
   static const String _cameraError = 'camera_error';
   static String get cameraError => _cameraError.tr();
 
+  static const String _cameraPermissionDenied = 'camera_permission_denied';
+  static String get cameraPermissionDenied => _cameraPermissionDenied.tr();
+
+  static const String _retry = 'retry';
+  static String get retry => _retry.tr();
+
+  static const String _alignCouponInsideFrame = 'align_coupon_inside_frame';
+  static String get alignCouponInsideFrame => _alignCouponInsideFrame.tr();
+
+  static const String _pleaseScanACodeFirst = 'please_scan_a_code_first';
+  static String get pleaseScanACodeFirst => _pleaseScanACodeFirst.tr();
+
 }

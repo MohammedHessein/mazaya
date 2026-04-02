@@ -16,6 +16,8 @@ class CouponEntity extends Equatable {
   final int categoryId;
   final String? categoryName;
   final bool isFav;
+  final String? qrPayload;
+  final bool? isUsed;
 
   const CouponEntity({
     required this.id,
@@ -32,23 +34,27 @@ class CouponEntity extends Equatable {
     this.categoryId = 0,
     this.categoryName,
     this.isFav = false,
+    this.qrPayload,
+    this.isUsed,
   });
 
   const CouponEntity.empty()
-      : id = 0,
-        name = '',
-        shortDescription = '',
-        description = '',
-        productImage = '',
-        discount = 0.0,
-        discountType = '',
-        sku = '',
-        vendorId = 0,
-        vendorName = '',
-        vendorImage = '',
-        categoryId = 0,
-        categoryName = '',
-        isFav = false;
+    : id = 0,
+      name = '',
+      shortDescription = '',
+      description = '',
+      productImage = '',
+      discount = 0.0,
+      discountType = '',
+      sku = '',
+      vendorId = 0,
+      vendorName = '',
+      vendorImage = '',
+      categoryId = 0,
+      categoryName = '',
+      isFav = false,
+      isUsed = false,
+      qrPayload = '';
 
   factory CouponEntity.fromJson(Map<String, dynamic> json) {
     int toInt(dynamic value) {
@@ -72,6 +78,8 @@ class CouponEntity extends Equatable {
       categoryId: toInt(json['category_id']),
       categoryName: json['category_name'],
       isFav: json['is_fav'] ?? false,
+      qrPayload: json['qr_payload'],
+      isUsed: json['is_used'] ?? false,
     );
   }
 
@@ -82,6 +90,9 @@ class CouponEntity extends Equatable {
       shortDescription: SkeltonizerManager.medium,
       description: SkeltonizerManager.medium,
       productImage: '',
+      discount: 0.0,
+      discountType: '',
+      sku: '',
     );
   }
 
@@ -100,6 +111,8 @@ class CouponEntity extends Equatable {
     int? categoryId,
     String? categoryName,
     bool? isFav,
+    String? qrPayload,
+    bool? isUsed,
   }) {
     return CouponEntity(
       id: id ?? this.id,
@@ -116,24 +129,28 @@ class CouponEntity extends Equatable {
       categoryId: categoryId ?? this.categoryId,
       categoryName: categoryName ?? this.categoryName,
       isFav: isFav ?? this.isFav,
+      qrPayload: qrPayload ?? this.qrPayload,
+      isUsed: isUsed ?? this.isUsed,
     );
   }
 
   @override
   List<Object?> get props => [
-        id,
-        name,
-        shortDescription,
-        description,
-        productImage,
-        discount,
-        discountType,
-        sku,
-        vendorId,
-        vendorName,
-        vendorImage,
-        categoryId,
-        categoryName,
-        isFav,
-      ];
+    id,
+    name,
+    shortDescription,
+    description,
+    productImage,
+    discount,
+    discountType,
+    sku,
+    vendorId,
+    vendorName,
+    vendorImage,
+    categoryId,
+    categoryName,
+    isFav,
+    qrPayload,
+    isUsed,
+  ];
 }

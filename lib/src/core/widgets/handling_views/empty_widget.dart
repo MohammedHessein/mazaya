@@ -12,6 +12,7 @@ class EmptyWidget extends StatelessWidget {
   final String? path;
   final String title;
   final String desc;
+
   const EmptyWidget({
     super.key,
     this.path,
@@ -31,14 +32,14 @@ class EmptyWidget extends StatelessWidget {
           height: context.height * .25,
           child: FittedBox(fit: BoxFit.contain, child: _buildMedia()),
         ),
-        Text(title, style: const TextStyle().setMainTextColor.s16.bold),
+        Text(title, style: context.textStyle.setMainTextColor.s16.bold),
         Text(
           desc,
           textAlign: TextAlign.center,
-          style: const TextStyle().setSecondryColor.s14.regular,
+          style: context.textStyle.setSecondryColor.s14.regular,
         ).paddingSymmetric(horizontal: AppPadding.pW14),
       ],
-    ).paddingAll(AppPadding.pH10).marginTop(context.height * .1);
+    ).paddingAll(AppPadding.pH10).marginTop(context.height * .023);
   }
 
   Widget _buildMedia() {

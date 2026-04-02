@@ -37,8 +37,8 @@ extension ContextExtension on BuildContext {
   bool get isRight => Directionality.of(this) == TextDirection.rtl;
 
   bool get isArabic => Languages.currentLanguage == Languages.arabic;
-
   bool get isEnglish => Languages.currentLanguage == Languages.english;
+  bool get isSwedish => Languages.currentLanguage == Languages.swedish;
 }
 
 extension LanguageExtension on Widget {

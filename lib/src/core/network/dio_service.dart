@@ -142,9 +142,11 @@ class DioService implements NetworkService {
               error.response?.data['message'] ?? LocaleKeys.badRequest,
             );
           case HttpStatus.unauthorized:
-            throw UnauthorizedException(
-              error.response?.data['message'] ?? LocaleKeys.badRequest,
-            );
+            String message = error.response?.data['message'] ?? LocaleKeys.badRequest;
+            if (message.toLowerCase().contains('token expired')) {
+              message = LocaleKeys.appYourSessionIsExpired;
+            }
+            throw UnauthorizedException(message);
           case HttpStatus.locked:
             throw BlockedException(
               error.response?.data['message'] ?? LocaleKeys.badRequest,

@@ -6,7 +6,8 @@ import 'package:mazaya/src/features/qr_scanner/presentation/view/scan_coupon_vie
 
 class MainBody extends StatelessWidget {
   final int index;
-  const MainBody(this.index, {super.key});
+  final int currentIndex;
+  const MainBody(this.index, {super.key, required this.currentIndex});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class MainBody extends StatelessWidget {
       case 1:
         return const CouponsView();
       case 2:
-        return const ScanCouponView();
+        return ScanCouponView(isActive: currentIndex == index);
       case 3:
         return const MoreTabView();
 

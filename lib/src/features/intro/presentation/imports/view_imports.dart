@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:mazaya/src/core/helpers/cache_service.dart';
 import 'package:mazaya/src/features/auth/login/imports/login_imports.dart';
 

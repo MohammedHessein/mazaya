@@ -5,6 +5,7 @@ import 'package:mazaya/src/config/res/config_imports.dart';
 import 'package:mazaya/src/core/base_crud/code/domain/base_domain_imports.dart';
 import 'package:mazaya/src/core/base_crud/code/presentation/cubit/get_base_name_and_id/get_base_name_and_id_cubit.dart';
 import 'package:mazaya/src/core/extensions/widgets/sized_box_helper.dart';
+import 'package:mazaya/src/core/helpers/debouncer.dart';
 import 'package:mazaya/src/core/widgets/cards/app_card.dart';
 import 'package:mazaya/src/core/widgets/handling_views/empty_widget.dart';
 import 'package:mazaya/src/core/widgets/pickers/default_bottom_sheet.dart';
@@ -16,8 +17,21 @@ import 'package:mazaya/src/features/coupons/presentation/widgets/coupons_search_
 import 'package:mazaya/src/features/coupons/presentation/view/coupon_details_screen.dart';
 import 'package:mazaya/src/core/navigation/navigator.dart';
 
-class CouponsBody extends StatelessWidget {
+class CouponsBody extends StatefulWidget {
   const CouponsBody({super.key});
+
+  @override
+  State<CouponsBody> createState() => _CouponsBodyState();
+}
+
+class _CouponsBodyState extends State<CouponsBody> {
+  final _debouncer = Debouncer(delay: const Duration(milliseconds: 700));
+
+  @override
+  void dispose() {
+    _debouncer.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,31 +40,37 @@ class CouponsBody extends StatelessWidget {
       sliver: SliverMainAxisGroup(
         slivers: [
           SliverToBoxAdapter(
-            child: CouponsSearchBar(
-              onFilterTap: () {
-                showDefaultBottomSheet(
-                  context: context,
-                  child: MultiBlocProvider(
-                    providers: [
-                      BlocProvider.value(
-                        value: context.read<GetBaseEntityCubit<CityEntity>>(),
-                      ),
-                      BlocProvider.value(
-                        value: context
-                            .read<GetBaseEntityCubit<CategoryEntity>>(),
-                      ),
-                      BlocProvider.value(value: context.read<CouponsCubit>()),
-                    ],
-                    child: const CouponsFilterBottomSheet(),
-                  ),
-                );
-              },
-              onChanged: (query) {
-                context.read<CouponsCubit>().fetchInitialData(
-                  key: query.isEmpty ? null : query,
-                );
-              },
-            ),
+            child: Builder(builder: (searchContext) {
+              return CouponsSearchBar(
+                onFilterTap: () {
+                  showDefaultBottomSheet(
+                    context: searchContext,
+                    child: MultiBlocProvider(
+                      providers: [
+                        BlocProvider.value(
+                          value: searchContext
+                              .read<GetBaseEntityCubit<RegionEntity>>(),
+                        ),
+                        BlocProvider.value(
+                          value: searchContext
+                              .read<GetBaseEntityCubit<CategoryEntity>>(),
+                        ),
+                        BlocProvider.value(
+                            value: searchContext.read<CouponsCubit>()),
+                      ],
+                      child: const CouponsFilterBottomSheet(),
+                    ),
+                  );
+                },
+                onChanged: (query) {
+                  _debouncer.run(() {
+                    context.read<CouponsCubit>().fetchInitialData(
+                          key: query.isEmpty ? null : query,
+                        );
+                  });
+                },
+              );
+            }),
           ),
           SliverToBoxAdapter(child: 20.szH),
           PaginatedSliverListWidget<CouponsCubit, CouponEntity>(
@@ -66,7 +86,7 @@ class CouponsBody extends StatelessWidget {
               imageUrl: item.productImage,
               isFavorite: item.isFav,
               onTap: () {
-                Go.to(CouponDetailsScreen(id: item.id));
+                Go.to(CouponDetailsScreen(id: item.id, coupon: item));
               },
               onFavoriteTap: () {
                 context.read<CouponsCubit>().toggleFavorite(item.id);

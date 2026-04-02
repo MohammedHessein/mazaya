@@ -305,5 +305,9 @@
   "success_update_photo": "Profile photo updated successfully",
   "exit_app_title": "Exit App",
   "exit_app_desc": "Are you sure you want to exit the app?",
-  "camera_error": "Camera error:"
+  "camera_error": "Camera error:",
+  "camera_permission_denied": "Camera permission denied",
+  "retry": "Retry",
+  "align_coupon_inside_frame": "Align the coupon code inside the frame",
+  "please_scan_a_code_first": "Please scan a code first"
 }

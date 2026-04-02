@@ -9,13 +9,11 @@ import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
 import 'language_option.dart';
 
 class LanguageBottomSheet extends StatelessWidget {
-  final VoidCallback onArabicTap;
-  final VoidCallback onEnglishTap;
+  final Function(Languages) onLanguageTap;
 
   const LanguageBottomSheet({
     super.key,
-    required this.onArabicTap,
-    required this.onEnglishTap,
+    required this.onLanguageTap,
   });
 
   @override
@@ -52,16 +50,17 @@ class LanguageBottomSheet extends StatelessWidget {
             style: context.textStyle.s16.semiBold.setColor(AppColors.black),
           ),
           16.szH,
-          LanguageOption(
-            language: Languages.arabic,
-            isSelected: Languages.currentLanguage == Languages.arabic,
-            onTap: onArabicTap,
-          ),
-          16.szH,
-          LanguageOption(
-            language: Languages.english,
-            isSelected: Languages.currentLanguage == Languages.english,
-            onTap: onEnglishTap,
+          ...Languages.values.map(
+            (lang) => Column(
+              children: [
+                LanguageOption(
+                  language: lang,
+                  isSelected: Languages.currentLanguage == lang,
+                  onTap: () => onLanguageTap(lang),
+                ),
+                if (lang != Languages.values.last) 16.szH,
+              ],
+            ),
           ),
         ],
       ),

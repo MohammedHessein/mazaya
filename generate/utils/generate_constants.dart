@@ -9,6 +9,7 @@ abstract class GenerateConstants {
   static const String langJsonAssetFilePath = 'assets/translations/lang.json';
   static const String langEnJsonAssetFilePath = 'assets/translations/en.json';
   static const String langArJsonAssetFilePath = 'assets/translations/ar.json';
+  static const String langSvJsonAssetFilePath = 'assets/translations/sv.json';
   static const String outputStringsFilePath =
       'lib/src/config/language/locale_keys.g.dart';
   //generate_features

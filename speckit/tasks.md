@@ -17,17 +17,18 @@
 - [x] Implement FAQs, Contact Us, Complains, Static Pages, Settings, More features.
 - [x] Implement User Profile feature with profile header.
 - [x] Implement Location feature with geolocation support.
+- [x] Implement QR Scanner tab (tab 2) functionality.
+- [x] Integrate Swedish language support.
+- [x] Refactor and merge Settings into More feature.
+- [x] Implement Favourite and Used Coupons screens.
 
-## 🔄 In Progress
 - [ ] Finalize Figma pixel-perfect alignment across all screens.
 - [ ] Connect all features to live API endpoints.
-- [ ] Implement QR Scanner tab (tab 2) functionality.
 
 ## 📋 Infrastructure Backlog
 | Priority | Task | Module |
 | :--- | :--- | :--- |
 | 🔴 High | Connect auth APIs to live backend | `features/auth/` |
-| 🔴 High | Implement QR scanner feature | `features/main/` (tab 2) |
 | 🔴 High | Add unit tests for `baseCrudUseCase` | `core/base_crud/` |
 | 🟡 Medium | Implement automated request retry in `DioService` | `core/network/` |
 | 🟡 Medium | Add dark mode theme support | `config/themes/` |

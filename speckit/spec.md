@@ -6,7 +6,7 @@ This document serves as the authoritative "Source of Truth" for the **Mazaya** p
 - **Name**: Mazaya (مزايا)
 - **Package Name**: `com.smartVision.mazaya`
 - **Core Vision**: A premium coupon and loyalty platform delivering exclusive deals, offers, and merchant discovery for Arabic-speaking markets.
-- **Primary Locale**: Arabic (RTL-first) with full secondary English support.
+- **Primary Locale**: Arabic (RTL-first) with full secondary English and Swedish support.
 - **Target OS**: Android, iOS.
 - **Typography**: Madani Arabic (Thin, Extra Light, Light, Regular, Medium, Semi Bold, Bold, Extra Bold, Black).
 - **Design Size**: 375 × 911 (mobile-first).
@@ -77,7 +77,7 @@ The project lives in `lib/src/`, split into three high-level domains:
   - `extensions/`: `TextStyleEx`, `ContextExtension`, `SizedBoxHelper`, `FormMixin`, `StringExtension`.
   - `widgets/`: Base library (see UIComponents.md).
   - `error/`: Failure and Exception classes.
-- **`features/`**: Modular, self-contained business features (14 features – see ProjectMap.md).
+- **`features/`**: Modular, self-contained business features (18 features – see ProjectMap.md).
 
 ### 2. Networking Resilience
 - **Base CRUD**: All standard API operations are piped through a generic `BaseCrudUseCase`.
@@ -94,6 +94,6 @@ The project lives in `lib/src/`, split into three high-level domains:
 IntroScreen → LoginScreen → MainScreen (Bottom Nav)
                                 ├── Home (tab 0)
                                 ├── Coupons (tab 1)
-                                ├── QR Scanner (tab 2)
-                                └── My Account / More (tab 3)
+                                ├── QR Scanner (tab 2) – New!
+                                └── My Account / More (tab 3) – Settings merged into More
 ```

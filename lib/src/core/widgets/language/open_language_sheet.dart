@@ -10,12 +10,8 @@ Future<void> openLanguageSheet(BuildContext context) async {
     backgroundColor: Colors.transparent,
     builder: (sheetContext) {
       return LanguageBottomSheet(
-        onArabicTap: () {
-          Languages.setLocaleWithContext(sheetContext, Languages.arabic);
-          Go.back();
-        },
-        onEnglishTap: () {
-          Languages.setLocaleWithContext(sheetContext, Languages.english);
+        onLanguageTap: (lang) {
+          Languages.setLocaleWithContext(sheetContext, lang);
           Go.back();
         },
       );

@@ -19,9 +19,7 @@ class LanguageOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String label = language == Languages.arabic
-        ? ConstantManager.arabic
-        : ConstantManager.english;
+    final String label = language.title;
 
     final Color bg = isSelected ? AppColors.blue50 : AppColors.white;
     final Color borderColor = isSelected
@@ -54,7 +52,7 @@ class LanguageOption extends StatelessWidget {
             Expanded(
               child: Text(
                 label,
-                textAlign: TextAlign.right,
+                textAlign: context.isRight ? TextAlign.right : TextAlign.left,
                 style: context.textStyle.s14.medium.setColor(textColor),
               ),
             ),

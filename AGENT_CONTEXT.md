@@ -35,7 +35,7 @@ The project follows a **Modified Clean Architecture (Feature-First)** approach.
 
 ## ├── Coding Rules
 ### 1. Zero Hardcoding
-- **Strings**: Use `LocaleKeys.key.tr()` from `easy_localization`. Primary locale is Arabic.
+- **Strings**: Use `LocaleKeys.key.tr()` from `easy_localization`. Supported locales: Arabic (Primary), English, Swedish.
 - **Sizes**: Use `AppPadding`, `AppSize`, `AppMargin`. Apply `.h`, `.w`, `.r`, `.sp` from `flutter_screenutil`.
 - **Spacing**: Use `SizedBoxHelper` extensions (e.g., `10.szH`, `15.szW`).
 
@@ -157,8 +157,8 @@ Each feature in `lib/src/features/` must follow:
 
 ### 4. Localization
 - **Add**: Update `assets/translations/lang.json` (Source of Truth).
-- **Format**: `key #$ English Text`: `Arabic Text`.
-- **English/Arabic files**: NEVER edit `en.json` or `ar.json` directly. They are generated.
+- **Format**: `key #$ English Text #$ Swedish Text`: `Arabic Text`.
+- **English/Arabic/Swedish files**: NEVER edit `en.json`, `ar.json`, or `sv.json` directly. They are generated.
 - **Gen**: Run `dart run generate/strings/main.dart` after ANY change to `lang.json`.
 - **Use**: `LocaleKeys.key.tr()` (Zero hardcoding rule).
 
