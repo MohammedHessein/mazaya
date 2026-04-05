@@ -109,7 +109,8 @@ void main() async {
     EasyLocalization(
       supportedLocales: Languages.supportLocales,
       path: 'assets/translations',
-      fallbackLocale: const Locale('en'),
+      fallbackLocale: const Locale('sv'),
+      startLocale: const Locale('sv'),
       saveLocale: true,
       child: MazayaApp(home: initialScreen),
     ),

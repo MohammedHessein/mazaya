@@ -69,8 +69,8 @@ class _CouponsSectionState extends State<CouponsSection> {
                 itemBuilder: (context, index) {
                   final product = products[index];
                   return AppCard(
-                    title: product.name,
-                    description: product.shortDescription ?? '',
+                    title: product.vendorName ?? product.name,
+                    description: product.name,
                     imageUrl: product.productImage,
                     status: null,
                     isFavorite: product.isFav,

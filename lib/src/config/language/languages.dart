@@ -35,16 +35,16 @@ enum Languages {
   static Languages get currentLanguage {
     try {
       final context = Go.navigatorKey.currentContext;
-      if (context == null) return Languages.arabic;
+      if (context == null) return Languages.swedish;
       final easyLocale = EasyLocalization.of(context);
-      if (easyLocale == null) return Languages.arabic;
+      if (easyLocale == null) return Languages.swedish;
       final currentLocale = easyLocale.locale;
       return Languages.values.firstWhere(
         (element) => element.locale == currentLocale,
-        orElse: () => Languages.arabic,
+        orElse: () => Languages.swedish,
       );
     } catch (_) {
-      return Languages.arabic;
+      return Languages.swedish;
     }
   }
 }

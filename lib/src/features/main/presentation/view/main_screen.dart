@@ -37,6 +37,13 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    params.selectedIndexNotifier.addListener(_onTabChange);
+  }
+
+  void _onTabChange() {
+    if (params.selectedIndexNotifier.value == 3) {
+      UserCubit.instance.getProfile();
+    }
   }
 
   @override
@@ -192,13 +199,19 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
                     ),
                   ),
                   MainBody(2, currentIndex: value),
-                  CustomScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    slivers: [
-                      const ProfileHeaderSliver(),
-                      const MoreTabBody(),
-                      const SliverToBoxAdapter(child: SizedBox(height: 100)),
-                    ],
+                  RefreshIndicator(
+                    onRefresh: () => UserCubit.instance.getProfile(),
+                    color: AppColors.primary,
+                    child: CustomScrollView(
+                      physics: const BouncingScrollPhysics(
+                        parent: AlwaysScrollableScrollPhysics(),
+                      ),
+                      slivers: [
+                        const ProfileHeaderSliver(),
+                        const MoreTabBody(),
+                        const SliverToBoxAdapter(child: SizedBox(height: 100)),
+                      ],
+                    ),
                   ),
                 ],
               ),

@@ -3,6 +3,7 @@ import 'package:mazaya/src/features/coupons/presentation/cubits/coupon_details_c
 
 import '../../../location/imports/location_imports.dart';
 import '../../../qr_scanner/presentation/view/scan_coupon_view.dart';
+import 'package:mazaya/src/core/shared/cubits/user_cubit/user_cubit.dart';
 import 'view_imports.dart';
 
 class CouponDetailsScreen extends BlocStatelessWidget<CouponDetailsCubit> {
@@ -36,6 +37,7 @@ class CouponDetailsScreen extends BlocStatelessWidget<CouponDetailsCubit> {
                   title: LocaleKeys.scanCouponCode,
                   isDissabled: state.isSuccess && (state.data.isUsed ?? false),
                   onTap: () async {
+                    if (!UserCubit.instance.checkAuth()) return;
                     if (state.isSuccess) {
                       final currentCoupon = state.data;
                       Go.to(ScanCouponView(

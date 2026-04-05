@@ -139,11 +139,11 @@
   "blocked": "تم حظر حسابك من قبل الادارة",
   "app_your_session_is_expired": "انتهت صلاحية الجلسة. الرجاء تسجيل الدخول مرة أخرى",
   "logout": "تسجيل الخروج",
-  "onboarding_title_1": "خصم حصرية scan ووفر فوراً",
+  "onboarding_title_1": "كوبونات حصرية scan ووفر فورًا",
   "onboarding_desc_1": "كوبونات حصرية مفعلة فوراً... امسح الكود وابدأ التوفير.",
   "onboarding_title_2": "اشترِ بسهولة واستمتع بالتوفير",
   "onboarding_desc_2": "استمتع بخصومات حصرية عبر باقاتنا البروزنزية، الفضية، والذهبية.",
-  "onboarding_title_3": "اكتشف خصومات بسهولة",
+  "onboarding_title_3": "اكتشف كوبونات خصم بسهولة",
   "onboarding_desc_3": "اعثر على أفضل العروض حسب مدينتك أو الفئة المفضلة لديك. كل ما تحتاجه في مكان واحد.",
   "intro_skip": "تخطي",
   "intro_startnow": "ابدا الان",
@@ -309,5 +309,8 @@
   "camera_permission_denied": "تم رفض إذن الكاميرا",
   "retry": "إعادة المحاولة",
   "align_coupon_inside_frame": "قم بمحاذاة كود الكوبون داخل الإطار",
-  "please_scan_a_code_first": "من فضلك قم بمسح الرمز أولاً"
+  "please_scan_a_code_first": "من فضلك قم بمسح الرمز أولاً",
+  "please_login_to_access_this_feature": "يرجى تسجيل الدخول للوصول إلى هذه الميزة",
+  "user_package_name": "{user_package_name}",
+  "member_type": "{member_type}"
 }

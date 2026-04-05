@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/widgets/un_autheticated/unauthenticated_bottomsheet.dart';
 import 'package:mazaya/src/core/network/api_endpoints.dart';
 import 'package:mazaya/src/core/network/network_request.dart';
 import 'package:mazaya/src/core/helpers/cache_service.dart';
@@ -97,7 +98,7 @@ class UserCubit extends Cubit<UserState> with UserUtils {
       request,
       mapper: (json) => UserModel.fromJson(json),
     );
-    if (response.key == 'success') {
+    if (response.key.toLowerCase() == 'success') {
       await updateUser(response.data);
     }
   }
@@ -142,4 +143,12 @@ class UserCubit extends Cubit<UserState> with UserUtils {
   static UserCubit get instance => injector<UserCubit>();
 
   bool get isUserLoggedIn => state.userStatus == UserStatus.loggedIn;
+
+  bool checkAuth({bool isGuest = true}) {
+    if (!isUserLoggedIn) {
+      UnAuthenticatedBottomSheet.show(isBlocked: false, isGuest: isGuest);
+      return false;
+    }
+    return true;
+  }
 }

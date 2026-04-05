@@ -934,4 +934,13 @@ abstract class LocaleKeys {
   static const String _pleaseScanACodeFirst = 'please_scan_a_code_first';
   static String get pleaseScanACodeFirst => _pleaseScanACodeFirst.tr();
 
+  static const String _pleaseLoginToAccessThisFeature = 'please_login_to_access_this_feature';
+  static String get pleaseLoginToAccessThisFeature => _pleaseLoginToAccessThisFeature.tr();
+
+  static const String _userPackageName = 'user_package_name';
+  static String userPackageName({required String user_package_name}) => _userPackageName.tr(namedArgs: {'user_package_name': user_package_name});
+
+  static const String _memberType = 'member_type';
+  static String memberType({required String member_type}) => _memberType.tr(namedArgs: {'member_type': member_type});
+
 }

@@ -17,12 +17,14 @@ class UnAuthenticatedBottomSheet extends StatelessWidget {
 
   static bool isOpend = false;
   static bool _isBlocked = false;
+  static bool _isGuest = false;
 
-  static Future<void> show({required bool isBlocked}) async {
+  static Future<void> show({required bool isBlocked, bool isGuest = false}) async {
     final context = Go.context;
     if (isOpend) return;
 
     _isBlocked = isBlocked;
+    _isGuest = isGuest;
     isOpend = true;
 
     await showAppModalBottomSheet(
@@ -35,6 +37,7 @@ class UnAuthenticatedBottomSheet extends StatelessWidget {
     ).whenComplete(() {
       isOpend = false;
       _isBlocked = false;
+      _isGuest = false;
     });
   }
 
@@ -48,7 +51,11 @@ class UnAuthenticatedBottomSheet extends StatelessWidget {
         Icon(Icons.login_rounded, size: 100.sp, color: AppColors.primary),
         const SizedBox(height: 16),
         Text(
-          _isBlocked ? LocaleKeys.blocked : LocaleKeys.appYourSessionIsExpired,
+          _isBlocked
+              ? LocaleKeys.blocked
+              : _isGuest
+                  ? LocaleKeys.pleaseLoginToAccessThisFeature
+                  : LocaleKeys.appYourSessionIsExpired,
           textAlign: TextAlign.center,
           style: context.textStyle.s14.medium.setMainTextColor,
         ),

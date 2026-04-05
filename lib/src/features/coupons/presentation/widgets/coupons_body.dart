@@ -77,12 +77,12 @@ class _CouponsBodyState extends State<CouponsBody> {
             skeletonItemCount: 10,
             config: const PaginatedListConfig(),
             skeletonBuilder: (context) => AppCard(
-              title: CouponEntity.empty().name,
-              description: CouponEntity.empty().shortDescription ?? '',
+              title: CouponEntity.empty().vendorName ?? '',
+              description: CouponEntity.empty().name,
             ),
             itemBuilder: (context, item, index) => AppCard(
-              title: item.name,
-              description: item.shortDescription ?? '',
+              title: item.vendorName ?? item.name,
+              description: item.name,
               imageUrl: item.productImage,
               isFavorite: item.isFav,
               onTap: () {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mazaya/src/config/res/assets.gen.dart';
 import 'package:mazaya/src/config/res/config_imports.dart';
 import 'package:mazaya/src/core/extensions/context_extension.dart';
 import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
@@ -51,10 +52,10 @@ class AppCard extends StatelessWidget {
             Stack(
               children: [
                 Container(
-                  width: 65.w,
-                  height: 85.h,
+                  width: 90.w,
+                  height: 90.h,
                   decoration: BoxDecoration(
-                    color: AppColors.black,
+                    color: AppColors.gray100,
                     borderRadius: BorderRadius.circular(AppCircular.r8),
                   ),
                   child: ClipRRect(
@@ -67,27 +68,48 @@ class AppCard extends StatelessWidget {
                                         padding: EdgeInsets.all(8.w),
                                         child: SvgPicture.asset(
                                           imageUrl!,
-                                          fit: BoxFit.contain,
+                                          fit: BoxFit.cover,
                                         ),
                                       )
                                     : Image.asset(
                                         imageUrl!,
                                         fit: BoxFit.cover,
                                       )))
-                        : Icon(Icons.image, color: AppColors.gray400),
+                        : Padding(
+                            padding: EdgeInsets.all(12.w),
+                            child: AppAssets.svg.appSvg.appIconPart.svg(
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                   ),
                 ),
                 if (onFavoriteTap != null)
                   Positioned.directional(
                     textDirection: Directionality.of(context),
-                    top: 4.h,
-                    end: 4.w,
+                    top: 6.h,
+                    end: 6.w,
                     child: GestureDetector(
                       onTap: onFavoriteTap,
-                      child: Icon(
-                        isFavorite ? Icons.favorite : Icons.favorite_border,
-                        size: AppSize.sH30,
-                        color: isFavorite ? AppColors.error : AppColors.white,
+                      child: Container(
+                        padding: EdgeInsets.all(4.w),
+                        decoration: BoxDecoration(
+                          color: AppColors.white,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.black.withValues(alpha: 0.1),
+                              blurRadius: 4,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Icon(
+                          isFavorite ? Icons.favorite : Icons.favorite_border,
+                          size: 20.h,
+                          color: isFavorite
+                              ? AppColors.error
+                              : AppColors.gray400,
+                        ),
                       ),
                     ),
                   ),

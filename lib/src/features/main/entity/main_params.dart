@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mazaya/src/config/language/locale_keys.g.dart';
 import 'package:mazaya/src/config/res/assets.gen.dart';
 import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/shared/cubits/user_cubit/user_cubit.dart';
 import 'package:mazaya/src/core/widgets/navigation_bar/navigation_bar_entity.dart';
 
 class MainParams {
@@ -26,16 +27,13 @@ class MainParams {
   }
 
   void updateNavValue(int value) {
-    // if (UserCubit.instance.isUserLoggedIn) {
-    //   selectedIndexNotifier.value = value;
-    // } else {
-    //   if (value == 0) {
-    //     selectedIndexNotifier.value = value;
-    //   } else {
-    //     visitorDialog(visitorDesc(value));
-    //   }
-    // }
-    selectedIndexNotifier.value = value;
+    if (value == 0 || value == 1) {
+      selectedIndexNotifier.value = value;
+    } else {
+      if (UserCubit.instance.checkAuth()) {
+        selectedIndexNotifier.value = value;
+      }
+    }
   }
 
   List<NavigationBarEntity> get navTabs => [

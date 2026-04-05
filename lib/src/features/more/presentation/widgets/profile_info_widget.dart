@@ -14,17 +14,15 @@ class ProfileInfoWidget extends StatelessWidget {
             ? MembershipType.sliver
             : MembershipType.diamond;
         final userName = user.name;
-        final subTitle = membershipType == MembershipType.golden
-            ? LocaleKeys.goldMember
-            : membershipType == MembershipType.sliver
-            ? LocaleKeys.silverMember
-            : LocaleKeys.diamondMember;
+        final subTitle = LocaleKeys.memberType(
+          member_type: user.memberType ?? '',
+        );
 
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              userName.isNotEmpty ? userName : 'أدم علي',
+              userName.isNotEmpty ? userName : LocaleKeys.visitorText.tr(),
               style: context.textStyle.s18.bold.setMainTextColor,
             ),
             if (subTitle.isNotEmpty) ...[

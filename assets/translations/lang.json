@@ -700,9 +700,9 @@
     "sv": "Logga ut"
   },
   "onboarding_title_1": {
-    "en": "Exclusive Scan Discounts and Save Instantly",
-    "ar": "خصم حصرية scan ووفر فوراً",
-    "sv": "Exklusiva skanningsrabatter och spara direkt"
+    "en": "Exclusive coupons Scan and save instantly",
+    "ar": "كوبونات حصرية scan ووفر فورًا",
+    "sv": "Exklusiva kuponger Skanna och spara direkt"
   },
   "onboarding_desc_1": {
     "en": "Exclusive coupons activated instantly... scan the code and start saving.",
@@ -720,9 +720,9 @@
     "sv": "Njut av exklusiva rabatter genom våra brons-, silver- och guldpaket."
   },
   "onboarding_title_3": {
-    "en": "Discover Discounts Easily",
-    "ar": "اكتشف خصومات بسهولة",
-    "sv": "Upptäck rabatter enkelt"
+    "en": "Discover discount coupons easily",
+    "ar": "اكتشف كوبونات خصم بسهولة",
+    "sv": "Upptäck rabattkuponger enkelt"
   },
   "onboarding_desc_3": {
     "en": "Find the best offers based on your city or preferred category. Everything you need in one place.",
@@ -1552,6 +1552,21 @@
   "please_scan_a_code_first": {
     "en": "Please scan a code first",
     "ar": "من فضلك قم بمسح الرمز أولاً",
-    "sv": "Skanna en kod först"
+    "sv": "Vänligen skanna en kod först"
+  },
+  "please_login_to_access_this_feature": {
+    "en": "Please login to access this feature",
+    "ar": "يرجى تسجيل الدخول للوصول إلى هذه الميزة",
+    "sv": "Vänligen logga in för att komma åt denna funktion"
+  },
+  "user_package_name": {
+    "en": "{user_package_name}",
+    "ar": "{user_package_name}",
+    "sv": "{user_package_name}"
+  },
+  "member_type": {
+    "en": "{member_type}",
+    "ar": "{member_type}",
+    "sv": "{member_type}"
   }
 }

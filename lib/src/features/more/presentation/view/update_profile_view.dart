@@ -1,7 +1,18 @@
 part of '../imports/view_imports.dart';
 
-class UpdateProfileScreen extends StatelessWidget {
+class UpdateProfileScreen extends StatefulWidget {
   const UpdateProfileScreen({super.key});
+
+  @override
+  State<UpdateProfileScreen> createState() => _UpdateProfileScreenState();
+}
+
+class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
+  @override
+  void initState() {
+    super.initState();
+    UserCubit.instance.getProfile();
+  }
 
   @override
   Widget build(BuildContext context) {

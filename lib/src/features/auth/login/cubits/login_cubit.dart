@@ -33,6 +33,7 @@ class LoginCubit extends AsyncCubit<UserModel?> {
             user: user,
             token: user.token!,
           );
+          await UserCubit.instance.getProfile();
           final bool isLocationSelected =
               CacheStorage.read(ConstantManager.selectedLocation) ?? false;
           if (user.locationId != null && isLocationSelected) {

@@ -139,11 +139,11 @@
   "blocked": "Ditt konto har blockerats av administrationen",
   "app_your_session_is_expired": "Din session har gått ut. Logga in igen",
   "logout": "Logga ut",
-  "onboarding_title_1": "Exklusiva skanningsrabatter och spara direkt",
+  "onboarding_title_1": "Exklusiva kuponger Skanna och spara direkt",
   "onboarding_desc_1": "Exklusiva kuponger aktiverade omedelbart... skanna koden och börja spara.",
   "onboarding_title_2": "Köp enkelt och njut av besparingar",
   "onboarding_desc_2": "Njut av exklusiva rabatter genom våra brons-, silver- och guldpaket.",
-  "onboarding_title_3": "Upptäck rabatter enkelt",
+  "onboarding_title_3": "Upptäck rabattkuponger enkelt",
   "onboarding_desc_3": "Hitta de bästa erbjudandena baserat på din stad eller favoritkategori. Allt du behöver på ett ställe.",
   "intro_skip": "Hoppa över",
   "intro_startnow": "Börja nu",
@@ -309,5 +309,8 @@
   "camera_permission_denied": "Kameratillstånd nekades",
   "retry": "Försök igen",
   "align_coupon_inside_frame": "Rikta in kupongkoden inuti ramen",
-  "please_scan_a_code_first": "Skanna en kod först"
+  "please_scan_a_code_first": "Vänligen skanna en kod först",
+  "please_login_to_access_this_feature": "Vänligen logga in för att komma åt denna funktion",
+  "user_package_name": "{user_package_name}",
+  "member_type": "{member_type}"
 }

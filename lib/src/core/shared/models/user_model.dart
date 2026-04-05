@@ -15,6 +15,7 @@ class UserModel {
   final String? userPackageImage;
   final int? userPackageCouponsLimit;
   final int? userPackageUsedCoupons;
+  final int? userPackageRemainingCoupons;
   final String? userPackageStartDate;
   final String? userPackageEndDate;
   final bool userPackageIsActive;
@@ -46,6 +47,7 @@ class UserModel {
     this.userPackageImage,
     this.userPackageCouponsLimit,
     this.userPackageUsedCoupons,
+    this.userPackageRemainingCoupons,
     this.userPackageStartDate,
     this.userPackageEndDate,
     required this.userPackageIsActive,
@@ -73,6 +75,7 @@ class UserModel {
     userPackageImage: null,
     userPackageCouponsLimit: null,
     userPackageUsedCoupons: null,
+    userPackageRemainingCoupons: null,
     userPackageStartDate: null,
     userPackageEndDate: null,
     userPackageIsActive: false,
@@ -100,6 +103,7 @@ class UserModel {
     String? userPackageImage,
     int? userPackageCouponsLimit,
     int? userPackageUsedCoupons,
+    int? userPackageRemainingCoupons,
     String? userPackageStartDate,
     String? userPackageEndDate,
     bool? userPackageIsActive,
@@ -128,6 +132,8 @@ class UserModel {
           userPackageCouponsLimit ?? this.userPackageCouponsLimit,
       userPackageUsedCoupons:
           userPackageUsedCoupons ?? this.userPackageUsedCoupons,
+      userPackageRemainingCoupons:
+          userPackageRemainingCoupons ?? this.userPackageRemainingCoupons,
       userPackageStartDate: userPackageStartDate ?? this.userPackageStartDate,
       userPackageEndDate: userPackageEndDate ?? this.userPackageEndDate,
       userPackageIsActive: userPackageIsActive ?? this.userPackageIsActive,
@@ -179,6 +185,7 @@ class UserModel {
       userPackageImage: user['user_package_image'],
       userPackageCouponsLimit: _toInt(user['user_package_coupons_limit'] ?? package['coupons_limit']),
       userPackageUsedCoupons: _toInt(user['user_package_used_coupons'] ?? package['used_coupons']),
+      userPackageRemainingCoupons: _toInt(user['user_package_remaining_coupons'] ?? package['remaining_coupons']),
       userPackageStartDate: user['user_package_start_date'] ?? package['start_date'],
       userPackageEndDate: user['user_package_end_date'] ?? package['end_date'],
       userPackageIsActive: user['userPackageIsActive'] ?? (package['is_active'] ?? false),
@@ -210,6 +217,7 @@ class UserModel {
     'user_package_image': userPackageImage,
     'user_package_coupons_limit': userPackageCouponsLimit,
     'user_package_used_coupons': userPackageUsedCoupons,
+    'user_package_remaining_coupons': userPackageRemainingCoupons,
     'user_package_start_date': userPackageStartDate,
     'user_package_end_date': userPackageEndDate,
     'userPackageIsActive': userPackageIsActive,

@@ -114,7 +114,7 @@ class CouponDetailsContent extends StatelessWidget {
                   10.szW,
                   Expanded(
                     child: Text(
-                      "خصم ${coupon.discount ?? 0} %",
+                      coupon.shortDescription ?? '',
                       style: context.textStyle.s14.bold.setPrimaryColor,
                     ),
                   ),
