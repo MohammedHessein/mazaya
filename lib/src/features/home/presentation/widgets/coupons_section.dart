@@ -9,6 +9,7 @@ import 'package:mazaya/src/core/widgets/tools/bloc_builder/async_bloc_builder.da
 import 'package:mazaya/src/core/navigation/navigator.dart';
 import 'package:mazaya/src/features/coupons/presentation/view/coupons_view.dart';
 import 'package:mazaya/src/features/coupons/presentation/view/coupon_details_screen.dart';
+import 'package:mazaya/src/core/utils/favorite_manager.dart';
 import '../cubits/home_cubit.dart';
 import '../../model/home_model.dart';
 
@@ -75,7 +76,10 @@ class _CouponsSectionState extends State<CouponsSection> {
                     status: null,
                     isFavorite: product.isFav,
                     onFavoriteTap: () {
-                      context.read<HomeCubit>().toggleFavorite(product.id);
+                      context.read<FavoriteManager>().toggle(
+                            id: product.id,
+                            coupon: product.toCouponEntity(),
+                          );
                     },
                     onTap: () {
                       Go.to(CouponDetailsScreen(id: product.id));

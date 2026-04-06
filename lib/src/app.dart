@@ -1,8 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_offline/flutter_offline.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mazaya/src/core/utils/favorite_manager.dart';
 import 'package:mazaya/src/features/intro/presentation/imports/view_imports.dart';
 
 import 'package:mazaya/src/config/res/config_imports.dart';
@@ -46,8 +47,12 @@ class _MazayaAppState extends State<MazayaApp> {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (ctx, child) {
-        return BlocProvider(
-          create: (context) => injector<UserCubit>(),
+        return MultiRepositoryProvider(
+          providers: [
+            RepositoryProvider(create: (context) => injector<FavoriteManager>()),
+          ],
+          child: BlocProvider.value(
+            value: injector<UserCubit>(),
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             title: ConstantManager.appName,
@@ -86,6 +91,7 @@ class _MazayaAppState extends State<MazayaApp> {
                 ),
               );
             },
+          ),
           ),
         );
       },

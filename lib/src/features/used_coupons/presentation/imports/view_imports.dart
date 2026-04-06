@@ -11,6 +11,7 @@ import 'package:mazaya/src/core/base_crud/code/domain/base_domain_imports.dart';
 
 import 'package:mazaya/src/features/coupons/presentation/view/coupon_details_screen.dart';
 import 'package:mazaya/src/core/navigation/navigator.dart';
+import 'package:mazaya/src/core/utils/favorite_manager.dart';
 
 part '../cubits/used_coupons_cubit.dart';
 part '../view/used_coupons_screen.dart';

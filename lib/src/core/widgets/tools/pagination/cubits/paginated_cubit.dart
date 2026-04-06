@@ -2,7 +2,10 @@ part of '../imports/pagination_imports.dart';
 
 /// Abstract base cubit for paginated data
 abstract class PaginatedCubit<T> extends AsyncCubit<PaginatedData<T>> {
-  PaginatedCubit() : super(PaginatedData.initial());
+  /// Optional mapper function to convert JSON to entity [T]
+  final T Function(Map<String, dynamic> json)? itemMapper;
+
+  PaginatedCubit({this.itemMapper}) : super(PaginatedData.initial());
 
   int _currentPage = 1;
   bool _isLoadingMore = false;
@@ -19,16 +22,57 @@ abstract class PaginatedCubit<T> extends AsyncCubit<PaginatedData<T>> {
   /// Override this method to provide the API call
   /// Returns a Result with list of items and pagination meta
   /// [page] - The current page number
-  /// [key] - Optional filter key (e.g., order type, stage, status)
+  /// [searchQuery] - Optional filter key (e.g., order type, stage, status)
   Future<Result<Map<String, dynamic>, Failure>> fetchPageData(
     int page, {
-    String? key,
+    String? searchQuery,
   });
 
-  /// Override this method to parse items from JSON
-  List<T> parseItems(dynamic json);
+  /// Default implementation for parsing items from JSON.
+  /// Looks for json['data']['data'] or json['data'].
+  /// Override this if your API uses a different structure.
+  List<T> parseItems(dynamic json) {
+    if (json == null || itemMapper == null) return [];
 
-  PaginationMeta parsePagination(dynamic json);
+    // Check common nested paths for the list data
+    final listData = json['data']?['data'] ?? json['data'] ?? json;
+
+    if (listData is List) {
+      return listData
+          .map((e) => itemMapper!(Map<String, dynamic>.from(e)))
+          .toList();
+    }
+    return [];
+  }
+
+  /// Default implementation for parsing pagination metadata.
+  /// Override this if your API uses a different structure.
+  PaginationMeta parsePagination(dynamic json) {
+    if (json == null) {
+      return const PaginationMeta(
+        totalItems: 0,
+        countItems: 0,
+        perPage: 10,
+        totalPages: 1,
+        currentPage: 1,
+      );
+    }
+
+    final meta = json['data']?['meta'] ?? json['meta'];
+
+    if (meta == null) {
+      dev.log('PaginatedCubit: No pagination meta found in response');
+      return const PaginationMeta(
+        totalItems: 0,
+        countItems: 0,
+        perPage: 10,
+        totalPages: 1,
+        currentPage: 1,
+      );
+    }
+
+    return PaginationMeta.fromJson(meta);
+  }
 
   /// Initial fetch - loads first page
   /// [key] - Optional filter key (e.g., order type, stage, status)
@@ -38,7 +82,7 @@ abstract class PaginatedCubit<T> extends AsyncCubit<PaginatedData<T>> {
     _filterKey = key;
 
     setLoading();
-    final result = await fetchPageData(_currentPage, key: _filterKey);
+    final result = await fetchPageData(_currentPage, searchQuery: _filterKey);
 
     result.when(
       (success) {
@@ -64,7 +108,7 @@ abstract class PaginatedCubit<T> extends AsyncCubit<PaginatedData<T>> {
     _currentPage++;
 
     setLoadingMore();
-    final result = await fetchPageData(_currentPage, key: _filterKey);
+    final result = await fetchPageData(_currentPage, searchQuery: _filterKey);
 
     result.when(
       (success) {

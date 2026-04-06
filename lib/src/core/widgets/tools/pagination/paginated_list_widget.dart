@@ -56,7 +56,6 @@ class _PaginatedListWidgetState<C extends PaginatedCubit<T>, T>
     super.initState();
     _cubit = context.read<C>();
     _scrollController = widget.config.controller ?? ScrollController();
-    _scrollController.addListener(_onScroll);
     // Create a unique key for scroll position storage
     _pageStorageKey = PageStorageKey<String>('paginated_list_${C.toString()}');
   }
@@ -69,17 +68,6 @@ class _PaginatedListWidgetState<C extends PaginatedCubit<T>, T>
     super.dispose();
   }
 
-  void _onScroll() {
-    if (!_scrollController.hasClients) return;
-
-    final maxScroll = _scrollController.position.maxScrollExtent;
-    final currentScroll = _scrollController.position.pixels;
-    final threshold = maxScroll * widget.loadMoreThreshold;
-
-    if (currentScroll >= threshold && _cubit.canLoadMore) {
-      _cubit.loadMore();
-    }
-  }
 
   Future<void> _onRefresh() async {
     await _cubit.refresh();
@@ -209,8 +197,8 @@ class _PaginatedListWidgetState<C extends PaginatedCubit<T>, T>
   }
 
   Widget _buildListView(PaginatedData<T> data, bool isLoadingMore) {
-    // Add extra item for loading indicator only if loading more
-    final itemCount = data.items.length + (isLoadingMore ? 1 : 0);
+    // Add extra item for loading indicator or load more trigger
+    final itemCount = data.items.length + (_cubit.hasMorePages || isLoadingMore ? 1 : 0);
     if (widget.config.viewType == ListViewType.grid) {
       return _buildGridView(data, itemCount, isLoadingMore);
     } else if (widget.config.useSeparator) {
@@ -246,7 +234,8 @@ class _PaginatedListWidgetState<C extends PaginatedCubit<T>, T>
       itemCount: itemCount,
       itemBuilder: (context, index) {
         if (index >= data.items.length) {
-          return _buildLoadMoreIndicator();
+          if (isLoadingMore) return _buildLoadMoreIndicator();
+          return LoadMoreTrigger(onLoadMore: _cubit.loadMore);
         }
         return _buildItem(context, data.items[index], index);
       },
@@ -276,7 +265,8 @@ class _PaginatedListWidgetState<C extends PaginatedCubit<T>, T>
       },
       itemBuilder: (context, index) {
         if (index >= data.items.length) {
-          return _buildLoadMoreIndicator();
+          if (isLoadingMore) return _buildLoadMoreIndicator();
+          return LoadMoreTrigger(onLoadMore: _cubit.loadMore);
         }
         return _buildItem(context, data.items[index], index);
       },
@@ -308,7 +298,8 @@ class _PaginatedListWidgetState<C extends PaginatedCubit<T>, T>
       itemCount: itemCount,
       itemBuilder: (context, index) {
         if (index >= data.items.length) {
-          return _buildLoadMoreIndicator();
+          if (isLoadingMore) return _buildLoadMoreIndicator();
+          return LoadMoreTrigger(onLoadMore: _cubit.loadMore);
         }
         return _buildItem(context, data.items[index], index);
       },

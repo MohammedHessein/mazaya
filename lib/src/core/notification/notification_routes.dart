@@ -5,19 +5,37 @@ class NotificationRoutes {
     log('========================================');
     log('NotificationRoutes: navigateByType called');
     log('Full notification data: $data');
-    log('Data keys: ${data.keys.toList()}');
-    log('Data values: ${data.values.toList()}');
 
-    final String type = data['type'].toString();
-    log('Notification type: $type');
+    // 1. Handle explicit 'redirect' field if available
+    final String? redirect = data['redirect']?.toString();
+    if (redirect != null && redirect.isNotEmpty) {
+      log('Handling redirect: $redirect');
+      final parts = redirect.split('/');
+      if (parts.length >= 2) {
+        final String feature = parts[0];
+        final String? idStr = parts[1];
+        final int? id = int.tryParse(idStr ?? '');
 
-    // Log all possible body/message fields
-    log('data[body]: ${data['body']}');
-    log('data[message]: ${data['message']}');
-    log('data[content]: ${data['content']}');
-    log('data[text]: ${data['text']}');
-    log('data[title]: ${data['title']}');
-    log('========================================');
+        if (id != null) {
+          switch (feature) {
+            case 'posts':
+            case 'coupons':
+              log('Navigating to CouponDetails with id: $id');
+              Go.to(CouponDetailsScreen(id: id));
+              return;
+            case 'users':
+              log('Navigating to User Profile with id: $id');
+              // Replace with your User/Profile screen navigation
+              // Go.to(ProfileScreen(userId: id));
+              return;
+          }
+        }
+      }
+    }
+
+    // 2. Fallback to existing 'type' logic
+    final String type = data['type']?.toString() ?? '';
+    log('Fallback to notification type: $type');
 
     if (type == "text" && data['sender_id'] != null) {
       log('Navigating to chat with sender_id: ${data['sender_id']}');

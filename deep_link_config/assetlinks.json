@@ -1,0 +1,10 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.smartvision.mazaya",
+    "sha256_cert_fingerprints": [
+      "48:39:5A:EF:10:37:87:0A:8B:B4:F4:05:88:2E:90:63:78:F6:91:D1:FE:A2:02:24:26:55:79:B2:AA:BF:A7:09"
+    ]
+  }
+}]

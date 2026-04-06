@@ -1,5 +1,7 @@
 {
-  "projects": {},
+  "projects": {
+    "default": "mazaya-26c13"
+  },
   "targets": {},
   "etags": {}
 }

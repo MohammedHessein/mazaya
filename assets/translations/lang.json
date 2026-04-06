@@ -1184,6 +1184,11 @@
     "ar": "العضوية الماسية",
     "sv": "Diamantmedlemskap"
   },
+  "member": {
+    "en": "Member",
+    "ar": "عضو",
+    "sv": "Medlem"
+  },
   "silver_member": {
     "en": "Silver Member",
     "ar": "عضو فضي",
@@ -1431,8 +1436,18 @@
   },
   "no_coupons_desc": {
     "en": "We will notify you when new coupons are available",
-    "ar": "سنوافيك بالجديد فور توفره",
+    "ar": "سنوافيكم بالجديد فور توفره",
     "sv": "Vi meddelar dig när nya kuponger finns tillgängliga"
+  },
+  "region": {
+    "en": "Region",
+    "ar": "المنطقة",
+    "sv": "Region"
+  },
+  "select_region": {
+    "en": "Select Region",
+    "ar": "اختر المنطقة",
+    "sv": "Välj region"
   },
   "reset": {
     "en": "Reset",

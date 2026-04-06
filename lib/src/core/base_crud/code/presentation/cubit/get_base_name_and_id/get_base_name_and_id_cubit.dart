@@ -26,11 +26,15 @@ class GetBaseEntityCubit<T extends BaseEntity>
     final result = await getBaseEntityseCase<T>(
       GetBaseEntityParams(id: id, paramsType: ParamsType.path),
     );
+    if (isClosed) return;
+    if (isClosed) return;
     result.when(
       (data) {
+        if (isClosed) return;
         emit(state.copyWith(data: Async<List<T>>.success(data)));
       },
       (failure) {
+        if (isClosed) return;
         emit(state.copyWith(data: Async<List<T>>.failure(failure)));
       },
     );
@@ -42,11 +46,15 @@ class GetBaseEntityCubit<T extends BaseEntity>
     log(T.runtimeType.toString());
     emit(state.copyWith(data: Async<List<T>>.loading()));
     final result = await getBaseEntityseCase<T>(params);
+    if (isClosed) return;
+    if (isClosed) return;
     result.when(
       (data) {
+        if (isClosed) return;
         emit(state.copyWith(data: Async<List<T>>.success(data)));
       },
       (failure) {
+        if (isClosed) return;
         emit(state.copyWith(data: Async<List<T>>.failure(failure)));
       },
     );

@@ -16,3 +16,4 @@ export 'package:mazaya/src/core/base_crud/code/presentation/cubit/base_cubit/asy
 export 'coupon_details_body.dart';
 export 'coupon_details_screen.dart';
 export '../widgets/custom_circular_action_button.dart';
+export 'package:mazaya/src/core/utils/favorite_manager.dart';

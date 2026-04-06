@@ -14,8 +14,10 @@ import 'package:mazaya/src/features/coupons/entity/coupon_entity.dart';
 import 'package:mazaya/src/features/coupons/presentation/cubits/coupons_cubit.dart';
 import 'package:mazaya/src/features/coupons/presentation/widgets/coupons_filter_bottom_sheet.dart';
 import 'package:mazaya/src/features/coupons/presentation/widgets/coupons_search_bar.dart';
+import 'package:mazaya/src/features/coupons/presentation/widgets/coupons_filter_chips.dart';
 import 'package:mazaya/src/features/coupons/presentation/view/coupon_details_screen.dart';
 import 'package:mazaya/src/core/navigation/navigator.dart';
+import 'package:mazaya/src/core/utils/favorite_manager.dart';
 
 class CouponsBody extends StatefulWidget {
   const CouponsBody({super.key});
@@ -41,34 +43,40 @@ class _CouponsBodyState extends State<CouponsBody> {
         slivers: [
           SliverToBoxAdapter(
             child: Builder(builder: (searchContext) {
-              return CouponsSearchBar(
-                onFilterTap: () {
-                  showDefaultBottomSheet(
-                    context: searchContext,
-                    child: MultiBlocProvider(
-                      providers: [
-                        BlocProvider.value(
-                          value: searchContext
-                              .read<GetBaseEntityCubit<RegionEntity>>(),
+              return Column(
+                children: [
+                  CouponsSearchBar(
+                    onFilterTap: () {
+                      showDefaultBottomSheet(
+                        context: searchContext,
+                        child: MultiBlocProvider(
+                          providers: [
+                            BlocProvider.value(
+                              value: searchContext
+                                  .read<GetBaseEntityCubit<RegionEntity>>(),
+                            ),
+                            BlocProvider.value(
+                              value: searchContext
+                                  .read<GetBaseEntityCubit<CategoryEntity>>(),
+                            ),
+                            BlocProvider.value(
+                                value: searchContext.read<CouponsCubit>()),
+                          ],
+                          child: const CouponsFilterBottomSheet(),
                         ),
-                        BlocProvider.value(
-                          value: searchContext
-                              .read<GetBaseEntityCubit<CategoryEntity>>(),
-                        ),
-                        BlocProvider.value(
-                            value: searchContext.read<CouponsCubit>()),
-                      ],
-                      child: const CouponsFilterBottomSheet(),
-                    ),
-                  );
-                },
-                onChanged: (query) {
-                  _debouncer.run(() {
-                    context.read<CouponsCubit>().fetchInitialData(
-                          key: query.isEmpty ? null : query,
-                        );
-                  });
-                },
+                      );
+                    },
+                    onChanged: (query) {
+                      _debouncer.run(() {
+                        context.read<CouponsCubit>().fetchInitialData(
+                              key: query.isEmpty ? null : query,
+                            );
+                      });
+                    },
+                  ),
+                  12.szH,
+                  const CouponsFilterChips(),
+                ],
               );
             }),
           ),
@@ -89,7 +97,10 @@ class _CouponsBodyState extends State<CouponsBody> {
                 Go.to(CouponDetailsScreen(id: item.id, coupon: item));
               },
               onFavoriteTap: () {
-                context.read<CouponsCubit>().toggleFavorite(item.id);
+                context.read<FavoriteManager>().toggle(
+                      id: item.id,
+                      coupon: item,
+                    );
               },
             ),
             emptyWidget: EmptyWidget(

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
 
+import 'package:mazaya/src/config/res/config_imports.dart';
 import 'package:mazaya/src/core/network/log_interceptor.dart';
 import 'image_widgets/cached_image.dart';
 
@@ -50,6 +51,17 @@ class IconWidget extends StatelessWidget {
           colorFilter: color != null
               ? ColorFilter.mode(color!, BlendMode.srcIn)
               : null,
+          errorBuilder: (context, error, stackTrace) {
+            logDebug(
+              '❌ SVG icon error: $error\nPath: $iconPath',
+              level: Level.error,
+            );
+            return Icon(
+              Icons.broken_image_outlined,
+              size: height ?? defaultSize,
+              color: color ?? AppColors.primary,
+            );
+          },
         );
       }
 

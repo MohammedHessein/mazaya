@@ -20,8 +20,10 @@ class FavouriteBody extends StatelessWidget {
                 title: coupon.name,
                 description: coupon.description ?? '',
                 isFavorite: coupon.isFav,
-                onFavoriteTap: () =>
-                    context.read<FavouriteCubit>().toggleFavorite(coupon.id),
+                onFavoriteTap: () => context.read<FavoriteManager>().toggle(
+                      id: coupon.id,
+                      coupon: coupon,
+                    ),
                 onTap: () {
                   Go.to(CouponDetailsScreen(id: coupon.id));
                 },

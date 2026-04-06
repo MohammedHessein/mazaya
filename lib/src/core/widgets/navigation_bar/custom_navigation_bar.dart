@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mazaya/src/core/network/log_interceptor.dart';
 import 'package:mazaya/src/features/location/imports/location_imports.dart';
 
 import 'navigation_bar_entity.dart';
@@ -116,6 +117,17 @@ class CustomNavigationBar extends StatelessWidget {
         colorFilter: !isActive
             ? const ColorFilter.mode(AppColors.gray500, BlendMode.srcIn)
             : null,
+        errorBuilder: (context, error, stackTrace) {
+          logDebug(
+            '❌ SVG asset error in NavigationBar: $error\nPath: $path',
+            level: Level.error,
+          );
+          return Icon(
+            Icons.broken_image_outlined,
+            size: 24.h,
+            color: AppColors.gray500,
+          );
+        },
       );
     } else {
       return Image.asset(

@@ -59,8 +59,10 @@ class UsedCouponsCubit extends AsyncCubit<List<CouponEntity>> {
     );
   }
 
-  void toggleFavorite(int id) async {
+  /// 🔥 LOCAL UPDATE
+  void toggleLocal(int id) {
     final currentData = state.data;
+
     final updatedItems = currentData.map((coupon) {
       if (coupon.id == id) {
         return coupon.copyWith(isFav: !coupon.isFav);
@@ -69,14 +71,5 @@ class UsedCouponsCubit extends AsyncCubit<List<CouponEntity>> {
     }).toList();
 
     updateData(updatedItems);
-
-    await baseCrudUseCase.call(
-      CrudBaseParams(
-        api: ApiConstants.toggleFavorite,
-        httpRequestType: HttpRequestType.post,
-        body: {'product_id': id},
-        mapper: (json) => json,
-      ),
-    );
   }
 }

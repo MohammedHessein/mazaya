@@ -13,11 +13,13 @@ class MemberShipCard extends StatelessWidget {
           return const SizedBox.shrink();
         }
 
-        final membershipType = user.memberType == 'golden'
+        final mType = user.memberType?.toLowerCase() ?? '';
+        final membershipType = (mType.contains('gold') || mType.contains('ذهب') || mType.contains('guld'))
             ? MembershipType.golden
-            : user.memberType == 'silver'
-            ? MembershipType.sliver
-            : MembershipType.diamond;
+            : (mType.contains('silver') || mType.contains('فض') || mType.contains('silv'))
+                ? MembershipType.sliver
+                : MembershipType.diamond;
+
 
         final totalCoupons = user.userPackageCouponsLimit ?? 0;
         final usedCoupons = user.userPackageUsedCoupons ?? 0;
@@ -65,9 +67,11 @@ class MemberShipCard extends StatelessWidget {
                               ),
                         12.szW,
                         Text(
-                          LocaleKeys.userPackageName(
-                            user_package_name: user.userPackageName ?? '',
-                          ),
+                          membershipType == MembershipType.golden
+                              ? LocaleKeys.goldMember
+                              : membershipType == MembershipType.sliver
+                                  ? LocaleKeys.silverMember
+                                  : LocaleKeys.diamondMember,
                           style: context.textStyle.s14.bold.setMainTextColor,
                         ),
                       ],

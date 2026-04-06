@@ -6,7 +6,7 @@ import 'package:mazaya/src/config/res/config_imports.dart';
 import 'package:mazaya/src/core/base_crud/code/domain/base_domain_imports.dart';
 import 'package:mazaya/src/core/base_crud/code/presentation/cubit/get_base_name_and_id/get_base_name_and_id_cubit.dart';
 import 'package:mazaya/src/core/shared/cubits/user_cubit/user_cubit.dart';
-import 'package:mazaya/src/core/widgets/scaffolds/default_scaffold.dart';
+import 'package:mazaya/src/core/widgets/scaffolds/app_header_sliver.dart';
 import 'package:mazaya/src/core/widgets/scaffolds/header_config.dart';
 import 'package:mazaya/src/features/coupons/presentation/cubits/coupons_cubit.dart';
 import 'package:mazaya/src/features/coupons/presentation/widgets/coupons_body.dart';
@@ -56,12 +56,25 @@ class CouponsView extends StatelessWidget {
         },
         child: Builder(
           builder: (context) {
-            return DefaultScaffold(
-              header: HeaderConfig(
-                title: LocaleKeys.couponsTitle.tr(),
-                showBackButton: false,
+            return Scaffold(
+              body: RefreshIndicator(
+                onRefresh: () async => context.read<CouponsCubit>().refresh(),
+                color: AppColors.primary,
+                child: CustomScrollView(
+                  physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics(),
+                  ),
+                  slivers: [
+                    AppHeaderSliver(
+                      config: HeaderConfig(
+                        title: LocaleKeys.couponsTitle.tr(),
+                        showBackButton: false,
+                      ),
+                    ),
+                    const CouponsBody(),
+                  ],
+                ),
               ),
-              slivers: [const CouponsBody()],
             );
           },
         ),

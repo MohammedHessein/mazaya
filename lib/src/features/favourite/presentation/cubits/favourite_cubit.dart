@@ -2,10 +2,17 @@ part of '../imports/view_imports.dart';
 
 @injectable
 class FavouriteCubit extends PaginatedCubit<CouponEntity> {
+  FavouriteCubit()
+    : super(
+        itemMapper: (json) => CouponEntity.fromJson(
+          Map<String, dynamic>.from(json),
+        ).copyWith(isFav: true),
+      );
+
   @override
   Future<Result<Map<String, dynamic>, Failure>> fetchPageData(
     int page, {
-    String? key,
+    String? searchQuery,
   }) async {
     return await baseCrudUseCase.call(
       CrudBaseParams(
@@ -17,46 +24,22 @@ class FavouriteCubit extends PaginatedCubit<CouponEntity> {
     );
   }
 
-  @override
-  List<CouponEntity> parseItems(json) {
-    if (json == null || json['data'] == null || json['data']['data'] == null) {
-      return [];
-    }
-    return (json['data']['data'] as List).map((e) {
-      final coupon = CouponEntity.fromJson(Map<String, dynamic>.from(e));
-      return coupon.copyWith(isFav: true);
-    }).toList();
-  }
-
-  @override
-  PaginationMeta parsePagination(json) {
-    if (json == null || json['data'] == null || json['data']['meta'] == null) {
-      return const PaginationMeta(
-          totalItems: 0,
-          countItems: 0,
-          perPage: 10,
-          totalPages: 1,
-          currentPage: 1);
-    }
-    return PaginationMeta.fromJson(json['data']['meta']);
-  }
-
-  void toggleFavorite(int id) async {
+  /// 🔥 LOCAL UPDATE (add/remove)
+  void toggleLocal(int id, {CouponEntity? coupon}) {
     final currentData = state.data;
-    // Remove the item from the list if it's currently fav (unfavoriting)
-    final updatedItems =
-        currentData.items.where((coupon) => coupon.id != id).toList();
+    final currentItems = currentData.items;
 
-    setSuccess(data: currentData.copyWith(items: updatedItems));
+    final exists = currentItems.any((e) => e.id == id);
 
-    // Call API to sync with server
-    await baseCrudUseCase.call(
-      CrudBaseParams(
-        api: ApiConstants.toggleFavorite,
-        httpRequestType: HttpRequestType.post,
-        body: {'product_id': id},
-        mapper: (json) => json,
-      ),
-    );
+    if (exists) {
+      final updated = currentItems.where((e) => e.id != id).toList();
+      setSuccess(data: currentData.copyWith(items: updated));
+    } else if (coupon != null) {
+      final updated = [
+        coupon.copyWith(isFav: true),
+        ...currentItems,
+      ];
+      setSuccess(data: currentData.copyWith(items: updated));
+    }
   }
 }

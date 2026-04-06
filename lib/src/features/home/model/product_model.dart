@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:mazaya/src/features/coupons/entity/coupon_entity.dart';
 
 class ProductModel extends Equatable {
   final int id;
@@ -109,4 +110,23 @@ class ProductModel extends Equatable {
     categoryName,
     isFav,
   ];
+
+  CouponEntity toCouponEntity() {
+    return CouponEntity(
+      id: id,
+      name: name,
+      shortDescription: shortDescription,
+      description: description,
+      productImage: productImage,
+      discount: discount,
+      discountType: discountType,
+      sku: sku,
+      vendorId: vendorId,
+      vendorName: vendorName,
+      vendorImage: vendorImage,
+      categoryId: categoryId,
+      categoryName: categoryName,
+      isFav: isFav,
+    );
+  }
 }

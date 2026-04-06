@@ -8,9 +8,9 @@ class PaginatedData<T> extends Equatable {
   const PaginatedData({required this.items, required this.meta});
 
   factory PaginatedData.initial() {
-    return const PaginatedData(
-      items: [],
-      meta: PaginationMeta(
+    return PaginatedData<T>(
+      items: <T>[],
+      meta: const PaginationMeta(
         totalItems: 0,
         countItems: 0,
         perPage: 10,

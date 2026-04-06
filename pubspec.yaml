@@ -86,6 +86,7 @@ dependencies:
   image: ^4.8.0
   geolocator: ^14.0.2
   geocoding: ^4.0.0
+  app_links: ^6.4.1
 
 dev_dependencies:
   flutter_test:

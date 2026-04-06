@@ -3,6 +3,8 @@ part of 'imports/pagination_imports.dart';
 class PaginatedSliverGridView<T> extends StatelessWidget {
   final List<T> items;
   final bool isLoadingMore;
+  final bool hasMorePages;
+  final VoidCallback onLoadMore;
   final Widget Function(BuildContext context, T item, int index) itemBuilder;
   final PaginatedListConfig config;
   final Widget? loadMoreIndicator;
@@ -11,6 +13,8 @@ class PaginatedSliverGridView<T> extends StatelessWidget {
     super.key,
     required this.items,
     required this.isLoadingMore,
+    required this.hasMorePages,
+    required this.onLoadMore,
     required this.itemBuilder,
     required this.config,
     this.loadMoreIndicator,
@@ -19,7 +23,7 @@ class PaginatedSliverGridView<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final itemsCount = items.length;
-    final totalCount = itemsCount + (isLoadingMore ? 1 : 0);
+    final totalCount = itemsCount + (hasMorePages || isLoadingMore ? 1 : 0);
 
     return SliverGrid(
       gridDelegate:
@@ -32,7 +36,10 @@ class PaginatedSliverGridView<T> extends StatelessWidget {
           ),
       delegate: SliverChildBuilderDelegate((context, index) {
         if (index >= itemsCount) {
-          return LoadMoreIndicatorSliver(indicator: loadMoreIndicator);
+          return LoadMoreIndicatorSliver(
+            indicator: loadMoreIndicator,
+            onLoadMore: onLoadMore,
+          );
         }
         final itemWidget = itemBuilder(context, items[index], index);
 

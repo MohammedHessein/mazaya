@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:mazaya/src/features/coupons/presentation/cubits/coupon_details_cubit.dart';
 
 import '../view/view_imports.dart';
@@ -77,7 +78,21 @@ class CouponDetailsContent extends StatelessWidget {
                   children: [
                     CustomCircularActionButton(
                       icon: AppAssets.svg.baseSvg.share.path,
-                      onTap: () {},
+                      onTap: () {
+                        debugPrint('🚀 Share Clicked for product: ${coupon.id}');
+                        final box = context.findRenderObject() as RenderBox?;
+                        final String shareLink = 'https://mazaya.com/coupon?id=${coupon.id}';
+                        final String message = '${coupon.vendorName ?? ''}\n${coupon.name}\n\n$shareLink';
+
+                        SharePlus.instance.share(
+                          ShareParams(
+                            text: message,
+                            sharePositionOrigin: box != null
+                                ? box.localToGlobal(Offset.zero) & box.size
+                                : null,
+                          ),
+                        );
+                      },
                     ),
                     10.szW,
                     CustomCircularActionButton(
@@ -86,9 +101,12 @@ class CouponDetailsContent extends StatelessWidget {
                           ? Icons.favorite
                           : Icons.favorite_border,
                       onTap: () {
-                        context.read<CouponDetailsCubit>().toggleFavorite(
-                          coupon.id,
+                        context.read<FavoriteManager>().toggle(
+                          id: coupon.id,
+                          coupon: coupon,
                         );
+                        // Also update the local state of this specific Details Cubit
+                        context.read<CouponDetailsCubit>().toggleLocal(coupon.id);
                       },
                     ),
                   ],

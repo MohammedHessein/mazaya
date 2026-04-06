@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/network/log_interceptor.dart';
 
 class CustomAvatar extends StatelessWidget {
   final String icon;
@@ -31,7 +32,22 @@ class CustomAvatar extends StatelessWidget {
       ),
       child: Padding(
         padding: padding ?? EdgeInsets.all(AppPadding.pH8),
-        child: SvgPicture.asset(icon, height: height, width: width),
+        child: SvgPicture.asset(
+          icon,
+          height: height,
+          width: width,
+          errorBuilder: (context, error, stackTrace) {
+            logDebug(
+              '❌ SVG avatar error: $error\nPath: $icon',
+              level: Level.error,
+            );
+            return Icon(
+              Icons.person_outline,
+              size: height,
+              color: iconColor ?? AppColors.primary,
+            );
+          },
+        ),
       ),
     );
   }

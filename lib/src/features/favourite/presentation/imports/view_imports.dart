@@ -10,6 +10,7 @@ import '../../../location/imports/location_imports.dart';
 
 import 'package:mazaya/src/core/navigation/navigator.dart';
 import 'package:mazaya/src/features/coupons/presentation/view/coupon_details_screen.dart';
+import 'package:mazaya/src/core/utils/favorite_manager.dart';
 
 part '../cubits/favourite_cubit.dart';
 part '../view/favourite_screen.dart';

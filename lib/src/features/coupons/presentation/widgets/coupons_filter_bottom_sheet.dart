@@ -21,8 +21,16 @@ class CouponsFilterBottomSheet extends StatefulWidget {
 }
 
 class CouponsFilterBottomSheetState extends State<CouponsFilterBottomSheet> {
-  RegionEntity? selectedRegion;
-  CategoryEntity? selectedCategory;
+  RegionEntity? localRegion;
+  CategoryEntity? localCategory;
+
+  @override
+  void initState() {
+    super.initState();
+    final cubit = context.read<CouponsCubit>();
+    localRegion = cubit.selectedRegion;
+    localCategory = cubit.selectedCategory;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +43,25 @@ class CouponsFilterBottomSheetState extends State<CouponsFilterBottomSheet> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(
-            child: Text(
-              LocaleKeys.searchFor,
-              style: context.textStyle.s18.bold.setMainTextColor,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextButton(
+                onPressed: () {
+                  context.read<CouponsCubit>().clearFilters();
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  LocaleKeys.reset,
+                  style: context.textStyle.s14.medium.setPrimaryColor,
+                ),
+              ),
+              Text(
+                LocaleKeys.searchFor,
+                style: context.textStyle.s18.bold.setMainTextColor,
+              ),
+              const SizedBox(width: 50), // For balance
+            ],
           ),
           20.szH,
           BlocBuilder<
@@ -54,11 +76,11 @@ class CouponsFilterBottomSheetState extends State<CouponsFilterBottomSheet> {
 
               return AppDropdown<RegionEntity>(
                 items: state.dataState.data ?? [],
-                value: selectedRegion,
+                value: localRegion,
                 itemAsString: (region) => region.name,
                 onChanged: (region) {
                   setState(() {
-                    selectedRegion = region;
+                    localRegion = region;
                   });
                 },
                 hint: isEgypt ? LocaleKeys.city : LocaleKeys.municipality,
@@ -74,13 +96,13 @@ class CouponsFilterBottomSheetState extends State<CouponsFilterBottomSheet> {
             builder: (context, state) {
               return AppDropdown<CategoryEntity>(
                 items: state.dataState.data ?? [],
-                value: selectedCategory,
-                itemAsString: (cat) => cat.name,
+                value: localCategory,
                 onChanged: (cat) {
                   setState(() {
-                    selectedCategory = cat;
+                    localCategory = cat;
                   });
                 },
+                itemAsString: (cat) => cat.name,
                 hint: LocaleKeys.section,
                 isLoading: state.dataState.isLoading,
               );
@@ -91,8 +113,8 @@ class CouponsFilterBottomSheetState extends State<CouponsFilterBottomSheet> {
             title: LocaleKeys.search,
             onTap: () async {
               context.read<CouponsCubit>().applyFilters(
-                categoryId: selectedCategory?.id,
-                locationId: selectedRegion?.id,
+                category: localCategory,
+                region: localRegion,
               );
               Navigator.pop(context);
             },

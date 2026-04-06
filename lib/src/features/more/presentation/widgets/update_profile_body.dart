@@ -31,11 +31,25 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
     _emailController.addListener(_onChanged);
     _addressController.addListener(_onChanged);
 
-    // Initialize location hierarchy from UserCubit
-    final userState = UserCubit.instance.state;
-    _selectedCountry = userState.selectedCountry;
-    _selectedCity = userState.selectedCity;
-    _selectedMunicipality = userState.selectedRegion;
+    // Initialize location hierarchy from UserModel IDs (instead of stale cache)
+    _selectedCountry = user.locationGrandparentId != null
+        ? CountryEntity(
+            id: user.locationGrandparentId!,
+            name: user.locationGrandparentName ?? '',
+          )
+        : null;
+    _selectedCity = user.locationParentId != null
+        ? CityEntity(
+            id: user.locationParentId!,
+            name: user.locationParentName ?? '',
+          )
+        : null;
+    _selectedMunicipality = user.locationId != null
+        ? RegionEntity(
+            id: user.locationId!,
+            name: user.locationName ?? '',
+          )
+        : null;
 
     // Trigger data fetching for dependent lists if initial values exist
     WidgetsBinding.instance.addPostFrameCallback((_) {

@@ -38,6 +38,9 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     params.selectedIndexNotifier.addListener(_onTabChange);
+    if (UserCubit.instance.isUserLoggedIn) {
+      UserCubit.instance.getProfile();
+    }
   }
 
   void _onTabChange() {
@@ -73,6 +76,7 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
             }
           },
           child: Scaffold(
+            key: ValueKey(context.locale.toString()),
             bottomNavigationBar: CustomNavigationBar(
               selectedIndex: value,
               onTabChange: (newIndex) => params.updateNavValue(newIndex),
@@ -174,25 +178,31 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
                       },
                       child: Builder(
                         builder: (context) {
-                          return CustomScrollView(
-                            physics: const BouncingScrollPhysics(),
-                            slivers: [
-                              BlocBuilder<UserCubit, UserState>(
-                                builder: (context, state) {
-                                  return AppHeaderSliver(
-                                    config: HeaderConfig(
-                                      type: ScaffoldHeaderType.standard,
-                                      imageUrl: AppAssets.svg.baseSvg.profile.path,
-                                      userName: state.userModel.name,
-                                      showBackButton: false,
-                                      title: LocaleKeys.couponsTitle.tr(),
-                                    ),
-                                  );
-                                }
+                          return RefreshIndicator(
+                            onRefresh: () async => context.read<CouponsCubit>().refresh(),
+                            color: AppColors.primary,
+                            child: CustomScrollView(
+                              physics: const BouncingScrollPhysics(
+                                parent: AlwaysScrollableScrollPhysics(),
                               ),
-                              const CouponsBody(),
-                              const SliverToBoxAdapter(child: SizedBox(height: 100)),
-                            ],
+                              slivers: [
+                                BlocBuilder<UserCubit, UserState>(
+                                  builder: (context, state) {
+                                    return AppHeaderSliver(
+                                      config: HeaderConfig(
+                                        type: ScaffoldHeaderType.standard,
+                                        imageUrl: AppAssets.svg.baseSvg.profile.path,
+                                        userName: state.userModel.name,
+                                        showBackButton: false,
+                                        title: LocaleKeys.couponsTitle.tr(),
+                                      ),
+                                    );
+                                  }
+                                ),
+                                const CouponsBody(),
+                                const SliverToBoxAdapter(child: SizedBox(height: 100)),
+                              ],
+                            ),
                           );
                         }
                       ),

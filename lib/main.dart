@@ -16,6 +16,8 @@ import 'src/core/navigation/constants/imports_constants.dart';
 import 'src/core/navigation/go.dart';
 import 'src/core/navigation/page_router/implementation/imports_page_router.dart';
 import 'src/core/navigation/page_router/imports_page_router_builder.dart';
+import 'src/core/navigation/deep_link_service.dart';
+
 import 'src/core/network/backend_configuation.dart';
 import 'src/core/shared/bloc_observer.dart';
 import 'src/core/shared/service_locators/setup_service_locators.dart';
@@ -61,6 +63,9 @@ void main() async {
       ),
     ),
   );
+
+  // Initialize Deep Linking
+  DeepLinkService().init();
 
   // Restart animations when hot reload happens (developer experience)
   Animate.restartOnHotReload = true;

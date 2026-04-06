@@ -55,82 +55,68 @@ class _PaginatedSliverListWidgetState<C extends PaginatedCubit<T>, T>
     _cubit = context.read<C>();
   }
 
-  void _onScrollNotification(ScrollNotification notification) {
-    if (notification is ScrollUpdateNotification) {
-      final metrics = notification.metrics;
-      final maxScroll = metrics.maxScrollExtent;
-      final currentScroll = metrics.pixels;
-      final threshold = maxScroll * widget.loadMoreThreshold;
-
-      if (currentScroll >= threshold && _cubit.canLoadMore) {
-        _cubit.loadMore();
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    return NotificationListener<ScrollNotification>(
-      onNotification: (notification) {
-        _onScrollNotification(notification);
-        return false;
+    return BlocBuilder<C, AsyncState<PaginatedData<T>>>(
+      builder: (context, state) {
+        // Show shimmer only on initial load or loading (not on loadingMore)
+        if ((state.status == BaseStatus.initial ||
+                state.status == BaseStatus.loading) &&
+            widget.skeletonBuilder != null) {
+          return Skeletonizer.sliver(
+            enabled: true,
+            child: PaginatedSliverSkeletonList(
+              config: widget.config,
+              skeletonBuilder: widget.skeletonBuilder!,
+              skeletonItemCount: widget.skeletonItemCount,
+            ),
+          );
+        }
+
+        // Show error state
+        if (state.status == BaseStatus.error) {
+          return SliverToBoxAdapter(
+            child:
+                widget.errorBuilder?.call(
+                  context,
+                  state.errorMessage ?? '',
+                ) ??
+                ErrorView(error: state.errorMessage ?? ''),
+          );
+        }
+
+        // Show empty state
+        final data = state.data;
+        if (data.items.isEmpty && state.status == BaseStatus.success) {
+          return SliverToBoxAdapter(
+            child: widget.emptyWidget ?? const NotContainData(),
+          );
+        }
+
+        // Show list/grid with data
+        if (widget.config.viewType == ListViewType.grid) {
+          return PaginatedSliverGridView<T>(
+            items: data.items,
+            isLoadingMore: state.status == BaseStatus.loadingMore,
+            hasMorePages: _cubit.hasMorePages,
+            onLoadMore: () => _cubit.loadMore(),
+            itemBuilder: widget.itemBuilder,
+            config: widget.config,
+            loadMoreIndicator: widget.loadMoreIndicator,
+          );
+        } else {
+          return PaginatedSliverListView<T>(
+            items: data.items,
+            isLoadingMore: state.status == BaseStatus.loadingMore,
+            hasMorePages: _cubit.hasMorePages,
+            onLoadMore: () => _cubit.loadMore(),
+            itemBuilder: widget.itemBuilder,
+            config: widget.config,
+            loadMoreIndicator: widget.loadMoreIndicator,
+          );
+        }
       },
-      child: BlocBuilder<C, AsyncState<PaginatedData<T>>>(
-        builder: (context, state) {
-          // Show shimmer only on initial load or loading (not on loadingMore)
-          if ((state.status == BaseStatus.initial ||
-                  state.status == BaseStatus.loading) &&
-              widget.skeletonBuilder != null) {
-            return Skeletonizer.sliver(
-              enabled: true,
-              child: PaginatedSliverSkeletonList(
-                config: widget.config,
-                skeletonBuilder: widget.skeletonBuilder!,
-                skeletonItemCount: widget.skeletonItemCount,
-              ),
-            );
-          }
-
-          // Show error state
-          if (state.status == BaseStatus.error) {
-            return SliverToBoxAdapter(
-              child:
-                  widget.errorBuilder?.call(
-                    context,
-                    state.errorMessage ?? '',
-                  ) ??
-                  ErrorView(error: state.errorMessage ?? ''),
-            );
-          }
-
-          // Show empty state
-          final data = state.data;
-          if (data.items.isEmpty && state.status == BaseStatus.success) {
-            return SliverToBoxAdapter(
-              child: widget.emptyWidget ?? const NotContainData(),
-            );
-          }
-
-          // Show list/grid with data
-          if (widget.config.viewType == ListViewType.grid) {
-            return PaginatedSliverGridView<T>(
-              items: data.items,
-              isLoadingMore: state.status == BaseStatus.loadingMore,
-              itemBuilder: widget.itemBuilder,
-              config: widget.config,
-              loadMoreIndicator: widget.loadMoreIndicator,
-            );
-          } else {
-            return PaginatedSliverListView<T>(
-              items: data.items,
-              isLoadingMore: state.status == BaseStatus.loadingMore,
-              itemBuilder: widget.itemBuilder,
-              config: widget.config,
-              loadMoreIndicator: widget.loadMoreIndicator,
-            );
-          }
-        },
-      ),
     );
   }
 }

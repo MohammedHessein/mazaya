@@ -28,10 +28,7 @@ class ConstantManager {
   static const String sawOnboarding = 'sawOnboarding';
   static const String selectedLocation = 'selectedLocation';
 
-  static Map<String, dynamic>? paginateJson(int page) => {
-    'page': page,
-    'per_page': pgSize,
-  };
+  static Map<String, dynamic>? paginateJson(int page) => {'page': page};
 }
 
 final class SecureLocalVariableKeys {

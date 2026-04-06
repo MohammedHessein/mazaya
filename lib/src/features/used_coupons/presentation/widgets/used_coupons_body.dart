@@ -36,9 +36,10 @@ class UsedCouponsBody extends StatelessWidget {
                         description: coupon.shortDescription ?? '',
                         imageUrl: coupon.productImage,
                         isFavorite: coupon.isFav,
-                        onFavoriteTap: () => context
-                            .read<UsedCouponsCubit>()
-                            .toggleFavorite(coupon.id),
+                        onFavoriteTap: () => context.read<FavoriteManager>().toggle(
+                              id: coupon.id,
+                              coupon: coupon,
+                            ),
                         onTap: () {
                           Go.to(CouponDetailsScreen(id: coupon.id));
                         },

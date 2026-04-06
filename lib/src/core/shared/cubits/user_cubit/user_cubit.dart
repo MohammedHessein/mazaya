@@ -36,6 +36,7 @@ class UserCubit extends Cubit<UserState> with UserUtils {
     final cityMap = CacheStorage.read(_selectedCityKey, isDecoded: true);
     final regionMap = CacheStorage.read(_selectedRegionKey, isDecoded: true);
 
+    if (isClosed) return;
     emit(
       state.copyWith(
         userModel: user,
@@ -61,6 +62,7 @@ class UserCubit extends Cubit<UserState> with UserUtils {
       if (region != null) CacheStorage.write(_selectedRegionKey, region.toJson()),
     ]);
 
+    if (isClosed) return;
     emit(
       state.copyWith(
         selectedCountry: country,
@@ -77,6 +79,7 @@ class UserCubit extends Cubit<UserState> with UserUtils {
       if (clearOnboarding) CacheStorage.delete(ConstantManager.sawOnboarding),
     ]);
     clearUser();
+    if (isClosed) return;
     emit(state.copyWith(userStatus: UserStatus.loggedOut));
   }
 
@@ -86,6 +89,7 @@ class UserCubit extends Cubit<UserState> with UserUtils {
 
   Future<void> updateUser(UserModel user) async {
     await _saveUser(user);
+    if (isClosed) return;
     emit(state.copyWith(userModel: user));
   }
 
@@ -118,6 +122,7 @@ class UserCubit extends Cubit<UserState> with UserUtils {
     log('userMap $userMap, token $token');
     if (token != null && userMap != null) {
       injector<NetworkService>().setToken(token);
+      if (isClosed) return false;
       emit(
         state.copyWith(
           userModel: UserModel.fromJson(userMap),

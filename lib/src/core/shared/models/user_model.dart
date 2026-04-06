@@ -10,6 +10,10 @@ class UserModel {
   final String? address;
   final int? locationId;
   final String? locationName;
+  final int? locationParentId;
+  final String? locationParentName;
+  final int? locationGrandparentId;
+  final String? locationGrandparentName;
   final String? userPackageName;
   final String? memberType;
   final String? userPackageImage;
@@ -42,6 +46,10 @@ class UserModel {
     this.address,
     this.locationId,
     this.locationName,
+    this.locationParentId,
+    this.locationParentName,
+    this.locationGrandparentId,
+    this.locationGrandparentName,
     this.userPackageName,
     this.memberType,
     this.userPackageImage,
@@ -70,6 +78,10 @@ class UserModel {
     address: null,
     locationId: null,
     locationName: null,
+    locationParentId: null,
+    locationParentName: null,
+    locationGrandparentId: null,
+    locationGrandparentName: null,
     userPackageName: null,
     memberType: null,
     userPackageImage: null,
@@ -98,6 +110,10 @@ class UserModel {
     String? address,
     int? locationId,
     String? locationName,
+    int? locationParentId,
+    String? locationParentName,
+    int? locationGrandparentId,
+    String? locationGrandparentName,
     String? userPackageName,
     String? memberType,
     String? userPackageImage,
@@ -125,6 +141,12 @@ class UserModel {
       address: address ?? this.address,
       locationId: locationId ?? this.locationId,
       locationName: locationName ?? this.locationName,
+      locationParentId: locationParentId ?? this.locationParentId,
+      locationParentName: locationParentName ?? this.locationParentName,
+      locationGrandparentId:
+          locationGrandparentId ?? this.locationGrandparentId,
+      locationGrandparentName:
+          locationGrandparentName ?? this.locationGrandparentName,
       userPackageName: userPackageName ?? this.userPackageName,
       memberType: memberType ?? this.memberType,
       userPackageImage: userPackageImage ?? this.userPackageImage,
@@ -180,6 +202,10 @@ class UserModel {
       address: user['address'],
       locationId: _toInt(user['location_id']),
       locationName: user['location_name'] ?? user['city'] ?? '',
+      locationParentId: _toInt(user['location_parent_id']),
+      locationParentName: user['location_parent_name'],
+      locationGrandparentId: _toInt(user['location_grandparent_id']),
+      locationGrandparentName: user['location_grandparent_name'],
       userPackageName: user['user_package_name'],
       memberType: user['member_type'],
       userPackageImage: user['user_package_image'],
@@ -212,6 +238,10 @@ class UserModel {
     'address': address,
     'location_id': locationId,
     'location_name': locationName,
+    'location_parent_id': locationParentId,
+    'location_parent_name': locationParentName,
+    'location_grandparent_id': locationGrandparentId,
+    'location_grandparent_name': locationGrandparentName,
     'user_package_name': userPackageName,
     'member_type': memberType,
     'user_package_image': userPackageImage,

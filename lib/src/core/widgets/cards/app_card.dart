@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mazaya/src/config/res/assets.gen.dart';
 import 'package:mazaya/src/config/res/config_imports.dart';
 import 'package:mazaya/src/core/extensions/context_extension.dart';
 import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
@@ -58,29 +56,12 @@ class AppCard extends StatelessWidget {
                     color: AppColors.gray100,
                     borderRadius: BorderRadius.circular(AppCircular.r8),
                   ),
-                  child: ClipRRect(
+                  child: CachedImage(
+                    url: imageUrl ?? '',
+                    fit: BoxFit.cover,
+                    width: 90.w,
+                    height: 90.h,
                     borderRadius: BorderRadius.circular(AppCircular.r8),
-                    child: (imageUrl != null && imageUrl!.isNotEmpty)
-                        ? (imageUrl!.startsWith('http')
-                              ? CachedImage(url: imageUrl!, fit: BoxFit.cover)
-                              : (imageUrl!.endsWith('.svg')
-                                    ? Padding(
-                                        padding: EdgeInsets.all(8.w),
-                                        child: SvgPicture.asset(
-                                          imageUrl!,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      )
-                                    : Image.asset(
-                                        imageUrl!,
-                                        fit: BoxFit.cover,
-                                      )))
-                        : Padding(
-                            padding: EdgeInsets.all(12.w),
-                            child: AppAssets.svg.appSvg.appIconPart.svg(
-                              fit: BoxFit.cover,
-                            ),
-                          ),
                   ),
                 ),
                 if (onFavoriteTap != null)

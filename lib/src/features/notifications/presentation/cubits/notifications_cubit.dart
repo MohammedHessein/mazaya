@@ -2,10 +2,16 @@ part of '../imports/view_imports.dart';
 
 @injectable
 class NotificationsCubit extends PaginatedCubit<NotificationEntity> {
+  NotificationsCubit()
+    : super(
+        itemMapper: (json) =>
+            NotificationEntity.fromJson(Map<String, dynamic>.from(json)),
+      );
+
   @override
   Future<Result<Map<String, dynamic>, Failure>> fetchPageData(
     int page, {
-    String? key,
+    String? searchQuery,
   }) async {
     return await baseCrudUseCase.call(
       CrudBaseParams(
@@ -15,29 +21,6 @@ class NotificationsCubit extends PaginatedCubit<NotificationEntity> {
         mapper: (json) => json,
       ),
     );
-  }
-
-  @override
-  List<NotificationEntity> parseItems(json) {
-    if (json == null || json['data'] == null || json['data']['data'] == null) {
-      return [];
-    }
-    return (json['data']['data'] as List)
-        .map((e) => NotificationEntity.fromJson(Map<String, dynamic>.from(e)))
-        .toList();
-  }
-
-  @override
-  PaginationMeta parsePagination(json) {
-    if (json == null || json['data'] == null || json['data']['meta'] == null) {
-      return const PaginationMeta(
-          totalItems: 0,
-          countItems: 0,
-          perPage: 10,
-          totalPages: 1,
-          currentPage: 1);
-    }
-    return PaginationMeta.fromJson(json['data']['meta']);
   }
 
   void clearData() async {

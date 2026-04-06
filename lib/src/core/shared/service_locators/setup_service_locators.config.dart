@@ -44,6 +44,7 @@ import '../../base_crud/code/domain/usecases/get_base_id_and_name_usecase.dart'
     as _i763;
 import '../../network/dio_service.dart' as _i37;
 import '../../network/network_service.dart' as _i632;
+import '../../utils/favorite_manager.dart' as _i41;
 import '../cubits/user_cubit/user_cubit.dart' as _i996;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -73,6 +74,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i241.BaseRemoteDataSource>(
       () => _i241.BaseRemoteDataSourceImpl(
         dioService: gh<_i632.NetworkService>(),
+      ),
+    );
+    gh.lazySingleton<_i41.FavoriteManager>(
+      () => _i41.FavoriteManager(
+        gh<_i1022.CouponsCubit>(),
+        gh<_i203.FavouriteCubit>(),
+        gh<_i519.UsedCouponsCubit>(),
+        gh<_i246.HomeCubit>(),
       ),
     );
     gh.lazySingleton<_i267.BaseRepository>(

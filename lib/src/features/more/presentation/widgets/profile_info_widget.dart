@@ -8,15 +8,24 @@ class ProfileInfoWidget extends StatelessWidget {
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
         final user = state.userModel;
-        final membershipType = user.memberType == 'golden'
+        final mType = user.memberType?.toLowerCase() ?? '';
+        final membershipType =
+            (mType.contains('gold') ||
+                mType.contains('ذهب') ||
+                mType.contains('guld'))
             ? MembershipType.golden
-            : user.memberType == 'silver'
+            : (mType.contains('silver') ||
+                  mType.contains('فض') ||
+                  mType.contains('silv'))
             ? MembershipType.sliver
             : MembershipType.diamond;
         final userName = user.name;
-        final subTitle = LocaleKeys.memberType(
-          member_type: user.memberType ?? '',
-        );
+        final subTitle = membershipType == MembershipType.golden
+            ? LocaleKeys.goldMember
+            : membershipType == MembershipType.sliver
+            ? LocaleKeys.silverMember
+            : LocaleKeys.diamondMember;
+        final hasPackage = user.userPackageName != null;
 
         return Column(
           mainAxisSize: MainAxisSize.min,
@@ -25,7 +34,7 @@ class ProfileInfoWidget extends StatelessWidget {
               userName.isNotEmpty ? userName : LocaleKeys.visitorText.tr(),
               style: context.textStyle.s18.bold.setMainTextColor,
             ),
-            if (subTitle.isNotEmpty) ...[
+            if (hasPackage && subTitle.isNotEmpty) ...[
               12.szH,
               Container(
                 padding: EdgeInsets.symmetric(

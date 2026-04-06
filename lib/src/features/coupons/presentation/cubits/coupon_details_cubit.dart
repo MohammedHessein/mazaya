@@ -24,19 +24,10 @@ class CouponDetailsCubit extends AsyncCubit<CouponEntity> {
     updateData(coupon);
   }
 
-  void toggleFavorite(int id) async {
-    final currentData = state.data;
-    final updatedData = currentData.copyWith(isFav: !currentData.isFav);
-    updateData(updatedData);
-
-    // Call API
-    await baseCrudUseCase.call(
-      CrudBaseParams(
-        api: ApiConstants.toggleFavorite,
-        httpRequestType: HttpRequestType.post,
-        body: {'product_id': id},
-        mapper: (json) => json,
-      ),
-    );
+  /// 🔥 LOCAL UPDATE
+  void toggleLocal(int id) {
+    if (state.data.id == id) {
+      updateData(state.data.copyWith(isFav: !state.data.isFav));
+    }
   }
 }

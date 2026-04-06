@@ -2,11 +2,14 @@ import 'dart:async';
 import 'dart:convert';
 import "dart:developer";
 import 'dart:io';
+
 import "package:firebase_core/firebase_core.dart";
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:mazaya/src/config/res/config_imports.dart';
 import 'package:mazaya/src/core/network/un_authenticated_interceptor.dart';
+import 'package:mazaya/src/core/navigation/navigator.dart';
+import 'package:mazaya/src/features/coupons/presentation/view/coupon_details_screen.dart';
 
 part 'navigation_types.dart';
 part 'notification_routes.dart';
@@ -107,6 +110,7 @@ class NotificationService {
           notification?.title ??
           message.data['title'] ??
           message.data['Title'] ??
+          (message.data['data'] as Map?)?['title'] ??
           'إشعار جديد';
 
       body =
@@ -114,6 +118,8 @@ class NotificationService {
           message.data['body'] ??
           message.data['Body'] ??
           message.data['message'] ??
+          message.data['text'] ??
+          (message.data['data'] as Map?)?['text'] ??
           message.data['body_ar'] ??
           message.data['body_en'] ??
           '';
@@ -122,6 +128,7 @@ class NotificationService {
       title =
           message.data['title'] ??
           message.data['Title'] ??
+          (message.data['data'] as Map?)?['title'] ??
           notification?.title ??
           'إشعار جديد';
 
@@ -129,6 +136,8 @@ class NotificationService {
           message.data['message'] ??
           message.data['body'] ??
           message.data['Body'] ??
+          message.data['text'] ??
+          (message.data['data'] as Map?)?['text'] ??
           message.data['body_ar'] ??
           message.data['body_en'] ??
           notification?.body ??

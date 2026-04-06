@@ -712,6 +712,9 @@ abstract class LocaleKeys {
   static const String _diamondMembership = 'diamond_membership';
   static String get diamondMembership => _diamondMembership.tr();
 
+  static const String _member = 'member';
+  static String get member => _member.tr();
+
   static const String _silverMember = 'silver_member';
   static String get silverMember => _silverMember.tr();
 
@@ -861,6 +864,12 @@ abstract class LocaleKeys {
 
   static const String _noCouponsDesc = 'no_coupons_desc';
   static String get noCouponsDesc => _noCouponsDesc.tr();
+
+  static const String _region = 'region';
+  static String get region => _region.tr();
+
+  static const String _selectRegion = 'select_region';
+  static String get selectRegion => _selectRegion.tr();
 
   static const String _reset = 'reset';
   static String get reset => _reset.tr();

@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mazaya/src/core/extensions/context_extension.dart';
-import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
-import 'package:mazaya/src/core/extensions/widgets/sized_box_helper.dart';
-import 'package:mazaya/src/core/widgets/image_widgets/cached_image.dart';
+import 'package:mazaya/src/features/coupons/presentation/view/view_imports.dart';
 
 import '../../model/category_model.dart';
 
