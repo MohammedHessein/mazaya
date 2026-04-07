@@ -1,3 +1,4 @@
+import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,19 +37,90 @@ class ScanCouponBody extends StatefulWidget {
 
 class _ScanCouponBodyState extends State<ScanCouponBody>
     with WidgetsBindingObserver {
-  late final MobileScannerController controller;
+  MobileScannerController? _controller; // ✅ nullable بدل late
   bool isScanned = false;
   String? scannedCode;
+  bool _hasError = false;
+  bool _isPermissionDenied = false;
+  int _scannerKey =
+      0; // ✅ بنزود الـ key ده عشان نـ force rebuild للـ MobileScanner
+
+  MobileScannerController _buildController() {
+    return MobileScannerController(
+      detectionSpeed: DetectionSpeed.noDuplicates,
+      formats: [BarcodeFormat.qrCode],
+      autoStart: false, // ✅ false دايماً، إحنا اللي بنبدأه
+    );
+  }
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    controller = MobileScannerController(
-      detectionSpeed: DetectionSpeed.noDuplicates,
-      formats: [BarcodeFormat.qrCode],
-      autoStart: true,
-    );
+    _controller = _buildController();
+    if (widget.isActive) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _startCamera());
+    }
+  }
+
+  Future<void> _startCamera() async {
+    if (!mounted || !widget.isActive) return;
+    final ctrl = _controller;
+    if (ctrl == null) return;
+
+    try {
+      await ctrl.start();
+    } catch (e) {
+      debugPrint('Error starting camera: $e');
+      if (mounted) {
+        setState(() {
+          _hasError = true;
+          _isPermissionDenied =
+              e.toString().contains('permissionDenied') ||
+              e.toString().toLowerCase().contains('permission');
+        });
+      }
+    }
+  }
+
+  void _stopCamera() {
+    _controller?.stop();
+  }
+
+  // ✅ الحل الحقيقي: بنـ dispose الـ controller القديم ثم بنبني واحد جديد
+  // وبنزود الـ _scannerKey عشان Flutter يشيل الـ MobileScanner widget القديم
+  // ويبني واحد جديد بالـ controller الجديد من الأول
+  Future<void> _recreateController() async {
+    if (!mounted) return;
+
+    // 1. نوقف ونـ dispose الـ controller القديم
+    final old = _controller;
+    _controller = null; // نفصله أولاً عشان الـ widget ميستخدمهوش
+
+    if (old != null) {
+      try {
+        await old.stop();
+      } catch (_) {}
+      old.dispose();
+    }
+
+    if (!mounted) return;
+
+    // 2. نبني controller جديد ونزود الـ key
+    // الـ key الجديد هيخلي Flutter يـ unmount الـ MobileScanner القديم
+    // ويبني واحد جديد تماماً مع الـ controller الجديد
+    final newController = _buildController();
+    setState(() {
+      _controller = newController;
+      _scannerKey++; // ✅ ده اللي بيحل المشكلة
+      _hasError = false;
+      _isPermissionDenied = false;
+      isScanned = false;
+      scannedCode = null;
+    });
+
+    // 3. بعد ما الـ widget يتبني، نبدأ الكاميرا
+    WidgetsBinding.instance.addPostFrameCallback((_) => _startCamera());
   }
 
   @override
@@ -63,27 +135,17 @@ class _ScanCouponBodyState extends State<ScanCouponBody>
     }
   }
 
-  void _startCamera() {
-    if (!controller.value.isRunning && widget.isActive) {
-      controller.start().catchError((e) {
-        debugPrint('Error starting camera: $e');
-      });
-    }
-  }
-
-  void _stopCamera() {
-    if (controller.value.isRunning) {
-      controller.stop();
-    }
-  }
-
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (!controller.value.isInitialized) return;
-
     switch (state) {
       case AppLifecycleState.resumed:
-        if (widget.isActive) _startCamera();
+        if (widget.isActive && !_hasError) {
+          // Only auto-start if there's no pre-existing error.
+          // If we have an error (e.g. Deny), wait for manual Retry.
+          if (_controller?.value.isRunning == false) {
+            _startCamera();
+          }
+        }
         break;
       case AppLifecycleState.inactive:
       case AppLifecycleState.paused:
@@ -98,137 +160,185 @@ class _ScanCouponBodyState extends State<ScanCouponBody>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    controller.dispose();
+    _controller?.dispose();
     super.dispose();
   }
 
   void _onDetect(BarcodeCapture capture) {
     if (isScanned) return;
-
-    final String? code = capture.barcodes.first.rawValue;
-    if (code != null) {
-      setState(() {
-        isScanned = true;
-        scannedCode = code;
-      });
+    for (final barcode in capture.barcodes) {
+      if (barcode.format == BarcodeFormat.qrCode && barcode.rawValue != null) {
+        setState(() {
+          isScanned = true;
+          scannedCode = barcode.rawValue;
+        });
+        context.read<ScanCubit>().scanQR(barcode.rawValue!, widget.couponId);
+        break;
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ScanCubit, AsyncState<ScanResult>>(
+    final ctrl = _controller;
+
+    return BlocConsumer<ScanCubit, AsyncState<ScanResult>>(
       listener: (context, state) {
         if (state.isSuccess) {
           showDefaultBottomSheet(
             context: context,
             child: ScanSuccessBottomSheet(scanResult: state.data),
-          ).then((value) {
-            if (mounted) {
+          ).then((_) {
+            if (mounted)
               setState(() {
                 isScanned = false;
                 scannedCode = null;
               });
-            }
           });
         } else if (state.isError) {
-          // Provide visual feedback for errors
+          ScaffoldMessenger.of(context).removeCurrentSnackBar();
           MessageUtils.showSnackBar(
+            context: context,
             message: state.errorMessage ?? LocaleKeys.operationFaild,
             baseStatus: BaseStatus.error,
           );
-          if (mounted) {
-            setState(() {
-              isScanned = false;
-            });
-          }
+          if (mounted) setState(() => isScanned = false);
         }
       },
+      builder: (context, state) {
+        return Container(
+          color: AppColors.black,
+          child: Stack(
+            children: [
+              // ✅ الـ key هنا هو اللي بيضمن إن Flutter يعمل dispose للـ widget
+              // القديم ويبني واحد جديد لما نزود _scannerKey
+              if (!_hasError && ctrl != null)
+                MobileScanner(
+                  key: ValueKey(_scannerKey),
+                  controller: ctrl,
+                  onDetect: _onDetect,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, child) {
+                    // One-shot error handling to prevent flicker loops
+                    if (!_hasError) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        if (mounted && !_hasError) {
+                          _controller?.stop();
+                          setState(() {
+                            _hasError = true;
+                            _isPermissionDenied =
+                                error.errorCode ==
+                                MobileScannerErrorCode.permissionDenied;
+                          });
+                        }
+                      });
+                    }
+                    return const SizedBox.shrink();
+                  },
+                ),
+
+              if (!_hasError) const ScannerOverlay(),
+
+              if (!_hasError)
+                Positioned(
+                  bottom: 120.h,
+                  left: 0,
+                  right: 0,
+                  child: _buildBottomControls(context),
+                ),
+
+              if (_hasError) _buildErrorFullScreen(context),
+
+              if (state.isLoading)
+                Positioned.fill(
+                  child: Container(
+                    color: AppColors.black.withValues(alpha: 0.5),
+                    child: const Center(
+                      child: CircularProgressIndicator(color: AppColors.white),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildBottomControls(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          LocaleKeys.placeQrCode,
+          style: context.textStyle.s17.setWhiteColor.copyWith(
+            color: AppColors.white.withValues(alpha: 0.8),
+          ),
+        ),
+        30.szH,
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: LoadingButtonWithIcon(
+            title: LocaleKeys.scanCouponCode,
+            icon: AppAssets.svg.baseSvg.coupon.path,
+            onTap: () async {
+              final payload = scannedCode?.isNotEmpty == true ? scannedCode : null;
+
+              if (payload == null) {
+                ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                MessageUtils.showSnackBar(
+                  context: context,
+                  message: LocaleKeys.pleaseScanACodeFirst,
+                  baseStatus: BaseStatus.initial,
+                );
+                return;
+              }
+              await context.read<ScanCubit>().scanQR(payload, widget.couponId);
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildErrorFullScreen(BuildContext context) {
+    return Positioned.fill(
       child: Container(
         color: AppColors.black,
-        child: Stack(
-          children: [
-            MobileScanner(
-              controller: controller,
-              onDetect: _onDetect,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, child) {
-                return Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(
-                        Icons.error_outline,
-                        color: AppColors.white,
-                        size: 48,
-                      ),
-                      16.szH,
-                      Text(
-                        LocaleKeys.cameraPermissionDenied,
-                        style: context.textStyle.s16.setWhiteColor,
-                      ),
-                      16.szH,
-                      LoadingButton(
-                        title: LocaleKeys.retry,
-                        onTap: () async => _startCamera(),
-                      ),
-                    ],
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30.w),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(
+                  Icons.camera_alt_outlined,
+                  color: AppColors.white,
+                  size: 64,
+                ),
+                24.szH,
+                Text(
+                  _isPermissionDenied
+                      ? LocaleKeys.cameraPermissionDenied
+                      : LocaleKeys.cameraError,
+                  style: context.textStyle.s16.medium.setWhiteColor,
+                  textAlign: TextAlign.center,
+                ),
+                32.szH,
+                if (_isPermissionDenied) ...[
+                  LoadingButton(
+                    title: LocaleKeys.settingsTitle,
+                    onTap: () => AppSettings.openAppSettings(),
                   ),
-                );
-              },
-            ),
-            const ScannerOverlay(),
-            Positioned(
-              bottom: 120.h,
-              left: 0,
-              right: 0,
-              child: Column(
-                children: [
-                  Text(
-                    LocaleKeys.placeQrCode,
-                    style: context.textStyle.s17.setWhiteColor.copyWith(
-                      color: AppColors.white.withValues(alpha: 0.8),
-                    ),
-                  ),
-                  30.szH,
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.w),
-                    child: LoadingButtonWithIcon(
-                      title: LocaleKeys.scanCouponCode,
-                      icon: AppAssets.svg.baseSvg.coupon.path,
-                      onTap: () async {
-                        final cubit = context.read<ScanCubit>();
-                        String? payload;
-                        debugPrint('--- Manual Scan Triggered ---');
-                        debugPrint('scannedCode: $scannedCode');
-                        debugPrint(
-                          'initialQrPayload: ${widget.initialQrPayload}',
-                        );
-                        debugPrint('couponId: ${widget.couponId}');
-                        if (scannedCode != null && scannedCode!.isNotEmpty) {
-                          payload = scannedCode!;
-                          debugPrint('Payload source: Scanned Camera');
-                        } else if (widget.initialQrPayload != null &&
-                            widget.initialQrPayload!.isNotEmpty) {
-                          payload = widget.initialQrPayload!;
-                          debugPrint('Payload source: Initial Data');
-                        }
-                        if (payload == null) {
-                          debugPrint('No payload available. Aborting scan.');
-                          MessageUtils.showSnackBar(
-                            message: LocaleKeys.pleaseScanACodeFirst,
-                            baseStatus: BaseStatus.initial,
-                          );
-                          return;
-                        }
-                        debugPrint('Sending payload: $payload');
-                        await cubit.scanQR(payload, widget.couponId);
-                      },
-                    ),
-                  ),
+                  16.szH,
                 ],
-              ),
+                LoadingButton(
+                  title: LocaleKeys.retry,
+                  // ✅ الـ retry button كمان بيعمل recreate مش بس start
+                  onTap: _recreateController,
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

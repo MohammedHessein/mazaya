@@ -20,8 +20,9 @@ class FavouriteBody extends StatelessWidget {
             ),
             itemBuilder: (context, coupon, index) {
               return AppCard(
-                title: coupon.name,
-                description: coupon.description ?? '',
+                title: coupon.vendorName ?? coupon.name,
+                description: coupon.name,
+                imageUrl: coupon.productImage,
                 isFavorite: coupon.isFav,
                 onFavoriteTap: () => context.read<FavoriteManager>().toggle(
                   id: coupon.id,

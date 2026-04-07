@@ -34,8 +34,8 @@ class UsedCouponsBody extends StatelessWidget {
                   delegate: SliverChildBuilderDelegate((context, index) {
                     final coupon = items[index];
                     return AppCard(
-                      title: coupon.name,
-                      description: coupon.shortDescription ?? '',
+                      title: coupon.vendorName ?? coupon.name,
+                      description: coupon.name,
                       imageUrl: coupon.productImage,
                       isFavorite: coupon.isFav,
                       onFavoriteTap: () => context

@@ -41,7 +41,7 @@ class CouponDetailsContent extends StatelessWidget {
               children: [
                 Container(
                   width: 70.w,
-                  height: 70.h,
+                  height: 90.h,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(AppCircular.r12),
                     border: Border.all(color: AppColors.gray100),
@@ -49,12 +49,11 @@ class CouponDetailsContent extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(AppCircular.r12),
                     child: UniversalMediaWidget(
-                      path:
-                          coupon.vendorImage != null &&
+                      path: coupon.vendorImage != null &&
                               coupon.vendorImage!.isNotEmpty
                           ? coupon.vendorImage!
                           : AppAssets.svg.appSvg.appLauncherIcon.path,
-                      fit: BoxFit.cover,
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),
@@ -73,6 +72,13 @@ class CouponDetailsContent extends StatelessWidget {
                         coupon.vendorName ?? '',
                         style: context.textStyle.s16.bold.setBlackColor,
                       ),
+                      if (coupon.sku != null && coupon.sku!.isNotEmpty) ...[
+                        4.szH,
+                        Text(
+                          'SKU: ${coupon.sku}',
+                          style: context.textStyle.s12.regular.setHintColor,
+                        ),
+                      ],
                     ],
                   ),
                 ),

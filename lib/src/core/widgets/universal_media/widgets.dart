@@ -52,7 +52,10 @@ class MediaSvgViewer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String path = this.path.trim().replaceAll('\n', '').replaceAll(' ', '');
+    final String path = this.path
+        .trim()
+        .replaceAll('\n', '')
+        .replaceAll(' ', '');
     if (source == MediaSource.network) {
       return SvgPicture.network(
         path,
@@ -87,12 +90,15 @@ class _SvgErrorFallback extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.all(2.w),
-        child: Image.asset(
-          AppAssets.svg.appSvg.appLauncherIcon.path,
-          fit: BoxFit.contain,
+    return Container(
+      color: AppColors.primary.withValues(alpha: .05),
+      child: Center(
+        child: Padding(
+          padding: EdgeInsets.all(15.w),
+          child: Image.asset(
+            AppAssets.svg.appSvg.appLauncherIcon.path,
+            fit: BoxFit.contain,
+          ),
         ),
       ),
     );

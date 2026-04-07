@@ -22,11 +22,18 @@ class CategoryItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            width: 50.w,
-            height: 50.w,
-            decoration: const BoxDecoration(shape: BoxShape.circle),
+            width: 60.w,
+            height: 60.w,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: AppColors.gray100.withValues(alpha: .5),
+            ),
             child: ClipOval(
-              child: CachedImage(url: category.image, fit: BoxFit.cover),
+              child: CachedImage(
+                url: category.image,
+                fit: BoxFit.fill,
+                bgColor: AppColors.gray100.withValues(alpha: .5),
+              ),
             ),
           ),
           8.szW,

@@ -141,11 +141,11 @@ flutter:
 
 flutter_native_splash:
   color: "#000000"
-  image: "assets/svg/app_svg/android11_splash.png"
+  image: "assets/svg/app_svg/android_12_splash.png"
   android_12:
-    image: "assets/svg/app_svg/android_12_splash.png"
+    image: "assets/svg/app_svg/android_12_fixed.png"
     color: "#000000"
-  fullscreen: true
+  fullscreen: false # Better for consistent layout
 
 flutter_launcher_icons:
   android: "launcher_icon"

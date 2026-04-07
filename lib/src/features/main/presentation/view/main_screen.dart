@@ -68,7 +68,7 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
           canPop: false,
           onPopInvokedWithResult: (didPop, result) async {
             if (didPop) return;
-            
+
             if (value != 0) {
               // Go to home if not on home
               params.updateNavValue(0);
@@ -114,12 +114,13 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
                                     return AppHeaderSliver(
                                       config: HeaderConfig(
                                         type: ScaffoldHeaderType.home,
-                                        imageUrl: AppAssets.svg.baseSvg.profile.path,
+                                        imageUrl:
+                                            AppAssets.svg.baseSvg.profile.path,
                                         userName: state.userModel.name,
                                         showBackButton: false,
                                       ),
                                     );
-                                  }
+                                  },
                                 ),
                                 const HomeScreen(),
                                 const SliverToBoxAdapter(
@@ -134,9 +135,7 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
                   ),
                   MultiBlocProvider(
                     providers: [
-                      BlocProvider.value(
-                        value: injector<CouponsCubit>(),
-                      ),
+                      BlocProvider.value(value: injector<CouponsCubit>()),
                       BlocProvider<GetBaseEntityCubit<RegionEntity>>(
                         lazy: false,
                         create: (context) {
@@ -160,26 +159,27 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
                           prev.selectedCountry?.id != curr.selectedCountry?.id,
                       listener: (context, state) {
                         final parentId = state.selectedCity?.id;
-                        
+
                         // Refresh Region/Municipality only if we have a valid parent
                         if (parentId != null) {
                           context
                               .read<GetBaseEntityCubit<RegionEntity>>()
                               .fGetBaseNameAndId(id: parentId);
                         }
-                            
+
                         // Refresh Categories
                         context
                             .read<GetBaseEntityCubit<CategoryEntity>>()
                             .fGetBaseNameAndId();
-                            
+
                         // Also refresh the coupons themselves
                         context.read<CouponsCubit>().fetchInitialData();
                       },
                       child: Builder(
                         builder: (context) {
                           return RefreshIndicator(
-                            onRefresh: () async => context.read<CouponsCubit>().refresh(),
+                            onRefresh: () async =>
+                                context.read<CouponsCubit>().refresh(),
                             color: AppColors.primary,
                             child: CustomScrollView(
                               physics: const BouncingScrollPhysics(
@@ -191,20 +191,23 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
                                     return AppHeaderSliver(
                                       config: HeaderConfig(
                                         type: ScaffoldHeaderType.standard,
-                                        imageUrl: AppAssets.svg.baseSvg.profile.path,
+                                        imageUrl:
+                                            AppAssets.svg.baseSvg.profile.path,
                                         userName: state.userModel.name,
                                         showBackButton: false,
                                         title: LocaleKeys.couponsTitle.tr(),
                                       ),
                                     );
-                                  }
+                                  },
                                 ),
                                 const CouponsBody(),
-                                const SliverToBoxAdapter(child: SizedBox(height: 100)),
+                                const SliverToBoxAdapter(
+                                  child: SizedBox(height: 100),
+                                ),
                               ],
                             ),
                           );
-                        }
+                        },
                       ),
                     ),
                   ),

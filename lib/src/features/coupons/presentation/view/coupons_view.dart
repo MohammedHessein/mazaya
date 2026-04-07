@@ -32,9 +32,7 @@ class _CouponsViewState extends State<CouponsView> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider.value(
-          value: _cubit,
-        ),
+        BlocProvider.value(value: _cubit),
         BlocProvider<GetBaseEntityCubit<RegionEntity>>(
           lazy: false,
           create: (context) {

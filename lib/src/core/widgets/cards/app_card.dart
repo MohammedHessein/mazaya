@@ -50,17 +50,18 @@ class AppCard extends StatelessWidget {
             Stack(
               children: [
                 Container(
-                  width: 90.w,
-                  height: 90.h,
+                  width: 110.w,
+                  height: 110.h,
                   decoration: BoxDecoration(
                     color: AppColors.gray100,
                     borderRadius: BorderRadius.circular(AppCircular.r8),
                   ),
                   child: CachedImage(
                     url: imageUrl ?? '',
-                    fit: BoxFit.cover,
-                    width: 90.w,
-                    height: 90.h,
+                    fit: BoxFit.fill,
+                    width: 110.w,
+                    height: 110.h,
+                    bgColor: AppColors.gray100,
                     borderRadius: BorderRadius.circular(AppCircular.r8),
                   ),
                 ),

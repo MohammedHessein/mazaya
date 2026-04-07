@@ -62,14 +62,12 @@ class CachedImage extends StatelessWidget {
               ? borderRadius ?? BorderRadius.circular(AppCircular.r2)
               : null,
           shape: boxShape ?? BoxShape.rectangle,
-          color: bgColor ?? AppColors.primary.withValues(alpha: .1),
+          color: bgColor ?? AppColors.primary.withValues(alpha: .05),
         ),
         child: Padding(
-          padding: EdgeInsets.all(
-            (width != null && width! > 40) ? 12.w : 4.w,
-          ),
-          child: UniversalMediaWidget(
-            path: AppAssets.svg.appSvg.appLauncherIcon.path,
+          padding: EdgeInsets.all((width != null && width! > 40) ? 20.r : 6.r),
+          child: Image.asset(
+            AppAssets.svg.appSvg.appLauncherIcon.path,
             fit: BoxFit.contain,
           ),
         ),
@@ -168,14 +166,14 @@ class CachedImage extends StatelessWidget {
                 ? borderRadius ?? BorderRadius.circular(AppCircular.r2)
                 : null,
             shape: boxShape ?? BoxShape.rectangle,
-            color: bgColor ?? AppColors.primary.withValues(alpha: .1),
+            color: bgColor ?? AppColors.primary.withValues(alpha: .05),
           ),
           child: Padding(
             padding: EdgeInsets.all(
-              (width != null && width! > 40) ? 12.w : 4.w,
+              (width != null && width! > 40) ? 20.r : 6.r,
             ),
-            child: UniversalMediaWidget(
-              path: AppAssets.svg.appSvg.appLauncherIcon.path,
+            child: Image.asset(
+              AppAssets.svg.appSvg.appLauncherIcon.path,
               fit: BoxFit.contain,
             ),
           ),

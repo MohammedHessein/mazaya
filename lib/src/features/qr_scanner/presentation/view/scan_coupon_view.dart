@@ -20,10 +20,13 @@ class ScanCouponView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => injector<ScanCubit>(),
-      child: ScanCouponBody(
-        isActive: isActive,
-        couponId: couponId,
-        initialQrPayload: initialQrPayload,
+      child: Scaffold(
+        backgroundColor: AppColors.black,
+        body: ScanCouponBody(
+          isActive: isActive,
+          couponId: couponId,
+          initialQrPayload: initialQrPayload,
+        ),
       ),
     );
   }
