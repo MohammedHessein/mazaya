@@ -1,6 +1,6 @@
 part of '../imports/view_imports.dart';
 
-@injectable
+@lazySingleton
 class UsedCouponsCubit extends AsyncCubit<List<CouponEntity>> {
   UsedCouponsCubit() : super([]);
 
@@ -71,5 +71,9 @@ class UsedCouponsCubit extends AsyncCubit<List<CouponEntity>> {
     }).toList();
 
     updateData(updatedItems);
+  }
+
+  void clear() {
+    emit(AsyncState.initial(data: []));
   }
 }

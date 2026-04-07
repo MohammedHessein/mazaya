@@ -4,6 +4,8 @@ import 'package:mazaya/src/features/coupons/presentation/cubits/coupons_cubit.da
 import 'package:mazaya/src/features/favourite/presentation/imports/view_imports.dart';
 import 'package:mazaya/src/features/used_coupons/presentation/imports/view_imports.dart';
 import 'package:mazaya/src/features/home/presentation/cubits/home_cubit.dart';
+import 'package:mazaya/src/core/widgets/custom_messages.dart';
+import 'package:mazaya/src/core/extensions/base_state.dart';
 
 @lazySingleton
 class FavoriteManager {
@@ -37,7 +39,29 @@ class FavoriteManager {
   }
 
   Future<void> _toggleRemote(int id) async {
-    // We delegate the API call to CouponsCubit which already has the configuration
-    await couponsCubit.toggleRemote(id);
+    // 1. Remote API call
+    final result = await couponsCubit.toggleRemote(id);
+
+    // 2. Handle feedback (Show message from API)
+    result.when(
+      (message) {
+        MessageUtils.showSnackBar(
+          message: message,
+          baseStatus: BaseStatus.success,
+        );
+      },
+      (failure) {
+        // Rollback local update on failure
+        couponsCubit.toggleLocal(id);
+        favouriteCubit.toggleLocal(id, coupon: null);
+        usedCouponsCubit.toggleLocal(id);
+        homeCubit.toggleLocal(id);
+
+        MessageUtils.showSnackBar(
+          message: failure.message,
+          baseStatus: BaseStatus.error,
+        );
+      },
+    );
   }
 }

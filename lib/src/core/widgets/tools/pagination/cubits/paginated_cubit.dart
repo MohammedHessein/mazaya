@@ -137,6 +137,6 @@ abstract class PaginatedCubit<T> extends AsyncCubit<PaginatedData<T>> {
     _currentPage = 1;
     _isLoadingMore = false;
     _filterKey = null;
-    super.reset();
+    emit(AsyncState.initial(data: PaginatedData.initial()));
   }
 }

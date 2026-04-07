@@ -11,6 +11,10 @@ import 'package:mazaya/src/core/helpers/cache_service.dart';
 import 'package:mazaya/src/core/network/network_service.dart';
 import 'package:mazaya/src/core/shared/models/user_model.dart';
 import 'package:mazaya/src/core/base_crud/code/domain/base_domain_imports.dart';
+import 'package:mazaya/src/features/home/presentation/cubits/home_cubit.dart';
+import 'package:mazaya/src/features/coupons/presentation/cubits/coupons_cubit.dart';
+import 'package:mazaya/src/features/favourite/presentation/imports/view_imports.dart';
+import 'package:mazaya/src/features/used_coupons/presentation/imports/view_imports.dart';
 part 'user_state.dart';
 part 'user_utils.dart';
 
@@ -78,9 +82,17 @@ class UserCubit extends Cubit<UserState> with UserUtils {
       SecureStorage.delete(_tokenKey),
       if (clearOnboarding) CacheStorage.delete(ConstantManager.sawOnboarding),
     ]);
+    _clearAllData();
     clearUser();
     if (isClosed) return;
     emit(state.copyWith(userStatus: UserStatus.loggedOut));
+  }
+
+  void _clearAllData() {
+    injector<HomeCubit>().clear();
+    injector<CouponsCubit>().reset();
+    injector<FavouriteCubit>().reset();
+    injector<UsedCouponsCubit>().clear();
   }
 
   Future<void> updateToken(String token) async {

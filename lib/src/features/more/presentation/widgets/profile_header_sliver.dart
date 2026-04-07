@@ -22,7 +22,7 @@ class ProfileHeaderSliver extends StatelessWidget {
             children: [
               SizedBox(
                 width: double.infinity,
-                height: 160.h,
+                height: 135.h,
                 child: Image.asset(
                   AppAssets.svg.baseSvg.curveBackground.path,
                   fit: BoxFit.cover,

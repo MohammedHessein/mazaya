@@ -40,6 +40,8 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
     params.selectedIndexNotifier.addListener(_onTabChange);
     if (UserCubit.instance.isUserLoggedIn) {
       UserCubit.instance.getProfile();
+      injector<HomeCubit>().getHomeData();
+      injector<CouponsCubit>().fetchInitialData();
     }
   }
 
@@ -87,8 +89,8 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
               child: IndexedStack(
                 index: value,
                 children: [
-                  BlocProvider<HomeCubit>(
-                    create: (context) => injector<HomeCubit>()..getHomeData(),
+                  BlocProvider.value(
+                    value: injector<HomeCubit>(),
                     child: BlocListener<UserCubit, UserState>(
                       listenWhen: (prev, curr) =>
                           prev.selectedCity?.id != curr.selectedCity?.id ||
@@ -132,10 +134,8 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
                   ),
                   MultiBlocProvider(
                     providers: [
-                      BlocProvider<CouponsCubit>(
-                        lazy: false,
-                        create: (context) =>
-                            injector<CouponsCubit>()..fetchInitialData(),
+                      BlocProvider.value(
+                        value: injector<CouponsCubit>(),
                       ),
                       BlocProvider<GetBaseEntityCubit<RegionEntity>>(
                         lazy: false,

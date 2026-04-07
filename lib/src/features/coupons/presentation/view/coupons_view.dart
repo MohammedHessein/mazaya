@@ -11,16 +11,29 @@ import 'package:mazaya/src/core/widgets/scaffolds/header_config.dart';
 import 'package:mazaya/src/features/coupons/presentation/cubits/coupons_cubit.dart';
 import 'package:mazaya/src/features/coupons/presentation/widgets/coupons_body.dart';
 
-class CouponsView extends StatelessWidget {
+class CouponsView extends StatefulWidget {
   const CouponsView({super.key});
+
+  @override
+  State<CouponsView> createState() => _CouponsViewState();
+}
+
+class _CouponsViewState extends State<CouponsView> {
+  late final CouponsCubit _cubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _cubit = injector<CouponsCubit>();
+    _cubit.fetchInitialData();
+  }
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<CouponsCubit>(
-          lazy: false,
-          create: (context) => injector<CouponsCubit>()..fetchInitialData(),
+        BlocProvider.value(
+          value: _cubit,
         ),
         BlocProvider<GetBaseEntityCubit<RegionEntity>>(
           lazy: false,

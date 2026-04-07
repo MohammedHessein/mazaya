@@ -2,33 +2,27 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_logger/easy_logger.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'src/app.dart';
 import 'src/config/language/languages.dart';
-import 'src/core/helpers/cache_service.dart';
 import 'src/core/helpers/helpers.dart';
 import 'src/core/navigation/constants/imports_constants.dart';
+import 'src/core/navigation/deep_link_service.dart';
 import 'src/core/navigation/go.dart';
 import 'src/core/navigation/page_router/implementation/imports_page_router.dart';
 import 'src/core/navigation/page_router/imports_page_router_builder.dart';
-import 'src/core/navigation/deep_link_service.dart';
-
 import 'src/core/network/backend_configuation.dart';
+import 'src/core/notification/notification_service.dart';
 import 'src/core/shared/bloc_observer.dart';
+import 'src/core/shared/cubits/user_cubit/user_cubit.dart';
 import 'src/core/shared/service_locators/setup_service_locators.dart';
 import 'src/core/widgets/handling_views/exeption_view.dart';
-import 'src/features/intro/presentation/imports/view_imports.dart';
 import 'src/features/auth/login/imports/login_imports.dart';
+import 'src/features/intro/presentation/imports/view_imports.dart';
 import 'src/features/location/imports/location_imports.dart';
-import 'src/features/main/presentation/view/main_screen.dart';
-import 'src/core/shared/cubits/user_cubit/user_cubit.dart';
-import 'src/config/res/config_imports.dart';
-import 'src/core/notification/notification_service.dart';
 
 void main() async {
   Bloc.observer = AppBlocObserver();
@@ -58,7 +52,7 @@ void main() async {
       android: CustomPageRouterCreator(
         parentTransition: TransitionType.fade, // Transition type: fade
         parentOptions: const FadeAnimationOptions(
-          duration: Duration(milliseconds: 300), // Transition duration
+          duration: Duration(milliseconds: 500), // Transition duration
         ),
       ),
     ),

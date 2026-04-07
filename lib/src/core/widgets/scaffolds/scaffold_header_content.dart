@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mazaya/src/core/widgets/universal_media/enums.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mazaya/src/core/widgets/scaffolds/header_config.dart';
+import 'package:mazaya/src/core/widgets/universal_media/enums.dart';
 
 class HeaderContent extends StatelessWidget {
   final HeaderConfig config;
@@ -19,7 +19,7 @@ class HeaderContent extends StatelessWidget {
         return Column(
           children: [
             config.headerWidget ?? const SizedBox(),
-            const SizedBox(height: 50),
+            if (config.headerWidget != null) 30.verticalSpace,
           ],
         );
 

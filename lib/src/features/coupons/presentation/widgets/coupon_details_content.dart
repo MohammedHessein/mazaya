@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:mazaya/src/features/coupons/presentation/cubits/coupon_details_cubit.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../view/view_imports.dart';
 
@@ -17,7 +17,10 @@ class CouponDetailsContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: AppPadding.pW20),
+      padding: EdgeInsets.symmetric(
+        horizontal: AppPadding.pW20,
+        vertical: AppPadding.pH16,
+      ),
       child: Container(
         padding: EdgeInsets.all(AppPadding.pW16),
         decoration: BoxDecoration(
@@ -79,10 +82,14 @@ class CouponDetailsContent extends StatelessWidget {
                     CustomCircularActionButton(
                       icon: AppAssets.svg.baseSvg.share.path,
                       onTap: () {
-                        debugPrint('🚀 Share Clicked for product: ${coupon.id}');
+                        debugPrint(
+                          '🚀 Share Clicked for product: ${coupon.id}',
+                        );
                         final box = context.findRenderObject() as RenderBox?;
-                        final String shareLink = 'https://mazaya.com/coupon?id=${coupon.id}';
-                        final String message = '${coupon.vendorName ?? ''}\n${coupon.name}\n\n$shareLink';
+                        final String shareLink =
+                            'https://mazaya.com/coupon?id=${coupon.id}';
+                        final String message =
+                            '${coupon.vendorName ?? ''}\n${coupon.name}\n\n$shareLink';
 
                         SharePlus.instance.share(
                           ShareParams(
@@ -106,7 +113,9 @@ class CouponDetailsContent extends StatelessWidget {
                           coupon: coupon,
                         );
                         // Also update the local state of this specific Details Cubit
-                        context.read<CouponDetailsCubit>().toggleLocal(coupon.id);
+                        context.read<CouponDetailsCubit>().toggleLocal(
+                          coupon.id,
+                        );
                       },
                     ),
                   ],

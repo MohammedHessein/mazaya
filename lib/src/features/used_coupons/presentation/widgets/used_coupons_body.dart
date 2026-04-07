@@ -24,29 +24,28 @@ class UsedCouponsBody extends StatelessWidget {
             }
 
             return SliverPadding(
-              padding: EdgeInsets.symmetric(horizontal: AppPadding.pW20),
+              padding: EdgeInsets.symmetric(
+                horizontal: AppPadding.pW20,
+                vertical: AppPadding.pH16,
+              ),
               sliver: Skeletonizer.sliver(
                 enabled: state.isLoading && state.data.isEmpty,
                 child: SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      final coupon = items[index];
-                      return AppCard(
-                        title: coupon.name,
-                        description: coupon.shortDescription ?? '',
-                        imageUrl: coupon.productImage,
-                        isFavorite: coupon.isFav,
-                        onFavoriteTap: () => context.read<FavoriteManager>().toggle(
-                              id: coupon.id,
-                              coupon: coupon,
-                            ),
-                        onTap: () {
-                          Go.to(CouponDetailsScreen(id: coupon.id));
-                        },
-                      );
-                    },
-                    childCount: items.length,
-                  ),
+                  delegate: SliverChildBuilderDelegate((context, index) {
+                    final coupon = items[index];
+                    return AppCard(
+                      title: coupon.name,
+                      description: coupon.shortDescription ?? '',
+                      imageUrl: coupon.productImage,
+                      isFavorite: coupon.isFav,
+                      onFavoriteTap: () => context
+                          .read<FavoriteManager>()
+                          .toggle(id: coupon.id, coupon: coupon),
+                      onTap: () {
+                        Go.to(CouponDetailsScreen(id: coupon.id));
+                      },
+                    );
+                  }, childCount: items.length),
                 ),
               ),
             );

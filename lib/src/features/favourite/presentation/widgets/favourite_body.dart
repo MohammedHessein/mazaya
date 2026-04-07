@@ -9,7 +9,10 @@ class FavouriteBody extends StatelessWidget {
       header: HeaderConfig(title: LocaleKeys.favourite, showBackButton: false),
       slivers: [
         SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: AppPadding.pW20),
+          padding: EdgeInsets.symmetric(
+            horizontal: AppPadding.pW20,
+            vertical: AppPadding.pH16,
+          ),
           sliver: PaginatedSliverListWidget<FavouriteCubit, CouponEntity>(
             skeletonBuilder: (context) => AppCard(
               title: CouponEntity.empty().name,
@@ -21,9 +24,9 @@ class FavouriteBody extends StatelessWidget {
                 description: coupon.description ?? '',
                 isFavorite: coupon.isFav,
                 onFavoriteTap: () => context.read<FavoriteManager>().toggle(
-                      id: coupon.id,
-                      coupon: coupon,
-                    ),
+                  id: coupon.id,
+                  coupon: coupon,
+                ),
                 onTap: () {
                   Go.to(CouponDetailsScreen(id: coupon.id));
                 },

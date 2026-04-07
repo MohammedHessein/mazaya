@@ -1,6 +1,6 @@
 part of '../imports/view_imports.dart';
 
-@injectable
+@lazySingleton
 class FavouriteCubit extends PaginatedCubit<CouponEntity> {
   FavouriteCubit()
     : super(

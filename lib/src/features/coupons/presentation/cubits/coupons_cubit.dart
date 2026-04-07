@@ -8,7 +8,7 @@ import 'package:mazaya/src/core/widgets/tools/pagination/imports/pagination_impo
 import 'package:mazaya/src/features/coupons/entity/coupon_entity.dart';
 import 'package:multiple_result/multiple_result.dart'; // Add this for Result
 
-@injectable
+@lazySingleton
 class CouponsCubit extends PaginatedCubit<CouponEntity> {
   CouponsCubit() : super(itemMapper: CouponEntity.fromJson);
 
@@ -87,14 +87,15 @@ class CouponsCubit extends PaginatedCubit<CouponEntity> {
   }
 
   /// 🌐 API CALL (Renamed for clarity in FavoriteManager)
-  Future<void> toggleRemote(int id) async {
-    await baseCrudUseCase.call(
+  Future<Result<String, Failure>> toggleRemote(int id) async {
+    final result = await baseCrudUseCase.call<String>(
       CrudBaseParams(
         api: ApiConstants.toggleFavorite,
         httpRequestType: HttpRequestType.post,
         body: {'product_id': id},
-        mapper: (json) => json,
+        mapper: (json) => json['message']?.toString() ?? '',
       ),
     );
+    return result;
   }
 }

@@ -58,9 +58,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i40.CategoriesCubit>(() => _i40.CategoriesCubit());
     gh.factory<_i778.ChangePasswordCubit>(() => _i778.ChangePasswordCubit());
     gh.factory<_i102.CouponDetailsCubit>(() => _i102.CouponDetailsCubit());
-    gh.factory<_i1022.CouponsCubit>(() => _i1022.CouponsCubit());
-    gh.factory<_i203.FavouriteCubit>(() => _i203.FavouriteCubit());
-    gh.factory<_i246.HomeCubit>(() => _i246.HomeCubit());
     gh.factory<_i667.UpdateProfileCubit>(() => _i667.UpdateProfileCubit());
     gh.factory<_i577.LogoutCubit>(() => _i577.LogoutCubit());
     gh.factory<_i964.DeleteAccountCubit>(() => _i964.DeleteAccountCubit());
@@ -68,8 +65,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i980.NotificationsCubit>(() => _i980.NotificationsCubit());
     gh.factory<_i552.ScanCubit>(() => _i552.ScanCubit());
     gh.factory<_i816.StaticPagesCubit>(() => _i816.StaticPagesCubit());
-    gh.factory<_i519.UsedCouponsCubit>(() => _i519.UsedCouponsCubit());
     gh.lazySingleton<_i996.UserCubit>(() => _i996.UserCubit());
+    gh.lazySingleton<_i1022.CouponsCubit>(() => _i1022.CouponsCubit());
+    gh.lazySingleton<_i203.FavouriteCubit>(() => _i203.FavouriteCubit());
+    gh.lazySingleton<_i246.HomeCubit>(() => _i246.HomeCubit());
+    gh.lazySingleton<_i519.UsedCouponsCubit>(() => _i519.UsedCouponsCubit());
     gh.lazySingleton<_i632.NetworkService>(() => _i37.DioService());
     gh.lazySingleton<_i241.BaseRemoteDataSource>(
       () => _i241.BaseRemoteDataSourceImpl(

@@ -5,7 +5,7 @@ import 'package:mazaya/src/core/network/api_endpoints.dart';
 
 import '../../model/home_model.dart';
 
-@injectable
+@lazySingleton
 class HomeCubit extends AsyncCubit<HomeModel?> {
   HomeCubit() : super(null);
 
@@ -33,5 +33,9 @@ class HomeCubit extends AsyncCubit<HomeModel?> {
     }).toList();
 
     setSuccess(data: currentModel.copyWith(products: updatedProducts));
+  }
+
+  void clear() {
+    emit(AsyncState.initial(data: null));
   }
 }

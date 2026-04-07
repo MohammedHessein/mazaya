@@ -12,7 +12,7 @@ class MessageUtils {
     required String message,
   }) {
     final snackBar = SnackBar(
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 1),
       content: Text(message, style: const TextStyle().setWhiteColor.s11.medium),
       action: SnackBarAction(
         label: LocaleKeys.cancel,
