@@ -8,6 +8,8 @@ class UserModel {
   final String photoProfile;
   final String status;
   final String? address;
+  final String? poBox;
+  final String? nationalId;
   final int? locationId;
   final String? locationName;
   final int? locationParentId;
@@ -44,6 +46,8 @@ class UserModel {
     required this.photoProfile,
     required this.status,
     this.address,
+    this.poBox,
+    this.nationalId,
     this.locationId,
     this.locationName,
     this.locationParentId,
@@ -76,6 +80,8 @@ class UserModel {
     photoProfile: '',
     status: '',
     address: null,
+    poBox: null,
+    nationalId: null,
     locationId: null,
     locationName: null,
     locationParentId: null,
@@ -108,6 +114,8 @@ class UserModel {
     String? photoProfile,
     String? status,
     String? address,
+    String? poBox,
+    String? nationalId,
     int? locationId,
     String? locationName,
     int? locationParentId,
@@ -139,6 +147,8 @@ class UserModel {
       photoProfile: photoProfile ?? this.photoProfile,
       status: status ?? this.status,
       address: address ?? this.address,
+      poBox: poBox ?? this.poBox,
+      nationalId: nationalId ?? this.nationalId,
       locationId: locationId ?? this.locationId,
       locationName: locationName ?? this.locationName,
       locationParentId: locationParentId ?? this.locationParentId,
@@ -200,6 +210,8 @@ class UserModel {
       photoProfile: user['photo_profile'] ?? user['image'] ?? '',
       status: user['status'] ?? '',
       address: user['address'],
+      poBox: user['po_box'],
+      nationalId: user['national_id'],
       locationId: _toInt(user['location_id']),
       locationName: user['location_name'] ?? user['city'] ?? '',
       locationParentId: _toInt(user['location_parent_id']),
@@ -236,6 +248,8 @@ class UserModel {
     'photo_profile': photoProfile,
     'status': status,
     'address': address,
+    'po_box': poBox,
+    'national_id': nationalId,
     'location_id': locationId,
     'location_name': locationName,
     'location_parent_id': locationParentId,

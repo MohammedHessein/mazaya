@@ -18,6 +18,9 @@ class CouponEntity extends Equatable {
   final bool isFav;
   final String? qrPayload;
   final bool? isUsed;
+  final double? lat;
+  final double? lng;
+  final String? vendorDescription;
 
   const CouponEntity({
     required this.id,
@@ -36,6 +39,9 @@ class CouponEntity extends Equatable {
     this.isFav = false,
     this.qrPayload,
     this.isUsed,
+    this.lat,
+    this.lng,
+    this.vendorDescription,
   });
 
   const CouponEntity.empty()
@@ -54,7 +60,10 @@ class CouponEntity extends Equatable {
       categoryName = '',
       isFav = false,
       isUsed = false,
-      qrPayload = '';
+      qrPayload = '',
+      lat = null,
+      lng = null,
+      vendorDescription = null;
 
   factory CouponEntity.fromJson(Map<String, dynamic> json) {
     int toInt(dynamic value) {
@@ -80,6 +89,9 @@ class CouponEntity extends Equatable {
       isFav: json['is_fav'] ?? false,
       qrPayload: json['qr_payload'],
       isUsed: json['is_used'] ?? false,
+      lat: json['lat'] != null ? double.tryParse(json['lat'].toString()) : json['latitude'] != null ? double.tryParse(json['latitude'].toString()) : null,
+      lng: json['lng'] != null ? double.tryParse(json['lng'].toString()) : json['longitude'] != null ? double.tryParse(json['longitude'].toString()) : null,
+      vendorDescription: json['vendor_description'],
     );
   }
 
@@ -113,6 +125,9 @@ class CouponEntity extends Equatable {
     bool? isFav,
     String? qrPayload,
     bool? isUsed,
+    double? lat,
+    double? lng,
+    String? vendorDescription,
   }) {
     return CouponEntity(
       id: id ?? this.id,
@@ -131,6 +146,9 @@ class CouponEntity extends Equatable {
       isFav: isFav ?? this.isFav,
       qrPayload: qrPayload ?? this.qrPayload,
       isUsed: isUsed ?? this.isUsed,
+      lat: lat ?? this.lat,
+      lng: lng ?? this.lng,
+      vendorDescription: vendorDescription ?? this.vendorDescription,
     );
   }
 
@@ -152,5 +170,8 @@ class CouponEntity extends Equatable {
     isFav,
     qrPayload,
     isUsed,
+    lat,
+    lng,
+    vendorDescription,
   ];
 }

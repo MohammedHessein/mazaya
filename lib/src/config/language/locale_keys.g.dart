@@ -481,6 +481,12 @@ abstract class LocaleKeys {
   static const String _successMsg = 'success_msg';
   static String get successMsg => _successMsg.tr();
 
+  static const String _messageLengthValidation = 'message_length_validation';
+  static String get messageLengthValidation => _messageLengthValidation.tr();
+
+  static const String _complaintSubmittedSuccessfully = 'complaint_submitted_successfully';
+  static String get complaintSubmittedSuccessfully => _complaintSubmittedSuccessfully.tr();
+
   static const String _fullNameLabel = 'full_name_label';
   static String get fullNameLabel => _fullNameLabel.tr();
 
@@ -610,6 +616,9 @@ abstract class LocaleKeys {
   static const String _notificationsClearAll = 'notifications_clear_all';
   static String get notificationsClearAll => _notificationsClearAll.tr();
 
+  static const String _readAll = 'read_all';
+  static String get readAll => _readAll.tr();
+
   static const String _notificationsDeleteAllNotifications = 'notifications_delete_all_notifications';
   static String get notificationsDeleteAllNotifications => _notificationsDeleteAllNotifications.tr();
 
@@ -727,6 +736,9 @@ abstract class LocaleKeys {
   static const String _subscriptionActive = 'subscription_active';
   static String get subscriptionActive => _subscriptionActive.tr();
 
+  static const String _subscriptionInactive = 'subscription_inactive';
+  static String get subscriptionInactive => _subscriptionInactive.tr();
+
   static const String _remainingCoupons = 'remaining_coupons';
   static String remainingCoupons({required String count}) => _remainingCoupons.tr(namedArgs: {'count': count});
 
@@ -798,6 +810,9 @@ abstract class LocaleKeys {
 
   static const String _returnToHome = 'return_to_home';
   static String get returnToHome => _returnToHome.tr();
+
+  static const String _memberSince = 'member_since';
+  static String get memberSince => _memberSince.tr();
 
   static const String _noNotificationsYet = 'no_notifications_yet';
   static String get noNotificationsYet => _noNotificationsYet.tr();
@@ -951,5 +966,29 @@ abstract class LocaleKeys {
 
   static const String _memberType = 'member_type';
   static String memberType({required String member_type}) => _memberType.tr(namedArgs: {'member_type': member_type});
+
+  static const String _volunteerMember = 'volunteer_member';
+  static String get volunteerMember => _volunteerMember.tr();
+
+  static const String _poBox = 'po_box';
+  static String get poBox => _poBox.tr();
+
+  static const String _enterPoBox = 'enter_po_box';
+  static String get enterPoBox => _enterPoBox.tr();
+
+  static const String _nationalId = 'national_id';
+  static String get nationalId => _nationalId.tr();
+
+  static const String _enterNationalId = 'enter_national_id';
+  static String get enterNationalId => _enterNationalId.tr();
+
+  static const String _storeDescription = 'store_description';
+  static String get storeDescription => _storeDescription.tr();
+
+  static const String _openMap = 'open_map';
+  static String get openMap => _openMap.tr();
+
+  static const String _visitOurWebsite = 'visit_our_website';
+  static String get visitOurWebsite => _visitOurWebsite.tr();
 
 }

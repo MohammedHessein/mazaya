@@ -3,7 +3,7 @@ import 'package:mazaya/src/config/res/config_imports.dart'; // Add this for Cons
 import 'package:mazaya/src/core/base_crud/code/domain/base_domain_imports.dart';
 import 'package:mazaya/src/core/error/failure.dart';
 import 'package:mazaya/src/core/network/api_endpoints.dart';
-import 'package:mazaya/src/core/shared/cubits/user_cubit/user_cubit.dart';
+
 import 'package:mazaya/src/core/widgets/tools/pagination/imports/pagination_imports.dart';
 import 'package:mazaya/src/features/coupons/entity/coupon_entity.dart';
 import 'package:multiple_result/multiple_result.dart'; // Add this for Result
@@ -31,11 +31,8 @@ class CouponsCubit extends PaginatedCubit<CouponEntity> {
           ...ConstantManager.paginateJson(page)!,
           if (_selectedCategory != null)
             'category_id': _selectedCategory?.id,
-          if (_selectedRegion != null ||
-              UserCubit.instance.state.userModel.locationId != null)
-            'location_id':
-                _selectedRegion?.id ??
-                UserCubit.instance.state.userModel.locationId,
+          if (_selectedRegion != null)
+            'location_id': _selectedRegion?.id,
           if (searchQuery != null && searchQuery.isNotEmpty)
             'search': searchQuery,
         },

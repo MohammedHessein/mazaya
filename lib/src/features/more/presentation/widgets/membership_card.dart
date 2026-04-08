@@ -18,7 +18,9 @@ class MemberShipCard extends StatelessWidget {
             ? MembershipType.golden
             : (mType.contains('silver') || mType.contains('فض') || mType.contains('silv'))
                 ? MembershipType.sliver
-                : MembershipType.diamond;
+                : (mType.contains('volu') || mType.contains('متطوع'))
+                    ? MembershipType.volunteer
+                    : MembershipType.diamond;
 
 
         final totalCoupons = user.userPackageCouponsLimit ?? 0;
@@ -30,7 +32,9 @@ class MemberShipCard extends StatelessWidget {
         return Container(
           clipBehavior: Clip.antiAlias,
           decoration: BoxDecoration(
-            color: AppColors.white,
+            color: membershipType == MembershipType.volunteer
+                ? AppColors.success.withValues(alpha: 0.1)
+                : AppColors.white,
             borderRadius: BorderRadius.circular(AppCircular.r20),
             boxShadow: [
               BoxShadow(
@@ -57,32 +61,42 @@ class MemberShipCard extends StatelessWidget {
                                 height: 30.w,
                               )
                             : membershipType == MembershipType.golden
-                            ? AppAssets.svg.baseSvg.goldenMember.svg(
-                                width: 30.w,
-                                height: 30.w,
-                              )
-                            : AppAssets.svg.baseSvg.diamondMember.svg(
-                                width: 30.w,
-                                height: 30.w,
-                              ),
+                                ? AppAssets.svg.baseSvg.goldenMember.svg(
+                                    width: 30.w,
+                                    height: 30.w,
+                                  )
+                                : membershipType == MembershipType.volunteer
+                                    ? AppAssets.svg.baseSvg.volunteer.svg(
+                                        width: 30.w,
+                                        height: 30.w,
+                                      )
+                                    : AppAssets.svg.baseSvg.diamondMember.svg(
+                                        width: 30.w,
+                                        height: 30.w,
+                                      ),
                         12.szW,
                         Text(
                           membershipType == MembershipType.golden
                               ? LocaleKeys.goldMember
                               : membershipType == MembershipType.sliver
                                   ? LocaleKeys.silverMember
-                                  : LocaleKeys.diamondMember,
+                                  : membershipType == MembershipType.volunteer
+                                      ? LocaleKeys.volunteerMember
+                                      : LocaleKeys.diamondMember,
                           style: context.textStyle.s14.bold.setMainTextColor,
                         ),
                       ],
                     ),
-                    if (user.userPackageIsActive)
-                      Text(
-                        LocaleKeys.subscriptionActive,
-                        style: context.textStyle.s12.medium.setColor(
-                          AppColors.success,
-                        ),
+                    Text(
+                      user.userPackageIsActive
+                          ? LocaleKeys.subscriptionActive
+                          : LocaleKeys.subscriptionInactive,
+                      style: context.textStyle.s12.medium.setColor(
+                        user.userPackageIsActive
+                            ? AppColors.success
+                            : AppColors.error,
                       ),
+                    ),
                   ],
                 ),
                 16.szH,

@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:image/image.dart' as img;
 
 void main() async {
@@ -20,11 +21,11 @@ void main() async {
   final canvasSize = 1152;
   final canvas = img.Image(width: canvasSize, height: canvasSize);
 
-  // Clear with black background (or transparent if you prefer, but the user wants black)
-  img.fill(canvas, color: img.ColorRgb8(0, 0, 0));
+  // Clear with white background
+  img.fill(canvas, color: img.ColorRgb8(255, 255, 255));
 
-  // Scale the logo to fit in the safe zone but make it larger (820px instead of 700px)
-  final targetLogoSize = 960;
+  // Scale the logo to fit in the safe zone
+  final targetLogoSize = 1100;
   final scaledLogo = img.copyResize(
     image,
     width: targetLogoSize,

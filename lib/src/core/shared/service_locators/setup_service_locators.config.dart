@@ -17,6 +17,8 @@ import '../../../features/categories/presentation/cubits/categories_cubit.dart'
     as _i40;
 import '../../../features/change_password/presentation/cubits/change_password_cubit.dart'
     as _i778;
+import '../../../features/complaints/presentation/cubits/complaints_cubit.dart'
+    as _i425;
 import '../../../features/coupons/presentation/cubits/coupon_details_cubit.dart'
     as _i102;
 import '../../../features/coupons/presentation/cubits/coupons_cubit.dart'
@@ -26,6 +28,8 @@ import '../../../features/favourite/presentation/imports/view_imports.dart'
 import '../../../features/home/presentation/cubits/home_cubit.dart' as _i246;
 import '../../../features/location/presentation/cubits/update_profile_cubit.dart'
     as _i667;
+import '../../../features/more/presentation/cubits/app_setting_cubit.dart'
+    as _i763;
 import '../../../features/more/presentation/cubits/logout_cubit.dart' as _i577;
 import '../../../features/more/presentation/imports/view_imports.dart' as _i964;
 import '../../../features/notifications/presentation/imports/view_imports.dart'
@@ -57,18 +61,29 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i668.LoginCubit>(() => _i668.LoginCubit());
     gh.factory<_i40.CategoriesCubit>(() => _i40.CategoriesCubit());
     gh.factory<_i778.ChangePasswordCubit>(() => _i778.ChangePasswordCubit());
+    gh.factory<_i425.ComplaintsCubit>(() => _i425.ComplaintsCubit());
     gh.factory<_i102.CouponDetailsCubit>(() => _i102.CouponDetailsCubit());
     gh.factory<_i667.UpdateProfileCubit>(() => _i667.UpdateProfileCubit());
+    gh.factory<_i763.AppSettingCubit>(() => _i763.AppSettingCubit());
     gh.factory<_i577.LogoutCubit>(() => _i577.LogoutCubit());
     gh.factory<_i964.DeleteAccountCubit>(() => _i964.DeleteAccountCubit());
     gh.factory<_i964.UpdatePhotoCubit>(() => _i964.UpdatePhotoCubit());
     gh.factory<_i980.NotificationsCubit>(() => _i980.NotificationsCubit());
+    gh.factory<_i980.ReadAllNotificationsCubit>(
+      () => _i980.ReadAllNotificationsCubit(),
+    );
+    gh.factory<_i980.ReadNotificationCubit>(
+      () => _i980.ReadNotificationCubit(),
+    );
     gh.factory<_i552.ScanCubit>(() => _i552.ScanCubit());
     gh.factory<_i816.StaticPagesCubit>(() => _i816.StaticPagesCubit());
     gh.lazySingleton<_i996.UserCubit>(() => _i996.UserCubit());
     gh.lazySingleton<_i1022.CouponsCubit>(() => _i1022.CouponsCubit());
     gh.lazySingleton<_i203.FavouriteCubit>(() => _i203.FavouriteCubit());
     gh.lazySingleton<_i246.HomeCubit>(() => _i246.HomeCubit());
+    gh.lazySingleton<_i980.NotificationCountCubit>(
+      () => _i980.NotificationCountCubit(),
+    );
     gh.lazySingleton<_i519.UsedCouponsCubit>(() => _i519.UsedCouponsCubit());
     gh.lazySingleton<_i632.NetworkService>(() => _i37.DioService());
     gh.lazySingleton<_i241.BaseRemoteDataSource>(

@@ -12,11 +12,12 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
   late TextEditingController _nameController;
   late TextEditingController _emailController;
   late TextEditingController _addressController;
+  late TextEditingController _poBoxController;
+  late TextEditingController _nationalIdController;
 
   CountryEntity? _selectedCountry;
   CityEntity? _selectedCity;
   RegionEntity? _selectedMunicipality;
-  bool _isFetchingLocation = false;
 
   UserModel get user => UserCubit.instance.state.userModel;
 
@@ -26,10 +27,14 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
     _nameController = TextEditingController(text: user.name);
     _emailController = TextEditingController(text: user.email);
     _addressController = TextEditingController(text: user.address);
+    _poBoxController = TextEditingController(text: user.poBox);
+    _nationalIdController = TextEditingController(text: user.nationalId);
 
     _nameController.addListener(_onChanged);
     _emailController.addListener(_onChanged);
     _addressController.addListener(_onChanged);
+    _poBoxController.addListener(_onChanged);
+    _nationalIdController.addListener(_onChanged);
 
     // Initialize location hierarchy from UserModel IDs (instead of stale cache)
     _selectedCountry = user.locationGrandparentId != null
@@ -120,6 +125,8 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
     _nameController.dispose();
     _emailController.dispose();
     _addressController.dispose();
+    _poBoxController.dispose();
+    _nationalIdController.dispose();
     super.dispose();
   }
 
@@ -136,9 +143,13 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
     final emailChanged = _emailController.text.trim() != user.email.trim();
     final addressChanged =
         (_addressController.text.trim() != (user.address ?? '').trim());
+    final poBoxChanged =
+        (_poBoxController.text.trim() != (user.poBox ?? '').trim());
+    final nationalIdChanged =
+        (_nationalIdController.text.trim() != (user.nationalId ?? '').trim());
     final locationChanged = _locationId != null;
 
-    return nameChanged || emailChanged || addressChanged || locationChanged;
+    return nameChanged || emailChanged || addressChanged || poBoxChanged || nationalIdChanged || locationChanged;
   }
 
   @override
@@ -265,66 +276,21 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
               controller: _addressController,
               hint: LocaleKeys.enterAddress,
             ),
-            15.szH,
-            InkWell(
-              onTap: _isFetchingLocation
-                  ? null
-                  : () async {
-                      setState(() => _isFetchingLocation = true);
-                      try {
-                        final position =
-                            await LocationHelper.getCurrentLocation();
-                        final address =
-                            await LocationHelper.getAddressFromLatLng(position);
-                        if (address != null) {
-                          _addressController.text = address;
-                        }
-                      } catch (e) {
-                        if (context.mounted) {
-                          MessageUtils.showSnackBar(
-                            context: context,
-                            baseStatus: BaseStatus.error,
-                            message: e.toString(),
-                          );
-                        }
-                      } finally {
-                        if (mounted) {
-                          setState(() => _isFetchingLocation = false);
-                        }
-                      }
-                    },
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (_isFetchingLocation)
-                    SizedBox(
-                      width: 20.r,
-                      height: 20.r,
-                      child: const CircularProgressIndicator(
-                        strokeWidth: 2,
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          AppColors.primary,
-                        ),
-                      ),
-                    )
-                  else
-                    AppAssets.svg.baseSvg.compress.svg(
-                      width: 20.r,
-                      height: 20.r,
-                      colorFilter: const ColorFilter.mode(
-                        AppColors.primary,
-                        BlendMode.srcIn,
-                      ),
-                    ),
-                  8.szW,
-                  Text(
-                    _isFetchingLocation
-                        ? LocaleKeys.fetchingLocation
-                        : LocaleKeys.useCurrentLocation,
-                    style: context.textStyle.s14.bold.setPrimaryColor,
-                  ),
-                ],
-              ),
+            20.szH,
+            FieldLabel(label: LocaleKeys.poBox),
+            8.szH,
+            AppTextField(
+              controller: _poBoxController,
+              hint: LocaleKeys.enterPoBox,
+              keyboardType: TextInputType.number,
+            ),
+            20.szH,
+            FieldLabel(label: LocaleKeys.nationalId),
+            8.szH,
+            AppTextField(
+              controller: _nationalIdController,
+              hint: LocaleKeys.enterNationalId,
+              keyboardType: TextInputType.number,
             ),
             40.szH,
             BlocBuilder<UpdateProfileCubit, AsyncState<UserModel?>>(
@@ -345,6 +311,8 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
                           email: _emailController.text,
                           locationId: _locationId,
                           address: _addressController.text,
+                          poBox: _poBoxController.text,
+                          nationalId: _nationalIdController.text,
                           isUpdate: true,
                         );
                   },

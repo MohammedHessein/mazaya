@@ -30,6 +30,9 @@ class MainScreen extends StatefulWidget {
 }
 
 class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
+  static MainScreenState? _instance;
+  static MainScreenState? get instance => _instance;
+
   late final MainParams params = MainParams(
     initialIndex: widget.initialTabIndex,
   );
@@ -37,6 +40,7 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    _instance = this;
     params.selectedIndexNotifier.addListener(_onTabChange);
     if (UserCubit.instance.isUserLoggedIn) {
       UserCubit.instance.getProfile();
@@ -53,6 +57,7 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
 
   @override
   void dispose() {
+    if (_instance == this) _instance = null;
     WidgetsBinding.instance.removeObserver(this);
     params.dispose();
     super.dispose();
@@ -60,6 +65,7 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    _instance = this;
     context.locale;
     return ValueListenableBuilder<int>(
       valueListenable: params.selectedIndexNotifier,
@@ -212,18 +218,21 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
                     ),
                   ),
                   MainBody(2, currentIndex: value),
-                  RefreshIndicator(
-                    onRefresh: () => UserCubit.instance.getProfile(),
-                    color: AppColors.primary,
-                    child: CustomScrollView(
-                      physics: const BouncingScrollPhysics(
-                        parent: AlwaysScrollableScrollPhysics(),
+                  BlocProvider(
+                    create: (context) => injector<AppSettingCubit>()..getSettings(),
+                    child: RefreshIndicator(
+                      onRefresh: () => UserCubit.instance.getProfile(),
+                      color: AppColors.primary,
+                      child: CustomScrollView(
+                        physics: const BouncingScrollPhysics(
+                          parent: AlwaysScrollableScrollPhysics(),
+                        ),
+                        slivers: [
+                          const ProfileHeaderSliver(),
+                          const MoreTabBody(),
+                          const SliverToBoxAdapter(child: SizedBox(height: 100)),
+                        ],
                       ),
-                      slivers: [
-                        const ProfileHeaderSliver(),
-                        const MoreTabBody(),
-                        const SliverToBoxAdapter(child: SizedBox(height: 100)),
-                      ],
                     ),
                   ),
                 ],

@@ -382,7 +382,7 @@
 // // ============================================================================
 
 // /*
-// 1. Create your entity model (e.g., ProductEntity)
+// 1. Create your entity entity (e.g., ProductEntity)
 
 // 2. Create a cubit that extends PaginatedCubit:
 //    - Override fetchPageData() to call your API

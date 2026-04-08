@@ -142,6 +142,10 @@ class $AssetsSvgAppSvgGen {
   AssetGenImage get android11Splash =>
       const AssetGenImage('assets/svg/app_svg/android11_splash.png');
 
+  /// File path: assets/svg/app_svg/android_12_fixed.png
+  AssetGenImage get android12Fixed =>
+      const AssetGenImage('assets/svg/app_svg/android_12_fixed.png');
+
   /// File path: assets/svg/app_svg/android_12_splash.png
   AssetGenImage get android12Splash =>
       const AssetGenImage('assets/svg/app_svg/android_12_splash.png');
@@ -160,6 +164,7 @@ class $AssetsSvgAppSvgGen {
   /// List of all assets
   List<dynamic> get values => [
     android11Splash,
+    android12Fixed,
     android12Splash,
     appIconPart,
     appLauncherIcon,
@@ -206,6 +211,9 @@ class $AssetsSvgBaseSvgGen {
   AssetGenImage get uploadDoted =>
       const AssetGenImage('assets/svg/base_svg/Upload_doted.png');
 
+  /// File path: assets/svg/base_svg/Vector.svg
+  SvgGenImage get vector => const SvgGenImage('assets/svg/base_svg/Vector.svg');
+
   /// File path: assets/svg/base_svg/active_coupons.svg
   SvgGenImage get activeCoupons =>
       const SvgGenImage('assets/svg/base_svg/active_coupons.svg');
@@ -241,6 +249,10 @@ class $AssetsSvgBaseSvgGen {
   /// File path: assets/svg/base_svg/bill.svg
   SvgGenImage get bill => const SvgGenImage('assets/svg/base_svg/bill.svg');
 
+  /// File path: assets/svg/base_svg/calendar.svg
+  SvgGenImage get calendar =>
+      const SvgGenImage('assets/svg/base_svg/calendar.svg');
+
   /// File path: assets/svg/base_svg/camera.svg
   SvgGenImage get camera => const SvgGenImage('assets/svg/base_svg/camera.svg');
 
@@ -263,6 +275,10 @@ class $AssetsSvgBaseSvgGen {
   /// File path: assets/svg/base_svg/complain_empty.png
   AssetGenImage get complainEmpty =>
       const AssetGenImage('assets/svg/base_svg/complain_empty.png');
+
+  /// File path: assets/svg/base_svg/complaints.svg
+  SvgGenImage get complaints =>
+      const SvgGenImage('assets/svg/base_svg/complaints.svg');
 
   /// File path: assets/svg/base_svg/compress.svg
   SvgGenImage get compress =>
@@ -343,6 +359,10 @@ class $AssetsSvgBaseSvgGen {
   /// File path: assets/svg/base_svg/inactive_scanner.svg
   SvgGenImage get inactiveScanner =>
       const SvgGenImage('assets/svg/base_svg/inactive_scanner.svg');
+
+  /// File path: assets/svg/base_svg/location.svg
+  SvgGenImage get location =>
+      const SvgGenImage('assets/svg/base_svg/location.svg');
 
   /// File path: assets/svg/base_svg/lock.png
   AssetGenImage get lock => const AssetGenImage('assets/svg/base_svg/lock.png');
@@ -454,6 +474,10 @@ class $AssetsSvgBaseSvgGen {
   AssetGenImage get verification =>
       const AssetGenImage('assets/svg/base_svg/verification.png');
 
+  /// File path: assets/svg/base_svg/volunteer.svg
+  SvgGenImage get volunteer =>
+      const SvgGenImage('assets/svg/base_svg/volunteer.svg');
+
   /// List of all assets
   List<dynamic> get values => [
     carousel1,
@@ -465,6 +489,7 @@ class $AssetsSvgBaseSvgGen {
     onboarding2,
     onboarding3,
     uploadDoted,
+    vector,
     activeCoupons,
     activeHome,
     activeMore,
@@ -474,12 +499,14 @@ class $AssetsSvgBaseSvgGen {
     arrowDown,
     arrowDownMenu,
     bill,
+    calendar,
     camera,
     cameraAlt,
     changeEmail,
     changePass,
     chatsEmpty,
     complainEmpty,
+    complaints,
     compress,
     correct,
     coupon,
@@ -501,6 +528,7 @@ class $AssetsSvgBaseSvgGen {
     inactiveHome,
     inactiveMore,
     inactiveScanner,
+    location,
     lock,
     login,
     logout,
@@ -530,6 +558,7 @@ class $AssetsSvgBaseSvgGen {
     unlock,
     usedCoupons,
     verification,
+    volunteer,
   ];
 }
 

@@ -58,7 +58,7 @@ class AppHeaderSliver extends StatelessWidget {
   double _getHeight() {
     switch (config.type) {
       case ScaffoldHeaderType.home:
-        return 130.h;
+        return 150.h;
       case ScaffoldHeaderType.profile:
         return 130.h;
       case ScaffoldHeaderType.auth:

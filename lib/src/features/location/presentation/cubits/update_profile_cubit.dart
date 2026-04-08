@@ -14,6 +14,8 @@ class UpdateProfileCubit extends AsyncCubit<UserModel?> {
     String? email,
     String? locationId,
     String? address,
+    String? poBox,
+    String? nationalId,
     bool isUpdate = false,
   }) async {
     await executeAsync(
@@ -26,6 +28,8 @@ class UpdateProfileCubit extends AsyncCubit<UserModel?> {
             if (email != null) 'email': email,
             if (locationId != null) 'location_id': locationId,
             if (address != null) 'address': address,
+            if (poBox != null) 'po_box': poBox,
+            if (nationalId != null) 'national_id': nationalId,
           },
           httpRequestType: HttpRequestType.post,
           mapper: (json) => UserModel.fromJson(json),

@@ -58,11 +58,36 @@ class NotificationCardWidget extends StatelessWidget {
                       ),
                     ),
                     const Spacer(),
-                    Text(
-                      notificationEntity.createdAt,
-                      style: context.textStyle.s12.regular.setColor(
-                        AppColors.gray500,
-                      ),
+                    Builder(
+                      builder: (context) {
+                        final dateTime = DateTime.tryParse(
+                          notificationEntity.createdAt,
+                        );
+                        final String time =
+                            dateTime?.toTime(context.locale.languageCode) ??
+                            notificationEntity.createdAt;
+                        final String? date = dateTime?.toFullDate(
+                          locale: context.locale.languageCode,
+                        );
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              time,
+                              style:
+                                  context.textStyle.s12.medium.setPrimaryColor,
+                            ),
+                            if (date != null)
+                              Text(
+                                date,
+                                style: context.textStyle.s10.regular.setColor(
+                                  AppColors.gray500,
+                                ),
+                              ),
+                          ],
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -79,7 +104,17 @@ class NotificationCardWidget extends StatelessWidget {
         ],
       ),
     ).onClick(
-      onTap: () => NotificationRoutes.navigateByType(notificationEntity.toMap),
+      onTap: () {
+        if (isUnread) {
+          context.read<ReadNotificationCubit>().readNotification(
+            notificationId: notificationEntity.id,
+            successEmitter: (_) {
+              context.read<NotificationsCubit>().fetchInitialData();
+            },
+          );
+        }
+        NotificationRoutes.navigateByType(notificationEntity.toMap);
+      },
     );
   }
 }

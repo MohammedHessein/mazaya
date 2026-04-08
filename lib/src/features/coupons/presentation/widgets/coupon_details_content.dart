@@ -16,81 +16,128 @@ class CouponDetailsContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: AppPadding.pW20,
-        vertical: AppPadding.pH16,
-      ),
-      child: Container(
-        padding: EdgeInsets.all(AppPadding.pW16),
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(AppCircular.r20),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.black.withValues(alpha: 0.05),
-              blurRadius: 15,
-              offset: const Offset(0, 5),
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: AppPadding.pW20,
+            vertical: AppPadding.pH16,
+          ),
+          child: Container(
+            padding: EdgeInsets.all(AppPadding.pW16),
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(AppCircular.r20),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.black.withValues(alpha: 0.05),
+                  blurRadius: 15,
+                  offset: const Offset(0, 5),
+                ),
+              ],
             ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: 70.w,
-                  height: 90.h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(AppCircular.r12),
-                    border: Border.all(color: AppColors.gray100),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(AppCircular.r12),
-                    child: UniversalMediaWidget(
-                      path: coupon.vendorImage != null &&
-                              coupon.vendorImage!.isNotEmpty
-                          ? coupon.vendorImage!
-                          : AppAssets.svg.appSvg.appLauncherIcon.path,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ),
-                12.szW,
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        coupon.categoryName ?? '',
-                        style: context.textStyle.s12.medium.setHintColor,
-                      ),
-                      4.szH,
-                      Text(
-                        coupon.vendorName ?? '',
-                        style: context.textStyle.s16.bold.setBlackColor,
-                      ),
-                      if (coupon.sku != null && coupon.sku!.isNotEmpty) ...[
-                        4.szH,
-                        Text(
-                          'SKU: ${coupon.sku}',
-                          style: context.textStyle.s12.regular.setHintColor,
-                        ),
-                      ],
-                    ],
-                  ),
-                ),
                 Row(
-                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 70.w,
+                      height: 70.h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(AppCircular.r12),
+                        border: Border.all(color: AppColors.blue100),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(AppCircular.r12),
+                        child: UniversalMediaWidget(
+                          path:
+                              coupon.vendorImage != null &&
+                                  coupon.vendorImage!.isNotEmpty
+                              ? coupon.vendorImage!
+                              : AppAssets.svg.appSvg.appLauncherIcon.path,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                    12.szW,
+                    Expanded(
+                      flex: 4,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            coupon.categoryName ?? '',
+                            style: context.textStyle.s14.medium.setHintColor,
+                          ),
+                          Text(
+                            coupon.vendorName ?? '',
+                            style: context.textStyle.s16.bold.setBlackColor,
+                          ),
+                          if (coupon.sku != null && coupon.sku!.isNotEmpty)
+                            Text(
+                              'SKU: ${coupon.sku}',
+                              style: context.textStyle.s14.regular.setHintColor,
+                            ),
+                        ],
+                      ),
+                    ),
+                    const Spacer(),
+                    if (coupon.discountType != null)
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 12.w,
+                          vertical: 4.h,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xffFEF3C6),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          coupon.discountType ?? '',
+                          style: context.textStyle.s12.medium.setColor(
+                            AppColors.primary,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+                if (coupon.description != null &&
+                    coupon.description!.isNotEmpty) ...[
+                  16.szH,
+                  Text(
+                    coupon.description ?? '',
+                    style: context.textStyle.s12.regular.setColor(
+                      AppColors.gray600,
+                    ),
+                    textAlign: TextAlign.start,
+                  ),
+                ],
+                Divider(color: AppColors.gray100),
+                Row(
+                  children: [
+                    IconWidget(
+                      icon: AppAssets.svg.baseSvg.percentage.path,
+                      color: AppColors.primary,
+                      height: 20.h,
+                    ),
+                    8.szW,
+                    Expanded(
+                      child: Text(
+                        coupon.shortDescription ?? '',
+                        style: context.textStyle.s14.bold.setPrimaryColor,
+                      ),
+                    ),
+                  ],
+                ),
+                16.szH,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CustomCircularActionButton(
                       icon: AppAssets.svg.baseSvg.share.path,
                       onTap: () {
-                        debugPrint(
-                          '🚀 Share Clicked for product: ${coupon.id}',
-                        );
                         final box = context.findRenderObject() as RenderBox?;
                         final String shareLink =
                             'https://mazaya.com/coupon?id=${coupon.id}';
@@ -107,9 +154,22 @@ class CouponDetailsContent extends StatelessWidget {
                         );
                       },
                     ),
-                    10.szW,
+                    16.szW,
                     CustomCircularActionButton(
-                      iconColor: AppColors.black,
+                      icon: AppAssets.svg.baseSvg.location.path,
+                      onTap: () {
+                        Go.to(
+                          OsmMapScreen(
+                            lat: coupon.lat ?? 24.7136, // Default to Riyadh
+                            lng: coupon.lng ?? 46.6753,
+                            title: coupon.vendorName ?? LocaleKeys.openMap,
+                          ),
+                        );
+                      },
+                    ),
+                    16.szW,
+                    CustomCircularActionButton(
+                      iconColor: coupon.isFav ? Colors.red : AppColors.black,
                       icon: coupon.isFav
                           ? Icons.favorite
                           : Icons.favorite_border,
@@ -118,7 +178,6 @@ class CouponDetailsContent extends StatelessWidget {
                           id: coupon.id,
                           coupon: coupon,
                         );
-                        // Also update the local state of this specific Details Cubit
                         context.read<CouponDetailsCubit>().toggleLocal(
                           coupon.id,
                         );
@@ -128,43 +187,29 @@ class CouponDetailsContent extends StatelessWidget {
                 ),
               ],
             ),
-            24.szH,
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
-              decoration: BoxDecoration(
-                color: AppColors.blue50,
-                borderRadius: BorderRadius.circular(AppCircular.r12),
-                border: Border.all(color: AppColors.blue100),
-              ),
-              child: Row(
-                children: [
-                  IconWidget(
-                    icon: AppAssets.svg.baseSvg.percentage.path,
-                    color: AppColors.primary,
-                    height: 25.h,
-                  ),
-                  10.szW,
-                  Expanded(
-                    child: Text(
-                      coupon.shortDescription ?? '',
-                      style: context.textStyle.s14.bold.setPrimaryColor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            24.szH,
-            Text(coupon.name, style: context.textStyle.s16.bold.setBlackColor),
-            12.szH,
-            Text(
-              coupon.description ?? '',
-              style: context.textStyle.s14.regular.setColor(AppColors.gray600),
-              textAlign: TextAlign.start,
-            ),
-          ],
+          ),
         ),
-      ),
+        if (coupon.productImage.isNotEmpty)
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: AppPadding.pW20),
+            child: Container(
+              height: 200.h,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(AppCircular.r20),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(AppCircular.r20),
+                child: UniversalMediaWidget(
+                  path: coupon.productImage,
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+          ),
+        24.szH,
+      ],
     );
   }
 }

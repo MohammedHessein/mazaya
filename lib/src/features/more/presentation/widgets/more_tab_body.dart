@@ -45,6 +45,38 @@ class MoreTabBody extends StatelessWidget {
                 ),
               ],
             ),
+            24.szH,
+            AsyncBlocBuilder<AppSettingCubit, AppSettingModel?>(
+              builder: (context, data) {
+                if (data?.websiteLink == null) return const SizedBox.shrink();
+                return InkWell(
+                  onTap: () => Go.to(
+                    WebViewScreen(
+                      url: data!.websiteLink!,
+                      title: LocaleKeys.visitOurWebsite.tr(),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconWidget(
+                        icon: AppAssets.svg.baseSvg.global.path,
+                        width: 20.w,
+                        height: 20.w,
+                        color: AppColors.primary,
+                      ),
+                      8.szW,
+                      Text(
+                        LocaleKeys.visitOurWebsite.tr(),
+                        textAlign: TextAlign.center,
+                        style: context.textStyle.s16.regular.setPrimaryColor,
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+            16.szH,
           ],
         ),
       ),

@@ -4,4 +4,4 @@ enum MediaSource { network, asset }
 
 enum ScaffoldHeaderType { standard, auth, home, profile }
 
-enum MembershipType { golden, sliver, diamond }
+enum MembershipType { golden, sliver, diamond, volunteer }

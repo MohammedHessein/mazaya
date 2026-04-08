@@ -10,6 +10,9 @@ import 'package:mazaya/src/config/res/config_imports.dart';
 import 'package:mazaya/src/core/network/un_authenticated_interceptor.dart';
 import 'package:mazaya/src/core/navigation/navigator.dart';
 import 'package:mazaya/src/features/coupons/presentation/view/coupon_details_screen.dart';
+import 'package:mazaya/src/features/main/presentation/view/main_screen.dart';
+import 'package:mazaya/src/features/notifications/presentation/imports/view_imports.dart';
+import 'package:mazaya/src/features/used_coupons/presentation/imports/view_imports.dart';
 
 part 'navigation_types.dart';
 part 'notification_routes.dart';
@@ -222,6 +225,7 @@ class NotificationService {
   void _handleNotificationsTap(RemoteMessage? message) async {
     if (message == null) return;
     log('👆 Notification tapped, navigating...');
+    injector<NotificationCountCubit>().decrement();
     NotificationNavigator._instance?.onRoutingMessage(message);
   }
 
@@ -279,6 +283,7 @@ class NotificationService {
     FirebaseMessaging.onBackgroundMessage(backgroundHandler);
 
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
+      injector<NotificationCountCubit>().increment();
       log('╔════════════════════════════════════════╗');
       log('║     NOTIFICATION RECEIVED (Foreground)  ║');
       log('╚════════════════════════════════════════╝');

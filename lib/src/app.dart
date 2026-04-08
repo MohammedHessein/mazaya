@@ -15,6 +15,7 @@ import 'package:mazaya/src/core/utils/favorite_manager.dart';
 import 'package:mazaya/src/core/widgets/handling_views/no_internet_view.dart';
 import 'package:mazaya/src/core/widgets/un_autheticated/unauthenticated_bottomsheet.dart';
 import 'package:mazaya/src/features/intro/presentation/imports/view_imports.dart';
+import 'package:mazaya/src/features/notifications/presentation/imports/view_imports.dart';
 
 class MazayaApp extends StatefulWidget {
   final Widget? home;
@@ -52,8 +53,11 @@ class _MazayaAppState extends State<MazayaApp> {
               create: (context) => injector<FavoriteManager>(),
             ),
           ],
-          child: BlocProvider.value(
-            value: injector<UserCubit>(),
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider.value(value: injector<UserCubit>()),
+              BlocProvider.value(value: injector<NotificationCountCubit>()),
+            ],
             child: MaterialApp(
               debugShowCheckedModeBanner: false,
               title: ConstantManager.appName,

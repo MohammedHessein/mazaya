@@ -22,7 +22,7 @@ class CustomCircularActionButton extends StatelessWidget {
         padding: EdgeInsets.all(8.r),
         decoration: BoxDecoration(
           color: AppColors.white,
-          borderRadius: BorderRadius.circular(AppCircular.r8),
+          borderRadius: BorderRadius.circular(AppCircular.r14),
           border: Border.all(color: AppColors.gray200),
         ),
         child: IconWidget(

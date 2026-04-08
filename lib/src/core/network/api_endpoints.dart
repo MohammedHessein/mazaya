@@ -23,8 +23,12 @@ class ApiConstants {
   static const String singleCoupon = 'coupons/';
   static const String scanQR = 'user/coupons/scan/';
   static const String notifications = 'user/notifications';
+  static const String readAllNotifications = 'user/notifications/read-all';
+  static const String readNotificationId = 'user/notifications/';
   static const String termsAndConditions =
       'https://backend.smartvision4p.com/mazaya-app/public/term-conditions';
   static const String privacyPolicy =
       'https://backend.smartvision4p.com/mazaya-app/public/privacy-policy';
+  static const String complaints = 'contact-us';
+  static const String appSettings = 'setting';
 }

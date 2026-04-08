@@ -799,6 +799,16 @@
     "ar": "تم إرسال الرسالة بنجاح",
     "sv": "Meddelandet skickades framgångsrikt"
   },
+  "message_length_validation": {
+    "en": "Message must be at least 5 characters long",
+    "ar": "يجب أن يكون طول النص الرسالة على الأقل 5 حروفٍ/حرفًا",
+    "sv": "Meddelandet måste vara minst 5 tecken långt"
+  },
+  "complaintSubmittedSuccessfully": {
+    "en": "Complaint submitted successfully",
+    "ar": "تم ارسال الشكوى بنجاح",
+    "sv": "Klagomålet skickades framgångsrikt"
+  },
   "full_name_label": {
     "en": "Full Name",
     "ar": "الاسم الكامل",
@@ -1014,6 +1024,11 @@
     "ar": "مسح الكل",
     "sv": "Rensa alla"
   },
+  "read_all": {
+    "en": "Read All",
+    "ar": "قراءة الكل",
+    "sv": "Läs alla"
+  },
   "notifications_delete_all_notifications": {
     "en": "Delete All Notifications ?",
     "ar": "حذف جميع الإشعارات ؟",
@@ -1205,9 +1220,14 @@
     "sv": "Diamantmedlem"
   },
   "subscription_active": {
-    "en": "Subscription Active",
-    "ar": "الاشتراك نشط",
-    "sv": "Prenumeration aktiv"
+    "en": "Active",
+    "ar": "نشط",
+    "sv": "Aktiv"
+  },
+  "subscription_inactive": {
+    "en": "Inactive",
+    "ar": "غير نشط",
+    "sv": "Inaktiv"
   },
   "remaining_coupons": {
     "en": "{count} Coupons Remaining",
@@ -1328,6 +1348,11 @@
     "en": "Return to Home",
     "ar": "العودة للرئيسية",
     "sv": "Återgå till startsidan"
+  },
+  "member_since": {
+    "en": "Member since",
+    "ar": "عضو منذ",
+    "sv": "Medlem sedan"
   },
   "no_notifications_yet": {
     "en": "No notifications yet!",
@@ -1583,5 +1608,45 @@
     "en": "{member_type}",
     "ar": "{member_type}",
     "sv": "{member_type}"
+  },
+  "volunteer_member": {
+    "en": "Volunteer Member",
+    "ar": "عضو متطوع",
+    "sv": "Volontärmedlem"
+  },
+  "po_box": {
+    "en": "Postal Code (PO. Box)",
+    "ar": "الرمز البريدي (P.O. Box)",
+    "sv": "Postnummer (PO. Box)"
+  },
+  "enter_po_box": {
+    "en": "Enter Postal Code",
+    "ar": "أدخل الرمز البريدي",
+    "sv": "Ange postnummer"
+  },
+  "national_id": {
+    "en": "National ID",
+    "ar": "الهوية الوطنية",
+    "sv": "Nationellt ID"
+  },
+  "enter_national_id": {
+    "en": "Enter National ID",
+    "ar": "أدخل الهوية الوطنية",
+    "sv": "Ange nationellt ID"
+  },
+  "store_description": {
+    "en": "Store Description",
+    "ar": "وصف المتجر",
+    "sv": "Butiksbeskrivning"
+  },
+  "open_map": {
+    "en": "Open Map",
+    "ar": "فتح الخريطة",
+    "sv": "Öppna karta"
+  },
+  "visit_our_website": {
+    "en": "Visit Our Website",
+    "ar": "زيارة موقعنا",
+    "sv": "Besök vår hemsida"
   }
 }

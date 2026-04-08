@@ -16,6 +16,7 @@ import 'package:mazaya/src/features/more/presentation/widgets/delete_account_bot
 import 'package:mazaya/src/features/more/presentation/widgets/logout_bottom_sheet.dart';
 import 'package:mazaya/src/features/more/presentation/imports/view_imports.dart';
 import 'package:mazaya/src/features/used_coupons/presentation/imports/view_imports.dart';
+import 'package:mazaya/src/features/complaints/presentation/imports/view_imports.dart';
 
 class MoreItemEntity {
   final String title;
@@ -65,6 +66,11 @@ class MoreItemEntity {
       icon: AppAssets.svg.baseSvg.global.path,
       trailingText: Languages.currentLanguage.title,
       onTap: () => openLanguageSheet(context),
+    ),
+    MoreItemEntity(
+      title: LocaleKeys.complaints,
+      icon: AppAssets.svg.baseSvg.complaints.path,
+      onTap: () => Go.to(const ComplaintsView()),
     ),
     MoreItemEntity(
       title: LocaleKeys.terms,

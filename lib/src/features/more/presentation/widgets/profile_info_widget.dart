@@ -18,12 +18,16 @@ class ProfileInfoWidget extends StatelessWidget {
                   mType.contains('فض') ||
                   mType.contains('silv'))
             ? MembershipType.sliver
+            : (mType.contains('volu') || mType.contains('متطوع'))
+            ? MembershipType.volunteer
             : MembershipType.diamond;
         final userName = user.name;
         final subTitle = membershipType == MembershipType.golden
             ? LocaleKeys.goldMember
             : membershipType == MembershipType.sliver
             ? LocaleKeys.silverMember
+            : membershipType == MembershipType.volunteer
+            ? LocaleKeys.volunteerMember
             : LocaleKeys.diamondMember;
         final hasPackage = user.userPackageName != null;
 
@@ -46,6 +50,8 @@ class ProfileInfoWidget extends StatelessWidget {
                       ? AppColors.orange.withValues(alpha: 0.1)
                       : membershipType == MembershipType.sliver
                       ? AppColors.gray200
+                      : membershipType == MembershipType.volunteer
+                      ? AppColors.success.withValues(alpha: 0.1)
                       : AppColors.blue100,
                   borderRadius: BorderRadius.circular(AppCircular.r20),
                   border: Border.all(color: Colors.transparent),
@@ -59,6 +65,8 @@ class ProfileInfoWidget extends StatelessWidget {
                           ? context.textStyle.s14.setColor(AppColors.orange)
                           : membershipType == MembershipType.sliver
                           ? context.textStyle.s14.setHintColor
+                          : membershipType == MembershipType.volunteer
+                          ? context.textStyle.s14.setColor(AppColors.success)
                           : context.textStyle.s14.setColor(AppColors.primary),
                     ),
                     10.szW,
@@ -72,12 +80,40 @@ class ProfileInfoWidget extends StatelessWidget {
                             width: 18.w,
                             height: 18.w,
                           )
+                        : membershipType == MembershipType.volunteer
+                        ? AppAssets.svg.baseSvg.volunteer.svg(
+                            width: 18.w,
+                            height: 18.w,
+                          )
                         : AppAssets.svg.baseSvg.diamondMember.svg(
                             width: 18.w,
                             height: 18.w,
                           ),
                   ],
                 ),
+              ),
+            ],
+            if (userName.isNotEmpty) ...[
+              10.szH,
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  AppAssets.svg.baseSvg.calendar.svg(
+                    width: 14.w,
+                    height: 14.w,
+                    colorFilter: const ColorFilter.mode(
+                      AppColors.hintText,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                  4.szW,
+                  Text(
+                    '${LocaleKeys.memberSince} ${DateTime.tryParse(user.createdAt)?.year ?? ''}',
+                    style: context.textStyle.s12.regular.setHintColor.setHeight(
+                      1.7,
+                    ),
+                  ),
+                ],
               ),
             ],
           ],
