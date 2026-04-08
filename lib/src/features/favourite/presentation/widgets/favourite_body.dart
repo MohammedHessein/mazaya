@@ -13,23 +13,33 @@ class FavouriteBody extends StatelessWidget {
             horizontal: AppPadding.pW20,
             vertical: AppPadding.pH16,
           ),
-          sliver: PaginatedSliverListWidget<FavouriteCubit, CouponEntity>(
-            skeletonBuilder: (context) => AppCard(
-              title: CouponEntity.empty().name,
-              description: CouponEntity.empty().description ?? '',
-            ),
-            itemBuilder: (context, coupon, index) {
-              return AppCard(
-                title: coupon.vendorName ?? coupon.name,
-                description: coupon.name,
-                imageUrl: coupon.productImage,
-                isFavorite: coupon.isFav,
-                onFavoriteTap: () => context.read<FavoriteManager>().toggle(
-                  id: coupon.id,
-                  coupon: coupon,
+          sliver: BlocBuilder<UserCubit, UserState>(
+            builder: (context, userState) {
+              final user = userState.userModel;
+              return PaginatedSliverListWidget<FavouriteCubit, CouponEntity>(
+                skeletonBuilder: (context) => AppCard(
+                  title: CouponEntity.empty().name,
+                  description: CouponEntity.empty().description ?? '',
                 ),
-                onTap: () {
-                  Go.to(CouponDetailsScreen(id: coupon.id));
+                itemBuilder: (context, coupon, index) {
+                  final isDisabled = coupon.packageName != null &&
+                      user.userPackageName != null &&
+                      coupon.packageName != user.userPackageName;
+                  return AppCard(
+                    title: coupon.vendorName ?? coupon.name,
+                    description: coupon.name,
+                    imageUrl: coupon.productImage,
+                    isFavorite: coupon.isFav,
+                    packageName: coupon.packageName,
+                    isDisabled: isDisabled,
+                    onFavoriteTap: () => context.read<FavoriteManager>().toggle(
+                          id: coupon.id,
+                          coupon: coupon,
+                        ),
+                    onTap: () {
+                      Go.to(CouponDetailsScreen(id: coupon.id, coupon: coupon));
+                    },
+                  );
                 },
               );
             },

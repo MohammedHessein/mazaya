@@ -4,6 +4,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 import 'package:mazaya/src/core/widgets/cards/app_card.dart';
 import 'package:mazaya/src/features/coupons/entity/coupon_entity.dart';
 
+import 'package:mazaya/src/core/shared/cubits/user_cubit/user_cubit.dart';
 import '../../../location/imports/location_imports.dart';
 import 'package:mazaya/src/core/network/api_endpoints.dart';
 import 'package:mazaya/src/core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';

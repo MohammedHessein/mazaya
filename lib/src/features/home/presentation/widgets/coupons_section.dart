@@ -12,6 +12,7 @@ import 'package:mazaya/src/features/coupons/presentation/view/coupon_details_scr
 import 'package:mazaya/src/core/utils/favorite_manager.dart';
 import '../cubits/home_cubit.dart';
 import '../../model/home_model.dart';
+import 'package:mazaya/src/core/shared/cubits/user_cubit/user_cubit.dart';
 
 class CouponsSection extends StatefulWidget {
   const CouponsSection({super.key});
@@ -62,27 +63,40 @@ class _CouponsSectionState extends State<CouponsSection> {
             ),
             builder: (context, home) {
               final products = home?.products ?? [];
-              return ListView.builder(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: products.length,
-                itemBuilder: (context, index) {
-                  final product = products[index];
-                  return AppCard(
-                    title: product.vendorName ?? product.name,
-                    description: product.name,
-                    imageUrl: product.productImage,
-                    status: null,
-                    isFavorite: product.isFav,
-                    onFavoriteTap: () {
-                      context.read<FavoriteManager>().toggle(
-                            id: product.id,
-                            coupon: product.toCouponEntity(),
-                          );
-                    },
-                    onTap: () {
-                      Go.to(CouponDetailsScreen(id: product.id));
+              return BlocBuilder<UserCubit, UserState>(
+                builder: (context, userState) {
+                  final user = userState.userModel;
+                  return ListView.builder(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: products.length,
+                    itemBuilder: (context, index) {
+                      final product = products[index];
+                      final isDisabled = product.packageName != null &&
+                          user.userPackageName != null &&
+                          product.packageName != user.userPackageName;
+
+                      return AppCard(
+                        title: product.vendorName ?? product.name,
+                        description: product.name,
+                        imageUrl: product.productImage,
+                        status: null,
+                        isFavorite: product.isFav,
+                        packageName: product.packageName,
+                        isDisabled: isDisabled,
+                        onFavoriteTap: () {
+                          context.read<FavoriteManager>().toggle(
+                                id: product.id,
+                                coupon: product.toCouponEntity(),
+                              );
+                        },
+                        onTap: () {
+                          Go.to(CouponDetailsScreen(
+                              id: product.id,
+                              coupon: product.toCouponEntity()));
+                        },
+                      );
                     },
                   );
                 },

@@ -14,6 +14,10 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
   late TextEditingController _addressController;
   late TextEditingController _poBoxController;
   late TextEditingController _nationalIdController;
+  late TextEditingController _firstNameController;
+  late TextEditingController _lastNameController;
+  late TextEditingController _mobileController;
+  late TextEditingController _personalNumberController;
 
   CountryEntity? _selectedCountry;
   CityEntity? _selectedCity;
@@ -29,12 +33,20 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
     _addressController = TextEditingController(text: user.address);
     _poBoxController = TextEditingController(text: user.poBox);
     _nationalIdController = TextEditingController(text: user.nationalId);
+    _firstNameController = TextEditingController(text: user.firstName);
+    _lastNameController = TextEditingController(text: user.lastName);
+    _mobileController = TextEditingController(text: user.mobile);
+    _personalNumberController = TextEditingController(text: user.personalNumber);
 
     _nameController.addListener(_onChanged);
     _emailController.addListener(_onChanged);
     _addressController.addListener(_onChanged);
     _poBoxController.addListener(_onChanged);
     _nationalIdController.addListener(_onChanged);
+    _firstNameController.addListener(_onChanged);
+    _lastNameController.addListener(_onChanged);
+    _mobileController.addListener(_onChanged);
+    _personalNumberController.addListener(_onChanged);
 
     // Initialize location hierarchy from UserModel IDs (instead of stale cache)
     _selectedCountry = user.locationGrandparentId != null
@@ -127,6 +139,10 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
     _addressController.dispose();
     _poBoxController.dispose();
     _nationalIdController.dispose();
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _mobileController.dispose();
+    _personalNumberController.dispose();
     super.dispose();
   }
 
@@ -140,6 +156,10 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
 
   bool get _hasChanges {
     final nameChanged = _nameController.text.trim() != user.name.trim();
+    final firstNameChanged = _firstNameController.text.trim() != (user.firstName ?? '').trim();
+    final lastNameChanged = _lastNameController.text.trim() != (user.lastName ?? '').trim();
+    final mobileChanged = _mobileController.text.trim() != user.mobile.trim();
+    final personalNumberChanged = _personalNumberController.text.trim() != (user.personalNumber ?? '').trim();
     final emailChanged = _emailController.text.trim() != user.email.trim();
     final addressChanged =
         (_addressController.text.trim() != (user.address ?? '').trim());
@@ -148,8 +168,17 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
     final nationalIdChanged =
         (_nationalIdController.text.trim() != (user.nationalId ?? '').trim());
     final locationChanged = _locationId != null;
-
-    return nameChanged || emailChanged || addressChanged || poBoxChanged || nationalIdChanged || locationChanged;
+ 
+    return nameChanged ||
+        firstNameChanged ||
+        lastNameChanged ||
+        mobileChanged ||
+        personalNumberChanged ||
+        emailChanged ||
+        addressChanged ||
+        poBoxChanged ||
+        nationalIdChanged ||
+        locationChanged;
   }
 
   @override
@@ -165,19 +194,72 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
             AppTextField(
               controller: _nameController,
               hint: LocaleKeys.name,
+              validator: (v) => Validators.validateName(v, fieldTitle: LocaleKeys.name),
             ),
             20.szH,
             FieldLabel(label: LocaleKeys.email),
             8.szH,
             AppTextField(
-              controller: _emailController,
-              hint: LocaleKeys.email,
-              keyboardType: TextInputType.emailAddress,
-              validator: (value) => value != null && value.isNotEmpty
-                  ? Validators.validateEmail(value)
-                  : null,
-            ),
-            20.szH,
+               controller: _emailController,
+               hint: LocaleKeys.email,
+               keyboardType: TextInputType.emailAddress,
+               validator: (value) => value != null && value.isNotEmpty
+                   ? Validators.validateEmail(value)
+                   : null,
+             ),
+             20.szH,
+             Row(
+               children: [
+                 Expanded(
+                   child: Column(
+                     crossAxisAlignment: CrossAxisAlignment.start,
+                     children: [
+                       FieldLabel(label: LocaleKeys.firstName),
+                       8.szH,
+                       AppTextField(
+                         controller: _firstNameController,
+                         hint: LocaleKeys.firstName,
+                         validator: (v) => Validators.validateName(v, fieldTitle: LocaleKeys.firstName),
+                       ),
+                     ],
+                   ),
+                 ),
+                 15.szW,
+                 Expanded(
+                   child: Column(
+                     crossAxisAlignment: CrossAxisAlignment.start,
+                     children: [
+                       FieldLabel(label: LocaleKeys.lastName),
+                       8.szH,
+                       AppTextField(
+                         controller: _lastNameController,
+                         hint: LocaleKeys.lastName,
+                         validator: (v) => Validators.validateName(v, fieldTitle: LocaleKeys.lastName),
+                       ),
+                     ],
+                   ),
+                 ),
+               ],
+             ),
+             20.szH,
+             FieldLabel(label: LocaleKeys.phoneNumber),
+             8.szH,
+             AppTextField(
+               controller: _mobileController,
+               hint: LocaleKeys.phoneNumber,
+               keyboardType: TextInputType.phone,
+               validator: (v) => Validators.validatePhone(v, fieldTitle: LocaleKeys.phoneNumber),
+             ),
+             20.szH,
+             FieldLabel(label: LocaleKeys.personalNumber),
+             8.szH,
+             AppTextField(
+               controller: _personalNumberController,
+               hint: LocaleKeys.personalNumber,
+               keyboardType: TextInputType.number,
+               validator: (v) => Validators.validateEmpty(v, fieldTitle: LocaleKeys.personalNumber),
+             ),
+             20.szH,
             FieldLabel(label: LocaleKeys.country),
             8.szH,
             BlocBuilder<GetBaseEntityCubit<CountryEntity>,
@@ -185,7 +267,7 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
               builder: (context, state) {
                 return const SizedBox().asFormField<CountryEntity>(
                   initialValue: _selectedCountry,
-                  validator: (value) => null,
+                  validator: (v) => Validators.validateDropDown(v, fieldTitle: LocaleKeys.country),
                   builder: (fieldState) => AppDropdown<CountryEntity>(
                     items: state.dataState.data ?? [],
                     value: _selectedCountry,
@@ -215,7 +297,7 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
                         builder: (context, state) {
                           return const SizedBox().asFormField<CityEntity>(
                             initialValue: _selectedCity,
-                            validator: (value) => null,
+                            validator: (v) => Validators.validateDropDown(v, fieldTitle: _level2Label),
                             builder: (fieldState) => AppDropdown<CityEntity>(
                               readonly: _selectedCountry == null,
                               items: state.dataState.data ?? [],
@@ -247,7 +329,7 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
                         builder: (context, state) {
                           return const SizedBox().asFormField<RegionEntity>(
                             initialValue: _selectedMunicipality,
-                            validator: (value) => null,
+                            validator: (v) => Validators.validateDropDown(v, fieldTitle: _level3Label),
                             builder: (fieldState) => AppDropdown<RegionEntity>(
                               readonly: _selectedCity == null,
                               items: state.dataState.data ?? [],
@@ -275,6 +357,7 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
             AppTextField(
               controller: _addressController,
               hint: LocaleKeys.enterAddress,
+              validator: (v) => Validators.validateEmpty(v, fieldTitle: LocaleKeys.address),
             ),
             20.szH,
             FieldLabel(label: LocaleKeys.poBox),
@@ -283,6 +366,7 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
               controller: _poBoxController,
               hint: LocaleKeys.enterPoBox,
               keyboardType: TextInputType.number,
+              validator: (v) => Validators.validateEmpty(v, fieldTitle: LocaleKeys.poBox),
             ),
             20.szH,
             FieldLabel(label: LocaleKeys.nationalId),
@@ -291,6 +375,7 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
               controller: _nationalIdController,
               hint: LocaleKeys.enterNationalId,
               keyboardType: TextInputType.number,
+              validator: (v) => Validators.validateEmpty(v, fieldTitle: LocaleKeys.nationalId),
             ),
             40.szH,
             BlocBuilder<UpdateProfileCubit, AsyncState<UserModel?>>(
@@ -301,20 +386,26 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
                   color: _hasChanges ? AppColors.primary : AppColors.placeholder,
                   isDissabled: !_hasChanges || state.isLoading,
                   onTap: () async {
-                    UserCubit.instance.updateLocationHierarchy(
-                      country: _selectedCountry,
-                      city: _selectedCity,
-                      region: _selectedMunicipality,
-                    );
-                    await context.read<UpdateProfileCubit>().updateProfile(
-                          name: _nameController.text,
-                          email: _emailController.text,
-                          locationId: _locationId,
-                          address: _addressController.text,
-                          poBox: _poBoxController.text,
-                          nationalId: _nationalIdController.text,
-                          isUpdate: true,
-                        );
+                    if (_formKey.currentState!.validate()) {
+                     await UserCubit.instance.updateLocationHierarchy(
+                        country: _selectedCountry,
+                        city: _selectedCity,
+                        region: _selectedMunicipality,
+                      );
+                      await context.read<UpdateProfileCubit>().updateProfile(
+                            name: _nameController.text,
+                            email: _emailController.text,
+                            locationId: _locationId,
+                            address: _addressController.text,
+                            poBox: _poBoxController.text,
+                            nationalId: _nationalIdController.text,
+                            firstName: _firstNameController.text,
+                            lastName: _lastNameController.text,
+                            mobile: _mobileController.text,
+                            personalNumber: _personalNumberController.text,
+                            isUpdate: true,
+                          );
+                    }
                   },
                 );
               },

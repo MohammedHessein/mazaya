@@ -18,6 +18,7 @@ import 'package:mazaya/src/features/coupons/presentation/view/coupon_details_scr
 import 'package:mazaya/src/features/coupons/presentation/widgets/coupons_filter_bottom_sheet.dart';
 import 'package:mazaya/src/features/coupons/presentation/widgets/coupons_filter_chips.dart';
 import 'package:mazaya/src/features/coupons/presentation/widgets/coupons_search_bar.dart';
+import '../view/view_imports.dart';
 
 class CouponsBody extends StatefulWidget {
   const CouponsBody({super.key});
@@ -87,32 +88,44 @@ class _CouponsBodyState extends State<CouponsBody> {
             ),
           ),
           SliverToBoxAdapter(child: 20.szH),
-          PaginatedSliverListWidget<CouponsCubit, CouponEntity>(
-            skeletonItemCount: 10,
-            config: const PaginatedListConfig(),
-            skeletonBuilder: (context) => AppCard(
-              title: CouponEntity.empty().vendorName ?? '',
-              description: CouponEntity.empty().name,
-            ),
-            itemBuilder: (context, item, index) => AppCard(
-              title: item.vendorName ?? item.name,
-              description: item.name,
-              imageUrl: item.productImage,
-              isFavorite: item.isFav,
-              onTap: () {
-                Go.to(CouponDetailsScreen(id: item.id, coupon: item));
-              },
-              onFavoriteTap: () {
-                context.read<FavoriteManager>().toggle(
-                  id: item.id,
-                  coupon: item,
-                );
-              },
-            ),
-            emptyWidget: EmptyWidget(
-              title: LocaleKeys.noCouponsTitle,
-              desc: LocaleKeys.noCouponsDesc,
-            ),
+          BlocBuilder<UserCubit, UserState>(
+            builder: (context, userState) {
+              final user = userState.userModel;
+              return PaginatedSliverListWidget<CouponsCubit, CouponEntity>(
+                skeletonItemCount: 10,
+                config: const PaginatedListConfig(),
+                skeletonBuilder: (context) => AppCard(
+                  title: CouponEntity.empty().vendorName ?? '',
+                  description: CouponEntity.empty().name,
+                ),
+                itemBuilder: (context, item, index) {
+                  final isDisabled = item.packageName != null &&
+                      user.userPackageName != null &&
+                      item.packageName != user.userPackageName;
+                  return AppCard(
+                    title: item.vendorName ?? item.name,
+                    description: item.name,
+                    imageUrl: item.productImage,
+                    isFavorite: item.isFav,
+                    packageName: item.packageName,
+                    isDisabled: isDisabled,
+                    onTap: () {
+                      Go.to(CouponDetailsScreen(id: item.id, coupon: item));
+                    },
+                    onFavoriteTap: () {
+                      context.read<FavoriteManager>().toggle(
+                            id: item.id,
+                            coupon: item,
+                          );
+                    },
+                  );
+                },
+                emptyWidget: EmptyWidget(
+                  title: LocaleKeys.noCouponsTitle,
+                  desc: LocaleKeys.noCouponsDesc,
+                ),
+              );
+            },
           ),
           SliverToBoxAdapter(child: 40.szH), // Bottom spacing for FAB/Nav
         ],

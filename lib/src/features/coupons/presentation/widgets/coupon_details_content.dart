@@ -16,200 +16,248 @@ class CouponDetailsContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: AppPadding.pW20,
-            vertical: AppPadding.pH16,
-          ),
-          child: Container(
-            padding: EdgeInsets.all(AppPadding.pW16),
-            decoration: BoxDecoration(
-              color: AppColors.white,
-              borderRadius: BorderRadius.circular(AppCircular.r20),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.black.withValues(alpha: 0.05),
-                  blurRadius: 15,
-                  offset: const Offset(0, 5),
+    return BlocBuilder<UserCubit, UserState>(
+      builder: (context, userState) {
+        final user = userState.userModel;
+        final isDisabled = coupon.packageName != null &&
+            user.userPackageName != null &&
+            coupon.packageName != user.userPackageName;
+
+        return Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: AppPadding.pW20,
+                vertical: AppPadding.pH16,
+              ),
+              child: Container(
+                padding: EdgeInsets.all(AppPadding.pW16),
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(AppCircular.r20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.black.withValues(alpha: 0.05),
+                      blurRadius: 15,
+                      offset: const Offset(0, 5),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      width: 70.w,
-                      height: 70.h,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(AppCircular.r12),
-                        border: Border.all(color: AppColors.blue100),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(AppCircular.r12),
-                        child: UniversalMediaWidget(
-                          path:
-                              coupon.vendorImage != null &&
-                                  coupon.vendorImage!.isNotEmpty
-                              ? coupon.vendorImage!
-                              : AppAssets.svg.appSvg.appLauncherIcon.path,
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ),
-                    12.szW,
-                    Expanded(
-                      flex: 4,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            coupon.categoryName ?? '',
-                            style: context.textStyle.s14.medium.setHintColor,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 70.w,
+                          height: 70.h,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(AppCircular.r12),
+                            border: Border.all(color: AppColors.blue100),
                           ),
-                          Text(
-                            coupon.vendorName ?? '',
-                            style: context.textStyle.s16.bold.setBlackColor,
-                          ),
-                          if (coupon.sku != null && coupon.sku!.isNotEmpty)
-                            Text(
-                              'SKU: ${coupon.sku}',
-                              style: context.textStyle.s14.regular.setHintColor,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(AppCircular.r12),
+                            child: UniversalMediaWidget(
+                              path: coupon.vendorImage != null &&
+                                      coupon.vendorImage!.isNotEmpty
+                                  ? coupon.vendorImage!
+                                  : AppAssets.svg.appSvg.appLauncherIcon.path,
+                              fit: BoxFit.contain,
                             ),
-                        ],
-                      ),
-                    ),
-                    const Spacer(),
-                    if (coupon.discountType != null)
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 12.w,
-                          vertical: 4.h,
-                        ),
-                        decoration: BoxDecoration(
-                          color: const Color(0xffFEF3C6),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Text(
-                          coupon.discountType ?? '',
-                          style: context.textStyle.s12.medium.setColor(
-                            AppColors.primary,
                           ),
                         ),
+                        12.szW,
+                        Expanded(
+                          flex: 4,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                coupon.categoryName ?? '',
+                                style: context.textStyle.s14.medium.setHintColor,
+                              ),
+                              Text(
+                                coupon.vendorName ?? '',
+                                style: context.textStyle.s16.bold.setBlackColor,
+                              ),
+                              if (coupon.sku != null && coupon.sku!.isNotEmpty)
+                                Text(
+                                  'SKU: ${coupon.sku}',
+                                  style:
+                                      context.textStyle.s14.regular.setHintColor,
+                                ),
+                              if (coupon.packageName != null) ...[
+                                8.szH,
+                                () {
+                                  final mType = MembershipType.fromString(
+                                      coupon.packageName);
+                                  return Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: AppPadding.pW12,
+                                      vertical: AppPadding.pH4,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: mType.backgroundColor(context),
+                                      borderRadius: BorderRadius.circular(
+                                        AppCircular.r20,
+                                      ),
+                                    ),
+                                    child: Text(
+                                      mType.shortLabel,
+                                      style:
+                                          context.textStyle.s10.bold.setColor(
+                                        mType.textColor(context),
+                                      ),
+                                    ),
+                                  );
+                                }(),
+                              ],
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    if (coupon.description != null &&
+                        coupon.description!.isNotEmpty) ...[
+                      16.szH,
+                      Text(
+                        coupon.description ?? '',
+                        style: context.textStyle.s12.regular.setColor(
+                          AppColors.gray600,
+                        ),
+                        textAlign: TextAlign.start,
                       ),
-                  ],
-                ),
-                if (coupon.description != null &&
-                    coupon.description!.isNotEmpty) ...[
-                  16.szH,
-                  Text(
-                    coupon.description ?? '',
-                    style: context.textStyle.s12.regular.setColor(
-                      AppColors.gray600,
-                    ),
-                    textAlign: TextAlign.start,
-                  ),
-                ],
-                Divider(color: AppColors.gray100),
-                Row(
-                  children: [
-                    IconWidget(
-                      icon: AppAssets.svg.baseSvg.percentage.path,
-                      color: AppColors.primary,
-                      height: 20.h,
-                    ),
-                    8.szW,
-                    Expanded(
-                      child: Text(
-                        coupon.shortDescription ?? '',
-                        style: context.textStyle.s14.bold.setPrimaryColor,
+                    ],
+                    if (coupon.vendorDescription != null &&
+                        coupon.vendorDescription!.isNotEmpty) ...[
+                      12.szH,
+                      Text(
+                        LocaleKeys.storeDescription,
+                        style: context.textStyle.s14.bold.setBlackColor,
                       ),
+                      4.szH,
+                      Text(
+                        coupon.vendorDescription!,
+                        style: context.textStyle.s12.regular.setColor(
+                          AppColors.gray600,
+                        ),
+                        textAlign: TextAlign.start,
+                      ),
+                    ],
+                    Divider(color: AppColors.gray100),
+                    Row(
+                      children: [
+                        IconWidget(
+                          icon: AppAssets.svg.baseSvg.percentage.path,
+                          color: AppColors.primary,
+                          height: 20.h,
+                        ),
+                        8.szW,
+                        Expanded(
+                          child: Text(
+                            coupon.shortDescription ?? '',
+                            style: context.textStyle.s14.bold.setPrimaryColor,
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                16.szH,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CustomCircularActionButton(
-                      icon: AppAssets.svg.baseSvg.share.path,
-                      onTap: () {
-                        final box = context.findRenderObject() as RenderBox?;
-                        final String shareLink =
-                            'https://mazaya.com/coupon?id=${coupon.id}';
-                        final String message =
-                            '${coupon.vendorName ?? ''}\n${coupon.name}\n\n$shareLink';
+                    16.szH,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CustomCircularActionButton(
+                          icon: AppAssets.svg.baseSvg.share.path,
+                          onTap: isDisabled
+                              ? null
+                              : () {
+                                  final box =
+                                      context.findRenderObject() as RenderBox?;
+                                  final String shareLink =
+                                      'https://mazaya.com/coupon?id=${coupon.id}';
+                                  final String message =
+                                      '${coupon.vendorName ?? ''}\n${coupon.name}\n\n$shareLink';
 
-                        SharePlus.instance.share(
-                          ShareParams(
-                            text: message,
-                            sharePositionOrigin: box != null
-                                ? box.localToGlobal(Offset.zero) & box.size
-                                : null,
-                          ),
-                        );
-                      },
-                    ),
-                    16.szW,
-                    CustomCircularActionButton(
-                      icon: AppAssets.svg.baseSvg.location.path,
-                      onTap: () {
-                        Go.to(
-                          OsmMapScreen(
-                            lat: coupon.lat ?? 24.7136, // Default to Riyadh
-                            lng: coupon.lng ?? 46.6753,
-                            title: coupon.vendorName ?? LocaleKeys.openMap,
-                          ),
-                        );
-                      },
-                    ),
-                    16.szW,
-                    CustomCircularActionButton(
-                      iconColor: coupon.isFav ? Colors.red : AppColors.black,
-                      icon: coupon.isFav
-                          ? Icons.favorite
-                          : Icons.favorite_border,
-                      onTap: () {
-                        context.read<FavoriteManager>().toggle(
-                          id: coupon.id,
-                          coupon: coupon,
-                        );
-                        context.read<CouponDetailsCubit>().toggleLocal(
-                          coupon.id,
-                        );
-                      },
+                                  SharePlus.instance.share(
+                                    ShareParams(
+                                      text: message,
+                                      sharePositionOrigin: box != null
+                                          ? box.localToGlobal(Offset.zero) &
+                                              box.size
+                                          : null,
+                                    ),
+                                  );
+                                },
+                        ),
+                        16.szW,
+                        CustomCircularActionButton(
+                          icon: AppAssets.svg.baseSvg.location.path,
+                          onTap: isDisabled
+                              ? null
+                              : () {
+                                  final user = UserCubit.instance.user;
+                                  Go.to(
+                                    OsmMapScreen(
+                                      lat: coupon.lat ?? 24.7136, // Default to Riyadh
+                                      lng: coupon.lng ?? 46.6753,
+                                      userLat: double.tryParse(user.lat ?? ''),
+                                      userLng: double.tryParse(user.lng ?? ''),
+                                      title: coupon.vendorName ??
+                                          LocaleKeys.openMap,
+                                    ),
+                                  );
+                                },
+                        ),
+                        16.szW,
+                        CustomCircularActionButton(
+                          iconColor:
+                              coupon.isFav ? Colors.red : AppColors.black,
+                          icon: coupon.isFav
+                              ? Icons.favorite
+                              : Icons.favorite_border,
+                          onTap: isDisabled
+                              ? null
+                              : () {
+                                  context.read<FavoriteManager>().toggle(
+                                        id: coupon.id,
+                                        coupon: coupon,
+                                      );
+                                  context
+                                      .read<CouponDetailsCubit>()
+                                      .toggleLocal(
+                                        coupon.id,
+                                      );
+                                },
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
-            ),
-          ),
-        ),
-        if (coupon.productImage.isNotEmpty)
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: AppPadding.pW20),
-            child: Container(
-              height: 200.h,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(AppCircular.r20),
               ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(AppCircular.r20),
-                child: UniversalMediaWidget(
-                  path: coupon.productImage,
-                  fit: BoxFit.fill,
+            ),
+            if (coupon.productImage.isNotEmpty)
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: AppPadding.pW20),
+                child: Container(
+                  height: 200.h,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.circular(AppCircular.r20),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(AppCircular.r20),
+                    child: UniversalMediaWidget(
+                      path: coupon.productImage,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-        24.szH,
-      ],
+            24.szH,
+          ],
+        );
+      },
     );
   }
 }

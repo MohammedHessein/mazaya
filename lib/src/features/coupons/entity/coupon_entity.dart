@@ -21,6 +21,18 @@ class CouponEntity extends Equatable {
   final double? lat;
   final double? lng;
   final String? vendorDescription;
+  final String? vendorLink;
+  final int? packageId;
+  final String? packageName;
+  final int? locationId;
+  final String? locationName;
+  final int? locationParentId;
+  final String? locationParentName;
+  final int? locationGrandparentId;
+  final String? locationGrandparentName;
+  final String? createdAt;
+  final bool isActive;
+  final int? vendorCouponsRemaining;
 
   const CouponEntity({
     required this.id,
@@ -34,7 +46,7 @@ class CouponEntity extends Equatable {
     this.vendorId = 0,
     this.vendorName,
     this.vendorImage,
-    this.categoryId = 0,
+    required this.categoryId,
     this.categoryName,
     this.isFav = false,
     this.qrPayload,
@@ -42,6 +54,18 @@ class CouponEntity extends Equatable {
     this.lat,
     this.lng,
     this.vendorDescription,
+    this.vendorLink,
+    this.packageId,
+    this.packageName,
+    this.locationId,
+    this.locationName,
+    this.locationParentId,
+    this.locationParentName,
+    this.locationGrandparentId,
+    this.locationGrandparentName,
+    this.createdAt,
+    this.isActive = true,
+    this.vendorCouponsRemaining,
   });
 
   const CouponEntity.empty()
@@ -63,7 +87,19 @@ class CouponEntity extends Equatable {
       qrPayload = '',
       lat = null,
       lng = null,
-      vendorDescription = null;
+      vendorDescription = null,
+      vendorLink = null,
+      packageId = null,
+      packageName = null,
+      locationId = null,
+      locationName = null,
+      locationParentId = null,
+      locationParentName = null,
+      locationGrandparentId = null,
+      locationGrandparentName = null,
+      createdAt = null,
+      isActive = true,
+      vendorCouponsRemaining = null;
 
   factory CouponEntity.fromJson(Map<String, dynamic> json) {
     int toInt(dynamic value) {
@@ -89,9 +125,21 @@ class CouponEntity extends Equatable {
       isFav: json['is_fav'] ?? false,
       qrPayload: json['qr_payload'],
       isUsed: json['is_used'] ?? false,
-      lat: json['lat'] != null ? double.tryParse(json['lat'].toString()) : json['latitude'] != null ? double.tryParse(json['latitude'].toString()) : null,
-      lng: json['lng'] != null ? double.tryParse(json['lng'].toString()) : json['longitude'] != null ? double.tryParse(json['longitude'].toString()) : null,
+      lat: json['lat'] != null ? double.tryParse(json['lat'].toString()) : json['vendor_lat'] != null ? double.tryParse(json['vendor_lat'].toString()) : json['latitude'] != null ? double.tryParse(json['latitude'].toString()) : null,
+      lng: json['lng'] != null ? double.tryParse(json['lng'].toString()) : json['vendor_lng'] != null ? double.tryParse(json['vendor_lng'].toString()) : json['longitude'] != null ? double.tryParse(json['longitude'].toString()) : null,
       vendorDescription: json['vendor_description'],
+      vendorLink: json['vendor_link'],
+      packageId: json['package_id'],
+      packageName: json['package_name'],
+      locationId: toInt(json['location_id']),
+      locationName: json['location_name'],
+      locationParentId: toInt(json['location_parent_id']),
+      locationParentName: json['location_parent_name'],
+      locationGrandparentId: toInt(json['location_grandparent_id']),
+      locationGrandparentName: json['location_grandparent_name'],
+      createdAt: json['created_at'],
+      isActive: json['is_active'] == null ? true : (json['is_active'] is bool ? json['is_active'] : (json['is_active'].toString() == '1' || json['is_active'].toString().toLowerCase() == 'true')),
+      vendorCouponsRemaining: json['vendor_coupons_remaining'],
     );
   }
 
@@ -105,6 +153,7 @@ class CouponEntity extends Equatable {
       discount: 0.0,
       discountType: '',
       sku: '',
+      categoryId: 0,
     );
   }
 
@@ -128,6 +177,18 @@ class CouponEntity extends Equatable {
     double? lat,
     double? lng,
     String? vendorDescription,
+    String? vendorLink,
+    int? packageId,
+    String? packageName,
+    int? locationId,
+    String? locationName,
+    int? locationParentId,
+    String? locationParentName,
+    int? locationGrandparentId,
+    String? locationGrandparentName,
+    String? createdAt,
+    bool? isActive,
+    int? vendorCouponsRemaining,
   }) {
     return CouponEntity(
       id: id ?? this.id,
@@ -149,7 +210,34 @@ class CouponEntity extends Equatable {
       lat: lat ?? this.lat,
       lng: lng ?? this.lng,
       vendorDescription: vendorDescription ?? this.vendorDescription,
+      vendorLink: vendorLink ?? this.vendorLink,
+      packageId: packageId ?? this.packageId,
+      packageName: packageName ?? this.packageName,
+      locationId: locationId ?? this.locationId,
+      locationName: locationName ?? this.locationName,
+      locationParentId: locationParentId ?? this.locationParentId,
+      locationParentName: locationParentName ?? this.locationParentName,
+      locationGrandparentId: locationGrandparentId ?? this.locationGrandparentId,
+      locationGrandparentName: locationGrandparentName ?? this.locationGrandparentName,
+      createdAt: createdAt ?? this.createdAt,
+      isActive: isActive ?? this.isActive,
+      vendorCouponsRemaining: vendorCouponsRemaining ?? this.vendorCouponsRemaining,
     );
+  }
+
+  String get fullLocationName {
+    final List<String> parts = [];
+    if (locationGrandparentName != null &&
+        locationGrandparentName!.isNotEmpty) {
+      parts.add(locationGrandparentName!);
+    }
+    if (locationParentName != null && locationParentName!.isNotEmpty) {
+      parts.add(locationParentName!);
+    }
+    if (locationName != null && locationName!.isNotEmpty) {
+      parts.add(locationName!);
+    }
+    return parts.join(', ');
   }
 
   @override
@@ -173,5 +261,17 @@ class CouponEntity extends Equatable {
     lat,
     lng,
     vendorDescription,
+    vendorLink,
+    packageId,
+    packageName,
+    locationId,
+    locationName,
+    locationParentId,
+    locationParentName,
+    locationGrandparentId,
+    locationGrandparentName,
+    createdAt,
+    isActive,
+    vendorCouponsRemaining,
   ];
 }

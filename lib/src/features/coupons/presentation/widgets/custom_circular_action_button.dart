@@ -4,13 +4,13 @@ import '../view/view_imports.dart';
 
 class CustomCircularActionButton extends StatelessWidget {
   final dynamic icon;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final Color? iconColor;
 
   const CustomCircularActionButton({
     super.key,
     required this.icon,
-    required this.onTap,
+    this.onTap,
     this.iconColor,
   });
 
@@ -18,7 +18,9 @@ class CustomCircularActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
+      child: Opacity(
+        opacity: onTap == null ? 0.5 : 1.0,
+        child: Container(
         padding: EdgeInsets.all(8.r),
         decoration: BoxDecoration(
           color: AppColors.white,
@@ -29,6 +31,7 @@ class CustomCircularActionButton extends StatelessWidget {
           icon: icon,
           color: iconColor ?? AppColors.secondary,
           height: 24.r,
+          ),
         ),
       ),
     );

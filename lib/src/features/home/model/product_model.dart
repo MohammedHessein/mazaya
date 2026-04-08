@@ -16,6 +16,7 @@ class ProductModel extends Equatable {
   final int categoryId;
   final String? categoryName;
   final bool isFav;
+  final String? packageName;
 
   const ProductModel({
     required this.id,
@@ -32,6 +33,7 @@ class ProductModel extends Equatable {
     this.categoryId = 0,
     this.categoryName,
     this.isFav = false,
+    this.packageName,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
@@ -56,6 +58,7 @@ class ProductModel extends Equatable {
       categoryId: toInt(json['category_id']),
       categoryName: json['category_name'],
       isFav: json['is_fav'] ?? false,
+      packageName: json['package_name'],
     );
   }
 
@@ -74,6 +77,7 @@ class ProductModel extends Equatable {
     int? categoryId,
     String? categoryName,
     bool? isFav,
+    String? packageName,
   }) {
     return ProductModel(
       id: id ?? this.id,
@@ -90,6 +94,7 @@ class ProductModel extends Equatable {
       categoryId: categoryId ?? this.categoryId,
       categoryName: categoryName ?? this.categoryName,
       isFav: isFav ?? this.isFav,
+      packageName: packageName ?? this.packageName,
     );
   }
 
@@ -106,9 +111,9 @@ class ProductModel extends Equatable {
     vendorId,
     vendorName,
     vendorImage,
-    categoryId,
     categoryName,
     isFav,
+    packageName,
   ];
 
   CouponEntity toCouponEntity() {
@@ -127,6 +132,7 @@ class ProductModel extends Equatable {
       categoryId: categoryId,
       categoryName: categoryName,
       isFav: isFav,
+      packageName: packageName,
     );
   }
 }

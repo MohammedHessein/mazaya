@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mazaya/src/config/res/assets.gen.dart';
 import 'package:mazaya/src/config/res/config_imports.dart';
 import 'package:mazaya/src/core/widgets/image_widgets/cached_image.dart';
-import 'universal_media_widget.dart';
+export 'package:mazaya/src/core/widgets/image_widgets/cached_image.dart';
 import 'controller.dart';
 import 'enums.dart';
 

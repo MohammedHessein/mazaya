@@ -28,25 +28,36 @@ class UsedCouponsBody extends StatelessWidget {
                 horizontal: AppPadding.pW20,
                 vertical: AppPadding.pH16,
               ),
-              sliver: Skeletonizer.sliver(
-                enabled: state.isLoading && state.data.isEmpty,
-                child: SliverList(
-                  delegate: SliverChildBuilderDelegate((context, index) {
-                    final coupon = items[index];
-                    return AppCard(
-                      title: coupon.vendorName ?? coupon.name,
-                      description: coupon.name,
-                      imageUrl: coupon.productImage,
-                      isFavorite: coupon.isFav,
-                      onFavoriteTap: () => context
-                          .read<FavoriteManager>()
-                          .toggle(id: coupon.id, coupon: coupon),
-                      onTap: () {
-                        Go.to(CouponDetailsScreen(id: coupon.id));
-                      },
-                    );
-                  }, childCount: items.length),
-                ),
+              sliver: BlocBuilder<UserCubit, UserState>(
+                builder: (context, userState) {
+                  final user = userState.userModel;
+                  return Skeletonizer.sliver(
+                    enabled: state.isLoading && state.data.isEmpty,
+                    child: SliverList(
+                      delegate: SliverChildBuilderDelegate((context, index) {
+                        final coupon = items[index];
+                        final isDisabled = coupon.packageName != null &&
+                            user.userPackageName != null &&
+                            coupon.packageName != user.userPackageName;
+                        return AppCard(
+                          title: coupon.vendorName ?? coupon.name,
+                          description: coupon.name,
+                          imageUrl: coupon.productImage,
+                          isFavorite: coupon.isFav,
+                          packageName: coupon.packageName,
+                          isDisabled: isDisabled,
+                          onFavoriteTap: () => context
+                              .read<FavoriteManager>()
+                              .toggle(id: coupon.id, coupon: coupon),
+                          onTap: () {
+                            Go.to(CouponDetailsScreen(
+                                id: coupon.id, coupon: coupon));
+                          },
+                        );
+                      }, childCount: items.length),
+                    ),
+                  );
+                },
               ),
             );
           },

@@ -487,6 +487,15 @@ abstract class LocaleKeys {
   static const String _complaintSubmittedSuccessfully = 'complaint_submitted_successfully';
   static String get complaintSubmittedSuccessfully => _complaintSubmittedSuccessfully.tr();
 
+  static const String _firstName = 'first_name';
+  static String get firstName => _firstName.tr();
+
+  static const String _lastName = 'last_name';
+  static String get lastName => _lastName.tr();
+
+  static const String _personalNumber = 'personal_number';
+  static String get personalNumber => _personalNumber.tr();
+
   static const String _fullNameLabel = 'full_name_label';
   static String get fullNameLabel => _fullNameLabel.tr();
 
@@ -970,6 +979,9 @@ abstract class LocaleKeys {
   static const String _volunteerMember = 'volunteer_member';
   static String get volunteerMember => _volunteerMember.tr();
 
+  static const String _volunteer = 'volunteer';
+  static String get volunteer => _volunteer.tr();
+
   static const String _poBox = 'po_box';
   static String get poBox => _poBox.tr();
 
@@ -990,5 +1002,23 @@ abstract class LocaleKeys {
 
   static const String _visitOurWebsite = 'visit_our_website';
   static String get visitOurWebsite => _visitOurWebsite.tr();
+
+  static const String _golden = 'golden';
+  static String get golden => _golden.tr();
+
+  static const String _silver = 'silver';
+  static String get silver => _silver.tr();
+
+  static const String _diamond = 'diamond';
+  static String get diamond => _diamond.tr();
+
+  static const String _volunteerPackage = 'volunteer_package';
+  static String get volunteerPackage => _volunteerPackage.tr();
+
+  static const String _volunteerMembership = 'volunteer_membership';
+  static String get volunteerMembership => _volunteerMembership.tr();
+
+  static const String _membership = 'membership';
+  static String get membership => _membership.tr();
 
 }

@@ -73,14 +73,7 @@ class ScaffoldTopRow extends StatelessWidget {
                                   ? AppAssets.svg.baseSvg.volunteer
                                   : AppAssets.svg.baseSvg.diamondMember;
 
-                              final label =
-                                  membershipType == MembershipType.golden
-                                  ? LocaleKeys.goldMember
-                                  : membershipType == MembershipType.sliver
-                                  ? LocaleKeys.silverMember
-                                  : membershipType == MembershipType.volunteer
-                                  ? LocaleKeys.volunteerMember
-                                  : LocaleKeys.diamondMember;
+                              final label = membershipType.label;
 
                               final color =
                                   membershipType == MembershipType.golden

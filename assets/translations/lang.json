@@ -809,6 +809,21 @@
     "ar": "تم ارسال الشكوى بنجاح",
     "sv": "Klagomålet skickades framgångsrikt"
   },
+  "firstName": {
+    "en": "First Name",
+    "ar": "الاسم الاول",
+    "sv": "Förnamn"
+  },
+  "lastName": {
+    "en": "Last Name",
+    "ar": "الاسم الاخير",
+    "sv": "Efternamn"
+  },
+  "personalNumber": {
+    "en": "Identity Number",
+    "ar": "رقم الهوية",
+    "sv": "Personnummer"
+  },
   "full_name_label": {
     "en": "Full Name",
     "ar": "الاسم الكامل",
@@ -1351,7 +1366,7 @@
   },
   "member_since": {
     "en": "Member since",
-    "ar": "عضو منذ",
+    "ar": "عضوية منذ",
     "sv": "Medlem sedan"
   },
   "no_notifications_yet": {
@@ -1521,7 +1536,7 @@
   },
   "golden_membership": {
     "en": "Golden Membership",
-    "ar": "عضو ذهبى",
+    "ar": "العضوية الذهبية",
     "sv": "Guldmedlemskap"
   },
   "change": {
@@ -1614,6 +1629,11 @@
     "ar": "عضو متطوع",
     "sv": "Volontärmedlem"
   },
+  "volunteer": {
+    "en": "Volunteer",
+    "ar": "متطوع",
+    "sv": "Volontär"
+  },
   "po_box": {
     "en": "Postal Code (PO. Box)",
     "ar": "الرمز البريدي (P.O. Box)",
@@ -1648,5 +1668,35 @@
     "en": "Visit Our Website",
     "ar": "زيارة موقعنا",
     "sv": "Besök vår hemsida"
+  },
+  "golden": {
+    "en": "Golden",
+    "ar": "الذهبية",
+    "sv": "Guld"
+  },
+  "silver": {
+    "en": "Silver",
+    "ar": "الفضية",
+    "sv": "Silver"
+  },
+  "diamond": {
+    "en": "Diamond",
+    "ar": "الماسية",
+    "sv": "Diamant"
+  },
+  "volunteer_package": {
+    "en": "Volunteer",
+    "ar": "متطوع",
+    "sv": "Volontär"
+  },
+  "volunteer_membership": {
+    "en": "Volunteer Membership",
+    "ar": "عضوية المتطوعين",
+    "sv": "Volontärmedlemskap"
+  },
+  "membership": {
+    "en": "Membership",
+    "ar": "العضوية",
+    "sv": "Medlemskap"
   }
 }

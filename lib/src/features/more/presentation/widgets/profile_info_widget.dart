@@ -22,20 +22,14 @@ class ProfileInfoWidget extends StatelessWidget {
             ? MembershipType.volunteer
             : MembershipType.diamond;
         final userName = user.name;
-        final subTitle = membershipType == MembershipType.golden
-            ? LocaleKeys.goldMember
-            : membershipType == MembershipType.sliver
-            ? LocaleKeys.silverMember
-            : membershipType == MembershipType.volunteer
-            ? LocaleKeys.volunteerMember
-            : LocaleKeys.diamondMember;
+        final subTitle = membershipType.label;
         final hasPackage = user.userPackageName != null;
 
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              userName.isNotEmpty ? userName : LocaleKeys.visitorText.tr(),
+              userName.isNotEmpty ? userName : LocaleKeys.visitorText,
               style: context.textStyle.s18.bold.setMainTextColor,
             ),
             if (hasPackage && subTitle.isNotEmpty) ...[
@@ -60,7 +54,7 @@ class ProfileInfoWidget extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      subTitle,
+                      membershipType.label,
                       style: membershipType == MembershipType.golden
                           ? context.textStyle.s14.setColor(AppColors.orange)
                           : membershipType == MembershipType.sliver

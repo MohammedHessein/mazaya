@@ -76,13 +76,7 @@ class MemberShipCard extends StatelessWidget {
                                       ),
                         12.szW,
                         Text(
-                          membershipType == MembershipType.golden
-                              ? LocaleKeys.goldMember
-                              : membershipType == MembershipType.sliver
-                                  ? LocaleKeys.silverMember
-                                  : membershipType == MembershipType.volunteer
-                                      ? LocaleKeys.volunteerMember
-                                      : LocaleKeys.diamondMember,
+                          membershipType.membershipLabel,
                           style: context.textStyle.s14.bold.setMainTextColor,
                         ),
                       ],
