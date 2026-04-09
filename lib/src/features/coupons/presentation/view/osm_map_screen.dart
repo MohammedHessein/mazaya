@@ -9,21 +9,26 @@ class OsmMapScreen extends StatelessWidget {
   final double lat;
   final double lng;
   final String title;
-  final double? userLat;
-  final double? userLng;
 
   const OsmMapScreen({
     super.key,
     required this.lat,
     required this.lng,
     required this.title,
-    this.userLat,
-    this.userLng,
   });
 
   @override
   Widget build(BuildContext context) {
     final MapController mapController = MapController();
+
+    // Normalizes longitude to [-180, 180] and clamps latitude to [-90, 90]
+    double normalizeLat(double l) => l.clamp(-90.0, 90.0);
+    double normalizeLng(double g) => ((g + 180) % 360) - 180;
+
+    final double nLat = normalizeLat(lat);
+    final double nLng = normalizeLng(lng);
+
+    final LatLng vendorPoint = LatLng(nLat, nLng);
 
     return DefaultScaffold(
       header: HeaderConfig(title: title, showBackButton: false),
@@ -31,23 +36,7 @@ class OsmMapScreen extends StatelessWidget {
         SliverFillRemaining(
           child: FlutterMap(
             mapController: mapController,
-            options: MapOptions(
-              initialCenter: LatLng(lat, lng),
-              initialZoom: 13.0,
-              onMapReady: () {
-                if (userLat != null && userLng != null) {
-                  mapController.fitCamera(
-                    CameraFit.bounds(
-                      bounds: LatLngBounds(
-                        LatLng(lat, lng),
-                        LatLng(userLat!, userLng!),
-                      ),
-                      padding: const EdgeInsets.all(50),
-                    ),
-                  );
-                }
-              },
-            ),
+            options: MapOptions(initialCenter: vendorPoint, initialZoom: 13.0),
             children: [
               TileLayer(
                 urlTemplate: ConstantManager.mapUrlTemplate,
@@ -56,7 +45,7 @@ class OsmMapScreen extends StatelessWidget {
               MarkerLayer(
                 markers: [
                   Marker(
-                    point: LatLng(lat, lng),
+                    point: vendorPoint,
                     width: 60.w,
                     height: 60.h,
                     child: IconWidget(
@@ -65,17 +54,6 @@ class OsmMapScreen extends StatelessWidget {
                       height: 50.h,
                     ),
                   ),
-                  if (userLat != null && userLng != null)
-                    Marker(
-                      point: LatLng(userLat!, userLng!),
-                      width: 60.w,
-                      height: 60.h,
-                      child: IconWidget(
-                        icon: AppAssets.svg.baseSvg.location.path,
-                        color: Colors.blue,
-                        height: 50.h,
-                      ),
-                    ),
                 ],
               ),
             ],

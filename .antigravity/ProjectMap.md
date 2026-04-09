@@ -11,18 +11,20 @@
 | 5 | **Intro** | `features/intro/` | Onboarding carousel screens |
 | 6 | **Main** | `features/main/` | Shell screen with bottom navigation (4 tabs) |
 | 7 | **Home** | `features/home/` | Home tab – categories section + coupons section |
-| 8 | **Coupons** | `features/coupons/` | Coupons list with search bar + filter bottom sheet |
+| 8 | **Coupons** | `features/coupons/` | Coupons list with advanced modular filtering (Country/City/Region/Distance), category chips, and OSM map details |
 | 9 | **Notifications** | `features/notifications/` | Notification list, cards, delete, empty state |
-| 10 | **User Profile** | `features/user_profile/` | Profile view with avatar and account settings |
-| 11 | **QR Scanner** | `features/scan/` | QR scanning for coupons and merchant verification |
-| 12 | **More** | `features/more/` | Consolidated menu with Profile, Password, Language, and Settings |
-| 13 | **Favourite** | `features/favourite/` | User's list of favourited coupons |
-| 14 | **Used Coupons** | `features/used_coupons/` | History of successfully redeemed coupons |
-| 15 | **FAQs** | `features/faqs/` | Frequently asked questions list |
-| 16 | **Contact Us** | `features/contact_us/` | Help/support message form |
-| 17 | **Complains** | `features/complains/` | Complaint submission and tracking |
-| 18 | **Location** | `features/location/` | Location-based features with geolocation |
-| 19 | **Static Pages** | `features/static_pages/` | About, Terms, Privacy pages |
+| 10 | **Categories** | `features/categories/` | Discover coupons by category with clickable filtering |
+| 11 | **User Profile** | `features/user_profile/` | Profile view with avatar, "Member Since" badge, and account settings |
+| 12 | **QR Scanner** | `features/qr_scanner/` | Fully modular QR scanning with specialized components for camera, manual entry, and lifecycle control |
+| 13 | **More** | `features/more/` | Menu with Profile, Password, Language, Settings, and Website Link |
+| 14 | **Change Password** | `features/change_password/` | Dedicated secured password update feature |
+| 15 | **Favourite** | `features/favourite/` | User's list of favourited coupons |
+| 16 | **Used Coupons** | `features/used_coupons/` | History of successfully redeemed coupons |
+| 17 | **FAQs** | `features/faqs/` | Frequently asked questions list |
+| 18 | **Contact Us** | `features/contact_us/` | Help/support message form |
+| 19 | **Complaints** | `features/complaints/` | Complaint submission and tracking |
+| 20 | **Location** | `features/location/` | Distance-based coordinate syncing and map navigation |
+| 21 | **Static Pages** | `features/static_pages/` | About, Terms, Privacy pages |
 
 ---
 
@@ -73,4 +75,5 @@
 | **Settings** | `switchNotification`, `updateProfile`, `changePassword`, `changeLang`, `deleteAccount`, `updateCountry` |
 | **Change Email** | `changeEmailCheckPassword`, `changeEmailSendCode`, `changeEmailReSendCode`, `changeEmailVerifyCode` |
 | **More** | `faqs`, `about`, `terms`, `privacy`, `contactUs`, `complain`, `addComplain`, `complainDetails`, `logOut` |
+| **Location** | `user/update-latlng` |
 | **General** | `intro`, `countries`, `cities`, `uploadFiles`, `registerContent` |

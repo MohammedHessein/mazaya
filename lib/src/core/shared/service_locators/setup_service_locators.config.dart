@@ -26,6 +26,8 @@ import '../../../features/coupons/presentation/cubits/coupons_cubit.dart'
 import '../../../features/favourite/presentation/imports/view_imports.dart'
     as _i203;
 import '../../../features/home/presentation/cubits/home_cubit.dart' as _i246;
+import '../../../features/location/presentation/cubits/update_lat_lng_cubit.dart'
+    as _i790;
 import '../../../features/location/presentation/cubits/update_profile_cubit.dart'
     as _i667;
 import '../../../features/more/presentation/cubits/app_setting_cubit.dart'
@@ -63,6 +65,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i778.ChangePasswordCubit>(() => _i778.ChangePasswordCubit());
     gh.factory<_i425.ComplaintsCubit>(() => _i425.ComplaintsCubit());
     gh.factory<_i102.CouponDetailsCubit>(() => _i102.CouponDetailsCubit());
+    gh.factory<_i790.UpdateLatLngCubit>(() => _i790.UpdateLatLngCubit());
     gh.factory<_i667.UpdateProfileCubit>(() => _i667.UpdateProfileCubit());
     gh.factory<_i763.AppSettingCubit>(() => _i763.AppSettingCubit());
     gh.factory<_i577.LogoutCubit>(() => _i577.LogoutCubit());

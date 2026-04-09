@@ -1698,5 +1698,125 @@
     "en": "Membership",
     "ar": "العضوية",
     "sv": "Medlemskap"
+  },
+  "unavailable": {
+    "en": "Unavailable",
+    "ar": "غير متاح",
+    "sv": "Ej tillgänglig"
+  },
+  "image_size_error": {
+    "en": "Image size must be less than 10MB",
+    "ar": "يجب أن يكون حجم الصورة أقل من 10 ميجا",
+    "sv": "Bildstorleken måste vara mindre än 10 MB"
+  },
+  "calculate_discount": {
+    "en": "Calculate discount",
+    "ar": "احسب قيمة الخصم",
+    "sv": "Beräkna rabatt"
+  },
+  "enter_invoice_amount_subtitle": {
+    "en": "Enter your invoice amount to see how much you save",
+    "ar": "أدخل مبلغ فاتورتك لمعرفة قيمة التوفير",
+    "sv": "Ange ditt fakturabelopp för att se hur mycket du sparar"
+  },
+  "invoice_amount": {
+    "en": "Invoice amount",
+    "ar": "مبلغ الفاتورة",
+    "sv": "Fakturabelopp"
+  },
+  "enter_invoice_amount_placeholder": {
+    "en": "Enter invoice amount",
+    "ar": "أدخل مبلغ الفاتورة",
+    "sv": "Ange fakturabelopp"
+  },
+  "calculate_btn": {
+    "en": "Calculate discount",
+    "ar": "احسب الخصم",
+    "sv": "Beräkna rabatt"
+  },
+  "original_price": {
+    "en": "Original price",
+    "ar": "السعر الأصلي",
+    "sv": "Ursprungspris"
+  },
+  "discount_label": {
+    "en": "Discount",
+    "ar": "الخصم",
+    "sv": "Rabatt"
+  },
+  "final_price": {
+    "en": "Final price",
+    "ar": "السعر النهائي",
+    "sv": "Slutpris"
+  },
+  "continue_scanning": {
+    "en": "Continue scanning",
+    "ar": "متابعة المسح",
+    "sv": "Fortsätt skanna"
+  },
+  "currency_krona": {
+    "en": "Krona",
+    "ar": "كورونا",
+    "sv": "Krona"
+  },
+  "manual_discount": {
+    "en": "Manual Discount",
+    "ar": "خصم يدوي",
+    "sv": "Manuell rabatt"
+  },
+  "original_price": {
+    "en": "Original Price",
+    "ar": "السعر الأصلي",
+    "sv": "Originalpris"
+  },
+  "discount_amount": {
+    "en": "Discount Amount",
+    "ar": "قيمة الخصم",
+    "sv": "Rabattbelopp"
+  },
+  "total_after_discount": {
+    "en": "Total After Discount",
+    "ar": "الإجمالي بعد الخصم",
+    "sv": "Totalt efter rabatt"
+  },
+  "enter_original_price": {
+    "en": "Enter original price",
+    "ar": "أدخل السعر الأصلي",
+    "sv": "Ange originalpris"
+  },
+  "sort_by": {
+    "en": "Sort By",
+    "ar": "ترتيب حسب",
+    "sv": "Sortera efter"
+  },
+  "sort_asc": {
+    "en": "A to Z",
+    "ar": "من الألف للياء",
+    "sv": "A till Ö"
+  },
+  "sort_desc": {
+    "en": "Z to A",
+    "ar": "من الياء للألف",
+    "sv": "Ö till A"
+  },
+  "nearby": {
+    "en": "Nearby",
+    "ar": "حسب القريب مني",
+    "sv": "I närheten"
+  },
+  "nearby_all": {
+    "en": "All",
+    "ar": "الكل",
+    "sv": "Alla"
+  },
+  "nearby_km": {
+    "en": "{distance} km",
+    "ar": "{distance} كم",
+    "sv": "{distance} km"
+  },
+  "nearby_disabled_hint": {
+    "en": "Available only in your registered location",
+    "ar": "متاح فقط في موقعك المسجل",
+    "sv": "Tillgängligt endast på din registrerade plats"
   }
 }

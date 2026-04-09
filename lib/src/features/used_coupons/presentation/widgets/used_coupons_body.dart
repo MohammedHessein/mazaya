@@ -36,15 +36,13 @@ class UsedCouponsBody extends StatelessWidget {
                     child: SliverList(
                       delegate: SliverChildBuilderDelegate((context, index) {
                         final coupon = items[index];
-                        final isDisabled = coupon.packageName != null &&
-                            user.userPackageName != null &&
-                            coupon.packageName != user.userPackageName;
+                        final isDisabled = !coupon.isActive;
                         return AppCard(
                           title: coupon.vendorName ?? coupon.name,
                           description: coupon.name,
                           imageUrl: coupon.productImage,
                           isFavorite: coupon.isFav,
-                          packageName: coupon.packageName,
+                          packageNames: coupon.packageNames,
                           isDisabled: isDisabled,
                           onFavoriteTap: () => context
                               .read<FavoriteManager>()

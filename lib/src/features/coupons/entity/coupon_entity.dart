@@ -22,8 +22,8 @@ class CouponEntity extends Equatable {
   final double? lng;
   final String? vendorDescription;
   final String? vendorLink;
-  final int? packageId;
-  final String? packageName;
+  final List<int>? packageIds;
+  final List<String>? packageNames;
   final int? locationId;
   final String? locationName;
   final int? locationParentId;
@@ -55,8 +55,8 @@ class CouponEntity extends Equatable {
     this.lng,
     this.vendorDescription,
     this.vendorLink,
-    this.packageId,
-    this.packageName,
+    this.packageIds,
+    this.packageNames,
     this.locationId,
     this.locationName,
     this.locationParentId,
@@ -89,8 +89,8 @@ class CouponEntity extends Equatable {
       lng = null,
       vendorDescription = null,
       vendorLink = null,
-      packageId = null,
-      packageName = null,
+      packageIds = null,
+      packageNames = null,
       locationId = null,
       locationName = null,
       locationParentId = null,
@@ -129,8 +129,12 @@ class CouponEntity extends Equatable {
       lng: json['lng'] != null ? double.tryParse(json['lng'].toString()) : json['vendor_lng'] != null ? double.tryParse(json['vendor_lng'].toString()) : json['longitude'] != null ? double.tryParse(json['longitude'].toString()) : null,
       vendorDescription: json['vendor_description'],
       vendorLink: json['vendor_link'],
-      packageId: json['package_id'],
-      packageName: json['package_name'],
+      packageIds: json['package_id'] is List
+          ? (json['package_id'] as List).map((e) => toInt(e)).toList()
+          : (json['package_id'] != null ? [toInt(json['package_id'])] : null),
+      packageNames: json['package_name'] is List
+          ? (json['package_name'] as List).map((e) => e.toString()).toList()
+          : (json['package_name'] != null ? [json['package_name'].toString()] : null),
       locationId: toInt(json['location_id']),
       locationName: json['location_name'],
       locationParentId: toInt(json['location_parent_id']),
@@ -178,8 +182,8 @@ class CouponEntity extends Equatable {
     double? lng,
     String? vendorDescription,
     String? vendorLink,
-    int? packageId,
-    String? packageName,
+    List<int>? packageIds,
+    List<String>? packageNames,
     int? locationId,
     String? locationName,
     int? locationParentId,
@@ -211,8 +215,8 @@ class CouponEntity extends Equatable {
       lng: lng ?? this.lng,
       vendorDescription: vendorDescription ?? this.vendorDescription,
       vendorLink: vendorLink ?? this.vendorLink,
-      packageId: packageId ?? this.packageId,
-      packageName: packageName ?? this.packageName,
+      packageIds: packageIds ?? this.packageIds,
+      packageNames: packageNames ?? this.packageNames,
       locationId: locationId ?? this.locationId,
       locationName: locationName ?? this.locationName,
       locationParentId: locationParentId ?? this.locationParentId,
@@ -262,8 +266,8 @@ class CouponEntity extends Equatable {
     lng,
     vendorDescription,
     vendorLink,
-    packageId,
-    packageName,
+    packageIds,
+    packageNames,
     locationId,
     locationName,
     locationParentId,

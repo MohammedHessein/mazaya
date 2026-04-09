@@ -110,7 +110,10 @@ class ScaffoldTopRow extends StatelessWidget {
                   ],
                 ),
                 IconButton(
-                  onPressed: () => Go.to(const NotificationScreen()),
+                  onPressed: () {
+                    injector<NotificationCountCubit>().reset();
+                    Go.to(const NotificationScreen());
+                  },
                   icon: Container(
                     padding: EdgeInsets.all(12.r),
                     decoration: BoxDecoration(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mazaya/src/config/language/locale_keys.g.dart';
 import 'package:mazaya/src/config/res/config_imports.dart';
 import 'package:mazaya/src/core/extensions/context_extension.dart';
 import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
@@ -19,9 +20,16 @@ class CouponsFilterChips extends StatelessWidget {
       builder: (context, state) {
         final cubit = context.read<CouponsCubit>();
         final category = cubit.selectedCategory;
-        final region = cubit.selectedRegion;
+        final location = cubit.selectedLocation;
+        final sort = cubit.selectedSort;
+        final nearby = cubit.selectedNearby;
 
-        if (category == null && region == null) return const SizedBox.shrink();
+        final hasFilters = category != null || 
+                         location != null || 
+                         sort != null || 
+                         (nearby != null && nearby != 'all');
+
+        if (!hasFilters) return const SizedBox.shrink();
 
         return SizedBox(
           height: 44.h,
@@ -35,12 +43,29 @@ class CouponsFilterChips extends StatelessWidget {
                   label: category.name,
                   onDelete: () => cubit.removeCategory(),
                 ),
-              if (category != null && region != null) 8.szW,
-              if (region != null)
+              if (category != null && (location != null || sort != null || (nearby != null && nearby != 'all'))) 8.szW,
+              
+              if (location != null)
                 _buildChip(
                   context,
-                  label: region.name,
-                  onDelete: () => cubit.removeRegion(),
+                  label: location.name,
+                  onDelete: () => cubit.removeLocation(),
+                ),
+              if (location != null && (sort != null || (nearby != null && nearby != 'all'))) 8.szW,
+
+              if (sort != null)
+                _buildChip(
+                  context,
+                  label: "${LocaleKeys.sortBy}: ${sort == 'asc' ? LocaleKeys.sortAsc : LocaleKeys.sortDesc}",
+                  onDelete: () => cubit.removeSort(),
+                ),
+              if (sort != null && (nearby != null && nearby != 'all')) 8.szW,
+
+              if (nearby != null && nearby != 'all')
+                _buildChip(
+                  context,
+                  label: "${LocaleKeys.nearby}: ${LocaleKeys.nearbyKm(distance: nearby)}",
+                  onDelete: () => cubit.removeNearby(),
                 ),
             ],
           ),

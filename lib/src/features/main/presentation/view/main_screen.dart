@@ -9,8 +9,6 @@ import 'package:mazaya/src/core/widgets/scaffolds/header_config.dart';
 import 'package:mazaya/src/features/main/entity/main_params.dart';
 import 'package:mazaya/src/core/widgets/dialogs/exit_app_bottom_sheet.dart';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mazaya/src/config/res/config_imports.dart';
 import 'package:mazaya/src/core/widgets/universal_media/enums.dart';
 import 'package:mazaya/src/features/coupons/presentation/widgets/coupons_body.dart';
 import 'package:mazaya/src/features/coupons/presentation/cubits/coupons_cubit.dart';
@@ -20,6 +18,7 @@ import 'package:mazaya/src/core/base_crud/code/domain/base_domain_imports.dart';
 import 'package:mazaya/src/core/base_crud/code/presentation/cubit/get_base_name_and_id/get_base_name_and_id_cubit.dart';
 import 'package:mazaya/src/features/more/presentation/imports/view_imports.dart';
 import 'package:mazaya/src/features/main/presentation/widgets/main_body.dart';
+import 'package:mazaya/src/features/location/presentation/cubits/update_lat_lng_cubit.dart';
 
 class MainScreen extends StatefulWidget {
   final int initialTabIndex;
@@ -46,6 +45,16 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
       UserCubit.instance.getProfile();
       injector<HomeCubit>().getHomeData();
       injector<CouponsCubit>().fetchInitialData();
+      injector<UpdateLatLngCubit>().checkAndUpdateLocation();
+    }
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed &&
+        UserCubit.instance.isUserLoggedIn) {
+      injector<UpdateLatLngCubit>().checkAndUpdateLocation();
     }
   }
 
@@ -90,8 +99,11 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
               onTabChange: (newIndex) => params.updateNavValue(newIndex),
               tabs: params.navTabs,
             ),
-            body: BlocProvider(
-              create: (context) => injector<UpdatePhotoCubit>(),
+            body: MultiBlocProvider(
+              providers: [
+                BlocProvider(create: (context) => injector<UpdatePhotoCubit>()),
+                BlocProvider(create: (context) => injector<UpdateLatLngCubit>()),
+              ],
               child: IndexedStack(
                 index: value,
                 children: [
@@ -142,6 +154,21 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
                   MultiBlocProvider(
                     providers: [
                       BlocProvider.value(value: injector<CouponsCubit>()),
+                      BlocProvider<GetBaseEntityCubit<CountryEntity>>(
+                        lazy: false,
+                        create: (context) => GetBaseEntityCubit<CountryEntity>()
+                          ..fGetBaseNameAndId(),
+                      ),
+                      BlocProvider<GetBaseEntityCubit<CityEntity>>(
+                        lazy: false,
+                        create: (context) {
+                          final userState = context.read<UserCubit>().state;
+                          final parentId = userState.selectedCountry?.id;
+
+                          return GetBaseEntityCubit<CityEntity>()
+                            ..fGetBaseNameAndId(id: parentId);
+                        },
+                      ),
                       BlocProvider<GetBaseEntityCubit<RegionEntity>>(
                         lazy: false,
                         create: (context) {
@@ -165,6 +192,13 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
                           prev.selectedCountry?.id != curr.selectedCountry?.id,
                       listener: (context, state) {
                         final parentId = state.selectedCity?.id;
+
+                        // Refresh City only if we have a valid country
+                        if (state.selectedCountry?.id != null) {
+                          context
+                              .read<GetBaseEntityCubit<CityEntity>>()
+                              .fGetBaseNameAndId(id: state.selectedCountry?.id);
+                        }
 
                         // Refresh Region/Municipality only if we have a valid parent
                         if (parentId != null) {
@@ -201,7 +235,7 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
                                             AppAssets.svg.baseSvg.profile.path,
                                         userName: state.userModel.name,
                                         showBackButton: false,
-                                        title: LocaleKeys.couponsTitle.tr(),
+                                        title: LocaleKeys.couponsTitle,
                                       ),
                                     );
                                   },

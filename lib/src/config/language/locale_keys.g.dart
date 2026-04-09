@@ -1021,4 +1021,73 @@ abstract class LocaleKeys {
   static const String _membership = 'membership';
   static String get membership => _membership.tr();
 
+  static const String _unavailable = 'unavailable';
+  static String get unavailable => _unavailable.tr();
+
+  static const String _imageSizeError = 'image_size_error';
+  static String get imageSizeError => _imageSizeError.tr();
+
+  static const String _calculateDiscount = 'calculate_discount';
+  static String get calculateDiscount => _calculateDiscount.tr();
+
+  static const String _enterInvoiceAmountSubtitle = 'enter_invoice_amount_subtitle';
+  static String get enterInvoiceAmountSubtitle => _enterInvoiceAmountSubtitle.tr();
+
+  static const String _invoiceAmount = 'invoice_amount';
+  static String get invoiceAmount => _invoiceAmount.tr();
+
+  static const String _enterInvoiceAmountPlaceholder = 'enter_invoice_amount_placeholder';
+  static String get enterInvoiceAmountPlaceholder => _enterInvoiceAmountPlaceholder.tr();
+
+  static const String _calculateBtn = 'calculate_btn';
+  static String get calculateBtn => _calculateBtn.tr();
+
+  static const String _originalPrice = 'original_price';
+  static String get originalPrice => _originalPrice.tr();
+
+  static const String _discountLabel = 'discount_label';
+  static String get discountLabel => _discountLabel.tr();
+
+  static const String _finalPrice = 'final_price';
+  static String get finalPrice => _finalPrice.tr();
+
+  static const String _continueScanning = 'continue_scanning';
+  static String get continueScanning => _continueScanning.tr();
+
+  static const String _currencyKrona = 'currency_krona';
+  static String get currencyKrona => _currencyKrona.tr();
+
+  static const String _manualDiscount = 'manual_discount';
+  static String get manualDiscount => _manualDiscount.tr();
+
+  static const String _discountAmount = 'discount_amount';
+  static String get discountAmount => _discountAmount.tr();
+
+  static const String _totalAfterDiscount = 'total_after_discount';
+  static String get totalAfterDiscount => _totalAfterDiscount.tr();
+
+  static const String _enterOriginalPrice = 'enter_original_price';
+  static String get enterOriginalPrice => _enterOriginalPrice.tr();
+
+  static const String _sortBy = 'sort_by';
+  static String get sortBy => _sortBy.tr();
+
+  static const String _sortAsc = 'sort_asc';
+  static String get sortAsc => _sortAsc.tr();
+
+  static const String _sortDesc = 'sort_desc';
+  static String get sortDesc => _sortDesc.tr();
+
+  static const String _nearby = 'nearby';
+  static String get nearby => _nearby.tr();
+
+  static const String _nearbyAll = 'nearby_all';
+  static String get nearbyAll => _nearbyAll.tr();
+
+  static const String _nearbyKm = 'nearby_km';
+  static String nearbyKm({required String distance}) => _nearbyKm.tr(namedArgs: {'distance': distance});
+
+  static const String _nearbyDisabledHint = 'nearby_disabled_hint';
+  static String get nearbyDisabledHint => _nearbyDisabledHint.tr();
+
 }

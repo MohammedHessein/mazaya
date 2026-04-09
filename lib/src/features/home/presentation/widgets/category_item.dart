@@ -4,7 +4,6 @@ import 'package:mazaya/src/features/coupons/presentation/view/view_imports.dart'
 import '../../model/category_model.dart';
 import '../../../../core/base_crud/code/domain/base_domain_imports.dart';
 import '../../../main/presentation/view/main_screen.dart';
-import '../../../../core/navigation/navigator.dart';
 import '../../../coupons/presentation/cubits/coupons_cubit.dart';
 
 class CategoryItem extends StatelessWidget {

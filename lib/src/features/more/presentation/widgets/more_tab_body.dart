@@ -53,7 +53,7 @@ class MoreTabBody extends StatelessWidget {
                   onTap: () => Go.to(
                     WebViewScreen(
                       url: data!.websiteLink!,
-                      title: LocaleKeys.visitOurWebsite.tr(),
+                      title: LocaleKeys.visitOurWebsite,
                     ),
                   ),
                   child: Row(
@@ -67,7 +67,7 @@ class MoreTabBody extends StatelessWidget {
                       ),
                       8.szW,
                       Text(
-                        LocaleKeys.visitOurWebsite.tr(),
+                        LocaleKeys.visitOurWebsite,
                         textAlign: TextAlign.center,
                         style: context.textStyle.s16.regular.setPrimaryColor,
                       ),

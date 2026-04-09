@@ -73,9 +73,7 @@ class _CouponsSectionState extends State<CouponsSection> {
                     itemCount: products.length,
                     itemBuilder: (context, index) {
                       final product = products[index];
-                      final isDisabled = product.packageName != null &&
-                          user.userPackageName != null &&
-                          product.packageName != user.userPackageName;
+                      final isDisabled = !product.isActive;
 
                       return AppCard(
                         title: product.vendorName ?? product.name,
@@ -83,7 +81,7 @@ class _CouponsSectionState extends State<CouponsSection> {
                         imageUrl: product.productImage,
                         status: null,
                         isFavorite: product.isFav,
-                        packageName: product.packageName,
+                        packageNames: product.packageNames,
                         isDisabled: isDisabled,
                         onFavoriteTap: () {
                           context.read<FavoriteManager>().toggle(

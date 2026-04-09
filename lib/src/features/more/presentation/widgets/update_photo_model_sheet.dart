@@ -14,6 +14,25 @@ Future updatePhotoModelSheet(BuildContext context) async {
 class UpdatePhotoBody extends StatelessWidget {
   const UpdatePhotoBody({super.key});
 
+  Future<void> _handleImageSelection(BuildContext context, File? file) async {
+    if (file == null) return;
+
+    final int sizeInBytes = await file.length();
+    if (sizeInBytes > 10 * 1024 * 1024) {
+      MessageUtils.showSnackBar(
+        message: LocaleKeys.imageSizeError,
+        baseStatus: BaseStatus.error,
+      );
+      return;
+    }
+
+    if (context.mounted) {
+      final cubit = context.read<UpdatePhotoCubit>();
+      Go.back();
+      cubit.updatePhoto(file: file);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -33,10 +52,8 @@ class UpdatePhotoBody extends StatelessWidget {
               icon: AppAssets.svg.baseSvg.cameraAlt,
               onTap: () async {
                 final file = await ImageHelper.takePicture();
-                if (file != null && context.mounted) {
-                  final cubit = context.read<UpdatePhotoCubit>();
-                  Go.back();
-                  cubit.updatePhoto(file: file);
+                if (context.mounted) {
+                  await _handleImageSelection(context, file);
                 }
               },
             ),
@@ -45,10 +62,8 @@ class UpdatePhotoBody extends StatelessWidget {
               icon: AppAssets.svg.baseSvg.gallery,
               onTap: () async {
                 final file = await ImageHelper.pickImage();
-                if (file != null && context.mounted) {
-                  final cubit = context.read<UpdatePhotoCubit>();
-                  Go.back();
-                  cubit.updatePhoto(file: file);
+                if (context.mounted) {
+                  await _handleImageSelection(context, file);
                 }
               },
             ),

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mazaya/src/core/helpers/validators.dart';
-import 'package:mazaya/src/core/shared/cubits/user_cubit/user_cubit.dart';
 import 'package:mazaya/src/core/widgets/fields/text_fields/app_text_field.dart';
 import 'package:mazaya/src/core/widgets/fields/text_fields/field_label.dart';
 import 'package:mazaya/src/core/widgets/scaffolds/default_scaffold.dart';
-import 'package:mazaya/src/core/widgets/universal_media/enums.dart';
 import 'package:mazaya/src/features/complaints/presentation/cubits/complaints_cubit.dart';
 import 'package:mazaya/src/features/coupons/presentation/view/view_imports.dart';
 

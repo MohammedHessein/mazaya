@@ -4,32 +4,110 @@ import 'package:mazaya/src/config/language/locale_keys.g.dart';
 import 'package:mazaya/src/config/res/config_imports.dart';
 import 'package:mazaya/src/core/base_crud/code/domain/base_domain_imports.dart';
 import 'package:mazaya/src/core/base_crud/code/presentation/cubit/get_base_name_and_id/get_base_name_and_id_cubit.dart';
-import 'package:mazaya/src/core/extensions/context_extension.dart';
-import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
 import 'package:mazaya/src/core/extensions/widgets/sized_box_helper.dart';
 import 'package:mazaya/src/core/shared/cubits/user_cubit/user_cubit.dart';
-import 'package:mazaya/src/core/widgets/buttons/loading_button.dart';
-import 'package:mazaya/src/core/widgets/fields/drop_downs/app_drop_down/app_dropdown.dart';
 import 'package:mazaya/src/features/coupons/presentation/cubits/coupons_cubit.dart';
+import 'filter_header.dart';
+import 'filter_location_selectors.dart';
+import 'filter_sort_and_category_section.dart';
+import 'filter_nearby_section.dart';
+import 'filter_apply_button.dart';
 
 class CouponsFilterBottomSheet extends StatefulWidget {
   const CouponsFilterBottomSheet({super.key});
 
   @override
   State<CouponsFilterBottomSheet> createState() =>
-      CouponsFilterBottomSheetState();
+      _CouponsFilterBottomSheetState();
 }
 
-class CouponsFilterBottomSheetState extends State<CouponsFilterBottomSheet> {
-  RegionEntity? localRegion;
-  CategoryEntity? localCategory;
+class _CouponsFilterBottomSheetState extends State<CouponsFilterBottomSheet> {
+  CountryEntity? _selectedCountry;
+  CityEntity? _selectedCity;
+  RegionEntity? _selectedRegion;
+  CategoryEntity? _selectedCategory;
+  String? _selectedSort;
+  String? _selectedNearby;
+
+  bool get _isEgypt => _selectedCountry?.id == 257 || _selectedCountry?.id == 1;
+
+  String get _level2Label =>
+      _isEgypt ? LocaleKeys.governorate : LocaleKeys.city;
+
+  String get _level3Label =>
+      _isEgypt ? LocaleKeys.city : LocaleKeys.municipality;
 
   @override
   void initState() {
     super.initState();
     final cubit = context.read<CouponsCubit>();
-    localRegion = cubit.selectedRegion;
-    localCategory = cubit.selectedCategory;
+    final userState = context.read<UserCubit>().state;
+
+    _selectedCountry = userState.selectedCountry;
+    _selectedCity = userState.selectedCity;
+    
+    if (cubit.selectedLocation is RegionEntity) {
+      _selectedRegion = cubit.selectedLocation as RegionEntity;
+    } else if (cubit.selectedLocation is CityEntity) {
+      _selectedCity = cubit.selectedLocation as CityEntity;
+    } else if (cubit.selectedLocation is CountryEntity) {
+      _selectedCountry = cubit.selectedLocation as CountryEntity;
+    } else {
+      _selectedRegion = userState.selectedRegion;
+    }
+
+    _selectedCategory = cubit.selectedCategory;
+    _selectedSort = cubit.selectedSort;
+    _selectedNearby = cubit.selectedNearby ?? 'all';
+    
+    _validateNearby();
+  }
+
+  void _onCountryChanged(CountryEntity? country) {
+    setState(() {
+      _selectedCountry = country;
+      _selectedCity = null;
+      _selectedRegion = null;
+      _validateNearby();
+    });
+    if (country != null) {
+      context.read<GetBaseEntityCubit<CityEntity>>().fGetBaseNameAndId(
+            id: country.id,
+          );
+    }
+  }
+
+  void _onCityChanged(CityEntity? city) {
+    setState(() {
+      _selectedCity = city;
+      _selectedRegion = null;
+      _validateNearby();
+    });
+    if (city != null) {
+      context.read<GetBaseEntityCubit<RegionEntity>>().fGetBaseNameAndId(
+            id: city.id,
+          );
+    }
+  }
+
+  void _onRegionChanged(RegionEntity? region) {
+    setState(() {
+      _selectedRegion = region;
+      _validateNearby();
+    });
+  }
+
+  void _validateNearby() {
+    if (!_isNearbyEnabled) {
+      _selectedNearby = 'all';
+    }
+  }
+
+  bool get _isNearbyEnabled {
+    final userState = context.read<UserCubit>().state;
+    return _selectedCountry?.id == userState.selectedCountry?.id &&
+        _selectedCity?.id == userState.selectedCity?.id &&
+        _selectedRegion?.id == userState.selectedRegion?.id;
   }
 
   @override
@@ -43,82 +121,53 @@ class CouponsFilterBottomSheetState extends State<CouponsFilterBottomSheet> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              TextButton(
-                onPressed: () {
-                  context.read<CouponsCubit>().clearFilters();
-                  Navigator.pop(context);
-                },
-                child: Text(
-                  LocaleKeys.reset,
-                  style: context.textStyle.s14.medium.setPrimaryColor,
-                ),
-              ),
-              Text(
-                LocaleKeys.searchFor,
-                style: context.textStyle.s18.bold.setMainTextColor,
-              ),
-              const SizedBox(width: 50), // For balance
-            ],
-          ),
+          FilterHeader(onReset: () {
+            context.read<CouponsCubit>().clearFilters();
+            Navigator.pop(context);
+          }),
           20.szH,
-          BlocBuilder<
-            GetBaseEntityCubit<RegionEntity>,
-            GetBaseEntityState<RegionEntity>
-          >(
-            builder: (context, state) {
-              final userState = context.read<UserCubit>().state;
-              final isEgypt =
-                  userState.selectedCountry?.id == 257 ||
-                  userState.selectedCountry?.id == 1;
-
-              return AppDropdown<RegionEntity>(
-                items: state.dataState.data ?? [],
-                value: localRegion,
-                itemAsString: (region) => region.name,
-                onChanged: (region) {
-                  setState(() {
-                    localRegion = region;
-                  });
-                },
-                hint: isEgypt ? LocaleKeys.city : LocaleKeys.municipality,
-                isLoading: state.dataState.isLoading,
-              );
-            },
+          FilterLocationSelectors(
+            selectedCountry: _selectedCountry,
+            selectedCity: _selectedCity,
+            selectedRegion: _selectedRegion,
+            level2Label: _level2Label,
+            level3Label: _level3Label,
+            onCountryChanged: _onCountryChanged,
+            onCityChanged: _onCityChanged,
+            onRegionChanged: _onRegionChanged,
           ),
           16.szH,
-          BlocBuilder<
-            GetBaseEntityCubit<CategoryEntity>,
-            GetBaseEntityState<CategoryEntity>
-          >(
-            builder: (context, state) {
-              return AppDropdown<CategoryEntity>(
-                items: state.dataState.data ?? [],
-                value: localCategory,
-                onChanged: (cat) {
-                  setState(() {
-                    localCategory = cat;
-                  });
-                },
-                itemAsString: (cat) => cat.name,
-                hint: LocaleKeys.section,
-                isLoading: state.dataState.isLoading,
-              );
-            },
+          FilterSortAndCategorySection(
+            selectedCategory: _selectedCategory,
+            selectedSort: _selectedSort,
+            onCategoryChanged: (cat) => setState(() => _selectedCategory = cat),
+            onSortChanged: (val) => setState(() => _selectedSort = val),
+          ),
+          20.szH,
+          FilterNearbySection(
+            isNearbyEnabled: _isNearbyEnabled,
+            selectedNearby: _selectedNearby,
+            onNearbyChanged: (val) => setState(() => _selectedNearby = val),
           ),
           30.szH,
-          LoadingButton(
-            title: LocaleKeys.search,
-            onTap: () async {
-              context.read<CouponsCubit>().applyFilters(
-                category: localCategory,
-                region: localRegion,
-              );
-              Navigator.pop(context);
-            },
-          ),
+          FilterApplyButton(onTap: () {
+            BaseIdAndNameEntity? finalLocation;
+            if (_selectedRegion != null) {
+              finalLocation = _selectedRegion;
+            } else if (_selectedCity != null) {
+              finalLocation = _selectedCity;
+            } else if (_selectedCountry != null) {
+              finalLocation = _selectedCountry;
+            }
+
+            context.read<CouponsCubit>().applyFilters(
+                  category: _selectedCategory,
+                  location: finalLocation,
+                  sort: _selectedSort,
+                  nearby: _selectedNearby,
+                );
+            Navigator.pop(context);
+          }),
           SizedBox(height: MediaQuery.of(context).viewInsets.bottom),
         ],
       ),

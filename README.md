@@ -9,7 +9,7 @@ This project follows a strict **Clean Architecture (Feature-First)** approach, e
 
 - **`lib/src/config/`**: Styling tokens, Material 3 themes, localization assets, generated code.
 - **`lib/src/core/`**: Shared infrastructure, 44+ reusable widgets, and centralized logic for networking, navigation, and notifications.
-- **`lib/src/features/`**: 18 modular, self-contained features (Auth, Home, Coupons, QR Scanner, Notifications, Profile, More, and more).
+- **`lib/src/features/`**: 15+ modular, self-contained features (Auth, Home, Coupons, QR Scanner, Notifications, Profile, More, and more).
 
 ---
 
@@ -44,9 +44,9 @@ For comprehensive technical guides and architectural decisions, please refer to:
 ```
 IntroScreen → LoginScreen → MainScreen (Bottom Nav)
                                 ├── Home (tab 0) – Categories + Coupons
-                                ├── Coupons (tab 1) – Search + Filter
-                                ├── QR Scanner (tab 2) – QR Scanning & Verification
-                                └── More (tab 3) – Profile, Password, Language, Settings
+                                ├── Coupons (tab 1) – Search + Filter + Map
+                                ├── QR Scanner (tab 2) – Manual Entry + QR Scanning
+                                └── More (tab 3) – Profile, Password, Settings, Website
 ```
 
 ---

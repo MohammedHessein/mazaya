@@ -1,5 +1,23 @@
 # Mazaya App – Logic Patterns Guide
 
+| `profile` | User profile tab | Large avatar, name, optional subtitle badge |
+
+## Location Tracking (UpdateLocationCubit)
+1. **Goal**: Sync user coordinates to backend periodically without draining battery.
+2. **Logic**:
+   - Store `last_lat` and `last_lng` in `SharedPreferences`.
+   - Calculate distance between current position and last synced position.
+   - **Condition**: Only trigger `user/update-latlng` API if distance > 5,000 meters (5km).
+3. **Trigger**: Handled in `MainScreen.initState()` or background service.
+
+## Conditional Navigation Logic
+1. **Utility**: Evaluates specific data fields before routing.
+2. **Example (Coupon Location)**:
+   - If `vendor.lat` / `vendor.lng` exists -> Navigate to **OSM Map Screen**.
+   - Else if `vendor.website` exists -> Navigate to **WebView Screen**.
+   - Else -> Show "Location information unavailable" toast.
+3. **Benefit**: Prevents broken UI or empty map views.
+
 ## Infinite Lists (PaginatedCubit)
 1. **Define Cubit**: Extend `PaginatedCubit<T>`.
 2. **Implement Fetch**: 
@@ -91,7 +109,12 @@ IntroScreen → LoginScreen → [ForgetPassword → OTP → ResetPassword] → M
 1. `CouponsCubit` fetches coupon data with search/filter support.
 2. `CouponsBody` displays list using `AppCard` widgets.
 3. `CouponsSearchBar` provides debounced search input.
-4. `CouponsFilterBottomSheet` provides category/status filters.
+4. **Advanced Filtering**: `CouponsFilterBottomSheet` handles:
+   - Proximity (Nearest/Distance).
+   - Sorting (Newest, Expiration Date).
+   - Localized category chips.
+5. **Modular Decomposition**: Extracted UI sections into public standalone widgets (`FilterHeader`, `FilterLocationSelectors`, etc.) to keep the bottom sheet logic readable and testable.
+6. **Detail Map**: Integrated OpenStreetMap (OSM) via `MapWidget` in coupon details for vendor discovery.
 
 ## Component/Feature Creation Rules
 - **Naming**: Use `_view.dart`, `_body.dart`, `_cubit.dart`, `_screen.dart`.
@@ -102,3 +125,11 @@ IntroScreen → LoginScreen → [ForgetPassword → OTP → ResetPassword] → M
   - Use `injector` for BLOC and Service injection.
   - Use `SizedBoxHelper` for spacing (`10.szH`, `15.szW`).
   - Use `TextStyleEx` for text styling (`context.textStyle.s16.bold.setWhiteColor`).
+
+## Modular UI Decomposition
+When a feature "Body" or "BottomSheet" exceeds ~200 lines, follow this pattern:
+1. **Logic Extraction**: Move non-UI logic (camera controllers, complex validations) to a dedicated `Controller` or the `Cubit`.
+2. **Componentization**: Identify logical UI sections (Header, Controls, Forms, Overlays).
+3. **Public Widgets**: Create separate files for each section using **Public Widgets** (no `_` prefix).
+4. **Coordination**: The main "Body" file acts as a thin coordinator that imports and arranges these sub-components.
+5. **Benefit**: Smaller file sizes, improved readability, and reusability of sub-components.

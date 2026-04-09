@@ -16,7 +16,23 @@ class ProductModel extends Equatable {
   final int categoryId;
   final String? categoryName;
   final bool isFav;
-  final String? packageName;
+  final bool isActive;
+  final bool isUsed;
+  final List<String>? packageNames;
+  final List<int>? packageIds;
+  final String? qrPayload;
+  final String? vendorLink;
+  final String? vendorDescription;
+  final String? vendorLat;
+  final String? vendorLng;
+  final String? createdAt;
+  final int? locationId;
+  final String? locationName;
+  final int? locationParentId;
+  final String? locationParentName;
+  final int? locationGrandparentId;
+  final String? locationGrandparentName;
+  final int? vendorCouponsRemaining;
 
   const ProductModel({
     required this.id,
@@ -33,7 +49,23 @@ class ProductModel extends Equatable {
     this.categoryId = 0,
     this.categoryName,
     this.isFav = false,
-    this.packageName,
+    this.isActive = true,
+    this.isUsed = false,
+    this.packageNames,
+    this.packageIds,
+    this.qrPayload,
+    this.vendorLink,
+    this.vendorDescription,
+    this.vendorLat,
+    this.vendorLng,
+    this.createdAt,
+    this.locationId,
+    this.locationName,
+    this.locationParentId,
+    this.locationParentName,
+    this.locationGrandparentId,
+    this.locationGrandparentName,
+    this.vendorCouponsRemaining,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
@@ -58,7 +90,27 @@ class ProductModel extends Equatable {
       categoryId: toInt(json['category_id']),
       categoryName: json['category_name'],
       isFav: json['is_fav'] ?? false,
-      packageName: json['package_name'],
+      isActive: json['is_active'] == null ? true : (json['is_active'] is bool ? json['is_active'] : (json['is_active'].toString() == '1' || json['is_active'].toString().toLowerCase() == 'true')),
+      isUsed: json['is_used'] ?? false,
+      packageNames: json['package_name'] is List
+          ? (json['package_name'] as List).map((e) => e.toString()).toList()
+          : (json['package_name'] != null ? [json['package_name'].toString()] : null),
+      packageIds: json['package_id'] is List
+          ? (json['package_id'] as List).map((e) => toInt(e)).toList()
+          : (json['package_id'] != null ? [toInt(json['package_id'])] : null),
+      qrPayload: json['qr_payload'],
+      vendorLink: json['vendor_link'],
+      vendorDescription: json['vendor_description'],
+      vendorLat: json['vendor_lat']?.toString(),
+      vendorLng: json['vendor_lng']?.toString(),
+      createdAt: json['created_at'],
+      locationId: toInt(json['location_id']),
+      locationName: json['location_name'],
+      locationParentId: toInt(json['location_parent_id']),
+      locationParentName: json['location_parent_name'],
+      locationGrandparentId: toInt(json['location_grandparent_id']),
+      locationGrandparentName: json['location_grandparent_name'],
+      vendorCouponsRemaining: toInt(json['vendor_coupons_remaining']),
     );
   }
 
@@ -77,7 +129,23 @@ class ProductModel extends Equatable {
     int? categoryId,
     String? categoryName,
     bool? isFav,
-    String? packageName,
+    bool? isActive,
+    bool? isUsed,
+    List<String>? packageNames,
+    List<int>? packageIds,
+    String? qrPayload,
+    String? vendorLink,
+    String? vendorDescription,
+    String? vendorLat,
+    String? vendorLng,
+    String? createdAt,
+    int? locationId,
+    String? locationName,
+    int? locationParentId,
+    String? locationParentName,
+    int? locationGrandparentId,
+    String? locationGrandparentName,
+    int? vendorCouponsRemaining,
   }) {
     return ProductModel(
       id: id ?? this.id,
@@ -94,7 +162,23 @@ class ProductModel extends Equatable {
       categoryId: categoryId ?? this.categoryId,
       categoryName: categoryName ?? this.categoryName,
       isFav: isFav ?? this.isFav,
-      packageName: packageName ?? this.packageName,
+      isActive: isActive ?? this.isActive,
+      isUsed: isUsed ?? this.isUsed,
+      packageNames: packageNames ?? this.packageNames,
+      packageIds: packageIds ?? this.packageIds,
+      qrPayload: qrPayload ?? this.qrPayload,
+      vendorLink: vendorLink ?? this.vendorLink,
+      vendorDescription: vendorDescription ?? this.vendorDescription,
+      vendorLat: vendorLat ?? this.vendorLat,
+      vendorLng: vendorLng ?? this.vendorLng,
+      createdAt: createdAt ?? this.createdAt,
+      locationId: locationId ?? this.locationId,
+      locationName: locationName ?? this.locationName,
+      locationParentId: locationParentId ?? this.locationParentId,
+      locationParentName: locationParentName ?? this.locationParentName,
+      locationGrandparentId: locationGrandparentId ?? this.locationGrandparentId,
+      locationGrandparentName: locationGrandparentName ?? this.locationGrandparentName,
+      vendorCouponsRemaining: vendorCouponsRemaining ?? this.vendorCouponsRemaining,
     );
   }
 
@@ -113,7 +197,23 @@ class ProductModel extends Equatable {
     vendorImage,
     categoryName,
     isFav,
-    packageName,
+    isActive,
+    isUsed,
+    packageNames,
+    packageIds,
+    qrPayload,
+    vendorLink,
+    vendorDescription,
+    vendorLat,
+    vendorLng,
+    createdAt,
+    locationId,
+    locationName,
+    locationParentId,
+    locationParentName,
+    locationGrandparentId,
+    locationGrandparentName,
+    vendorCouponsRemaining,
   ];
 
   CouponEntity toCouponEntity() {
@@ -132,7 +232,23 @@ class ProductModel extends Equatable {
       categoryId: categoryId,
       categoryName: categoryName,
       isFav: isFav,
-      packageName: packageName,
+      isActive: isActive,
+      isUsed: isUsed,
+      packageNames: packageNames,
+      packageIds: packageIds,
+      qrPayload: qrPayload,
+      vendorLink: vendorLink,
+      vendorDescription: vendorDescription,
+      lat: vendorLat != null ? double.tryParse(vendorLat!) : null,
+      lng: vendorLng != null ? double.tryParse(vendorLng!) : null,
+      createdAt: createdAt,
+      locationId: locationId,
+      locationName: locationName,
+      locationParentId: locationParentId,
+      locationParentName: locationParentName,
+      locationGrandparentId: locationGrandparentId,
+      locationGrandparentName: locationGrandparentName,
+      vendorCouponsRemaining: vendorCouponsRemaining,
     );
   }
 }

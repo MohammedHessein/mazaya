@@ -31,4 +31,5 @@ class ApiConstants {
       'https://backend.smartvision4p.com/mazaya-app/public/privacy-policy';
   static const String complaints = 'contact-us';
   static const String appSettings = 'setting';
+  static const String updateLatLng = 'user/update-latlng';
 }

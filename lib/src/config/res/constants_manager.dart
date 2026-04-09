@@ -5,7 +5,8 @@ final GetIt injector = GetIt.instance;
 class ConstantManager {
   static const String bundleId = 'com.smartVision.mazaya';
   static const String appName = 'mazaya';
-  static const String mapUrlTemplate = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+  static const String mapUrlTemplate =
+      'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
   static const String mapUserAgent = 'com.smartVision.mazaya';
   static const String fontFamily = 'Madani';
   static const String acceptHeader = 'application/json';
@@ -29,6 +30,8 @@ class ConstantManager {
 
   static const String sawOnboarding = 'sawOnboarding';
   static const String selectedLocation = 'selectedLocation';
+  static const String lastLat = 'lastLat';
+  static const String lastLng = 'lastLng';
 
   static Map<String, dynamic>? paginateJson(int page) => {'page': page};
 }

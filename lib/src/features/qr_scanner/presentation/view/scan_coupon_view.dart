@@ -9,11 +9,14 @@ class ScanCouponView extends StatelessWidget {
   final bool isActive;
   final int? couponId;
   final String? initialQrPayload;
+  final double? price;
+
   const ScanCouponView({
     super.key,
     required this.isActive,
     this.couponId,
     this.initialQrPayload,
+    this.price,
   });
 
   @override
@@ -26,6 +29,7 @@ class ScanCouponView extends StatelessWidget {
           isActive: isActive,
           couponId: couponId,
           initialQrPayload: initialQrPayload,
+          price: price,
         ),
       ),
     );

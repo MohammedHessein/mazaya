@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mazaya/src/config/language/languages.dart';
 import 'package:mazaya/src/config/language/locale_keys.g.dart';
 import 'package:mazaya/src/config/res/assets.gen.dart';
-import 'package:mazaya/src/config/res/config_imports.dart';
 import 'package:mazaya/src/core/navigation/navigator.dart';
 import 'package:mazaya/src/core/network/api_endpoints.dart';
 import 'package:mazaya/src/core/widgets/language/open_language_sheet.dart';
@@ -12,8 +10,6 @@ import 'package:mazaya/src/core/widgets/web_view/webview_screen.dart';
 import 'package:mazaya/src/features/change_password/imports/change_password_imports.dart';
 import 'package:mazaya/src/features/favourite/presentation/imports/view_imports.dart';
 import 'package:mazaya/src/features/more/presentation/cubits/logout_cubit.dart';
-import 'package:mazaya/src/features/more/presentation/widgets/delete_account_bottom_sheet.dart';
-import 'package:mazaya/src/features/more/presentation/widgets/logout_bottom_sheet.dart';
 import 'package:mazaya/src/features/more/presentation/imports/view_imports.dart';
 import 'package:mazaya/src/features/used_coupons/presentation/imports/view_imports.dart';
 import 'package:mazaya/src/features/complaints/presentation/imports/view_imports.dart';

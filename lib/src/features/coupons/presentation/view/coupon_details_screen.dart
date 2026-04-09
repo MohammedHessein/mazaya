@@ -3,7 +3,8 @@ import 'package:mazaya/src/features/coupons/presentation/cubits/coupon_details_c
 
 import '../../../location/imports/location_imports.dart';
 import '../../../qr_scanner/presentation/view/scan_coupon_view.dart';
-import 'package:mazaya/src/core/shared/cubits/user_cubit/user_cubit.dart';
+import 'package:mazaya/src/core/widgets/pickers/default_bottom_sheet.dart';
+import '../widgets/calculate_discount_bottom_sheet.dart';
 import 'view_imports.dart';
 
 class CouponDetailsScreen extends BlocStatelessWidget<CouponDetailsCubit> {
@@ -40,11 +41,20 @@ class CouponDetailsScreen extends BlocStatelessWidget<CouponDetailsCubit> {
                     if (!UserCubit.instance.checkAuth()) return;
                     if (state.isSuccess) {
                       final currentCoupon = state.data;
-                      Go.to(ScanCouponView(
-                        isActive: true,
-                        couponId: id,
-                        initialQrPayload: currentCoupon.qrPayload,
-                      ));
+                      
+                      final invoiceAmount = await showDefaultBottomSheet(
+                        context: context,
+                        child: CalculateDiscountBottomSheet(coupon: currentCoupon),
+                      );
+
+                      if (invoiceAmount != null && invoiceAmount is double) {
+                        Go.to(ScanCouponView(
+                          isActive: true,
+                          couponId: id,
+                          initialQrPayload: currentCoupon.qrPayload,
+                          price: invoiceAmount,
+                        ));
+                      }
                     } else if (state.isError) {
                       MessageUtils.showSnackBar(
                         message: state.errorMessage ?? LocaleKeys.operationFaild,

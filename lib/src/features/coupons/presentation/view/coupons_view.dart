@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mazaya/src/config/language/locale_keys.g.dart';
@@ -33,6 +32,20 @@ class _CouponsViewState extends State<CouponsView> {
     return MultiBlocProvider(
       providers: [
         BlocProvider.value(value: _cubit),
+        BlocProvider<GetBaseEntityCubit<CountryEntity>>(
+          lazy: false,
+          create: (context) =>
+              GetBaseEntityCubit<CountryEntity>()..fGetBaseNameAndId(),
+        ),
+        BlocProvider<GetBaseEntityCubit<CityEntity>>(
+          lazy: false,
+          create: (context) {
+            final userState = context.read<UserCubit>().state;
+            final countryId = userState.selectedCountry?.id;
+            return GetBaseEntityCubit<CityEntity>()
+              ..fGetBaseNameAndId(id: countryId);
+          },
+        ),
         BlocProvider<GetBaseEntityCubit<RegionEntity>>(
           lazy: false,
           create: (context) {
@@ -55,14 +68,20 @@ class _CouponsViewState extends State<CouponsView> {
             prev.selectedCountry?.id != curr.selectedCountry?.id,
         listener: (context, state) {
           final parentId = state.selectedCity?.id;
+
+          // Refresh City only if we have a valid country
+          if (state.selectedCountry?.id != null) {
+            context
+                .read<GetBaseEntityCubit<CityEntity>>()
+                .fGetBaseNameAndId(id: state.selectedCountry?.id);
+          }
+
           if (parentId != null) {
             context.read<GetBaseEntityCubit<RegionEntity>>().fGetBaseNameAndId(
-              id: parentId,
-            );
+                  id: parentId,
+                );
           }
-          context
-              .read<GetBaseEntityCubit<CategoryEntity>>()
-              .fGetBaseNameAndId();
+          context.read<GetBaseEntityCubit<CategoryEntity>>().fGetBaseNameAndId();
           context.read<CouponsCubit>().fetchInitialData();
         },
         child: Builder(
@@ -78,7 +97,7 @@ class _CouponsViewState extends State<CouponsView> {
                   slivers: [
                     AppHeaderSliver(
                       config: HeaderConfig(
-                        title: LocaleKeys.couponsTitle.tr(),
+                        title: LocaleKeys.couponsTitle,
                         showBackButton: false,
                       ),
                     ),

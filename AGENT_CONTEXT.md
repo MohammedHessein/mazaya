@@ -61,6 +61,11 @@ The project follows a **Modified Clean Architecture (Feature-First)** approach.
   ```
 - **Pagination**: Extend `PaginatedCubit`, override `fetchPageData`, `parseItems`, and `parsePagination`. Use `PaginatedListWidget` in UI.
 
+### 2. Specialized Logic Patterns
+- **Location Sync**: Sync user coordinates to backend only if distance > 5km from last sync.
+- **Conditional Navigation**: Evaluate data availability to decide destination (e.g., OSM for coordinates vs. WebView for links).
+- **Manual Input Scanner**: Allow manual invoice/price entry before initiating camera scanning.
+
 ### 2. UI Rendering Patterns
 - **AsyncBlocBuilder**: Handles skeletons, success, and error states automatically.
 - **StatusBuilder**: Manual state handling via `state.status.when()`.
@@ -109,8 +114,9 @@ Each feature in `lib/src/features/` must follow:
 ### 3. Media & Cards
 - **UniversalMediaWidget**: Handles SVG, PNG, Lottie, and Network images intelligently.
 - **CachedImage**: Optimized network image loading.
-- **AppCard**: Standardized coupon/item card with favorite toggle and status badges.
+- **AppCard**: Standardized coupon/item card with favorite toggle, "Unavailable" badges, and status indicators.
 - **IconWidget**: Primary icon renderer for all formats.
+- **MapWidget**: Integrated OpenStreetMap (OSM) for location-based features.
 
 ### 4. State & Data Handling
 - **AsyncBlocBuilder**: Auto-renders loading (skeletons), success, and error UIs.
@@ -184,7 +190,7 @@ Each feature in `lib/src/features/` must follow:
 ## ├── Folder Structure & Scaffolding
 - **`lib/src/config/`**: Themes, Design Tokens, L10n Assets.
 - **`lib/src/core/`**: 44+ Reusable Widgets, Go Navigation, Network, DI.
-- **`lib/src/features/`**: Modular Features (Auth, Home, Coupons, etc.).
+- **`lib/src/features/`**: 15+ Modularized Features (Auth, Home, Coupons, QR Scanner, etc.).
 - **Scaffolding**: Always use `mason make feature --name <feature_name>` to maintain architecture.
 - **Post-Scaffold**: Always run `dart run build_runner build --delete-conflicting-outputs`.
 

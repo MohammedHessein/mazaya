@@ -46,7 +46,7 @@
     - `lib/src/core/widgets/cards/app_card.dart`
     - Use for: Coupon items, list items, deal displays.
     - Props: `title`, `description`, `imageUrl`, `status`, `onTap`, `isFavorite`, `onFavoriteTap`.
-    - Features: Status badge, favorite heart toggle, shadow decoration.
+    - Features: Status badge (e.g., "Active", "Used"), **"Unavailable"** localized badge for expired/inactive items, favorite heart toggle, shadow decoration.
 
 ### Form Fields
 11. **AppTextField**:
@@ -113,9 +113,33 @@
 42. **CustomImageCarousel**: `carousel/custom_image_carousel.dart` – Image carousel.
 43. **IntroCarouselWidget**: `custom_animated_intro/intro_carousel_widget.dart` – Onboarding carousel.
 44. **LanguagePillWidget**: `language/language_pill_widget.dart` – Inline language display.
-45. **ScannerWidget**: `features/scan/presentation/widgets/scanner_widget.dart` – QR/Barcode camera interface.
-46. **LanguageOption**: `language/language_option.dart` – Selectable language item with flag.
-47. **LoadingButtonWithIcon**: (Defined in `loading_button.dart`) – Button with leading SVG.
+116. **ScannerWidget**:
+     - `lib/src/features/qr_scanner/presentation/widgets/`
+     - Use for: QR/Barcode camera interface.
+     - **Modular Components**:
+       - `ScannerCameraView`: The main camera preview layer.
+       - `ScannerBottomControls`: Detection instructions and scan actions.
+       - `ScannerErrorView`: Permission denied and general camera error handling.
+       - `ScannerManualForm`: User input for invoice details before scanning.
+       - `ScannerLoadingOverlay`: Standardized loading state during API calls.
+     - **Logic**: Managed via `AppScannerController` for camera/lifecycle sync.
+117. **LanguageOption**: `language/language_option.dart` – Selectable language item with flag.
+118. **MapWidget**: 
+     - `lib/src/core/widgets/map/map_widget.dart`
+     - Use for: Displaying interactive OpenStreetMap (OSM) maps.
+     - Features: Marker centering, custom vendor pins, and zoom controls.
+119. **WebViewWidget**:
+     - `lib/src/core/widgets/web_view/web_view_widget.dart`
+     - Use for: Displaying external merchant websites or links.
+120. **Coupons Filter Components**:
+     - `lib/src/features/coupons/presentation/widgets/`
+     - **Modular Components**:
+       - `FilterHeader`: Title and reset filter actions.
+       - `FilterLocationSelectors`: Triple-cascading dropdowns for Country/City/Region.
+       - `FilterSortAndCategorySection`: Sorting options and localized category chips.
+       - `FilterNearbySection`: Proximity-based filtering with distance chips.
+       - `FilterApplyButton`: Primary search execution button.
+       - `NearbyChipWidget`: Recyclable chip for proximity distance selection.
 
 ---
 

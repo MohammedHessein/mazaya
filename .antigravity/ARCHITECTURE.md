@@ -14,8 +14,8 @@ The Mazaya project follows a **Modified Clean Architecture** pattern tailored fo
    - `repositories/`: Concrete implementations.
 3. **Presentation Layer**:
    - `cubits/`: State management (extends `AsyncCubit` or `PaginatedCubit`).
-   - `view/`: Screens/Views.
-   - `widgets/`: Feature-specific UI components.
+   - `view/`: Screens/Views coordinating the overall feature state.
+   - `widgets/`: Feature-specific UI components. Large "Bodies" are decomposed into smaller, public, standalone widgets in separate files for maintainability.
    - `imports/`: Consolidated import/export files.
 
 ## State Management (Async State Pattern)
@@ -31,6 +31,7 @@ All features use `AsyncState<T>` which includes:
 
 ## Navigation
 - Centralized `Go` utility class with typed methods: `to()`, `off()`, `offAll()`, `back()`, `backToInitial()`.
+- **Conditional Logic**: Destination routing based on data state (e.g., specific coupon detail buttons route to OSM Map or WebView based on coordinate availability).
 - Named routes via `Go.toNamed()`, `Go.offNamed()`, `Go.offAllNamed()`.
 - Custom transitions via `TransitionType` + `AnimationOption`.
 - Global navigator key: `Go.navigatorKey`.
@@ -43,6 +44,7 @@ main.dart → MazayaApp → IntroScreen → LoginScreen → MainScreen
 ## MainScreen Architecture
 - Uses `ValueNotifier<int>` for tab state (via `MainParams`).
 - 4 tabs: Home (0), Coupons (1), Scanner (2), My Account (3).
+- **Location Syncing**: Background `UpdateLocationCubit` initialized in `main.dart` or `MainScreen` to sync coordinates to backend every 5km.
 - Each tab maps to different `ScaffoldHeaderType` in `DefaultScaffold`.
 - `CustomNavigationBar` with animated position indicator.
 
@@ -61,7 +63,7 @@ main.dart → MazayaApp → IntroScreen → LoginScreen → MainScreen
   - `extensions/`: TextStyle, context, sized box, string, form extensions.
   - `widgets/`: 15+ widget categories (see UIComponents.md).
   - `error/`: Failure and Exception classes.
-- `lib/src/features/`: Modularized features (14 features).
+- `lib/src/features/`: Modularized features (15+ features).
 - `assets/translations/`: Localization files.
 - `assets/svg/`: SVG assets (`base_svg/` for core, `app_svg/` for app-specific).
 - `assets/lottie/`: Animation files.

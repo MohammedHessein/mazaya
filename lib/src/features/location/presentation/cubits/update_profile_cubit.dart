@@ -1,9 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:mazaya/src/core/network/api_endpoints.dart';
 import 'package:mazaya/src/core/shared/cubits/user_cubit/user_cubit.dart';
-import 'package:mazaya/src/core/shared/models/user_model.dart';
 import 'package:mazaya/src/features/location/imports/location_imports.dart';
-import 'package:mazaya/src/features/main/presentation/view/main_screen.dart';
 
 @injectable
 class UpdateProfileCubit extends AsyncCubit<UserModel?> {
@@ -28,16 +26,16 @@ class UpdateProfileCubit extends AsyncCubit<UserModel?> {
           api: ApiConstants.updateProfile,
           isFromData: false,
           body: {
-            if (name != null) 'name': name,
-            if (email != null) 'email': email,
-            if (locationId != null) 'location_id': locationId,
-            if (address != null) 'address': address,
-            if (poBox != null) 'po_box': poBox,
-            if (nationalId != null) 'national_id': nationalId,
-            if (firstName != null) 'first_name': firstName,
-            if (lastName != null) 'last_name': lastName,
-            if (mobile != null) 'mobile': mobile,
-            if (personalNumber != null) 'personalnumber': personalNumber,
+            'name': ?name,
+            'email': ?email,
+            'location_id': ?locationId,
+            'address': ?address,
+            'po_box': ?poBox,
+            'national_id': ?nationalId,
+            'first_name': ?firstName,
+            'last_name': ?lastName,
+            'mobile': ?mobile,
+            'personalnumber': ?personalNumber,
           },
           httpRequestType: HttpRequestType.post,
           mapper: (json) => UserModel.fromJson(json),

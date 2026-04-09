@@ -49,7 +49,7 @@ class NotificationRoutes {
       final parts = redirect.split('/');
       if (parts.length >= 2) {
         final String feature = parts[0];
-        final String? idStr = parts[1];
+        final String idStr = parts[1];
         final int? id = int.tryParse(idStr ?? '');
 
         if (id != null) {
