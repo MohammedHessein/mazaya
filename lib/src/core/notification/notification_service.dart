@@ -13,6 +13,8 @@ import 'package:mazaya/src/features/coupons/presentation/view/coupon_details_scr
 import 'package:mazaya/src/features/main/presentation/view/main_screen.dart';
 import 'package:mazaya/src/features/notifications/presentation/imports/view_imports.dart';
 import 'package:mazaya/src/features/used_coupons/presentation/imports/view_imports.dart';
+import 'package:mazaya/src/core/base_crud/code/domain/entities/category_entity.dart';
+import 'package:mazaya/src/features/coupons/presentation/cubits/coupons_cubit.dart';
 
 part 'navigation_types.dart';
 part 'notification_routes.dart';

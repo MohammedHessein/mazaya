@@ -1,22 +1,45 @@
 part of 'notification_service.dart';
 
+/// This enum unifies both modern numeric (1-6) and legacy string-based notifications.
 enum NotificationType {
-  // Admin Notifications
-  adminNotify("admin_notify", NoAction()),
-  adminUserBlocked("admin_user_blocked", NoAction()),
-  // User Status
-  block("block", NoAction()),
-  blockNotify("block_notify", NoAction()),
-  deleteNotify("delete_notify", NoAction()),
-  userBlocked("user_blocked", NoAction()),
+  // --- Modern numeric mapping (notification_type: 1-6) ---
 
-  // Chat
-  chat("new_message", ChatScreenAction());
+  /// 1: Account activation → Profile (More tab)
+  accountActivation(code: 1, action: ProfileAction()),
 
-  final String key;
+  /// 2: Expiry reminder (3 days) → Home
+  nearExpiry(code: 2, action: HomeAction()),
+
+  /// 3: Expiry reminder (Today) → Home
+  expired(code: 3, action: HomeAction()),
+
+  /// 4: Coupon used confirmation → Used Coupons
+  couponUsed(code: 4, action: UsedCouponsAction()),
+
+  /// 5: Smart recommendation → Coupons (Filtered by category)
+  recommendation(code: 5, action: CategoryRecommendationAction()),
+
+  /// 6: Dashboard/Inactivity → Home
+  dashboard(code: 6, action: HomeAction()),
+
+  // --- Legacy/Admin string mapping (type: string) ---
+
+  adminNotify(key: "admin_notify", action: NoAction()),
+  adminUserBlocked(key: "admin_user_blocked", action: NoAction()),
+  block(key: "block", action: NoAction()),
+  blockNotify(key: "block_notify", action: NoAction()),
+  deleteNotify(key: "delete_notify", action: NoAction()),
+  userBlocked(key: "user_blocked", action: NoAction());
+
+  final int? code;
+  final String? key;
   final NotificationNavigation action;
 
-  const NotificationType(this.key, this.action);
+  const NotificationType({this.code, this.key, required this.action});
+
+  static NotificationType? fromCode(int code) {
+    return NotificationType.values.where((e) => e.code == code).firstOrNull;
+  }
 }
 
 extension NotificationTypeExtension on String {
@@ -27,40 +50,58 @@ extension NotificationTypeExtension on String {
 
 abstract interface class NotificationNavigation {
   const NotificationNavigation();
-
   void navigate({required Map<String, dynamic> data});
 }
 
 class NoAction implements NotificationNavigation {
   const NoAction();
+  @override
+  void navigate({required Map<String, dynamic> data}) {}
+}
 
+class HomeAction implements NotificationNavigation {
+  const HomeAction();
   @override
   void navigate({required Map<String, dynamic> data}) {
-    return;
+    Go.offAll(const MainScreen(initialTabIndex: 0));
   }
 }
 
-class ChatScreenAction implements NotificationNavigation {
-  const ChatScreenAction();
-
+class CouponsAction implements NotificationNavigation {
+  const CouponsAction();
   @override
   void navigate({required Map<String, dynamic> data}) {
-    // Extract chat details from notification data
-    final receiverId =
-        num.tryParse(data["receiver_id"]?.toString() ?? "")?.toInt() ?? 0;
-    // final roomId = num.tryParse(data["room_id"]?.toString() ?? "")?.toInt();
-    // final receiverName = data["sender_name"]?.toString() ?? '';
-    // final receiverImage = data["avatar"]?.toString() ?? '';
+    Go.offAll(const MainScreen(initialTabIndex: 1));
+  }
+}
 
-    if (receiverId > 0) {
-      // Go.to(
-      //   ChatDetailsScreen(
-      //     receiverId: receiverId,
-      //     receiverName: receiverName,
-      //     receiverImage: receiverImage,
-      //     roomId: roomId,
-      //   ),
-      // );
+class ProfileAction implements NotificationNavigation {
+  const ProfileAction();
+  @override
+  void navigate({required Map<String, dynamic> data}) {
+    Go.offAll(const MainScreen(initialTabIndex: 3));
+  }
+}
+
+class UsedCouponsAction implements NotificationNavigation {
+  const UsedCouponsAction();
+  @override
+  void navigate({required Map<String, dynamic> data}) {
+    Go.to(const UsedCouponsScreen());
+  }
+}
+
+class CategoryRecommendationAction implements NotificationNavigation {
+  const CategoryRecommendationAction();
+  @override
+  void navigate({required Map<String, dynamic> data}) {
+    final nestedData = data['data'];
+    final categoryId = NotificationRoutes._extractCategoryId(nestedData);
+    if (categoryId != null) {
+      injector<CouponsCubit>().applyFilters(
+        category: CategoryEntity(id: categoryId, name: ''),
+      );
     }
+    Go.offAll(const MainScreen(initialTabIndex: 1));
   }
 }
