@@ -1,9 +1,9 @@
 import 'package:mazaya/src/core/base_crud/code/presentation/cubit/base_cubit/bloc_widget.dart';
+import 'package:mazaya/src/core/widgets/pickers/default_bottom_sheet.dart';
 import 'package:mazaya/src/features/coupons/presentation/cubits/coupon_details_cubit.dart';
 
 import '../../../location/imports/location_imports.dart';
 import '../../../qr_scanner/presentation/view/scan_coupon_view.dart';
-import 'package:mazaya/src/core/widgets/pickers/default_bottom_sheet.dart';
 import '../widgets/calculate_discount_bottom_sheet.dart';
 import 'view_imports.dart';
 
@@ -34,35 +34,49 @@ class CouponDetailsScreen extends BlocStatelessWidget<CouponDetailsCubit> {
             builder: (context, state) {
               return Padding(
                 padding: EdgeInsets.all(AppPadding.pW20),
-                child: LoadingButtonWithIcon(
-                  title: LocaleKeys.scanCouponCode,
-                  isDissabled: state.isSuccess && (state.data.isUsed ?? false),
-                  onTap: () async {
-                    if (!UserCubit.instance.checkAuth()) return;
-                    if (state.isSuccess) {
-                      final currentCoupon = state.data;
-                      
-                      final invoiceAmount = await showDefaultBottomSheet(
-                        context: context,
-                        child: CalculateDiscountBottomSheet(coupon: currentCoupon),
-                      );
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    LoadingButtonWithIcon(
+                      title: state.isSuccess && (state.data.isUsed ?? false)
+                          ? LocaleKeys.couponUsedBefore
+                          : LocaleKeys.scanCouponCode,
+                      isDissabled:
+                          state.isSuccess && (state.data.isUsed ?? false),
+                      onTap: () async {
+                        if (!UserCubit.instance.checkAuth()) return;
+                        if (state.isSuccess) {
+                          final currentCoupon = state.data;
 
-                      if (invoiceAmount != null && invoiceAmount is double) {
-                        Go.to(ScanCouponView(
-                          isActive: true,
-                          couponId: id,
-                          initialQrPayload: currentCoupon.qrPayload,
-                          price: invoiceAmount,
-                        ));
-                      }
-                    } else if (state.isError) {
-                      MessageUtils.showSnackBar(
-                        message: state.errorMessage ?? LocaleKeys.operationFaild,
-                        baseStatus: BaseStatus.error,
-                      );
-                    }
-                  },
-                  icon: AppAssets.svg.baseSvg.coupon.path,
+                          final invoiceAmount = await showDefaultBottomSheet(
+                            context: context,
+                            child: CalculateDiscountBottomSheet(
+                              coupon: currentCoupon,
+                            ),
+                          );
+
+                          if (invoiceAmount != null &&
+                              invoiceAmount is double) {
+                            Go.to(
+                              ScanCouponView(
+                                isActive: true,
+                                couponId: id,
+                                initialQrPayload: currentCoupon.qrPayload,
+                                price: invoiceAmount,
+                              ),
+                            );
+                          }
+                        } else if (state.isError) {
+                          MessageUtils.showSnackBar(
+                            message:
+                                state.errorMessage ?? LocaleKeys.operationFaild,
+                            baseStatus: BaseStatus.error,
+                          );
+                        }
+                      },
+                      icon: AppAssets.svg.baseSvg.coupon.path,
+                    ),
+                  ],
                 ),
               );
             },

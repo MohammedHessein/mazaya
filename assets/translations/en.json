@@ -361,5 +361,6 @@
   "nearby": "Nearby",
   "nearby_all": "All",
   "nearby_km": "{distance} km",
-  "nearby_disabled_hint": "Available only in your registered location"
+  "nearby_disabled_hint": "Available only in your registered location",
+  "coupon_used_before": "This coupon has already been used"
 }

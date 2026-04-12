@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:mazaya/src/config/language/locale_keys.g.dart';
 import 'package:mazaya/src/config/res/assets.gen.dart';
 import 'package:mazaya/src/config/res/config_imports.dart';
@@ -19,7 +18,7 @@ class ExceptionView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           spacing: AppMargin.mH10,
           children: [
-            AppAssets.lottie.error1.lottie(
+            AppAssets.lottie.error4.lottie(
               width: context.width * .7,
               height: context.height * .3,
             ),

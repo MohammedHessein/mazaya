@@ -189,7 +189,7 @@ class _LoadingButtonWithIconState extends State<LoadingButtonWithIcon> {
                   8.w.szW,
                   Text(
                     widget.title,
-                    style: context.textStyle.s16.semiBold.copyWith(
+                    style: context.textStyle.s14.semiBold.copyWith(
                       color: widget.isDissabled
                           ? AppColors.black
                           : AppColors.white,

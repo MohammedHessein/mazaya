@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:mazaya/src/config/res/assets.gen.dart';
 import 'package:mazaya/src/config/res/config_imports.dart';
 import 'package:mazaya/src/core/extensions/context_extension.dart';
@@ -26,7 +25,7 @@ class ErrorView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             spacing: isSmall ? AppMargin.mH6 : AppMargin.mH10,
             children: [
-              AppAssets.lottie.error1.lottie(
+              AppAssets.lottie.error4.lottie(
                 height: height ?? (isSmall ? (maxHeight * .5) : 150.h),
                 fit: BoxFit.contain,
               ),

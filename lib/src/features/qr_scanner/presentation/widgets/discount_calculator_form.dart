@@ -97,24 +97,16 @@ class _DiscountCalculatorFormState extends State<DiscountCalculatorForm> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           if (widget.showTitle) ...[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  widget.title ?? (isGeneric ? LocaleKeys.manualDiscount : LocaleKeys.calculateDiscount),
-                  style: context.textStyle.s16.bold.setBlackColor,
-                ),
-              ],
+            Text(
+              widget.title ?? (isGeneric ? LocaleKeys.manualDiscount : LocaleKeys.calculateDiscount),
+              style: context.textStyle.s16.bold.setBlackColor,
+              textAlign: TextAlign.center,
             ),
             4.szH,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  widget.subtitle ?? LocaleKeys.enterInvoiceAmountSubtitle,
-                  style: context.textStyle.s14.light.setHintColor,
-                ),
-              ],
+            Text(
+              widget.subtitle ?? LocaleKeys.enterInvoiceAmountSubtitle,
+              style: context.textStyle.s14.light.setHintColor,
+              textAlign: TextAlign.center,
             ),
           ],
           24.szH,
@@ -234,10 +226,13 @@ class _DiscountCalculatorFormState extends State<DiscountCalculatorForm> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          title,
-          style: titleStyle ?? context.textStyle.s14.regular.setHintColor,
+        Expanded(
+          child: Text(
+            title,
+            style: titleStyle ?? context.textStyle.s14.regular.setHintColor,
+          ),
         ),
+        8.szW,
         Text(
           value,
           style: valueStyle,

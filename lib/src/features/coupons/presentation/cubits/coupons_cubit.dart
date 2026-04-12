@@ -12,11 +12,17 @@ class CouponsCubit extends PaginatedCubit<CouponEntity> {
   CouponsCubit() : super(itemMapper: CouponEntity.fromJson);
 
   CategoryEntity? _selectedCategory;
+  CountryEntity? _selectedCountry;
+  CityEntity? _selectedCity;
+  RegionEntity? _selectedRegion;
   BaseIdAndNameEntity? _selectedLocation;
   String? _selectedSort;
   String? _selectedNearby;
 
   CategoryEntity? get selectedCategory => _selectedCategory;
+  CountryEntity? get selectedCountry => _selectedCountry;
+  CityEntity? get selectedCity => _selectedCity;
+  RegionEntity? get selectedRegion => _selectedRegion;
   BaseIdAndNameEntity? get selectedLocation => _selectedLocation;
   String? get selectedSort => _selectedSort;
   String? get selectedNearby => _selectedNearby;
@@ -32,12 +38,9 @@ class CouponsCubit extends PaginatedCubit<CouponEntity> {
         httpRequestType: HttpRequestType.get,
         queryParameters: {
           ...ConstantManager.paginateJson(page)!,
-          if (_selectedCategory != null)
-            'category_id': _selectedCategory?.id,
-          if (_selectedLocation != null)
-            'location_id': _selectedLocation?.id,
-          if (_selectedSort != null)
-            'sort': _selectedSort,
+          if (_selectedCategory != null) 'category_id': _selectedCategory?.id,
+          if (_selectedLocation != null) 'location_id': _selectedLocation?.id,
+          if (_selectedSort != null) 'sort': _selectedSort,
           if (_selectedNearby != null && _selectedNearby != 'all')
             'near_by': _selectedNearby,
           if (searchQuery != null && searchQuery.isNotEmpty)
@@ -50,12 +53,17 @@ class CouponsCubit extends PaginatedCubit<CouponEntity> {
 
   void applyFilters({
     CategoryEntity? category,
-    BaseIdAndNameEntity? location,
+    CountryEntity? country,
+    CityEntity? city,
+    RegionEntity? region,
     String? sort,
     String? nearby,
   }) {
     _selectedCategory = category;
-    _selectedLocation = location;
+    _selectedCountry = country;
+    _selectedCity = city;
+    _selectedRegion = region;
+    _selectedLocation = region ?? city ?? country;
     _selectedSort = sort;
     _selectedNearby = nearby;
     fetchInitialData(key: filterKey);
@@ -68,6 +76,9 @@ class CouponsCubit extends PaginatedCubit<CouponEntity> {
 
   void removeLocation() {
     _selectedLocation = null;
+    _selectedCountry = null;
+    _selectedCity = null;
+    _selectedRegion = null;
     fetchInitialData(key: filterKey);
   }
 
@@ -83,6 +94,9 @@ class CouponsCubit extends PaginatedCubit<CouponEntity> {
 
   void clearFilters() {
     _selectedCategory = null;
+    _selectedCountry = null;
+    _selectedCity = null;
+    _selectedRegion = null;
     _selectedLocation = null;
     _selectedSort = null;
     _selectedNearby = null;

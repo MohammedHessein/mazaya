@@ -191,7 +191,7 @@ class CouponDetailsContent extends StatelessWidget {
                                   );
                                 },
                         ),
-                        if ((coupon.lat != null && coupon.lng != null) ||
+                        if (coupon.hasValidLocation ||
                             (coupon.vendorLink != null &&
                                 coupon.vendorLink!.isNotEmpty)) ...[
                           16.szW,
@@ -200,8 +200,7 @@ class CouponDetailsContent extends StatelessWidget {
                             onTap: isDisabled
                                 ? null
                                 : () {
-                                    if (coupon.lat != null &&
-                                        coupon.lng != null) {
+                                    if (coupon.hasValidLocation) {
                                       Go.to(
                                         OsmMapScreen(
                                           lat: coupon.lat!,

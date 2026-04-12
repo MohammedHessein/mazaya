@@ -1818,5 +1818,10 @@
     "en": "Available only in your registered location",
     "ar": "متاح فقط في موقعك المسجل",
     "sv": "Tillgängligt endast på din registrerade plats"
+  },
+  "coupon_used_before": {
+    "en": "This coupon has already been used",
+    "ar": "تم استخدام هذا الكوبون مسبقاً",
+    "sv": "Denna kupong har redan använts"
   }
 }

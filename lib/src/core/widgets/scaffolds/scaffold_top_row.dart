@@ -40,71 +40,52 @@ class ScaffoldTopRow extends StatelessWidget {
                           LocaleKeys.welcomeHome,
                           style: context.textStyle.s14.medium.setWhiteColor,
                         ),
-                        Text(
-                          user.name,
-                          style: context.textStyle.s14.regular.setWhiteColor,
-                        ),
-                        if (user.userPackageName != null) ...[
-                          4.szH,
-                          Builder(
-                            builder: (context) {
-                              final mType =
-                                  user.memberType?.toLowerCase() ?? '';
-                              final membershipType =
-                                  (mType.contains('gold') ||
-                                      mType.contains('ذهب') ||
-                                      mType.contains('guld'))
-                                  ? MembershipType.golden
-                                  : (mType.contains('silver') ||
-                                        mType.contains('فض') ||
-                                        mType.contains('silv'))
-                                  ? MembershipType.sliver
-                                  : (mType.contains('volu') ||
-                                        mType.contains('متطوع'))
-                                  ? MembershipType.volunteer
-                                  : MembershipType.diamond;
+                        Row(
+                          children: [
+                            if (user.userPackageName != null) ...[
+                              Builder(
+                                builder: (context) {
+                                  final mType =
+                                      user.memberType?.toLowerCase() ?? '';
+                                  final membershipType =
+                                      MembershipType.fromString(mType);
 
-                              final icon =
-                                  membershipType == MembershipType.golden
-                                  ? AppAssets.svg.baseSvg.goldenMember
-                                  : membershipType == MembershipType.sliver
-                                  ? AppAssets.svg.baseSvg.silverMember
-                                  : membershipType == MembershipType.volunteer
-                                  ? AppAssets.svg.baseSvg.volunteer
-                                  : AppAssets.svg.baseSvg.diamondMember;
+                                  final icon =
+                                      membershipType == MembershipType.golden
+                                      ? AppAssets.svg.baseSvg.goldenMember
+                                      : membershipType == MembershipType.sliver
+                                      ? AppAssets.svg.baseSvg.silverMember
+                                      : membershipType ==
+                                            MembershipType.volunteer
+                                      ? AppAssets.svg.baseSvg.volunteer
+                                      : AppAssets.svg.baseSvg.diamondMember;
 
-                              final label = membershipType.label;
+                                  final color =
+                                      membershipType == MembershipType.golden
+                                      ? AppColors.yellow
+                                      : membershipType == MembershipType.sliver
+                                      ? AppColors.grey1
+                                      : membershipType ==
+                                            MembershipType.volunteer
+                                      ? AppColors.success
+                                      : AppColors.white;
 
-                              final color =
-                                  membershipType == MembershipType.golden
-                                  ? null
-                                  : membershipType == MembershipType.sliver
-                                  ? AppColors.grey1
-                                  : membershipType == MembershipType.volunteer
-                                  ? AppColors.success
-                                  : AppColors.white;
-
-                              return Row(
-                                children: [
-                                  icon.svg(
+                                  return icon.svg(
                                     width: 18.w,
                                     height: 18.w,
                                     color: color,
-                                  ),
-                                  6.szW,
-                                  Text(
-                                    label,
-                                    style: context
-                                        .textStyle
-                                        .s11
-                                        .regular
-                                        .setWhiteColor,
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
-                        ],
+                                  );
+                                },
+                              ),
+                            ],
+                            6.szW,
+                            Text(
+                              user.name,
+                              style:
+                                  context.textStyle.s14.regular.setWhiteColor,
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ],

@@ -68,13 +68,9 @@ class _SelectLocationBodyState extends State<SelectLocationBody> {
     super.dispose();
   }
 
-  String? get _locationId {
-    if (_isEgypt) {
-      return _selectedCity?.id.toString();
-    } else {
-      return _selectedMunicipality?.id.toString();
-    }
-  }
+  String? get _locationId =>
+      (_selectedMunicipality?.id ?? _selectedCity?.id ?? _selectedCountry?.id)
+          ?.toString();
 
   @override
   Widget build(BuildContext context) {

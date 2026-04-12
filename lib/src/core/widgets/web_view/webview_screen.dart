@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mazaya/src/config/res/config_imports.dart';
 import 'package:mazaya/src/core/widgets/scaffolds/default_scaffold.dart';
 import 'package:mazaya/src/core/widgets/scaffolds/header_config.dart';
+import 'package:mazaya/src/core/helpers/lancher_helper.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -23,6 +24,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
   @override
   void initState() {
     super.initState();
+    final sanitizedUrl = _sanitizeUrl(widget.url);
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
@@ -37,9 +39,32 @@ class _WebViewScreenState extends State<WebViewScreen> {
               _isLoading = false;
             });
           },
+          onWebResourceError: (WebResourceError error) {
+            debugPrint('WebView Error: ${error.description}');
+            setState(() {
+              _isLoading = false;
+            });
+          },
+          onNavigationRequest: (NavigationRequest request) {
+            final url = request.url;
+            if (url.startsWith('http://') || url.startsWith('https://')) {
+              return NavigationDecision.navigate;
+            }
+            // Handle custom schemes (whatsapp, tel, etc.) by delegating to LauncherHelper
+            LauncherHelper.launchURL(url: url);
+            return NavigationDecision.prevent;
+          },
         ),
       )
-      ..loadRequest(Uri.parse(widget.url));
+      ..loadRequest(Uri.parse(sanitizedUrl));
+  }
+
+  String _sanitizeUrl(String url) {
+    String trimmed = url.trim();
+    if (trimmed.contains('://')) {
+      return trimmed;
+    }
+    return 'https://$trimmed';
   }
 
   @override

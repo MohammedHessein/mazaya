@@ -244,6 +244,9 @@ class CouponEntity extends Equatable {
     return parts.join(', ');
   }
 
+  bool get hasValidLocation =>
+      lat != null && lng != null && lat != 0.0 && lng != 0.0;
+
   @override
   List<Object?> get props => [
     id,

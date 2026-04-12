@@ -1090,4 +1090,7 @@ abstract class LocaleKeys {
   static const String _nearbyDisabledHint = 'nearby_disabled_hint';
   static String get nearbyDisabledHint => _nearbyDisabledHint.tr();
 
+  static const String _couponUsedBefore = 'coupon_used_before';
+  static String get couponUsedBefore => _couponUsedBefore.tr();
+
 }

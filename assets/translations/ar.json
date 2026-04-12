@@ -361,5 +361,6 @@
   "nearby": "حسب القريب مني",
   "nearby_all": "الكل",
   "nearby_km": "{distance} كم",
-  "nearby_disabled_hint": "متاح فقط في موقعك المسجل"
+  "nearby_disabled_hint": "متاح فقط في موقعك المسجل",
+  "coupon_used_before": "تم استخدام هذا الكوبون مسبقاً"
 }

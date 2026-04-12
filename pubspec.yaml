@@ -142,12 +142,12 @@ flutter:
           weight: 100
 
 flutter_native_splash:
-  color: "#FFFFFF"
+  color: "#ffffff"
   color_dark: "#FFFFFF"
   image: "assets/svg/app_svg/android_12_fixed.png"
   android_12:
     image: "assets/svg/app_svg/android_12_fixed.png"
-    color: "#FFFFFF"
+    color: "#ffffff"
     color_dark: "#FFFFFF"
   fullscreen: false # Better for consistent layout
 

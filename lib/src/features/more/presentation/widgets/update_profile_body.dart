@@ -146,13 +146,9 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
     super.dispose();
   }
 
-  String? get _locationId {
-    if (_isEgypt) {
-      return _selectedCity?.id.toString();
-    } else {
-      return _selectedMunicipality?.id.toString();
-    }
-  }
+  String? get _locationId =>
+      (_selectedMunicipality?.id ?? _selectedCity?.id ?? _selectedCountry?.id)
+          ?.toString();
 
   bool get _hasChanges {
     final nameChanged = _nameController.text.trim() != user.name.trim();

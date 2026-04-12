@@ -7,11 +7,12 @@ import 'package:mazaya/src/core/base_crud/code/presentation/cubit/get_base_name_
 import 'package:mazaya/src/core/extensions/widgets/sized_box_helper.dart';
 import 'package:mazaya/src/core/shared/cubits/user_cubit/user_cubit.dart';
 import 'package:mazaya/src/features/coupons/presentation/cubits/coupons_cubit.dart';
+
+import 'filter_apply_button.dart';
 import 'filter_header.dart';
 import 'filter_location_selectors.dart';
-import 'filter_sort_and_category_section.dart';
 import 'filter_nearby_section.dart';
-import 'filter_apply_button.dart';
+import 'filter_sort_and_category_section.dart';
 
 class CouponsFilterBottomSheet extends StatefulWidget {
   const CouponsFilterBottomSheet({super.key});
@@ -42,24 +43,46 @@ class _CouponsFilterBottomSheetState extends State<CouponsFilterBottomSheet> {
     super.initState();
     final cubit = context.read<CouponsCubit>();
     final userState = context.read<UserCubit>().state;
+    final user = userState.userModel;
 
-    _selectedCountry = userState.selectedCountry;
-    _selectedCity = userState.selectedCity;
-    
-    if (cubit.selectedLocation is RegionEntity) {
-      _selectedRegion = cubit.selectedLocation as RegionEntity;
-    } else if (cubit.selectedLocation is CityEntity) {
-      _selectedCity = cubit.selectedLocation as CityEntity;
-    } else if (cubit.selectedLocation is CountryEntity) {
-      _selectedCountry = cubit.selectedLocation as CountryEntity;
-    } else {
-      _selectedRegion = userState.selectedRegion;
-    }
+    // Prioritize values from CouponsCubit (last selected), fallback to profile/login response
+    _selectedCountry = cubit.selectedCountry ??
+        (user.locationGrandparentId != null
+            ? CountryEntity(
+                id: user.locationGrandparentId!,
+                name: user.locationGrandparentName ?? '',
+              )
+            : null);
+
+    _selectedCity = cubit.selectedCity ??
+        (user.locationParentId != null
+            ? CityEntity(
+                id: user.locationParentId!,
+                name: user.locationParentName ?? '',
+              )
+            : null);
+
+    _selectedRegion = cubit.selectedRegion ??
+        (user.locationId != null
+            ? RegionEntity(
+                id: user.locationId!,
+                name: user.locationName ?? '',
+              )
+            : null);
 
     _selectedCategory = cubit.selectedCategory;
     _selectedSort = cubit.selectedSort;
     _selectedNearby = cubit.selectedNearby ?? 'all';
-    
+
+    // Trigger region fetching if a city is set
+    if (_selectedCity != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        context.read<GetBaseEntityCubit<RegionEntity>>().fGetBaseNameAndId(
+              id: _selectedCity!.id,
+            );
+      });
+    }
+
     _validateNearby();
   }
 
@@ -121,10 +144,12 @@ class _CouponsFilterBottomSheetState extends State<CouponsFilterBottomSheet> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          FilterHeader(onReset: () {
-            context.read<CouponsCubit>().clearFilters();
-            Navigator.pop(context);
-          }),
+          FilterHeader(
+            onReset: () {
+              context.read<CouponsCubit>().clearFilters();
+              Navigator.pop(context);
+            },
+          ),
           20.szH,
           FilterLocationSelectors(
             selectedCountry: _selectedCountry,
@@ -150,24 +175,19 @@ class _CouponsFilterBottomSheetState extends State<CouponsFilterBottomSheet> {
             onNearbyChanged: (val) => setState(() => _selectedNearby = val),
           ),
           30.szH,
-          FilterApplyButton(onTap: () {
-            BaseIdAndNameEntity? finalLocation;
-            if (_selectedRegion != null) {
-              finalLocation = _selectedRegion;
-            } else if (_selectedCity != null) {
-              finalLocation = _selectedCity;
-            } else if (_selectedCountry != null) {
-              finalLocation = _selectedCountry;
-            }
-
-            context.read<CouponsCubit>().applyFilters(
-                  category: _selectedCategory,
-                  location: finalLocation,
-                  sort: _selectedSort,
-                  nearby: _selectedNearby,
-                );
-            Navigator.pop(context);
-          }),
+          FilterApplyButton(
+            onTap: () {
+              context.read<CouponsCubit>().applyFilters(
+                    category: _selectedCategory,
+                    country: _selectedCountry,
+                    city: _selectedCity,
+                    region: _selectedRegion,
+                    sort: _selectedSort,
+                    nearby: _selectedNearby,
+                  );
+              Navigator.pop(context);
+            },
+          ),
           SizedBox(height: MediaQuery.of(context).viewInsets.bottom),
         ],
       ),

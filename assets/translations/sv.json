@@ -361,5 +361,6 @@
   "nearby": "I närheten",
   "nearby_all": "Alla",
   "nearby_km": "{distance} km",
-  "nearby_disabled_hint": "Tillgängligt endast på din registrerade plats"
+  "nearby_disabled_hint": "Tillgängligt endast på din registrerade plats",
+  "coupon_used_before": "Denna kupong har redan använts"
 }

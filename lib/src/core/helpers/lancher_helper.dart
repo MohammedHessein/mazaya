@@ -8,10 +8,18 @@ import 'package:mazaya/src/config/language/locale_keys.g.dart';
 
 class LauncherHelper {
   static void launchURL({required String url}) async {
-    if (!url.toString().startsWith('https')) {
-      url = 'https://$url';
+    String finalUrl = url.trim();
+    if (!finalUrl.contains('://')) {
+      finalUrl = 'https://$finalUrl';
     }
-    await launchUrl(Uri.parse(url));
+    try {
+      await launchUrl(
+        Uri.parse(finalUrl),
+        mode: LaunchMode.externalApplication,
+      );
+    } catch (e) {
+      log('Could not launch $finalUrl: $e');
+    }
   }
 
   static void launchWhatsApp(String phone) async {
