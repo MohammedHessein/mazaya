@@ -97,7 +97,7 @@ class NotificationService {
           channelDescription: ConstantManager.appName,
           enableVibration: true,
           playSound: true,
-          icon: "@mipmap/ic_launcher",
+          icon: "@mipmap/launcher_icon",
           importance: Importance.high,
           priority: Priority.max,
         );
@@ -187,7 +187,7 @@ class NotificationService {
 
   Future<void> _initLocalNotification() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings("@mipmap/ic_launcher");
+        AndroidInitializationSettings("@mipmap/launcher_icon");
 
     const DarwinInitializationSettings initializationSettingsIOS =
         DarwinInitializationSettings(
