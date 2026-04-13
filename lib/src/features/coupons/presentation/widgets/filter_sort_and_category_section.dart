@@ -27,9 +27,20 @@ class FilterSortAndCategorySection extends StatelessWidget {
         BlocBuilder<GetBaseEntityCubit<CategoryEntity>,
             GetBaseEntityState<CategoryEntity>>(
           builder: (context, state) {
+            final categories = state.dataState.data ?? [];
+            
+            // Resolve the full category from the list to ensure the name is populated
+            CategoryEntity? resolvedCategory = selectedCategory;
+            if (selectedCategory != null && selectedCategory!.name.isEmpty) {
+              resolvedCategory = categories.firstWhere(
+                (cat) => cat.id == selectedCategory!.id,
+                orElse: () => selectedCategory!,
+              );
+            }
+
             return AppDropdown<CategoryEntity>(
-              items: state.dataState.data ?? [],
-              value: selectedCategory,
+              items: categories,
+              value: resolvedCategory,
               onChanged: onCategoryChanged,
               itemAsString: (cat) => cat.name,
               hint: LocaleKeys.section,

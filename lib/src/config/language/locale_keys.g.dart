@@ -821,7 +821,7 @@ abstract class LocaleKeys {
   static String get returnToHome => _returnToHome.tr();
 
   static const String _memberSince = 'member_since';
-  static String get memberSince => _memberSince.tr();
+  static String memberSince({required String date}) => _memberSince.tr(namedArgs: {'date': date});
 
   static const String _noNotificationsYet = 'no_notifications_yet';
   static String get noNotificationsYet => _noNotificationsYet.tr();
@@ -1092,5 +1092,8 @@ abstract class LocaleKeys {
 
   static const String _couponUsedBefore = 'coupon_used_before';
   static String get couponUsedBefore => _couponUsedBefore.tr();
+
+  static const String _createdAtWithLabel = 'created_at_with_label';
+  static String createdAtWithLabel({required String date}) => _createdAtWithLabel.tr(namedArgs: {'date': date});
 
 }

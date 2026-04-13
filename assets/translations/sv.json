@@ -272,7 +272,7 @@
   "scanned_successfully": "QR-koden skannad framgångsrikt",
   "coupon_used_successfully": "Kupongen användes framgångsrikt",
   "return_to_home": "Återgå till startsidan",
-  "member_since": "Medlem sedan",
+  "member_since": "Medlem sedan {date}",
   "no_notifications_yet": "Inga aviseringar ännu!",
   "notification_reach_msg": "Vi meddelar dig så snart nya aviseringar anländer.",
   "change_language": "Ändra språk",
@@ -362,5 +362,6 @@
   "nearby_all": "Alla",
   "nearby_km": "{distance} km",
   "nearby_disabled_hint": "Tillgängligt endast på din registrerade plats",
-  "coupon_used_before": "Denna kupong har redan använts"
+  "coupon_used_before": "Denna kupong har redan använts",
+  "created_at_with_label": "Skapad den: {date}"
 }

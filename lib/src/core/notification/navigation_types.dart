@@ -96,12 +96,33 @@ class CategoryRecommendationAction implements NotificationNavigation {
   @override
   void navigate({required Map<String, dynamic> data}) {
     final nestedData = data['data'];
-    final categoryId = NotificationRoutes._extractCategoryId(nestedData);
+    final categoryId = NotificationRoutes._extractCategoryId(nestedData, data);
+
     if (categoryId != null) {
+      log('🎯 Filtering coupons by category ID: $categoryId');
+
+      // Attempt to resolve category name from HomeCubit cache
+      String resolvedName = '';
+      final homeState = injector<HomeCubit>().state;
+      if (homeState.isSuccess) {
+        final category = homeState.data?.categories.firstWhereOrNull(
+          (c) => c.id == categoryId,
+        );
+        if (category != null) {
+          resolvedName = category.name;
+          log('✅ Resolved category name: $resolvedName');
+        }
+      }
+
       injector<CouponsCubit>().applyFilters(
-        category: CategoryEntity(id: categoryId, name: ''),
+        category: CategoryEntity(id: categoryId, name: resolvedName),
       );
+    } else {
+      log('⚠️ WARNING: Category recommendation action triggered, but categoryId was not found.');
+      log('   Check NotificationRoutes logs for details on searched fields.');
     }
+
+    // Always navigate to coupons tab
     Go.offAll(const MainScreen(initialTabIndex: 1));
   }
 }

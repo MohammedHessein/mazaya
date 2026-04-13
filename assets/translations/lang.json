@@ -1365,9 +1365,9 @@
     "sv": "Återgå till startsidan"
   },
   "member_since": {
-    "en": "Member since",
-    "ar": "عضوية منذ",
-    "sv": "Medlem sedan"
+    "en": "Member since {date}",
+    "ar": "عضوية منذ {date}",
+    "sv": "Medlem sedan {date}"
   },
   "no_notifications_yet": {
     "en": "No notifications yet!",
@@ -1823,5 +1823,10 @@
     "en": "This coupon has already been used",
     "ar": "تم استخدام هذا الكوبون مسبقاً",
     "sv": "Denna kupong har redan använts"
+  },
+  "created_at_with_label": {
+    "en": "Created at: {date}",
+    "ar": "أنشئ في: {date}",
+    "sv": "Skapad den: {date}"
   }
 }

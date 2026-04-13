@@ -272,7 +272,7 @@
   "scanned_successfully": "تم مسح الـ QR Code بنجاح",
   "coupon_used_successfully": "تم استخدام الكوبون بنجاح",
   "return_to_home": "العودة للرئيسية",
-  "member_since": "عضوية منذ",
+  "member_since": "عضوية منذ {date}",
   "no_notifications_yet": "لا يوجد اشعارات بعد!",
   "notification_reach_msg": "سنعلمك فور وصول أي إشعارات جديدة.",
   "change_language": "تغيير اللغه",
@@ -362,5 +362,6 @@
   "nearby_all": "الكل",
   "nearby_km": "{distance} كم",
   "nearby_disabled_hint": "متاح فقط في موقعك المسجل",
-  "coupon_used_before": "تم استخدام هذا الكوبون مسبقاً"
+  "coupon_used_before": "تم استخدام هذا الكوبون مسبقاً",
+  "created_at_with_label": "أنشئ في: {date}"
 }

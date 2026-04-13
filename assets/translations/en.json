@@ -272,7 +272,7 @@
   "scanned_successfully": "QR Code scanned successfully",
   "coupon_used_successfully": "Coupon used successfully",
   "return_to_home": "Return to Home",
-  "member_since": "Member since",
+  "member_since": "Member since {date}",
   "no_notifications_yet": "No notifications yet!",
   "notification_reach_msg": "We will notify you as soon as new notifications arrive.",
   "change_language": "Change Language",
@@ -362,5 +362,6 @@
   "nearby_all": "All",
   "nearby_km": "{distance} km",
   "nearby_disabled_hint": "Available only in your registered location",
-  "coupon_used_before": "This coupon has already been used"
+  "coupon_used_before": "This coupon has already been used",
+  "created_at_with_label": "Created at: {date}"
 }

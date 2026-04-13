@@ -66,54 +66,54 @@ extension DateTimeFormatHelper on DateTime {
   }
 
   String toFullDate({String? locale, String key = '-'}) {
-    return DateFormat('yyyy${key}MM${key}dd').format(this);
+    return DateFormat('yyyy${key}MM${key}dd', locale).format(this);
   }
 
   String toFullDateTime([String? locale]) {
-    return DateFormat('yyyy-MM-dd HH:mm').format(this);
+    return DateFormat('yyyy-MM-dd HH:mm', locale).format(this);
   }
 
   String toDay([String? locale]) {
-    return DateFormat('EEEE').format(this);
+    return DateFormat('EEEE', locale).format(this);
   }
 
   String toMonth([String? locale]) {
-    return DateFormat('MMMM').format(this);
+    return DateFormat('MMMM', locale).format(this);
   }
 
   String toMonthShort([String? locale]) {
-    return DateFormat('MMM').format(this);
+    return DateFormat('MMM', locale).format(this);
   }
 
   String toDayMonth([String? locale]) {
-    return DateFormat('dd MMMM').format(this);
+    return DateFormat('dd MMMM', locale).format(this);
   }
 
   String toDayMonthShort([String? locale]) {
-    return DateFormat('dd MMM').format(this);
+    return DateFormat('dd MMM', locale).format(this);
   }
 
   String toDayMonthYear([String? locale]) {
-    return DateFormat('dd MMMM yyyy').format(this);
+    return DateFormat('dd MMMM yyyy', locale).format(this);
   }
 
   String toDayMonthYearShort([String? locale]) {
-    return DateFormat('dd MMM yyyy').format(this);
+    return DateFormat('dd MMM yyyy', locale).format(this);
   }
 
   String toDayMonthYearTime([String? locale]) {
-    return DateFormat('dd MMMM yyyy HH:mm').format(this);
+    return DateFormat('dd MMMM yyyy HH:mm', locale).format(this);
   }
 
   String toDayMonthYearTimeShort([String? locale]) {
-    return DateFormat('dd MMM yyyy HH:mm').format(this);
+    return DateFormat('dd MMM yyyy HH:mm', locale).format(this);
   }
 
   String toDayMonthYearTimeSeconds([String? locale]) {
-    return DateFormat('dd MMMM yyyy HH:mm:ss').format(this);
+    return DateFormat('dd MMMM yyyy HH:mm:ss', locale).format(this);
   }
 
   String toDayMonthYearTimeSecondsShort([String? locale]) {
-    return DateFormat('dd MMM yyyy HH:mm:ss').format(this);
+    return DateFormat('dd MMM yyyy HH:mm:ss', locale).format(this);
   }
 }

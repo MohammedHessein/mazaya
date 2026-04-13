@@ -66,8 +66,8 @@ class NotificationCardWidget extends StatelessWidget {
                         final String time =
                             dateTime?.toTime(context.locale.languageCode) ??
                             notificationEntity.createdAt;
-                        final String? date = dateTime?.toFullDate(
-                          locale: context.locale.languageCode,
+                        final String? date = dateTime?.toDayMonthYear(
+                          context.locale.languageCode,
                         );
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.end,

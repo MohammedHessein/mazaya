@@ -4,15 +4,16 @@ import 'package:mazaya/src/config/language/locale_keys.g.dart';
 import 'package:mazaya/src/config/res/config_imports.dart';
 import 'package:mazaya/src/core/extensions/context_extension.dart';
 import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
+import 'package:mazaya/src/core/navigation/navigator.dart';
+import 'package:mazaya/src/core/shared/cubits/user_cubit/user_cubit.dart';
+import 'package:mazaya/src/core/utils/favorite_manager.dart';
 import 'package:mazaya/src/core/widgets/cards/app_card.dart';
 import 'package:mazaya/src/core/widgets/tools/bloc_builder/async_bloc_builder.dart';
-import 'package:mazaya/src/core/navigation/navigator.dart';
-import 'package:mazaya/src/features/coupons/presentation/view/coupons_view.dart';
 import 'package:mazaya/src/features/coupons/presentation/view/coupon_details_screen.dart';
-import 'package:mazaya/src/core/utils/favorite_manager.dart';
-import '../cubits/home_cubit.dart';
+import 'package:mazaya/src/features/coupons/presentation/view/coupons_view.dart';
+
 import '../../model/home_model.dart';
-import 'package:mazaya/src/core/shared/cubits/user_cubit/user_cubit.dart';
+import '../cubits/home_cubit.dart';
 
 class CouponsSection extends StatefulWidget {
   const CouponsSection({super.key});
@@ -22,7 +23,6 @@ class CouponsSection extends StatefulWidget {
 }
 
 class _CouponsSectionState extends State<CouponsSection> {
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -73,7 +73,7 @@ class _CouponsSectionState extends State<CouponsSection> {
                     itemCount: products.length,
                     itemBuilder: (context, index) {
                       final product = products[index];
-                      final isDisabled = !product.isActive;
+                      final isDisabled = product.isActive;
 
                       return AppCard(
                         title: product.vendorName ?? product.name,
@@ -85,14 +85,17 @@ class _CouponsSectionState extends State<CouponsSection> {
                         isDisabled: isDisabled,
                         onFavoriteTap: () {
                           context.read<FavoriteManager>().toggle(
-                                id: product.id,
-                                coupon: product.toCouponEntity(),
-                              );
+                            id: product.id,
+                            coupon: product.toCouponEntity(),
+                          );
                         },
                         onTap: () {
-                          Go.to(CouponDetailsScreen(
+                          Go.to(
+                            CouponDetailsScreen(
                               id: product.id,
-                              coupon: product.toCouponEntity()));
+                              coupon: product.toCouponEntity(),
+                            ),
+                          );
                         },
                       );
                     },

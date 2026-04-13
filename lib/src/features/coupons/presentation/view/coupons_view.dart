@@ -9,6 +9,7 @@ import 'package:mazaya/src/core/widgets/scaffolds/app_header_sliver.dart';
 import 'package:mazaya/src/core/widgets/scaffolds/header_config.dart';
 import 'package:mazaya/src/features/coupons/presentation/cubits/coupons_cubit.dart';
 import 'package:mazaya/src/features/coupons/presentation/widgets/coupons_body.dart';
+import 'package:mazaya/src/features/home/presentation/cubits/home_cubit.dart';
 
 class CouponsView extends StatefulWidget {
   const CouponsView({super.key});
@@ -61,6 +62,7 @@ class _CouponsViewState extends State<CouponsView> {
           create: (context) =>
               GetBaseEntityCubit<CategoryEntity>()..fGetBaseNameAndId(),
         ),
+        BlocProvider.value(value: injector<HomeCubit>()),
       ],
       child: BlocListener<UserCubit, UserState>(
         listenWhen: (prev, curr) =>
@@ -71,17 +73,19 @@ class _CouponsViewState extends State<CouponsView> {
 
           // Refresh City only if we have a valid country
           if (state.selectedCountry?.id != null) {
-            context
-                .read<GetBaseEntityCubit<CityEntity>>()
-                .fGetBaseNameAndId(id: state.selectedCountry?.id);
+            context.read<GetBaseEntityCubit<CityEntity>>().fGetBaseNameAndId(
+              id: state.selectedCountry?.id,
+            );
           }
 
           if (parentId != null) {
             context.read<GetBaseEntityCubit<RegionEntity>>().fGetBaseNameAndId(
-                  id: parentId,
-                );
+              id: parentId,
+            );
           }
-          context.read<GetBaseEntityCubit<CategoryEntity>>().fGetBaseNameAndId();
+          context
+              .read<GetBaseEntityCubit<CategoryEntity>>()
+              .fGetBaseNameAndId();
           context.read<CouponsCubit>().fetchInitialData();
         },
         child: Builder(

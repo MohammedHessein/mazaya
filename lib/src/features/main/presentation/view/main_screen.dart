@@ -43,8 +43,18 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
     params.selectedIndexNotifier.addListener(_onTabChange);
     if (UserCubit.instance.isUserLoggedIn) {
       UserCubit.instance.getProfile();
-      injector<HomeCubit>().getHomeData();
-      injector<CouponsCubit>().fetchInitialData();
+
+      // Only fetch if initial to avoid overwriting specialized fetches (e.g. from notifications)
+      final homeCubit = injector<HomeCubit>();
+      if (homeCubit.state.isInitial) {
+        homeCubit.getHomeData();
+      }
+
+      final couponsCubit = injector<CouponsCubit>();
+      if (couponsCubit.state.isInitial) {
+        couponsCubit.fetchInitialData();
+      }
+
       injector<UpdateLatLngCubit>().checkAndUpdateLocation();
     }
     WidgetsBinding.instance.addObserver(this);
@@ -102,53 +112,53 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
             body: MultiBlocProvider(
               providers: [
                 BlocProvider(create: (context) => injector<UpdatePhotoCubit>()),
-                BlocProvider(create: (context) => injector<UpdateLatLngCubit>()),
+                BlocProvider(
+                  create: (context) => injector<UpdateLatLngCubit>(),
+                ),
+                BlocProvider.value(value: injector<HomeCubit>()),
               ],
               child: IndexedStack(
                 index: value,
                 children: [
-                  BlocProvider.value(
-                    value: injector<HomeCubit>(),
-                    child: BlocListener<UserCubit, UserState>(
-                      listenWhen: (prev, curr) =>
-                          prev.selectedCity?.id != curr.selectedCity?.id ||
-                          prev.selectedCountry?.id != curr.selectedCountry?.id,
-                      listener: (context, state) {
-                        context.read<HomeCubit>().getHomeData();
-                      },
-                      child: Builder(
-                        builder: (context) {
-                          return RefreshIndicator(
-                            onRefresh: () =>
-                                context.read<HomeCubit>().getHomeData(),
-                            color: AppColors.primary,
-                            child: CustomScrollView(
-                              physics: const BouncingScrollPhysics(
-                                parent: AlwaysScrollableScrollPhysics(),
-                              ),
-                              slivers: [
-                                BlocBuilder<UserCubit, UserState>(
-                                  builder: (context, state) {
-                                    return AppHeaderSliver(
-                                      config: HeaderConfig(
-                                        type: ScaffoldHeaderType.home,
-                                        imageUrl:
-                                            AppAssets.svg.baseSvg.profile.path,
-                                        userName: state.userModel.name,
-                                        showBackButton: false,
-                                      ),
-                                    );
-                                  },
-                                ),
-                                const HomeScreen(),
-                                const SliverToBoxAdapter(
-                                  child: SizedBox(height: 100),
-                                ),
-                              ],
+                  BlocListener<UserCubit, UserState>(
+                    listenWhen: (prev, curr) =>
+                        prev.selectedCity?.id != curr.selectedCity?.id ||
+                        prev.selectedCountry?.id != curr.selectedCountry?.id,
+                    listener: (context, state) {
+                      context.read<HomeCubit>().getHomeData();
+                    },
+                    child: Builder(
+                      builder: (context) {
+                        return RefreshIndicator(
+                          onRefresh: () =>
+                              context.read<HomeCubit>().getHomeData(),
+                          color: AppColors.primary,
+                          child: CustomScrollView(
+                            physics: const BouncingScrollPhysics(
+                              parent: AlwaysScrollableScrollPhysics(),
                             ),
-                          );
-                        },
-                      ),
+                            slivers: [
+                              BlocBuilder<UserCubit, UserState>(
+                                builder: (context, state) {
+                                  return AppHeaderSliver(
+                                    config: HeaderConfig(
+                                      type: ScaffoldHeaderType.home,
+                                      imageUrl:
+                                          AppAssets.svg.baseSvg.profile.path,
+                                      userName: state.userModel.name,
+                                      showBackButton: false,
+                                    ),
+                                  );
+                                },
+                              ),
+                              const HomeScreen(),
+                              const SliverToBoxAdapter(
+                                child: SizedBox(height: 100),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
                     ),
                   ),
                   MultiBlocProvider(
@@ -156,8 +166,9 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
                       BlocProvider.value(value: injector<CouponsCubit>()),
                       BlocProvider<GetBaseEntityCubit<CountryEntity>>(
                         lazy: false,
-                        create: (context) => GetBaseEntityCubit<CountryEntity>()
-                          ..fGetBaseNameAndId(),
+                        create: (context) =>
+                            GetBaseEntityCubit<CountryEntity>()
+                              ..fGetBaseNameAndId(),
                       ),
                       BlocProvider<GetBaseEntityCubit<CityEntity>>(
                         lazy: false,
@@ -253,7 +264,8 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
                   ),
                   MainBody(2, currentIndex: value),
                   BlocProvider(
-                    create: (context) => injector<AppSettingCubit>()..getSettings(),
+                    create: (context) =>
+                        injector<AppSettingCubit>()..getSettings(),
                     child: RefreshIndicator(
                       onRefresh: () => UserCubit.instance.getProfile(),
                       color: AppColors.primary,
@@ -264,7 +276,9 @@ class MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
                         slivers: [
                           const ProfileHeaderSliver(),
                           const MoreTabBody(),
-                          const SliverToBoxAdapter(child: SizedBox(height: 100)),
+                          const SliverToBoxAdapter(
+                            child: SizedBox(height: 100),
+                          ),
                         ],
                       ),
                     ),

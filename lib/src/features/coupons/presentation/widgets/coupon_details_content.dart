@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mazaya/src/features/coupons/presentation/cubits/coupon_details_cubit.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../../../core/helpers/lancher_helper.dart';
 import '../view/view_imports.dart';
 
 class CouponDetailsContent extends StatelessWidget {
@@ -51,13 +52,18 @@ class CouponDetailsContent extends StatelessWidget {
                           width: 70.w,
                           height: 70.h,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(AppCircular.r12),
+                            borderRadius: BorderRadius.circular(
+                              AppCircular.r12,
+                            ),
                             border: Border.all(color: AppColors.blue100),
                           ),
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(AppCircular.r12),
+                            borderRadius: BorderRadius.circular(
+                              AppCircular.r12,
+                            ),
                             child: UniversalMediaWidget(
-                              path: coupon.vendorImage != null &&
+                              path:
+                                  coupon.vendorImage != null &&
                                       coupon.vendorImage!.isNotEmpty
                                   ? coupon.vendorImage!
                                   : AppAssets.svg.appSvg.appLauncherIcon.path,
@@ -72,7 +78,8 @@ class CouponDetailsContent extends StatelessWidget {
                             children: [
                               Text(
                                 coupon.categoryName ?? '',
-                                style: context.textStyle.s14.medium.setHintColor,
+                                style:
+                                    context.textStyle.s14.medium.setHintColor,
                               ),
                               Text(
                                 coupon.vendorName ?? '',
@@ -81,8 +88,11 @@ class CouponDetailsContent extends StatelessWidget {
                               if (coupon.sku != null && coupon.sku!.isNotEmpty)
                                 Text(
                                   'SKU: ${coupon.sku}',
-                                  style:
-                                      context.textStyle.s14.regular.setHintColor,
+                                  style: context
+                                      .textStyle
+                                      .s14
+                                      .regular
+                                      .setHintColor,
                                 ),
                               if (coupon.packageNames != null &&
                                   coupon.packageNames!.isNotEmpty) ...[
@@ -91,8 +101,9 @@ class CouponDetailsContent extends StatelessWidget {
                                   spacing: 4.w,
                                   runSpacing: 4.h,
                                   children: coupon.packageNames!.map((name) {
-                                    final mType =
-                                        MembershipType.fromString(name);
+                                    final mType = MembershipType.fromString(
+                                      name,
+                                    );
                                     return Container(
                                       padding: EdgeInsets.symmetric(
                                         horizontal: AppPadding.pW12,
@@ -106,10 +117,8 @@ class CouponDetailsContent extends StatelessWidget {
                                       ),
                                       child: Text(
                                         mType.shortLabel,
-                                        style:
-                                            context.textStyle.s10.bold.setColor(
-                                          mType.textColor(context),
-                                        ),
+                                        style: context.textStyle.s10.bold
+                                            .setColor(mType.textColor(context)),
                                       ),
                                     );
                                   }).toList(),
@@ -185,7 +194,7 @@ class CouponDetailsContent extends StatelessWidget {
                                       text: message,
                                       sharePositionOrigin: box != null
                                           ? box.localToGlobal(Offset.zero) &
-                                              box.size
+                                                box.size
                                           : null,
                                     ),
                                   );
@@ -205,25 +214,38 @@ class CouponDetailsContent extends StatelessWidget {
                                         OsmMapScreen(
                                           lat: coupon.lat!,
                                           lng: coupon.lng!,
-                                          title: coupon.vendorName ??
+                                          title:
+                                              coupon.vendorName ??
                                               LocaleKeys.openMap,
                                         ),
                                       );
-                                    } else if (coupon.vendorLink != null) {
-                                      Go.to(
-                                        WebViewScreen(
-                                          url: coupon.vendorLink!,
-                                          title: coupon.vendorName ?? '',
-                                        ),
-                                      );
+                                    } else if (coupon.vendorLink != null &&
+                                        coupon.vendorLink!.isNotEmpty) {
+                                      final url = coupon.vendorLink!;
+                                      final isMapLink =
+                                          url.contains('maps.') ||
+                                          url.contains('goo.gl/maps') ||
+                                          url.contains('apple.com/maps');
+
+                                      if (isMapLink) {
+                                        LauncherHelper.launchURL(url: url);
+                                      } else {
+                                        Go.to(
+                                          WebViewScreen(
+                                            url: url,
+                                            title: coupon.vendorName ?? '',
+                                          ),
+                                        );
+                                      }
                                     }
                                   },
                           ),
                         ],
                         16.szW,
                         CustomCircularActionButton(
-                          iconColor:
-                              coupon.isFav ? Colors.red : AppColors.black,
+                          iconColor: coupon.isFav
+                              ? Colors.red
+                              : AppColors.black,
                           icon: coupon.isFav
                               ? Icons.favorite
                               : Icons.favorite_border,
@@ -231,14 +253,12 @@ class CouponDetailsContent extends StatelessWidget {
                               ? null
                               : () {
                                   context.read<FavoriteManager>().toggle(
-                                        id: coupon.id,
-                                        coupon: coupon,
-                                      );
+                                    id: coupon.id,
+                                    coupon: coupon,
+                                  );
                                   context
                                       .read<CouponDetailsCubit>()
-                                      .toggleLocal(
-                                        coupon.id,
-                                      );
+                                      .toggleLocal(coupon.id);
                                 },
                         ),
                       ],

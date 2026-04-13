@@ -23,7 +23,7 @@ class NotificationRoutes {
     final String? redirect = data['redirect']?.toString();
     if (redirect != null && redirect.isNotEmpty) {
       log('🔗 Handling redirect link: $redirect');
-      _handleRedirect(redirect);
+      _handleRedirect(redirect, data);
       return;
     }
 
@@ -39,24 +39,59 @@ class NotificationRoutes {
     }
   }
 
-  static void _handleRedirect(String redirect) {
-    final parts = redirect.split('/');
-    if (parts.length < 2) return;
+  static void _handleRedirect(String redirect, Map<String, dynamic> data) {
+    String feature = redirect;
+    int? id;
 
-    final String feature = parts[0];
-    final String idStr = parts[1];
-    final int? id = int.tryParse(idStr);
+    // Handle feature/id format (e.g., "coupons/123")
+    if (redirect.contains('/')) {
+      final parts = redirect.split('/');
+      feature = parts[0];
+      id = int.tryParse(parts[1]);
+    }
+
+    // Fallback: extract ID from the data map if not in the string
+    if (id == null) {
+      if (feature == 'coupons' || feature == 'coupon_details') {
+        id = _extractCouponId(data['data'], data);
+      } else if (feature == 'categories' || feature == 'category_details') {
+        id = _extractCategoryId(data['data'], data);
+      }
+    }
 
     if (id != null) {
+      log('🎯 Executing redirect to $feature with id: $id');
       switch (feature) {
         case 'posts':
         case 'coupons':
-          log('Navigating to CouponDetails with id: $id');
+        case 'coupon_details':
           Go.to(CouponDetailsScreen(id: id));
           break;
-        case 'users':
-          log('Navigating to User Profile with id: $id');
+        case 'categories':
+        case 'category_details':
+          // Attempt to resolve name for the chip
+          String resolvedName = '';
+          final homeState = injector<HomeCubit>().state;
+          if (homeState.isSuccess) {
+            final category = homeState.data?.categories.firstWhereOrNull(
+              (c) => c.id == id,
+            );
+            if (category != null) resolvedName = category.name;
+          }
+
+          injector<CouponsCubit>().applyFilters(
+            category: CategoryEntity(id: id, name: resolvedName),
+          );
+          Go.offAll(const MainScreen(initialTabIndex: 1));
           break;
+      }
+    } else {
+      log('⚠️ Could not resolve ID for redirect feature: $feature');
+      // Fallback to home or specific tab if known
+      if (feature == 'coupons' || feature == 'coupon_details') {
+        Go.offAll(const MainScreen(initialTabIndex: 1));
+      } else {
+        Go.offAll(const MainScreen(initialTabIndex: 0));
       }
     }
   }
@@ -65,24 +100,96 @@ class NotificationRoutes {
     return _extractParam(nestedData, 'notification_type');
   }
 
-  static int? _extractCategoryId(dynamic nestedData) {
-    return _extractParam(nestedData, 'category_id');
-  }
+  static int? _extractCategoryId(dynamic nestedData, [Map<String, dynamic>? fullData]) {
+    final possibleKeys = ['category_id', 'categoryId', 'cat_id', 'id'];
+    int? id;
 
-  static int? _extractParam(dynamic nestedData, String key) {
-    if (nestedData == null) return null;
-    if (nestedData is Map) {
-      return int.tryParse(nestedData[key]?.toString() ?? '');
-    }
-    if (nestedData is String) {
-      try {
-        final Map<String, dynamic> parsed =
-            Map<String, dynamic>.from(json.decode(nestedData));
-        return int.tryParse(parsed[key]?.toString() ?? '');
-      } catch (_) {
-        return null;
+    log('🔍 Searching for category ID in:');
+    if (nestedData is Map) log('   - Nested Data Keys: ${nestedData.keys.toList()}');
+    if (fullData != null) log('   - Full Data Keys: ${fullData.keys.toList()}');
+
+    // 1. Check nested data first
+    for (final key in possibleKeys) {
+      id = _extractParam(nestedData, key);
+      if (id != null) {
+        log('✅ Found category ID in nested data with key: $key -> $id');
+        return id;
       }
     }
+
+    // 2. Check full data
+    if (fullData != null) {
+      for (final key in possibleKeys) {
+        id = _extractParam(fullData, key);
+        if (id != null) {
+          log('✅ Found category ID in full data with key: $key -> $id');
+          return id;
+        }
+      }
+    }
+
+    log('❌ Could not find category ID in any field using keys: $possibleKeys');
+    return id;
+  }
+
+  static int? _extractCouponId(dynamic nestedData, [Map<String, dynamic>? fullData]) {
+    final possibleKeys = ['coupon_id', 'couponId', 'id'];
+    int? id;
+
+    for (final key in possibleKeys) {
+      id = _extractParam(nestedData, key);
+      if (id != null) return id;
+    }
+
+    if (fullData != null) {
+      for (final key in possibleKeys) {
+        id = _extractParam(fullData, key);
+        if (id != null) return id;
+      }
+    }
+
+    return id;
+  }
+
+  static int? _extractParam(dynamic data, String key) {
+    if (data == null) return null;
+
+    // Helper for case-insensitive map lookup
+    int? getFromMap(Map map, String k) {
+      final String lowerK = k.toLowerCase();
+      // Try exact, then lowercase/uppercase variations
+      dynamic val = map[k] ?? map[lowerK] ?? map[k.toUpperCase()];
+
+      // Try searching keys manually if still null
+      if (val == null) {
+        for (final mKey in map.keys) {
+          if (mKey.toString().toLowerCase() == lowerK) {
+            val = map[mKey];
+            break;
+          }
+        }
+      }
+
+      if (val == null) return null;
+      if (val is int) return val;
+      return int.tryParse(val.toString());
+    }
+
+    if (data is Map) {
+      return getFromMap(data, key);
+    }
+
+    if (data is String) {
+      try {
+        final dynamic decoded = json.decode(data);
+        if (decoded is Map) {
+          return getFromMap(decoded, key);
+        }
+      } catch (_) {
+        // Not a JSON string
+      }
+    }
+
     return null;
   }
 }

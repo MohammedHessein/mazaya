@@ -102,7 +102,12 @@ class ProfileInfoWidget extends StatelessWidget {
                   ),
                   4.szW,
                   Text(
-                    '${LocaleKeys.memberSince} ${DateTime.tryParse(user.createdAt)?.year ?? ''}',
+                    LocaleKeys.memberSince(
+                      date: DateTime.tryParse(user.createdAt)?.toDayMonthYear(
+                            context.locale.languageCode,
+                          ) ??
+                          '',
+                    ),
                     style: context.textStyle.s12.regular.setHintColor.setHeight(
                       1.7,
                     ),
