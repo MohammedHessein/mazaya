@@ -22,17 +22,24 @@ class PaginationMeta extends Equatable {
 
   factory PaginationMeta.fromJson(Map<String, dynamic> json) {
     return PaginationMeta(
-      totalItems: json['total'] ?? json['total_items'] ?? 0,
-      countItems: json['count'] ??
-          json['count_items'] ??
-          ((json['to'] != null && json['from'] != null)
-              ? (json['to'] as int) - (json['from'] as int) + 1
-              : 0),
-      perPage: json['per_page'] ?? json['paginate'] ?? ConstantManager.pgSize,
-      totalPages: json['last_page'] ?? json['total_pages'] ?? 1,
-      currentPage: json['current_page'] ?? 1,
-      nextPageUrl: json['next_page_url'],
-      prevPageUrl: json['prev_page_url'] ?? json['perv_page_url'],
+      totalItems: MappingHelpers.toInt(json['total'] ?? json['total_items']),
+      countItems: MappingHelpers.toInt(
+        json['count'] ??
+            json['count_items'] ??
+            ((json['to'] != null && json['from'] != null)
+                ? (MappingHelpers.toInt(json['to'])) -
+                        (MappingHelpers.toInt(json['from'])) +
+                        1
+                : 0),
+      ),
+      perPage: MappingHelpers.toInt(
+          json['per_page'] ?? json['paginate'] ?? ConstantManager.pgSize),
+      totalPages:
+          MappingHelpers.toInt(json['last_page'] ?? json['total_pages'] ?? 1),
+      currentPage: MappingHelpers.toInt(json['current_page'] ?? 1),
+      nextPageUrl: MappingHelpers.toStringSafe(json['next_page_url']),
+      prevPageUrl: MappingHelpers.toStringSafe(
+          json['prev_page_url'] ?? json['perv_page_url']),
     );
   }
 

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:mazaya/src/core/helpers/mapping_helpers.dart';
 import 'category_model.dart';
 import 'product_model.dart';
 
@@ -11,9 +12,9 @@ class SliderModel extends Equatable {
 
   factory SliderModel.fromJson(Map<String, dynamic> json) {
     return SliderModel(
-      id: json['id'] ?? 0,
-      image: json['image'] ?? '',
-      link: json['link'],
+      id: MappingHelpers.toInt(json['id']),
+      image: MappingHelpers.toStringSafe(json['image']),
+      link: MappingHelpers.toStringSafe(json['link']),
     );
   }
 
@@ -35,18 +36,15 @@ class HomeModel extends Equatable {
   factory HomeModel.fromJson(Map<String, dynamic> json) {
     final data = json['data'] ?? json;
     return HomeModel(
-      sliders: (data['sliders'] as List?)
-              ?.map((e) => SliderModel.fromJson(e))
-              .toList() ??
-          [],
-      categories: (data['categories'] as List?)
-              ?.map((e) => CategoryModel.fromJson(e))
-              .toList() ??
-          [],
-      products: (data['products'] as List?)
-              ?.map((e) => ProductModel.fromJson(e))
-              .toList() ??
-          [],
+      sliders: data['sliders'] is List
+          ? (data['sliders'] as List).map((e) => SliderModel.fromJson(e)).toList()
+          : [],
+      categories: data['categories'] is List
+          ? (data['categories'] as List).map((e) => CategoryModel.fromJson(e)).toList()
+          : [],
+      products: data['products'] is List
+          ? (data['products'] as List).map((e) => ProductModel.fromJson(e)).toList()
+          : [],
     );
   }
 

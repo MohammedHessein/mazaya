@@ -86,12 +86,20 @@ abstract class PaginatedCubit<T> extends AsyncCubit<PaginatedData<T>> {
 
     result.when(
       (success) {
-        final items = parseItems(success);
-        final meta = parsePagination(success);
+        try {
+          final items = parseItems(success);
+          final meta = parsePagination(success);
 
-        setSuccess(
-          data: PaginatedData(items: items, meta: meta),
-        );
+          setSuccess(
+            data: PaginatedData(items: items, meta: meta),
+          );
+        } catch (e, s) {
+          dev.log('PaginatedCubit: Error parsing initial data',
+              error: e, stackTrace: s);
+          setError(
+              errorMessage: 'Error parsing data: ${e.toString()}',
+              showToast: true);
+        }
       },
       (failure) {
         setError(errorMessage: failure.message, showToast: true);
@@ -112,11 +120,21 @@ abstract class PaginatedCubit<T> extends AsyncCubit<PaginatedData<T>> {
 
     result.when(
       (success) {
-        final newItems = parseItems(success);
-        final newMeta = parsePagination(success);
-        final updatedData = state.data.addItems(newItems, newMeta);
-        setSuccess(data: updatedData);
-        _isLoadingMore = false;
+        try {
+          final newItems = parseItems(success);
+          final newMeta = parsePagination(success);
+          final updatedData = state.data.addItems(newItems, newMeta);
+          setSuccess(data: updatedData);
+          _isLoadingMore = false;
+        } catch (e, s) {
+          dev.log('PaginatedCubit: Error parsing load more data',
+              error: e, stackTrace: s);
+          _currentPage--; // Revert page on error
+          _isLoadingMore = false;
+          setError(
+              errorMessage: 'Error parsing more data: ${e.toString()}',
+              showToast: true);
+        }
       },
       (failure) {
         _currentPage--; // Revert page on error

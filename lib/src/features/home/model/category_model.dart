@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:mazaya/src/core/helpers/mapping_helpers.dart';
 
 class CategoryModel extends Equatable {
   final int id;
@@ -12,14 +13,10 @@ class CategoryModel extends Equatable {
   });
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) {
-    final rawTitle = json['title'] ?? json['name'];
-
-    final title = (rawTitle is String ? rawTitle : '').trim();
-
     return CategoryModel(
-      id: json['id'] ?? 0,
-      name: title,
-      image: json['image'] ?? '',
+      id: MappingHelpers.toInt(json['id']),
+      name: MappingHelpers.toStringSafe(json['name'] ?? json['title']),
+      image: MappingHelpers.toStringSafe(json['image']),
     );
   }
   factory CategoryModel.initial() {

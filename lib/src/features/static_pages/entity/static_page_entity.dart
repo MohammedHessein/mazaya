@@ -1,4 +1,5 @@
 import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/helpers/mapping_helpers.dart';
 
 class StaticPageEntity {
   final String htmlContent;
@@ -6,7 +7,7 @@ class StaticPageEntity {
 
   factory StaticPageEntity.fromJson(Map<String, dynamic> json) {
     return StaticPageEntity(
-      htmlContent: json['content'] as String? ?? ConstantManager.emptyText,
+      htmlContent: MappingHelpers.toStringSafe(json['content'] ?? json['body']),
     );
   }
 }

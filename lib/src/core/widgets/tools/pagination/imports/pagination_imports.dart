@@ -11,6 +11,7 @@ import 'package:mazaya/src/core/extensions/base_state.dart';
 import 'package:mazaya/src/core/widgets/handling_views/error_view.dart';
 import 'package:mazaya/src/core/widgets/handling_views/not_contain_data.dart';
 import 'package:mazaya/src/core/widgets/universal_media/widgets.dart';
+import 'package:mazaya/src/core/helpers/mapping_helpers.dart';
 
 part '../cubits/paginated_cubit.dart';
 part '../paginated_list_widget.dart';

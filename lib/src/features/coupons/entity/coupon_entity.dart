@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/helpers/mapping_helpers.dart';
 
 class CouponEntity extends Equatable {
   final int id;
@@ -102,48 +103,42 @@ class CouponEntity extends Equatable {
       vendorCouponsRemaining = null;
 
   factory CouponEntity.fromJson(Map<String, dynamic> json) {
-    int toInt(dynamic value) {
-      if (value == null) return 0;
-      if (value is int) return value;
-      return int.tryParse(value.toString()) ?? 0;
-    }
-
     return CouponEntity(
-      id: toInt(json['id']),
-      name: json['name'] ?? json['title'] ?? '',
-      shortDescription: json['short_description'],
-      description: json['description'],
-      productImage: json['product_image'] ?? '',
+      id: MappingHelpers.toInt(json['id']),
+      name: MappingHelpers.toStringSafe(json['name'] ?? json['title']),
+      shortDescription: MappingHelpers.toStringSafe(json['short_description']),
+      description: MappingHelpers.toStringSafe(json['description']),
+      productImage: MappingHelpers.toStringSafe(json['product_image']),
       discount: json['discount'],
-      discountType: json['discount_type'],
-      sku: json['sku'],
-      vendorId: toInt(json['vendor_id']),
-      vendorName: json['vendor_name'],
-      vendorImage: json['vendor_image'],
-      categoryId: toInt(json['category_id']),
-      categoryName: json['category_name'],
-      isFav: json['is_fav'] ?? false,
-      qrPayload: json['qr_payload'],
-      isUsed: json['is_used'] ?? false,
-      lat: json['lat'] != null ? double.tryParse(json['lat'].toString()) : json['vendor_lat'] != null ? double.tryParse(json['vendor_lat'].toString()) : json['latitude'] != null ? double.tryParse(json['latitude'].toString()) : null,
-      lng: json['lng'] != null ? double.tryParse(json['lng'].toString()) : json['vendor_lng'] != null ? double.tryParse(json['vendor_lng'].toString()) : json['longitude'] != null ? double.tryParse(json['longitude'].toString()) : null,
-      vendorDescription: json['vendor_description'],
-      vendorLink: json['vendor_link'],
+      discountType: MappingHelpers.toStringSafe(json['discount_type']),
+      sku: MappingHelpers.toStringSafe(json['sku']),
+      vendorId: MappingHelpers.toInt(json['vendor_id']),
+      vendorName: MappingHelpers.toStringSafe(json['vendor_name']),
+      vendorImage: MappingHelpers.toStringSafe(json['vendor_image']),
+      categoryId: MappingHelpers.toInt(json['category_id']),
+      categoryName: MappingHelpers.toStringSafe(json['category_name']),
+      isFav: MappingHelpers.toBool(json['is_fav']),
+      qrPayload: MappingHelpers.toStringSafe(json['qr_payload']),
+      isUsed: MappingHelpers.toBool(json['is_used']),
+      lat: MappingHelpers.toDouble(json['lat'] ?? json['vendor_lat'] ?? json['latitude']),
+      lng: MappingHelpers.toDouble(json['lng'] ?? json['vendor_lng'] ?? json['longitude']),
+      vendorDescription: MappingHelpers.toStringSafe(json['vendor_description']),
+      vendorLink: MappingHelpers.toStringSafe(json['vendor_link']),
       packageIds: json['package_id'] is List
-          ? (json['package_id'] as List).map((e) => toInt(e)).toList()
-          : (json['package_id'] != null ? [toInt(json['package_id'])] : null),
+          ? (json['package_id'] as List).map((e) => MappingHelpers.toInt(e)).toList()
+          : (json['package_id'] != null ? [MappingHelpers.toInt(json['package_id'])] : null),
       packageNames: json['package_name'] is List
-          ? (json['package_name'] as List).map((e) => e.toString()).toList()
-          : (json['package_name'] != null ? [json['package_name'].toString()] : null),
-      locationId: toInt(json['location_id']),
-      locationName: json['location_name'],
-      locationParentId: toInt(json['location_parent_id']),
-      locationParentName: json['location_parent_name'],
-      locationGrandparentId: toInt(json['location_grandparent_id']),
-      locationGrandparentName: json['location_grandparent_name'],
-      createdAt: json['created_at'],
-      isActive: json['is_active'] == null ? true : (json['is_active'] is bool ? json['is_active'] : (json['is_active'].toString() == '1' || json['is_active'].toString().toLowerCase() == 'true')),
-      vendorCouponsRemaining: json['vendor_coupons_remaining'],
+          ? (json['package_name'] as List).map((e) => MappingHelpers.toStringSafe(e)).toList()
+          : (json['package_name'] != null ? [MappingHelpers.toStringSafe(json['package_name'])] : null),
+      locationId: MappingHelpers.toInt(json['location_id']),
+      locationName: MappingHelpers.toStringSafe(json['location_name']),
+      locationParentId: MappingHelpers.toInt(json['location_parent_id']),
+      locationParentName: MappingHelpers.toStringSafe(json['location_parent_name']),
+      locationGrandparentId: MappingHelpers.toInt(json['location_grandparent_id']),
+      locationGrandparentName: MappingHelpers.toStringSafe(json['location_grandparent_name']),
+      createdAt: MappingHelpers.toStringSafe(json['created_at']),
+      isActive: MappingHelpers.toBool(json['is_active'] ?? true),
+      vendorCouponsRemaining: MappingHelpers.toInt(json['vendor_coupons_remaining']),
     );
   }
 

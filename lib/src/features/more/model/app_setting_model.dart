@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:mazaya/src/core/helpers/mapping_helpers.dart';
 
 class AppSettingModel extends Equatable {
   final String? whatsappPhone;
@@ -18,11 +19,11 @@ class AppSettingModel extends Equatable {
   factory AppSettingModel.fromJson(Map<String, dynamic> json) {
     final data = json['data'] ?? json;
     return AppSettingModel(
-      whatsappPhone: data['whatsapp_phone'],
-      mobile: data['mobile'],
-      websiteLink: data['website_link'],
-      facebookLink: data['facebook_link'],
-      instagramLink: data['instagram_link'],
+      whatsappPhone: MappingHelpers.toStringSafe(data['whatsapp_phone']),
+      mobile: MappingHelpers.toStringSafe(data['mobile']),
+      websiteLink: MappingHelpers.toStringSafe(data['website_link']),
+      facebookLink: MappingHelpers.toStringSafe(data['facebook_link']),
+      instagramLink: MappingHelpers.toStringSafe(data['instagram_link']),
     );
   }
 

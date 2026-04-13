@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:mazaya/src/core/helpers/mapping_helpers.dart';
 
 class Complaint extends Equatable {
   final int? id;
@@ -23,16 +24,16 @@ class Complaint extends Equatable {
 
   factory Complaint.fromJson(Map<String, dynamic> json) {
     return Complaint(
-      id: json['id'] as int?,
-      ticketNum: json['ticket_num'] as String?,
-      reason: json['reason'] as String?,
-      details: json['details'] as String?,
-      status: json['status'] as String?,
-      adminResponse: json['admin_response'] as String?,
-      createdAt: json['created_at'] as String?,
-      photos: (json['photos'] as List<dynamic>?)
-          ?.map((e) => e.toString())
-          .toList(),
+      id: MappingHelpers.toInt(json['id']),
+      ticketNum: MappingHelpers.toStringSafe(json['ticket_num']),
+      reason: MappingHelpers.toStringSafe(json['reason']),
+      details: MappingHelpers.toStringSafe(json['details']),
+      status: MappingHelpers.toStringSafe(json['status']),
+      adminResponse: MappingHelpers.toStringSafe(json['admin_response']),
+      createdAt: MappingHelpers.toStringSafe(json['created_at']),
+      photos: json['photos'] is List
+          ? (json['photos'] as List).map((e) => MappingHelpers.toStringSafe(e)).toList()
+          : null,
     );
   }
 

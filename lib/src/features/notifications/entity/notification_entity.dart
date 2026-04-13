@@ -1,4 +1,5 @@
 import 'package:mazaya/src/config/res/config_imports.dart';
+import 'package:mazaya/src/core/helpers/mapping_helpers.dart';
 
 class NotificationEntity {
   final String id;
@@ -32,16 +33,16 @@ class NotificationEntity {
       );
 
   factory NotificationEntity.fromJson(Map<String, dynamic> json) {
-    final nestedData = Map<String, dynamic>.from(json["data"] ?? {});
+    final nestedData = json["data"] is Map ? Map<String, dynamic>.from(json["data"]) : <String, dynamic>{};
     return NotificationEntity(
-      id: json["id"]?.toString() ?? '',
-      type: json["type"]?.toString() ?? '',
+      id: MappingHelpers.toStringSafe(json["id"]),
+      type: MappingHelpers.toStringSafe(json["type"]),
       // Extract from nested 'data' object if available
-      title: nestedData["title"]?.toString() ?? '',
-      body: nestedData["text"]?.toString() ?? '',
-      redirect: nestedData["redirect"]?.toString(),
-      data: Map<String, dynamic>.from(nestedData["data"] ?? {}),
-      createdAt: json["created_at"]?.toString() ?? '',
+      title: MappingHelpers.toStringSafe(nestedData["title"]),
+      body: MappingHelpers.toStringSafe(nestedData["text"]),
+      redirect: nestedData["redirect"] != null ? MappingHelpers.toStringSafe(nestedData["redirect"]) : null,
+      data: nestedData["data"] is Map ? Map<String, dynamic>.from(nestedData["data"]) : <String, dynamic>{},
+      createdAt: MappingHelpers.toStringSafe(json["created_at"]),
       // Map 'read_at' to 'read' (1 if read, 0 if unread)
       read: json["read_at"] != null ? 1 : 0,
     );
