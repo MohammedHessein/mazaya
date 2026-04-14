@@ -73,7 +73,7 @@ class _CouponsSectionState extends State<CouponsSection> {
                     itemCount: products.length,
                     itemBuilder: (context, index) {
                       final product = products[index];
-                      final isDisabled = product.isActive;
+                      final isDisabled = !product.isActive;
 
                       return AppCard(
                         title: product.vendorName ?? product.name,
