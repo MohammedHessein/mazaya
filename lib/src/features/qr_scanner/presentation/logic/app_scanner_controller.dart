@@ -159,11 +159,6 @@ class AppScannerController extends WidgetsBindingObserver {
         final code = barcode.rawValue!;
         _updateScannerState(isScanned: true, scannedCode: code);
         
-        // Optimize battery/safety by stopping after detection
-        try {
-          await _controller.stop();
-        } catch (_) {}
-        
         onCodeDetected(code);
         break;
       }

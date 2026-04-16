@@ -1096,4 +1096,10 @@ abstract class LocaleKeys {
   static const String _createdAtWithLabel = 'created_at_with_label';
   static String createdAtWithLabel({required String date}) => _createdAtWithLabel.tr(namedArgs: {'date': date});
 
+  static const String _userPackageInactive = 'user_package_inactive';
+  static String get userPackageInactive => _userPackageInactive.tr();
+
+  static const String _userPackageExpired = 'user_package_expired';
+  static String get userPackageExpired => _userPackageExpired.tr();
+
 }

@@ -44,7 +44,7 @@ class CouponDetailsScreen extends BlocStatelessWidget<CouponDetailsCubit> {
                       isDissabled:
                           state.isSuccess && (state.data.isUsed ?? false),
                       onTap: () async {
-                        if (!UserCubit.instance.checkAuth()) return;
+                        if (!UserCubit.instance.checkMembership()) return;
                         if (state.isSuccess) {
                           final currentCoupon = state.data;
 

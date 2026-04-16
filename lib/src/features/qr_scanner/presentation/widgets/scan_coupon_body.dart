@@ -106,8 +106,7 @@ class _ScanCouponBodyState extends State<ScanCouponBody> {
             message: state.errorMessage ?? LocaleKeys.operationFaild,
             baseStatus: BaseStatus.error,
           );
-          _scannerController.isScanned = false;
-          _scannerController.onStateUpdate();
+          _scannerController.resetInternalState();
         }
       },
       builder: (context, state) {

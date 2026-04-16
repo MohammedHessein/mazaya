@@ -29,6 +29,10 @@ class MainParams {
   void updateNavValue(int value) {
     if (value == 0 || value == 1) {
       selectedIndexNotifier.value = value;
+    } else if (value == 2) {
+      if (UserCubit.instance.checkMembership()) {
+        selectedIndexNotifier.value = value;
+      }
     } else {
       if (UserCubit.instance.checkAuth()) {
         selectedIndexNotifier.value = value;

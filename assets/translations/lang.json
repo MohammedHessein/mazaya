@@ -1828,5 +1828,15 @@
     "en": "Created at: {date}",
     "ar": "أنشئ في: {date}",
     "sv": "Skapad den: {date}"
+  },
+  "user_package_inactive": {
+    "en": "Your package is inactive. Please contact support or renew.",
+    "ar": "باقتك غير نشطة. يرجى التواصل مع الدعم أو التجديد.",
+    "sv": "Ditt paket är inaktivt. Kontakta supporten eller förnya."
+  },
+  "user_package_expired": {
+    "en": "Your membership has expired. Please renew to continue using coupons.",
+    "ar": "انتهت صلاحية عضويتك. يرجى التجديد لمتابعة استخدام الكوبونات.",
+    "sv": "Ditt medlemskap har löpt ut. Förnya gärna för att fortsätta använda kuponger."
   }
 }

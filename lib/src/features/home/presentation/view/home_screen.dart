@@ -11,7 +11,7 @@ class HomeScreen extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [const CategoriesSection(), 20.szH, const CouponsSection()],
+        children: [const CategoriesSection(), const CouponsSection()],
       ),
     );
   }

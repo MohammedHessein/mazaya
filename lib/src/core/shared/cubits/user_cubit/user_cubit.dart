@@ -1,20 +1,19 @@
 import 'dart:convert';
 import 'dart:developer';
+
 import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:mazaya/src/config/res/config_imports.dart';
-import 'package:mazaya/src/core/widgets/un_autheticated/unauthenticated_bottomsheet.dart';
 import 'package:mazaya/src/core/network/api_endpoints.dart';
 import 'package:mazaya/src/core/network/network_request.dart';
-import 'package:mazaya/src/core/helpers/cache_service.dart';
 import 'package:mazaya/src/core/network/network_service.dart';
-import 'package:mazaya/src/core/shared/models/user_model.dart';
-import 'package:mazaya/src/core/base_crud/code/domain/base_domain_imports.dart';
-import 'package:mazaya/src/features/home/presentation/cubits/home_cubit.dart';
+import 'package:mazaya/src/core/widgets/un_autheticated/unauthenticated_bottomsheet.dart';
 import 'package:mazaya/src/features/coupons/presentation/cubits/coupons_cubit.dart';
 import 'package:mazaya/src/features/favourite/presentation/imports/view_imports.dart';
+import 'package:mazaya/src/features/home/presentation/cubits/home_cubit.dart';
 import 'package:mazaya/src/features/used_coupons/presentation/imports/view_imports.dart';
+
+import '../../../../features/location/imports/location_imports.dart';
+
 part 'user_state.dart';
 part 'user_utils.dart';
 
@@ -45,11 +44,13 @@ class UserCubit extends Cubit<UserState> with UserUtils {
       state.copyWith(
         userModel: user,
         userStatus: UserStatus.loggedIn,
-        selectedCountry:
-            countryMap != null ? CountryEntity.fromJson(countryMap) : null,
+        selectedCountry: countryMap != null
+            ? CountryEntity.fromJson(countryMap)
+            : null,
         selectedCity: cityMap != null ? CityEntity.fromJson(cityMap) : null,
-        selectedRegion:
-            regionMap != null ? RegionEntity.fromJson(regionMap) : null,
+        selectedRegion: regionMap != null
+            ? RegionEntity.fromJson(regionMap)
+            : null,
       ),
     );
   }
@@ -63,7 +64,8 @@ class UserCubit extends Cubit<UserState> with UserUtils {
       if (country != null)
         CacheStorage.write(_selectedCountryKey, country.toJson()),
       if (city != null) CacheStorage.write(_selectedCityKey, city.toJson()),
-      if (region != null) CacheStorage.write(_selectedRegionKey, region.toJson()),
+      if (region != null)
+        CacheStorage.write(_selectedRegionKey, region.toJson()),
     ]);
 
     if (isClosed) return;
@@ -139,11 +141,13 @@ class UserCubit extends Cubit<UserState> with UserUtils {
         state.copyWith(
           userModel: UserModel.fromJson(userMap),
           userStatus: UserStatus.loggedIn,
-          selectedCountry:
-              countryMap != null ? CountryEntity.fromJson(countryMap) : null,
+          selectedCountry: countryMap != null
+              ? CountryEntity.fromJson(countryMap)
+              : null,
           selectedCity: cityMap != null ? CityEntity.fromJson(cityMap) : null,
-          selectedRegion:
-              regionMap != null ? RegionEntity.fromJson(regionMap) : null,
+          selectedRegion: regionMap != null
+              ? RegionEntity.fromJson(regionMap)
+              : null,
         ),
       );
       return true;
@@ -166,6 +170,32 @@ class UserCubit extends Cubit<UserState> with UserUtils {
       UnAuthenticatedBottomSheet.show(isBlocked: false, isGuest: isGuest);
       return false;
     }
+    return true;
+  }
+
+  bool checkMembership() {
+    if (!checkAuth()) return false;
+
+    final user = state.userModel;
+    final endDate = DateTime.tryParse(user.userPackageEndDate ?? '');
+    final isDateExpired = endDate != null && endDate.isBefore(DateTime.now());
+
+    if (!user.userPackageIsActive) {
+      MessageUtils.showSnackBar(
+        message: LocaleKeys.userPackageInactive,
+        baseStatus: BaseStatus.error,
+      );
+      return false;
+    }
+
+    if ((user.isExpired ?? false) || isDateExpired) {
+      MessageUtils.showSnackBar(
+        message: LocaleKeys.userPackageExpired,
+        baseStatus: BaseStatus.error,
+      );
+      return false;
+    }
+
     return true;
   }
 }
