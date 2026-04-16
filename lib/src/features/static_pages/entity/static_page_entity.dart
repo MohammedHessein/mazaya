@@ -1,4 +1,3 @@
-import 'package:mazaya/src/config/res/config_imports.dart';
 import 'package:mazaya/src/core/helpers/mapping_helpers.dart';
 
 class StaticPageEntity {

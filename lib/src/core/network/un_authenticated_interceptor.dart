@@ -33,10 +33,14 @@ class UnAuthenticatedInterceptor extends Interceptor {
     final bool isUnauthenticated =
         (response.statusCode == 401 &&
             !response.requestOptions.path.contains(ApiConstants.login)) ||
-        (response.statusCode == 200 && data['key'] == "unauthenticated");
+        (response.statusCode == 200 && data is Map && data['key'] == "unauthenticated");
 
-    final bool isBlocked =
-        response.statusCode == 200 && _blockedKeys.contains(data['key']);
+    final bool isLoginPath =
+        response.requestOptions.path.contains(ApiConstants.login);
+
+    final bool isBlocked = !isLoginPath &&
+        ((response.statusCode == 200 && data is Map && _blockedKeys.contains(data['key'])) ||
+        (response.statusCode == 403));
 
     if (isUnauthenticated || isBlocked) {
       notifyListeners(isBlocked);
@@ -47,9 +51,21 @@ class UnAuthenticatedInterceptor extends Interceptor {
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
+    final data = err.response?.data;
     if (err.response?.statusCode == 401 &&
         !err.requestOptions.path.contains(ApiConstants.login)) {
       notifyListeners(false); // unauthenticated
+    } else if (!err.requestOptions.path.contains(ApiConstants.login) &&
+        (err.response?.statusCode == 403 ||
+        (data is Map &&
+            (data['exception']?.toString().contains('TokenBlacklistedException') ==
+                    true ||
+                data['message']
+                        ?.toString()
+                        .toLowerCase()
+                        .contains('blacklisted') ==
+                    true)))) {
+      notifyListeners(true); // isBlocked
     }
     super.onError(err, handler);
   }

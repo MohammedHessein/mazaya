@@ -365,5 +365,7 @@
   "coupon_used_before": "Denna kupong har redan använts",
   "created_at_with_label": "Skapad den: {date}",
   "user_package_inactive": "Ditt paket är inaktivt. Kontakta supporten eller förnya.",
-  "user_package_expired": "Ditt medlemskap har löpt ut. Förnya gärna för att fortsätta använda kuponger."
+  "user_package_expired": "Ditt medlemskap har löpt ut. Förnya gärna för att fortsätta använda kuponger.",
+  "country_code": "Landskod",
+  "enter_country_code": "Ange landskod"
 }

@@ -365,5 +365,7 @@
   "coupon_used_before": "This coupon has already been used",
   "created_at_with_label": "Created at: {date}",
   "user_package_inactive": "Your package is inactive. Please contact support or renew.",
-  "user_package_expired": "Your membership has expired. Please renew to continue using coupons."
+  "user_package_expired": "Your membership has expired. Please renew to continue using coupons.",
+  "country_code": "Country Code",
+  "enter_country_code": "Enter country code"
 }

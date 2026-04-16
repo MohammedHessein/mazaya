@@ -16,8 +16,6 @@ import 'package:mazaya/src/features/used_coupons/presentation/imports/view_impor
 import 'package:mazaya/src/core/base_crud/code/domain/entities/category_entity.dart';
 import 'package:mazaya/src/features/coupons/presentation/cubits/coupons_cubit.dart';
 import 'package:mazaya/src/features/home/presentation/cubits/home_cubit.dart';
-import 'package:mazaya/src/features/home/model/home_model.dart';
-import 'package:mazaya/src/core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import 'package:collection/collection.dart';
 
 part 'navigation_types.dart';

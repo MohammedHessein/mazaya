@@ -1102,4 +1102,10 @@ abstract class LocaleKeys {
   static const String _userPackageExpired = 'user_package_expired';
   static String get userPackageExpired => _userPackageExpired.tr();
 
+  static const String _countryCode = 'country_code';
+  static String get countryCode => _countryCode.tr();
+
+  static const String _enterCountryCode = 'enter_country_code';
+  static String get enterCountryCode => _enterCountryCode.tr();
+
 }

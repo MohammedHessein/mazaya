@@ -43,6 +43,12 @@ extension FormatString on String {
           (Match match) => match.group(1)!.toLowerCase(),
         );
   }
+  String get toFlagEmoji {
+    final countryCode = toUpperCase();
+    return countryCode.replaceAllMapped(RegExp(r'[A-Z]'), (match) {
+      return String.fromCharCode(match.group(0)!.codeUnitAt(0) + 127397);
+    });
+  }
 }
 
 extension FormatDouble on double {

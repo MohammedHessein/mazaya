@@ -108,17 +108,19 @@ class UserCubit extends Cubit<UserState> with UserUtils {
   }
 
   Future<void> getProfile() async {
-    final request = NetworkRequest(
-      method: RequestMethod.get,
-      path: ApiConstants.profile,
-    );
-    final response = await injector<NetworkService>().callApi<UserModel>(
-      request,
-      mapper: (json) => UserModel.fromJson(json),
-    );
-    if (response.key.toLowerCase() == 'success') {
-      await updateUser(response.data);
-    }
+    try {
+      final request = NetworkRequest(
+        method: RequestMethod.get,
+        path: ApiConstants.profile,
+      );
+      final response = await injector<NetworkService>().callApi<UserModel>(
+        request,
+        mapper: (json) => UserModel.fromJson(json),
+      );
+      if (response.key.toLowerCase() == 'success') {
+        await updateUser(response.data);
+      }
+    } catch (_) {}
   }
 
   Future<bool> init() async {
@@ -176,21 +178,9 @@ class UserCubit extends Cubit<UserState> with UserUtils {
   bool checkMembership() {
     if (!checkAuth()) return false;
 
-    final user = state.userModel;
-    final endDate = DateTime.tryParse(user.userPackageEndDate ?? '');
-    final isDateExpired = endDate != null && endDate.isBefore(DateTime.now());
-
     if (!user.userPackageIsActive) {
       MessageUtils.showSnackBar(
         message: LocaleKeys.userPackageInactive,
-        baseStatus: BaseStatus.error,
-      );
-      return false;
-    }
-
-    if ((user.isExpired ?? false) || isDateExpired) {
-      MessageUtils.showSnackBar(
-        message: LocaleKeys.userPackageExpired,
         baseStatus: BaseStatus.error,
       );
       return false;

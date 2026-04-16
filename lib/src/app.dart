@@ -1,3 +1,5 @@
+
+import 'package:fl_country_code_picker/fl_country_code_picker.dart' as flc;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -61,7 +63,10 @@ class _MazayaAppState extends State<MazayaApp> {
             child: MaterialApp(
               debugShowCheckedModeBanner: false,
               title: ConstantManager.appName,
-              localizationsDelegates: context.localizationDelegates,
+              localizationsDelegates: [
+                flc.CountryLocalizations.delegate,
+                ...context.localizationDelegates,
+              ],
               supportedLocales: context.supportedLocales,
               locale: context.locale,
               navigatorKey: Go.navigatorKey,

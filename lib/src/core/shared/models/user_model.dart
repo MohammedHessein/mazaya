@@ -32,7 +32,6 @@ class UserModel {
   final bool userPackageIsActive;
   final String createdAt;
   final String? token;
-  final bool? isExpired;
   final bool allowNotify; // Legacy field
   final int userType; // Legacy field
 
@@ -75,7 +74,6 @@ class UserModel {
     required this.userPackageIsActive,
     required this.createdAt,
     this.token,
-    this.isExpired,
     this.allowNotify = false,
     this.userType = 0,
   });
@@ -114,7 +112,6 @@ class UserModel {
     userPackageIsActive: false,
     createdAt: '',
     token: '',
-    isExpired: false,
     allowNotify: false,
     userType: 0,
   );
@@ -153,7 +150,6 @@ class UserModel {
     bool? userPackageIsActive,
     String? createdAt,
     String? token,
-    bool? isExpired,
     bool? allowNotify,
     int? userType,
   }) {
@@ -196,7 +192,6 @@ class UserModel {
       userPackageIsActive: userPackageIsActive ?? this.userPackageIsActive,
       createdAt: createdAt ?? this.createdAt,
       token: token ?? this.token,
-      isExpired: isExpired ?? this.isExpired,
       allowNotify: allowNotify ?? this.allowNotify,
       userType: userType ?? this.userType,
     );
@@ -260,9 +255,6 @@ class UserModel {
       createdAt: (user['created_at'] ?? user['createdAt'] ?? '').toString(),
       token:
           data['token'] ?? (json.containsKey('token') ? json['token'] : null),
-      isExpired:
-          data['isExpired'] ??
-          (json.containsKey('isExpired') ? json['isExpired'] : null),
       allowNotify: user['allowNotify'] ?? user['allow_notify'] ?? false,
       userType: _toInt(user['userType'] ?? user['user_type']) ?? 0,
     );
@@ -302,7 +294,6 @@ class UserModel {
     'userPackageIsActive': userPackageIsActive,
     'created_at': createdAt,
     'token': token,
-    'isExpired': isExpired,
     'allowNotify': allowNotify,
     'userType': userType,
   };

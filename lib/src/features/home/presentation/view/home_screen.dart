@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mazaya/src/core/extensions/widgets/sized_box_helper.dart';
 import '../widgets/categories_section.dart';
 import '../widgets/coupons_section.dart';
 

@@ -263,15 +263,22 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
       if (selectedValues.isEmpty) {
         return widget.hint ?? LocaleKeys.selectAnOption;
       } else {
-        return selectedValues.map(widget.itemAsString).join(', ');
+        final List<T> displayValues = selectedValues.map((val) {
+          final int index = widget._items.indexOf(val);
+          return index != -1 ? widget._items[index] : val;
+        }).toList();
+        return displayValues.map(widget.itemAsString).join(', ');
       }
     } else {
       if (value == null) {
         return widget.hint ?? LocaleKeys.selectAnOption;
       }
-      return widget.itemAsString.call(value);
+      final int index = widget._items.indexOf(value as T);
+      final T displayValue = index != -1 ? widget._items[index] : value;
+      return widget.itemAsString.call(displayValue);
     }
   }
+
 
   Widget _getSuffixWidget() {
     if (widget.isLoading) {

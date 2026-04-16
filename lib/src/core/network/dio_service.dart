@@ -35,6 +35,8 @@ class DioService implements NetworkService {
       _dio.interceptors.add(ConfigurationInterceptor());
     }
 
+    _dio.interceptors.add(UnAuthenticatedInterceptor.instance);
+
     if (kDebugMode) {
       _dio.interceptors.add(
         PrettyDioLogger(
@@ -47,7 +49,6 @@ class DioService implements NetworkService {
           maxWidth: 100,
         ),
       );
-      _dio.interceptors.add(UnAuthenticatedInterceptor.instance);
     }
   }
 
@@ -130,6 +131,16 @@ class DioService implements NetworkService {
   }
 
   dynamic _handleError(DioException error) {
+    final data = error.response?.data;
+    final isTokenBlacklisted = data is Map &&
+        (data['exception']?.toString().contains('TokenBlacklistedException') ==
+                true ||
+            data['message']
+                    ?.toString()
+                    .toLowerCase()
+                    .contains('blacklisted') ==
+                true);
+
     switch (error.type) {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
@@ -142,7 +153,8 @@ class DioService implements NetworkService {
               error.response?.data['message'] ?? LocaleKeys.badRequest,
             );
           case HttpStatus.unauthorized:
-            String message = error.response?.data['message'] ?? LocaleKeys.badRequest;
+            String message =
+                error.response?.data['message'] ?? LocaleKeys.badRequest;
             if (message.toLowerCase().contains('token expired')) {
               message = LocaleKeys.appYourSessionIsExpired;
             }
@@ -152,6 +164,11 @@ class DioService implements NetworkService {
               error.response?.data['message'] ?? LocaleKeys.badRequest,
             );
           case HttpStatus.forbidden:
+            if (isTokenBlacklisted) {
+              throw BlockedException(
+                error.response?.data['message'] ?? LocaleKeys.blocked,
+              );
+            }
             throw NeedActiveException(
               error.response?.data['message'] ?? LocaleKeys.badRequest,
             );
@@ -162,6 +179,11 @@ class DioService implements NetworkService {
               error.response?.data['message'] ?? LocaleKeys.serverError,
             );
           case HttpStatus.internalServerError:
+            if (isTokenBlacklisted) {
+              throw BlockedException(
+                error.response?.data['message'] ?? LocaleKeys.blocked,
+              );
+            }
             throw InternalServerErrorException(
               error.response?.data['message'] ?? LocaleKeys.serverError,
             );

@@ -1,10 +1,8 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mazaya/src/config/language/locale_keys.g.dart';
 import 'package:mazaya/src/config/res/config_imports.dart';
 import 'package:mazaya/src/core/extensions/context_extension.dart';
-import 'package:mazaya/src/core/extensions/string_extension.dart';
 import 'package:mazaya/src/core/extensions/text_style_extensions.dart';
 import 'package:mazaya/src/core/extensions/widgets/sized_box_helper.dart';
 import 'package:mazaya/src/core/widgets/buttons/loading_button.dart';

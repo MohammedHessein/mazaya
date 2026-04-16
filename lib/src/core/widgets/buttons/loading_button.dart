@@ -67,7 +67,7 @@ class LoadingButton extends StatelessWidget {
       child: CustomAnimatedButton(
         color: isDissabled ? null : (color ?? AppColors.buttonColor),
         gradient: isDissabled ? AppColors.disableGradient : null,
-        onTap: isDissabled ? () async {} : onTap,
+        onTap: isDissabled ? null : onTap,
         elevation: 0,
         padding: EdgeInsets.zero,
         width: width ?? MediaQuery.sizeOf(context).width,

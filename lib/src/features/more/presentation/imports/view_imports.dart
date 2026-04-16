@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math' as math;
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -73,4 +74,8 @@ part '../widgets/profile_header_sliver.dart';
 part '../widgets/profile_info_widget.dart';
 part '../widgets/switch_notify_widget.dart';
 part '../widgets/update_photo_model_sheet.dart';
+part '../widgets/update_profile_additional_info_fields.dart';
+part '../widgets/update_profile_basic_info_fields.dart';
 part '../widgets/update_profile_body.dart';
+part '../widgets/update_profile_location_section.dart';
+part '../widgets/update_profile_phone_fields.dart';

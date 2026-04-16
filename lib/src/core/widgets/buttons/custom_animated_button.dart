@@ -15,7 +15,7 @@ class CustomAnimatedButton extends StatefulWidget {
   final Curve curve;
   final Curve reverseCurve;
   final Widget child;
-  final FutureOr<void> Function() onTap;
+  final FutureOr<void> Function()? onTap;
   final Color? color;
   final Gradient? gradient; // New gradient property
   final Brightness? colorBrightness;
@@ -40,7 +40,7 @@ class CustomAnimatedButton extends StatefulWidget {
     this.curve = Curves.easeInOutCirc,
     this.reverseCurve = Curves.easeInOutCirc,
     required this.child,
-    required this.onTap,
+    this.onTap,
     this.color,
     this.gradient, // New gradient parameter
     this.colorBrightness,
@@ -157,7 +157,7 @@ class CustomButtonState extends State<CustomAnimatedButton>
   void doWhileLoading() async {
     try {
       startLoading();
-      await widget.onTap();
+      await widget.onTap?.call();
     } finally {
       stopLoading();
     }
@@ -170,7 +170,10 @@ class CustomButtonState extends State<CustomAnimatedButton>
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: buttonStatus == ButtonStatus.idle ? doWhileLoading : null,
+          onTap:
+              (buttonStatus == ButtonStatus.idle && widget.onTap != null)
+                  ? doWhileLoading
+                  : null,
           customBorder: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(
               widget.roundLoadingShape

@@ -1838,5 +1838,15 @@
     "en": "Your membership has expired. Please renew to continue using coupons.",
     "ar": "انتهت صلاحية عضويتك. يرجى التجديد لمتابعة استخدام الكوبونات.",
     "sv": "Ditt medlemskap har löpt ut. Förnya gärna för att fortsätta använda kuponger."
+  },
+  "country_code": {
+    "en": "Country Code",
+    "ar": "رمز الدولة",
+    "sv": "Landskod"
+  },
+  "enter_country_code": {
+    "en": "Enter country code",
+    "ar": "أدخل رمز الدولة",
+    "sv": "Ange landskod"
   }
 }

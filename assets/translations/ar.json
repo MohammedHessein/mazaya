@@ -365,5 +365,7 @@
   "coupon_used_before": "تم استخدام هذا الكوبون مسبقاً",
   "created_at_with_label": "أنشئ في: {date}",
   "user_package_inactive": "باقتك غير نشطة. يرجى التواصل مع الدعم أو التجديد.",
-  "user_package_expired": "انتهت صلاحية عضويتك. يرجى التجديد لمتابعة استخدام الكوبونات."
+  "user_package_expired": "انتهت صلاحية عضويتك. يرجى التجديد لمتابعة استخدام الكوبونات.",
+  "country_code": "رمز الدولة",
+  "enter_country_code": "أدخل رمز الدولة"
 }

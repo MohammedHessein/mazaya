@@ -17,8 +17,44 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
   late TextEditingController _firstNameController;
   late TextEditingController _lastNameController;
   late TextEditingController _mobileController;
+  late TextEditingController _countryCodeController;
   late TextEditingController _personalNumberController;
-
+  FlCountryCodePicker get _countryPicker => FlCountryCodePicker(
+    localize: true,
+    favorites: const ['EG', 'SE', 'SA', 'US'],
+    favoritesIcon: Icon(
+      Icons.star_rounded,
+      color: AppColors.orange,
+      size: 18.w,
+    ),
+    title: Padding(
+      padding: EdgeInsets.all(12.h),
+      child: Text(LocaleKeys.selectCountry, style: context.textStyle.s18.bold),
+    ),
+    searchBarDecoration: InputDecoration(
+      hintText: LocaleKeys.searchFor,
+      prefixIcon: Padding(
+        padding: EdgeInsets.all(12.w),
+        child: AppAssets.svg.baseSvg.search.svg(),
+      ),
+      prefixIconColor: WidgetStateColor.resolveWith((states) {
+        if (states.contains(WidgetState.focused)) {
+          return AppColors.primary;
+        }
+        return AppColors.placeholder;
+      }),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: AppColors.primary, width: 1.w),
+        borderRadius: BorderRadius.circular(12.r),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: AppColors.hintText, width: 1.w),
+        borderRadius: BorderRadius.circular(12.r),
+      ),
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.r)),
+    ),
+  );
+  CountryCode? _pickedCountryCode;
   CountryEntity? _selectedCountry;
   CityEntity? _selectedCity;
   RegionEntity? _selectedMunicipality;
@@ -36,7 +72,11 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
     _firstNameController = TextEditingController(text: user.firstName);
     _lastNameController = TextEditingController(text: user.lastName);
     _mobileController = TextEditingController(text: user.mobile);
-    _personalNumberController = TextEditingController(text: user.personalNumber);
+    _countryCodeController = TextEditingController(text: user.countryCode);
+    _pickedCountryCode = CountryCode.fromDialCode(_countryCodeController.text);
+    _personalNumberController = TextEditingController(
+      text: user.personalNumber,
+    );
 
     _nameController.addListener(_onChanged);
     _emailController.addListener(_onChanged);
@@ -46,6 +86,7 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
     _firstNameController.addListener(_onChanged);
     _lastNameController.addListener(_onChanged);
     _mobileController.addListener(_onChanged);
+    _countryCodeController.addListener(_onChanged);
     _personalNumberController.addListener(_onChanged);
 
     // Initialize location hierarchy from UserModel IDs (instead of stale cache)
@@ -62,23 +103,20 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
           )
         : null;
     _selectedMunicipality = user.locationId != null
-        ? RegionEntity(
-            id: user.locationId!,
-            name: user.locationName ?? '',
-          )
+        ? RegionEntity(id: user.locationId!, name: user.locationName ?? '')
         : null;
 
     // Trigger data fetching for dependent lists if initial values exist
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_selectedCountry != null) {
         context.read<GetBaseEntityCubit<CityEntity>>().fGetBaseNameAndId(
-              id: _selectedCountry!.id,
-            );
+          id: _selectedCountry!.id,
+        );
       }
       if (_selectedCity != null) {
         context.read<GetBaseEntityCubit<RegionEntity>>().fGetBaseNameAndId(
-              id: _selectedCity!.id,
-            );
+          id: _selectedCity!.id,
+        );
       }
     });
   }
@@ -109,8 +147,8 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
     });
     if (country != null) {
       context.read<GetBaseEntityCubit<CityEntity>>().fGetBaseNameAndId(
-            id: country.id,
-          );
+        id: country.id,
+      );
     }
   }
 
@@ -121,8 +159,8 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
     });
     if (city != null) {
       context.read<GetBaseEntityCubit<RegionEntity>>().fGetBaseNameAndId(
-            id: city.id,
-          );
+        id: city.id,
+      );
     }
   }
 
@@ -142,6 +180,7 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
     _firstNameController.dispose();
     _lastNameController.dispose();
     _mobileController.dispose();
+    _countryCodeController.dispose();
     _personalNumberController.dispose();
     super.dispose();
   }
@@ -152,10 +191,16 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
 
   bool get _hasChanges {
     final nameChanged = _nameController.text.trim() != user.name.trim();
-    final firstNameChanged = _firstNameController.text.trim() != (user.firstName ?? '').trim();
-    final lastNameChanged = _lastNameController.text.trim() != (user.lastName ?? '').trim();
+    final firstNameChanged =
+        _firstNameController.text.trim() != (user.firstName ?? '').trim();
+    final lastNameChanged =
+        _lastNameController.text.trim() != (user.lastName ?? '').trim();
     final mobileChanged = _mobileController.text.trim() != user.mobile.trim();
-    final personalNumberChanged = _personalNumberController.text.trim() != (user.personalNumber ?? '').trim();
+    final countryCodeChanged =
+        _countryCodeController.text.trim() != (user.countryCode ?? '').trim();
+    final personalNumberChanged =
+        _personalNumberController.text.trim() !=
+        (user.personalNumber ?? '').trim();
     final emailChanged = _emailController.text.trim() != user.email.trim();
     final addressChanged =
         (_addressController.text.trim() != (user.address ?? '').trim());
@@ -163,12 +208,16 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
         (_poBoxController.text.trim() != (user.poBox ?? '').trim());
     final nationalIdChanged =
         (_nationalIdController.text.trim() != (user.nationalId ?? '').trim());
-    final locationChanged = _locationId != null;
- 
+    final initialLocationId =
+        (user.locationId ?? user.locationParentId ?? user.locationGrandparentId)
+            ?.toString();
+    final locationChanged = _locationId != initialLocationId;
+
     return nameChanged ||
         firstNameChanged ||
         lastNameChanged ||
         mobileChanged ||
+        countryCodeChanged ||
         personalNumberChanged ||
         emailChanged ||
         addressChanged ||
@@ -185,193 +234,49 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
         key: _formKey,
         child: Column(
           children: [
-            FieldLabel(label: LocaleKeys.name),
-            8.szH,
-            AppTextField(
-              controller: _nameController,
-              hint: LocaleKeys.name,
-              validator: (v) => Validators.validateName(v, fieldTitle: LocaleKeys.name),
+            UpdateProfileBasicInfoFields(
+              nameController: _nameController,
+              emailController: _emailController,
+              firstNameController: _firstNameController,
+              lastNameController: _lastNameController,
             ),
             20.szH,
-            FieldLabel(label: LocaleKeys.email),
-            8.szH,
-            AppTextField(
-               controller: _emailController,
-               hint: LocaleKeys.email,
-               keyboardType: TextInputType.emailAddress,
-               validator: (value) => value != null && value.isNotEmpty
-                   ? Validators.validateEmail(value)
-                   : null,
-             ),
-             20.szH,
-             Row(
-               children: [
-                 Expanded(
-                   child: Column(
-                     crossAxisAlignment: CrossAxisAlignment.start,
-                     children: [
-                       FieldLabel(label: LocaleKeys.firstName),
-                       8.szH,
-                       AppTextField(
-                         controller: _firstNameController,
-                         hint: LocaleKeys.firstName,
-                         validator: (v) => Validators.validateName(v, fieldTitle: LocaleKeys.firstName),
-                       ),
-                     ],
-                   ),
-                 ),
-                 15.szW,
-                 Expanded(
-                   child: Column(
-                     crossAxisAlignment: CrossAxisAlignment.start,
-                     children: [
-                       FieldLabel(label: LocaleKeys.lastName),
-                       8.szH,
-                       AppTextField(
-                         controller: _lastNameController,
-                         hint: LocaleKeys.lastName,
-                         validator: (v) => Validators.validateName(v, fieldTitle: LocaleKeys.lastName),
-                       ),
-                     ],
-                   ),
-                 ),
-               ],
-             ),
-             20.szH,
-             FieldLabel(label: LocaleKeys.phoneNumber),
-             8.szH,
-             AppTextField(
-               controller: _mobileController,
-               hint: LocaleKeys.phoneNumber,
-               keyboardType: TextInputType.phone,
-               validator: (v) => Validators.validatePhone(v, fieldTitle: LocaleKeys.phoneNumber),
-             ),
-             20.szH,
-             FieldLabel(label: LocaleKeys.personalNumber),
-             8.szH,
-             AppTextField(
-               controller: _personalNumberController,
-               hint: LocaleKeys.personalNumber,
-               keyboardType: TextInputType.number,
-               validator: (v) => Validators.validateEmpty(v, fieldTitle: LocaleKeys.personalNumber),
-             ),
-             20.szH,
-            FieldLabel(label: LocaleKeys.country),
-            8.szH,
-            BlocBuilder<GetBaseEntityCubit<CountryEntity>,
-                GetBaseEntityState<CountryEntity>>(
-              builder: (context, state) {
-                return const SizedBox().asFormField<CountryEntity>(
-                  initialValue: _selectedCountry,
-                  validator: (v) => Validators.validateDropDown(v, fieldTitle: LocaleKeys.country),
-                  builder: (fieldState) => AppDropdown<CountryEntity>(
-                    items: state.dataState.data ?? [],
-                    value: _selectedCountry,
-                    hint: LocaleKeys.selectCountry,
-                    itemAsString: (country) => country.name,
-                    onChanged: (val) {
-                      _onCountryChanged(val);
-                      fieldState.didChange(val);
-                    },
-                    isLoading: state.dataState.isLoading,
-                    hasError: fieldState.hasError,
-                  ),
+            UpdateProfilePhoneFields(
+              mobileController: _mobileController,
+              countryCodeController: _countryCodeController,
+              pickedCountryCode: _pickedCountryCode,
+              onCountryPickerTap: () async {
+                final picked = await _countryPicker.showPicker(
+                  context: context,
+                  pickerMaxHeight: ScreenUtil().screenHeight * 0.7,
                 );
+                if (picked != null) {
+                  setState(() {
+                    _pickedCountryCode = picked;
+                    _countryCodeController.text = picked.dialCode;
+                  });
+                }
               },
             ),
             20.szH,
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      FieldLabel(label: _level2Label),
-                      8.szH,
-                      BlocBuilder<GetBaseEntityCubit<CityEntity>,
-                          GetBaseEntityState<CityEntity>>(
-                        builder: (context, state) {
-                          return const SizedBox().asFormField<CityEntity>(
-                            initialValue: _selectedCity,
-                            validator: (v) => Validators.validateDropDown(v, fieldTitle: _level2Label),
-                            builder: (fieldState) => AppDropdown<CityEntity>(
-                              readonly: _selectedCountry == null,
-                              items: state.dataState.data ?? [],
-                              value: _selectedCity,
-                              hint: _level2Hint,
-                              itemAsString: (city) => city.name,
-                              onChanged: (val) {
-                                _onCityChanged(val);
-                                fieldState.didChange(val);
-                              },
-                              isLoading: state.dataState.isLoading,
-                              hasError: fieldState.hasError,
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                15.szW,
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      FieldLabel(label: _level3Label),
-                      8.szH,
-                      BlocBuilder<GetBaseEntityCubit<RegionEntity>,
-                          GetBaseEntityState<RegionEntity>>(
-                        builder: (context, state) {
-                          return const SizedBox().asFormField<RegionEntity>(
-                            initialValue: _selectedMunicipality,
-                            validator: (v) => Validators.validateDropDown(v, fieldTitle: _level3Label),
-                            builder: (fieldState) => AppDropdown<RegionEntity>(
-                              readonly: _selectedCity == null,
-                              items: state.dataState.data ?? [],
-                              value: _selectedMunicipality,
-                              hint: _level3Hint,
-                              itemAsString: (region) => region.name,
-                              onChanged: (val) {
-                                _onMunicipalityChanged(val);
-                                fieldState.didChange(val);
-                              },
-                              isLoading: state.dataState.isLoading,
-                              hasError: fieldState.hasError,
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+            UpdateProfileAdditionalInfoFields(
+              personalNumberController: _personalNumberController,
+              addressController: _addressController,
+              poBoxController: _poBoxController,
+              nationalIdController: _nationalIdController,
             ),
             20.szH,
-            FieldLabel(label: LocaleKeys.address),
-            8.szH,
-            AppTextField(
-              controller: _addressController,
-              hint: LocaleKeys.enterAddress,
-              validator: (v) => Validators.validateEmpty(v, fieldTitle: LocaleKeys.address),
-            ),
-            20.szH,
-            FieldLabel(label: LocaleKeys.poBox),
-            8.szH,
-            AppTextField(
-              controller: _poBoxController,
-              hint: LocaleKeys.enterPoBox,
-              keyboardType: TextInputType.number,
-              validator: (v) => Validators.validateEmpty(v, fieldTitle: LocaleKeys.poBox),
-            ),
-            20.szH,
-            FieldLabel(label: LocaleKeys.nationalId),
-            8.szH,
-            AppTextField(
-              controller: _nationalIdController,
-              hint: LocaleKeys.enterNationalId,
-              keyboardType: TextInputType.number,
-              validator: (v) => Validators.validateEmpty(v, fieldTitle: LocaleKeys.nationalId),
+            UpdateProfileLocationSection(
+              selectedCountry: _selectedCountry,
+              selectedCity: _selectedCity,
+              selectedMunicipality: _selectedMunicipality,
+              onCountryChanged: _onCountryChanged,
+              onCityChanged: _onCityChanged,
+              onMunicipalityChanged: _onMunicipalityChanged,
+              level2Label: _level2Label,
+              level2Hint: _level2Hint,
+              level3Label: _level3Label,
+              level3Hint: _level3Hint,
             ),
             40.szH,
             BlocBuilder<UpdateProfileCubit, AsyncState<UserModel?>>(
@@ -379,28 +284,32 @@ class _UpdateProfileBodyState extends State<UpdateProfileBody> {
                 return LoadingButton(
                   title: LocaleKeys.saveChanges,
                   textColor: AppColors.white,
-                  color: _hasChanges ? AppColors.primary : AppColors.placeholder,
-                  isDissabled: !_hasChanges || state.isLoading,
+                  color: _hasChanges
+                      ? AppColors.primary
+                      : AppColors.placeholder,
+                  isDissabled: !_hasChanges,
                   onTap: () async {
                     if (_formKey.currentState!.validate()) {
-                     await UserCubit.instance.updateLocationHierarchy(
+                      await UserCubit.instance.updateLocationHierarchy(
                         country: _selectedCountry,
                         city: _selectedCity,
                         region: _selectedMunicipality,
                       );
-                      await context.read<UpdateProfileCubit>().updateProfile(
-                            name: _nameController.text,
-                            email: _emailController.text,
-                            locationId: _locationId,
-                            address: _addressController.text,
-                            poBox: _poBoxController.text,
-                            nationalId: _nationalIdController.text,
-                            firstName: _firstNameController.text,
-                            lastName: _lastNameController.text,
-                            mobile: _mobileController.text,
-                            personalNumber: _personalNumberController.text,
-                            isUpdate: true,
-                          );
+                      final cubit = context.read<UpdateProfileCubit>();
+                      await cubit.updateProfile(
+                        name: _nameController.text,
+                        email: _emailController.text,
+                        locationId: _locationId,
+                        address: _addressController.text,
+                        poBox: _poBoxController.text,
+                        nationalId: _nationalIdController.text,
+                        firstName: _firstNameController.text,
+                        lastName: _lastNameController.text,
+                        mobile: _mobileController.text,
+                        countryCode: _countryCodeController.text,
+                        personalNumber: _personalNumberController.text,
+                        isUpdate: true,
+                      );
                     }
                   },
                 );
