@@ -59,7 +59,7 @@ void main() async {
   );
 
   // Initialize Deep Linking
-  DeepLinkService().init();
+  DeepLinkService.instance.init();
 
   // Restart animations when hot reload happens (developer experience)
   Animate.restartOnHotReload = true;
